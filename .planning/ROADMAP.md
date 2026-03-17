@@ -120,7 +120,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation + Schema Registry | 3/3 | Complete   | 2026-03-17 |
-| 2. Photo Capture + Storage | 0/3 | Not started | - |
+| 2. Photo Capture + Storage | 1/3 | In Progress|  |
 | 3. AI Extraction | 0/2 | Not started | - |
 | 4. Review Form + Save | 0/2 | Not started | - |
 | 5. Output Generation | 0/3 | Not started | - |

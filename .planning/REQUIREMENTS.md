@@ -19,9 +19,9 @@
 
 ### Photo Capture
 
-- [ ] **PHOTO-01**: User can upload photos via web file picker (supports phone camera roll on mobile browser and file system on desktop)
-- [ ] **PHOTO-02**: Photos are resized client-side to max 2MP (with EXIF orientation correction) before upload and stored in private Supabase Storage
-- [ ] **PHOTO-03**: User can drag-to-reorder photos with cover photo designation; order persists after navigation and refresh
+- [x] **PHOTO-01**: User can upload photos via web file picker (supports phone camera roll on mobile browser and file system on desktop)
+- [x] **PHOTO-02**: Photos are resized client-side to max 2MP (with EXIF orientation correction) before upload and stored in private Supabase Storage
+- [x] **PHOTO-03**: User can drag-to-reorder photos with cover photo designation; order persists after navigation and refresh
 
 ### AI Extraction
 
@@ -89,9 +89,9 @@
 | AUTH-02 | Phase 1 | Complete |
 | ASSET-01 | Phase 1 | Complete |
 | ASSET-02 | Phase 1 | Complete |
-| PHOTO-01 | Phase 2 | Pending |
-| PHOTO-02 | Phase 2 | Pending |
-| PHOTO-03 | Phase 2 | Pending |
+| PHOTO-01 | Phase 2 | Complete |
+| PHOTO-02 | Phase 2 | Complete |
+| PHOTO-03 | Phase 2 | Complete |
 | AI-01 | Phase 3 | Pending |
 | AI-02 | Phase 3 | Pending |
 | FORM-01 | Phase 4 | Pending |

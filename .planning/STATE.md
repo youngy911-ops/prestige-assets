@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-17T14:08:25.646Z"
+stopped_at: Completed 02-photo-capture-storage-01-PLAN.md
+last_updated: "2026-03-17T14:35:08.681Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 6
+  completed_plans: 4
   percent: 17
 ---
 
@@ -53,6 +53,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 01 P01 | 7 | 2 tasks | 14 files |
 | Phase 01 P02 | 6 | 2 tasks | 5 files |
 | Phase 01 P03 | 4 | 2 tasks | 14 files |
+| Phase 02-photo-capture-storage P01 | 3 | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,10 @@ Recent decisions affecting current work:
 - [Phase 01-02]: Files placed under src/lib/ (not root lib/) — @/* alias resolves to ./src, existing pattern from 01-01
 - [Phase 01-03]: descriptionTemplate stub returns empty string on all 7 schemas — Phase 5 implements deterministic templates
 - [Phase 01-03]: caravan hasGlassValuation: true; Glass's Valuation sub-fields (Max Offer, Est. Trade, RRP) come from external service, not user-entered schema fields
+- [Phase 02-photo-capture-storage]: updatePhotoOrder does NOT call revalidatePath — client does optimistic update on drag to avoid visible flicker
+- [Phase 02-photo-capture-storage]: processImageForUpload uses canvas redraw to bake EXIF orientation before compression (no preserveExif) — ensures correct GPT-4o pixel input in Phase 3
+- [Phase 02-photo-capture-storage]: Storage RLS uses storage.foldername(name)[1] for userId prefix ownership — path pattern {userId}/{assetId}/{filename}
+- [Phase 02-photo-capture-storage]: extraction_stale only set when assets.fields != '{}' — avoids unnecessary re-extraction on fresh draft assets
 
 ### Pending Todos
 
@@ -83,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T14:08:25.643Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-photo-capture-storage/02-CONTEXT.md
+Last session: 2026-03-17T14:35:08.678Z
+Stopped at: Completed 02-photo-capture-storage-01-PLAN.md
+Resume file: None
