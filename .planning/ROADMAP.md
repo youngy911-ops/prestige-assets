@@ -30,12 +30,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. User can create a new asset record and select an asset type from the 7 valid types
   3. Schema Registry exists for all 7 asset types with correct Salesforce field labels, field ordering, AI-extractable flags, and description template stubs
   4. API keys are server-only (no `NEXT_PUBLIC_` prefix, `server-only` import guard in place); Supabase Storage bucket is private; RLS is enabled on all tables
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Next.js 15 scaffold, Supabase project, environment config, auth middleware + login page
-- [ ] 01-02: DB schema (assets, asset_photos tables with RLS), Supabase client/server wrappers
-- [ ] 01-03: Schema Registry — all 7 asset type definitions (fields, Salesforce labels, sfOrder, AI flags, description template stubs)
+- [ ] 01-01-PLAN.md — Scaffold + vitest + auth middleware + login page + app shell (Wave 1)
+- [ ] 01-02-PLAN.md — DB schema (assets + asset_photos + RLS), BRANCHES constant, createAsset Server Action (Wave 2)
+- [ ] 01-03-PLAN.md — Schema Registry (all 7 asset types, subtypes, fields) + New Asset wizard (Wave 2, parallel with 01-02)
 
 ### Phase 2: Photo Capture + Storage
 **Goal**: Staff can upload photos on a mobile browser or desktop, photos are correctly oriented and resized, and cover photo order persists after refresh
