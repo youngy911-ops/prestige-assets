@@ -12,7 +12,7 @@ Six phases derived from the hard dependency chain in the architecture: the Schem
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation + Schema Registry** - Auth, Supabase setup, DB schema, and the complete Schema Registry that drives everything downstream
+- [x] **Phase 1: Foundation + Schema Registry** - Auth, Supabase setup, DB schema, and the complete Schema Registry that drives everything downstream (completed 2026-03-17)
 - [ ] **Phase 2: Photo Capture + Storage** - File picker, client-side resize with EXIF correction, Supabase Storage, drag-to-reorder with persistence
 - [ ] **Phase 3: AI Extraction** - Route Handler calling GPT-4o, per-field confidence scores, extraction UI and failure states
 - [ ] **Phase 4: Review Form + Save** - Dynamic RHF form pre-filled from extraction, low-confidence highlighting, mandatory save step
@@ -118,7 +118,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation + Schema Registry | 2/3 | In Progress|  |
+| 1. Foundation + Schema Registry | 3/3 | Complete   | 2026-03-17 |
 | 2. Photo Capture + Storage | 0/2 | Not started | - |
 | 3. AI Extraction | 0/2 | Not started | - |
 | 4. Review Form + Save | 0/2 | Not started | - |
