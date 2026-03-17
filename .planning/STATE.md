@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-03-17T12:16:58.333Z"
-last_activity: 2026-03-17 — Roadmap created; project initialized
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-03-17T12:24:00Z"
+last_activity: 2026-03-17 — DB migration, BRANCHES constant, createAsset Server Action complete
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-17)
 ## Current Position
 
 Phase: 1 of 6 (Foundation + Schema Registry)
-Plan: 0 of 3 in current phase
-Status: Ready to plan
-Last activity: 2026-03-17 — Roadmap created; project initialized
+Plan: 2 of 3 in current phase
+Status: In progress
+Last activity: 2026-03-17 — DB migration, BRANCHES constant, createAsset Server Action complete
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -51,6 +51,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01 P01 | 7 | 2 tasks | 14 files |
+| Phase 01 P02 | 6 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,7 @@ Recent decisions affecting current work:
 - [Phase 01]: shadcn v4 uses @base-ui/react — Button asChild pattern not available; used styled Link for navigation buttons
 - [Phase 01]: Tailwind v4 uses oklch color space — brand hex values adapted to oklch equivalents in globals.css
 - [Phase 01]: Used @supabase/ssr createBrowserClient and createServerClient (not deprecated auth-helpers-nextjs)
+- [Phase 01-02]: Files placed under src/lib/ (not root lib/) — @/* alias resolves to ./src, existing pattern from 01-01
 
 ### Pending Todos
 
@@ -78,6 +80,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T12:16:58.330Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-03-17T12:24:00Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
