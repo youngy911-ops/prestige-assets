@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 02-photo-capture-storage-01-PLAN.md
-last_updated: "2026-03-17T14:35:08.681Z"
+stopped_at: Completed 02-photo-capture-storage-02-PLAN.md
+last_updated: "2026-03-17T14:39:50.932Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
+  completed_plans: 5
   percent: 17
 ---
 
@@ -54,6 +54,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 01 P02 | 6 | 2 tasks | 5 files |
 | Phase 01 P03 | 4 | 2 tasks | 14 files |
 | Phase 02-photo-capture-storage P01 | 3 | 2 tasks | 8 files |
+| Phase 02-photo-capture-storage P02 | 3 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,7 @@ Recent decisions affecting current work:
 - [Phase 02-photo-capture-storage]: processImageForUpload uses canvas redraw to bake EXIF orientation before compression (no preserveExif) — ensures correct GPT-4o pixel input in Phase 3
 - [Phase 02-photo-capture-storage]: Storage RLS uses storage.foldername(name)[1] for userId prefix ownership — path pattern {userId}/{assetId}/{filename}
 - [Phase 02-photo-capture-storage]: extraction_stale only set when assets.fields != '{}' — avoids unnecessary re-extraction on fresh draft assets
+- [Phase 02-photo-capture-storage]: PhotoThumbnail accepts dnd-kit passthrough props (dragHandleProps, style, isDragging) but does not call useSortable itself — PhotoThumbnailGrid owns drag logic
 
 ### Pending Todos
 
@@ -88,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T14:35:08.678Z
-Stopped at: Completed 02-photo-capture-storage-01-PLAN.md
+Last session: 2026-03-17T14:39:50.929Z
+Stopped at: Completed 02-photo-capture-storage-02-PLAN.md
 Resume file: None
