@@ -1,17 +1,28 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
+import { NextRequest } from 'next/server'
 
-// AUTH-02: Middleware redirects unauthenticated requests to /login
+const mockGetUser = vi.fn()
+vi.mock('@supabase/ssr', () => ({
+  createServerClient: () => ({
+    auth: { getUser: mockGetUser },
+  }),
+}))
+
+const { middleware } = await import('../../middleware')
+
 describe('middleware', () => {
   it('redirects unauthenticated request to /login', async () => {
-    // TODO: implement after middleware.ts exists
-    // Mock @supabase/ssr createServerClient, return { data: { user: null } }
-    // Call middleware with a request to /assets
-    // Expect response to redirect to /login
-    expect(true).toBe(false) // placeholder — forces RED
+    mockGetUser.mockResolvedValue({ data: { user: null } })
+    const request = new NextRequest('http://localhost/assets')
+    const response = await middleware(request)
+    expect(response.status).toBe(307)
+    expect(response.headers.get('location')).toContain('/login')
   })
 
   it('allows authenticated request to pass through', async () => {
-    // TODO: implement after middleware.ts exists
-    expect(true).toBe(false) // placeholder — forces RED
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-123' } } })
+    const request = new NextRequest('http://localhost/assets')
+    const response = await middleware(request)
+    expect(response.status).not.toBe(307)
   })
 })
