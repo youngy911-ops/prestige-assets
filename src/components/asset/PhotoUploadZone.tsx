@@ -2,9 +2,9 @@
 import { useRef, useState } from 'react'
 import { Camera, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { PhotoThumbnail } from './PhotoThumbnail'
 import { processImageForUpload } from '@/lib/utils/image'
-import { insertPhoto, getSignedUrl, removePhoto } from '@/lib/actions/photo.actions'
+import { insertPhoto, getSignedUrl } from '@/lib/actions/photo.actions'
+import { PhotoThumbnailGrid } from './PhotoThumbnailGrid'
 import { createClient } from '@/lib/supabase/client'
 
 export interface PhotoItem {
@@ -121,22 +121,6 @@ export function PhotoUploadZone({
     setIsUploading(false)
   }
 
-  async function handleRemove(photoId: string) {
-    const result = await removePhoto(photoId)
-    if ('error' in result) {
-      setUploadErrors((prev) => [
-        ...prev,
-        { filename: photoId, message: result.error },
-      ])
-      return
-    }
-    setPhotos((prev) => {
-      const updated = prev.filter((p) => p.id !== photoId)
-      onPhotosChange?.(updated)
-      return updated
-    })
-  }
-
   // Empty state
   if (photos.length === 0 && uploadingIds.size === 0) {
     return (
@@ -220,29 +204,31 @@ export function PhotoUploadZone({
         disabled={isUploading || atCap}
       />
 
-      {/* Thumbnail grid — 3 cols mobile, 4 cols desktop — dnd-kit wrapper added in Plan 03 */}
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
-        {photos.map((photo, index) => (
-          <PhotoThumbnail
-            key={photo.id}
-            id={photo.id}
-            signedUrl={photo.signedUrl}
-            isCover={index === 0}
-            onRemove={handleRemove}
-          />
-        ))}
-        {/* Uploading placeholders */}
-        {Array.from(uploadingIds).map((tempId) => (
-          <div
-            key={tempId}
-            className="relative aspect-square min-w-[80px] min-h-[80px] rounded-md bg-[oklch(0.34_0.1_148)] flex items-center justify-center"
-          >
-            <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-md">
-              <Camera className="w-6 h-6 text-white animate-pulse" />
+      {/* Uploading placeholders — shown above grid while uploads are in progress */}
+      {uploadingIds.size > 0 && (
+        <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
+          {Array.from(uploadingIds).map((tempId) => (
+            <div
+              key={tempId}
+              className="relative aspect-square min-w-[80px] min-h-[80px] rounded-md bg-[oklch(0.34_0.1_148)] flex items-center justify-center"
+            >
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-md">
+                <Camera className="w-6 h-6 text-white animate-pulse" />
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
+      {/* Thumbnail grid with dnd-kit drag-to-reorder */}
+      <PhotoThumbnailGrid
+        photos={photos}
+        onPhotosChange={(updated) => {
+          setPhotos(updated)
+          onPhotosChange?.(updated)
+        }}
+        isUploading={isUploading}
+      />
 
       {/* Upload errors */}
       {uploadErrors.length > 0 && (
