@@ -63,7 +63,7 @@ export default function NewAssetPage() {
       setSubmitting(false)
       return
     }
-    router.push(`/assets/${result.assetId}`)
+    router.push(`/assets/${result.assetId}/photos`)
   }
 
   const stepHeadings = {
