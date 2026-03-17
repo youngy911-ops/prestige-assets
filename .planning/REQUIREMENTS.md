@@ -12,7 +12,7 @@
 
 ### Asset Record
 
-- [ ] **ASSET-01**: User can create a new asset record
+- [x] **ASSET-01**: User can create a new asset record
 - [ ] **ASSET-02**: User can select asset type (Truck, Trailer, Earthmoving, Agriculture, Forklift, Caravan/Motor Home, General Goods)
 - [ ] **ASSET-03**: User can view a list of asset records sorted by recency
 - [ ] **ASSET-04**: User can resume editing an asset record from the list
@@ -87,7 +87,7 @@
 |-------------|-------|--------|
 | AUTH-01 | Phase 1 | Complete |
 | AUTH-02 | Phase 1 | Complete |
-| ASSET-01 | Phase 1 | Pending |
+| ASSET-01 | Phase 1 | Complete |
 | ASSET-02 | Phase 1 | Pending |
 | PHOTO-01 | Phase 2 | Pending |
 | PHOTO-02 | Phase 2 | Pending |
