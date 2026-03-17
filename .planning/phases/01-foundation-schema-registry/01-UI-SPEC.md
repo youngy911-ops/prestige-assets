@@ -1,7 +1,7 @@
 ---
 phase: 1
 slug: foundation-schema-registry
-status: draft
+status: approved
 shadcn_initialized: false
 preset: zinc
 created: 2026-03-17
@@ -68,25 +68,27 @@ Notes:
 
 ## Color
 
-Brand palette derived from user decision: green, dark green, hint of white, dark navy.
+Brand palette: dark green backgrounds, white text, dark navy as secondary surface. Design is dark-mode by default.
 
 | Role | Value | Usage |
 |------|-------|-------|
-| Dominant (60%) | #F8FAFC | Background surfaces, page background, form backgrounds — light near-white (zinc-50 compatible) |
-| Secondary (30%) | #1E293B | Navigation bar, sidebar (future), card borders, input border on focus — dark navy (slate-800 compatible) |
-| Accent (10%) | #166534 | Reserved elements listed below only |
-| Destructive | #DC2626 | Destructive actions only (none in Phase 1 — defined for downstream phases) |
+| Primary background | #166534 | Page backgrounds, card surfaces, main content areas |
+| Secondary / elevated | #14532D | Nav bar, step headers, elevated cards, bottom navigation |
+| Navy accent | #1E3A5F | Borders, active state indicators, bottom nav background |
+| Text (primary) | #FFFFFF | All headings, body text, labels — white on dark surfaces |
+| Text (muted) | rgba(255,255,255,0.65) | Secondary labels, helper text, placeholder text |
+| Destructive | #F87171 | Error states — lighter red readable on dark green backgrounds |
 
-Accent (#166534 — forest green) reserved for:
-1. "Sign In" button (primary CTA on login page)
-2. "New Asset" button / FAB on post-login landing
-3. "Next" / "Continue" button in the New Asset entry flow (branch selection → type selection → subtype selection)
-4. Active/selected state indicator on asset type cards (selected card border or checkmark)
-5. Selected branch chip border/background tint
+Interactive element highlights:
+1. "Sign In" button — navy (#1E3A5F) background, white text
+2. "New Asset" button / FAB — navy (#1E3A5F) background, white text
+3. "Next" / "Continue" button — navy (#1E3A5F) background, white text
+4. Active/selected card — white border (2px) + subtle white overlay (rgba(255,255,255,0.1))
+5. Selected branch chip — white border (2px), white text
 
-Accent is NOT used for: body text, headings, labels, inactive cards, nav bar background, page background, or any non-interactive element.
+Logo area: "Slattery Auctions" in white (#FFFFFF) on dark green (#166534) background — no separate container needed, inherits page background.
 
-Dark navy (#1E293B) provides the 30% secondary surface for the top navigation bar background and any sidebar chrome.
+Dark surfaces are the default. No light-mode fallback required for Phase 1.
 
 ---
 
@@ -173,12 +175,12 @@ Destructive actions in Phase 1: none. No delete, cancel, or irreversible action 
 Back button on steps 2 and 3 returns to the previous step without losing prior selections.
 
 ### Loading states
-- Auth session check on page load: show a centered spinner (lucide-react `Loader2` icon, animated) on a white background — do not flash the login page before the session check completes
+- Auth session check on page load: show a centered spinner (lucide-react `Loader2` icon, animated, white) on the primary green (#166534) background — do not flash the login page before the session check completes
 - "Sign In" button loading: replace button text with `Loader2` spinner, disable button, maintain button width
 - No skeleton loaders needed in Phase 1 (asset list is empty on first load; no data-dependent skeletons required)
 
 ### Error states
-- Auth errors: inline below the form, 14px/400 text in destructive red (#DC2626), no icon needed
+- Auth errors: inline below the form, 14px/400 text in destructive red (#F87171 — visible on dark green background), no icon needed
 - Network errors: same inline placement
 
 ---
