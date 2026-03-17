@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//home/jack/.claude/get-shit-done/references/**)",
+      "Read(//home/jack/.claude/get-shit-done/templates/**)",
+      "Bash(node \"/home/jack/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs: initialize project\" --files .planning/PROJECT.md)",
+      "Bash(git -C /home/jack/projects/prestige_assets config user.email \"jack@slatteryauctions.com.au\")",
+      "Bash(git -C /home/jack/projects/prestige_assets config user.name \"Jack\")",
+      "Read(//home/jack/.gsd/**)",
+      "Bash(node \"/home/jack/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs: complete project research\" --files .planning/research/)",
+      "Bash(node \"/home/jack/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs: define v1 requirements\" --files .planning/REQUIREMENTS.md)"
+    ]
+  }
+}
