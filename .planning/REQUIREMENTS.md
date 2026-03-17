@@ -37,7 +37,7 @@
 
 - [ ] **SF-01**: App generates a copy-paste-ready structured fields block for each asset with fields in the correct Salesforce order and correct field labels for that asset type
 - [ ] **SF-02**: App generates a correctly formatted description block per asset subtype (Excavator, Dozer, Grader, Wheel Loader, Truck, Trailer, Caravan, etc.) using deterministic templates — correct line ordering, no dot points, no marketing language, "Sold As Is, Untested & Unregistered." footer
-- [ ] **SF-03**: Each output section (fields block, description block) has its own copy-to-clipboard button with visual confirmation
+- [ ] **SF-03**: Each output section has its own copy-to-clipboard button with visual confirmation
 
 ## v2 Requirements
 
@@ -77,34 +77,36 @@
 | Public-facing bidding interface | Handled by existing platforms (i-bidder, Bidspotter) |
 | Automated valuation engine | Manual input only; comp pricing provides context but not a calculated value |
 | Email / notification system | Not part of the book-in workflow |
+| Glass's Valuation block (Caravan) | Deferred to v2 — not needed for core copy-paste workflow validation |
 
 ## Traceability
 
-*(Populated by roadmapper)*
+*(Updated by roadmapper — 2026-03-17)*
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | TBD | Pending |
-| AUTH-02 | TBD | Pending |
-| ASSET-01 | TBD | Pending |
-| ASSET-02 | TBD | Pending |
-| ASSET-03 | TBD | Pending |
-| ASSET-04 | TBD | Pending |
-| PHOTO-01 | TBD | Pending |
-| PHOTO-02 | TBD | Pending |
-| PHOTO-03 | TBD | Pending |
-| AI-01 | TBD | Pending |
-| AI-02 | TBD | Pending |
-| FORM-01 | TBD | Pending |
-| FORM-02 | TBD | Pending |
-| SF-01 | TBD | Pending |
-| SF-02 | TBD | Pending |
-| SF-03 | TBD | Pending |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| ASSET-01 | Phase 1 | Pending |
+| ASSET-02 | Phase 1 | Pending |
+| PHOTO-01 | Phase 2 | Pending |
+| PHOTO-02 | Phase 2 | Pending |
+| PHOTO-03 | Phase 2 | Pending |
+| AI-01 | Phase 3 | Pending |
+| AI-02 | Phase 3 | Pending |
+| FORM-01 | Phase 4 | Pending |
+| FORM-02 | Phase 4 | Pending |
+| SF-01 | Phase 5 | Pending |
+| SF-02 | Phase 5 | Pending |
+| SF-03 | Phase 5 | Pending |
+| ASSET-03 | Phase 6 | Pending |
+| ASSET-04 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 16 total
-- Mapped to phases: TBD
-- Unmapped: TBD
+- Mapped to phases: 16
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-17*
+*Traceability updated: 2026-03-17*
