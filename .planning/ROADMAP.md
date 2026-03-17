@@ -46,11 +46,12 @@ Plans:
   2. Uploaded photos are stored in private Supabase Storage and displayed via presigned URL (never a public URL)
   3. A photo taken in portrait or landscape on Android is stored and displayed with correct orientation (EXIF correction applied before upload)
   4. User can drag photos to reorder them; the first photo is designated cover photo; order is unchanged after page reload
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: PhotoCapture component — file picker, browser-image-compression resize, EXIF orientation correction via exifr, direct upload to Supabase Storage
-- [ ] 02-02: Photo thumbnail grid with presigned URL display, drag-to-reorder via @dnd-kit, cover photo designation, order persistence via Server Action
+- [ ] 02-01-PLAN.md — Storage migration + image processing utility (processImageForUpload) + photo Server Actions + Wave 0 test scaffolds (Wave 1)
+- [ ] 02-02-PLAN.md — CoverPhotoBadge + UploadProgressIndicator + PhotoThumbnail + PhotoUploadZone with upload orchestration (Wave 2)
+- [ ] 02-03-PLAN.md — PhotoThumbnailGrid (dnd-kit drag-to-reorder) + /assets/[id]/photos page + wizard redirect (Wave 3)
 
 ### Phase 3: AI Extraction
 **Goal**: The app can extract VIN/PIN/Serial, make, model, and year from a build plate photo with per-field confidence scores, and staff can see what was and was not successfully extracted
@@ -119,7 +120,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation + Schema Registry | 3/3 | Complete   | 2026-03-17 |
-| 2. Photo Capture + Storage | 0/2 | Not started | - |
+| 2. Photo Capture + Storage | 0/3 | Not started | - |
 | 3. AI Extraction | 0/2 | Not started | - |
 | 4. Review Form + Save | 0/2 | Not started | - |
 | 5. Output Generation | 0/3 | Not started | - |
