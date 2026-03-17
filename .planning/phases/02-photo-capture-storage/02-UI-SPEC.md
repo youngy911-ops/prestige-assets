@@ -1,7 +1,8 @@
 ---
 phase: 2
 slug: photo-capture-storage
-status: draft
+status: approved
+reviewed_at: 2026-03-17T00:00:00Z
 shadcn_initialized: true
 preset: base-nova / neutral / cssVariables
 created: 2026-03-17
