@@ -1,0 +1,53 @@
+import type { AssetSchema } from '../types'
+
+export const truckSchema: AssetSchema = {
+  assetType: 'truck',
+  displayName: 'Truck',
+  subtypes: [
+    { key: 'prime_mover',    label: 'Prime Mover' },
+    { key: 'rigid_truck',    label: 'Rigid Truck' },
+    { key: 'tipper',         label: 'Tipper' },
+    { key: 'service_truck',  label: 'Service Truck' },
+    { key: 'crane_truck',    label: 'Crane Truck' },
+  ],
+  hasGlassValuation: false,
+  fields: [
+    { key: 'chassis_number',      label: 'Chassis Number',      sfOrder: 1,  inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'vin',                 label: 'VIN',                  sfOrder: 2,  inputType: 'text',     aiExtractable: true,  required: false },
+    { key: 'make',                label: 'Make',                 sfOrder: 3,  inputType: 'text',     aiExtractable: true,  required: true  },
+    { key: 'model',               label: 'Model',                sfOrder: 4,  inputType: 'text',     aiExtractable: true,  required: true  },
+    { key: 'year',                label: 'Year',                 sfOrder: 5,  inputType: 'number',   aiExtractable: true,  required: true  },
+    { key: 'cab_type',            label: 'Cab Type',             sfOrder: 6,  inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'gearbox_make',        label: 'Gearbox Make',         sfOrder: 7,  inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'drive_type',          label: 'Drive Type',           sfOrder: 8,  inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'engine_manufacturer', label: 'Engine Manufacturer',  sfOrder: 9,  inputType: 'text',     aiExtractable: true,  required: false },
+    { key: 'engine_series',       label: 'Engine Series',        sfOrder: 10, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'engine_type',         label: 'Engine Type',          sfOrder: 11, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'engine_number',       label: 'Engine Number',        sfOrder: 12, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'engine_size',         label: 'Engine Size',          sfOrder: 13, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'fuel_type',           label: 'Fuel Type',            sfOrder: 14, inputType: 'select',   options: ['Diesel', 'Petrol', 'Electric', 'LPG', 'CNG'], aiExtractable: false, required: false },
+    { key: 'variant',             label: 'Variant',              sfOrder: 15, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'compliance_date',     label: 'Compliance Date',      sfOrder: 16, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'odometer',            label: 'Odometer',             sfOrder: 17, inputType: 'number',   aiExtractable: false, required: false },
+    { key: 'registration_number', label: 'Registration Number',  sfOrder: 18, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'registration_expiry', label: 'Registration Expiry',  sfOrder: 19, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'colour',              label: 'Colour',               sfOrder: 20, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'body_type',           label: 'Body Type',            sfOrder: 21, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'hourmeter',           label: 'Hourmeter',            sfOrder: 22, inputType: 'number',   aiExtractable: false, required: false },
+    { key: 'tyre_size',           label: 'Tyre Size',            sfOrder: 23, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'transmission',        label: 'Transmission',         sfOrder: 24, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'rims',                label: 'Rims',                 sfOrder: 25, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'suspension',          label: 'Suspension',           sfOrder: 26, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'axle_configuration',  label: 'Axle Configuration',   sfOrder: 27, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'brakes',              label: 'Brakes',               sfOrder: 28, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'gcm',                 label: 'GCM',                  sfOrder: 29, inputType: 'number',   aiExtractable: false, required: false },
+    { key: 'gvm',                 label: 'GVM',                  sfOrder: 30, inputType: 'number',   aiExtractable: false, required: false },
+    { key: 'nw',                  label: 'NW',                   sfOrder: 31, inputType: 'number',   aiExtractable: false, required: false },
+    { key: 'service_history',     label: 'Service History',      sfOrder: 32, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'extras',              label: 'Extras',               sfOrder: 33, inputType: 'textarea', aiExtractable: false, required: false },
+  ],
+  descriptionTemplate: (_fields, _subtype) => {
+    // Stub — Phase 5 implements full deterministic template
+    return ''
+  },
+}
