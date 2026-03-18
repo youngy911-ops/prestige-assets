@@ -54,34 +54,39 @@ Plans:
 - [ ] 02-03-PLAN.md — PhotoThumbnailGrid (dnd-kit drag-to-reorder) + /assets/[id]/photos page + wizard redirect (Wave 3)
 
 ### Phase 3: AI Extraction
-**Goal**: The app can extract VIN/PIN/Serial, make, model, and year from a build plate photo with per-field confidence scores, and staff can see what was and was not successfully extracted
+**Goal**: Staff enter inspection notes and trigger AI extraction — the app processes both photos and notes to extract all Salesforce fields with confidence scores, and staff can see exactly what was and was not confidently extracted
 **Depends on**: Phase 2
-**Requirements**: AI-01, AI-02
+**Requirements**: AI-01, AI-02, AI-03
 **Success Criteria** (what must be TRUE):
-  1. User can trigger AI extraction from uploaded build plate photos and see a loading state while the call is in progress
-  2. Extracted fields (VIN/PIN/Serial, make, model, year) appear with per-field confidence indicators (high / medium / low)
-  3. When a field cannot be read from the photo, the app shows it as unextracted rather than guessing
-  4. Extraction results are never auto-saved — the user must proceed to the review step before any data is written
-**Plans**: TBD
+  1. User can trigger AI extraction from photos alone — photos-only is a fully supported workflow requiring no inspection notes
+  2. AI analyses all visible plates and markings in photos (build plate, compliance plate, weight rating plate, cab card etc.) to extract every possible Salesforce field with per-field confidence scores (high / medium / low)
+  3. Staff can optionally add freeform "Inspection notes" before extraction — when provided, notes are passed to AI alongside photos to improve accuracy (km, hours, number of keys, service history etc. that photos cannot capture)
+  4. User sees a loading state while extraction is in progress
+  5. When a field cannot be determined from photos or notes, the app shows it as unextracted rather than guessing
+  6. Extraction results are never auto-saved — the user must proceed to the review step before any data is written
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: /api/extract Route Handler — auth check, signed URL generation, GPT-4o generateObject() call with Zod schema, confidence scores, null-for-unclear instruction
-- [ ] 03-02: ExtractionPanel component — trigger button, loading state, result display with confidence indicators, failure and partial-extraction states
+- [ ] 03-01-PLAN.md — DB migration + Schema Registry (inspectionPriority flag) + saveInspectionNotes Server Action + buildExtractionSchema + /api/extract Route Handler + Wave 0 test scaffolds (Wave 1)
+- [ ] 03-02-PLAN.md — ConfidenceBadge + InspectionNotesSection + ExtractionTriggerState + ExtractionLoadingState + ExtractionResultPanel + ExtractionFailureState + /assets/[id]/extract page + photos page extension + human checkpoint (Wave 2)
 
 ### Phase 4: Review Form + Save
-**Goal**: Staff must confirm all AI-extracted data in an editable form before any record is saved — there is no path to skip this step
+**Goal**: Staff must confirm all AI-extracted data in an editable form, work through a missing-information checklist, and save — there is no path to skip these steps
 **Depends on**: Phase 3
-**Requirements**: FORM-01, FORM-02
+**Requirements**: FORM-01, FORM-02, AI-04
 **Success Criteria** (what must be TRUE):
   1. The review form renders every Salesforce field for the selected asset type (e.g. ~35 fields for Truck, 2-page schema for Earthmoving) and is pre-filled with AI extraction results
   2. Fields with low-confidence extraction scores are visually distinct from high-confidence fields, prompting staff to verify them
-  3. Staff cannot reach the output view without completing and submitting the review form
-  4. Saved field values are correctly persisted to the asset record and survive a page reload
+  3. Before saving, a "Missing information" checklist appears showing every field AI could not confidently extract — blocking fields (VIN, rego) cannot be dismissed without a value or explicit "unknown" override; optional fields (e.g. engine hours) can be marked "not applicable"
+  4. Staff can update inspection notes and re-trigger AI extraction from the review screen to fill gaps
+  5. Staff cannot reach the output view without completing the review form and resolving or dismissing all checklist items
+  6. Saved field values plus checklist state (flagged / dismissed-na / confirmed / unknown) are correctly persisted to Supabase and survive a page reload
 **Plans**: TBD
 
 Plans:
 - [ ] 04-01: DynamicFieldForm component — RHF + Zod, schema-driven field rendering, pre-fill from extraction result, low-confidence visual highlighting
-- [ ] 04-02: Save Server Action — upsert asset record with confirmed field values, revalidation, route to output view on success
+- [ ] 04-02: MissingInfoChecklist component — per-field gap analysis, blocking vs dismissible classification, "not applicable" and "mark as unknown" actions, re-trigger extraction from notes update
+- [ ] 04-03: Save Server Action — upsert asset record with confirmed field values + checklist state, revalidation, route to output view on success
 
 ### Phase 5: Output Generation
 **Goal**: After confirming the review form, staff get two copy-paste-ready blocks correctly formatted for Salesforce — structured fields and description
@@ -121,7 +126,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Foundation + Schema Registry | 3/3 | Complete   | 2026-03-17 |
 | 2. Photo Capture + Storage | 3/3 | Complete   | 2026-03-17 |
-| 3. AI Extraction | 0/2 | Not started | - |
+| 3. AI Extraction | 0/2 | Planned | - |
 | 4. Review Form + Save | 0/2 | Not started | - |
 | 5. Output Generation | 0/3 | Not started | - |
 | 6. Asset List + Navigation | 0/2 | Not started | - |
