@@ -58,9 +58,9 @@
 
 Phase 3 adds three capabilities: (1) an inspection notes UI on the photos page with per-asset-type structured fields and a freeform textarea, (2) a `/api/extract` Route Handler that calls GPT-4o via Vercel AI SDK with all photos and notes, writing the structured result to a new `extraction_result` JSONB column, and (3) a new `/assets/[id]/extract` page with four exclusive states (trigger, loading, result, failure).
 
-The key technical fact: `generateObject()` is deprecated in Vercel AI SDK v6. The correct pattern is `generateText()` with `Output.object({ schema })`. Neither `ai` nor `@ai-sdk/openai` are currently installed — both must be added. The project already uses `zod@^4.3.6` which is compatible with AI SDK v6.
+The key technical fact: `generateObject()` is deprecated in Vercel AI SDK v6 (confirmed against official migration guide — it will be removed in a future version). The correct pattern is `generateText()` with `Output.object({ schema })`. Neither `ai` nor `@ai-sdk/openai` are currently installed — both must be added. The project already uses `zod@^4.3.6` which is compatible with AI SDK v6.
 
-The DB requires a migration adding two columns to `assets`: `extraction_result JSONB` and `inspection_notes TEXT`. The `extraction_stale` flag (added in Phase 2) is already in place and must be cleared when a new `extraction_result` is stored.
+The DB requires a migration adding two columns to `assets`: `extraction_result JSONB` and `inspection_notes TEXT`. The `extraction_stale` flag (added in Phase 2) is already in place and must be cleared when a new `extraction_result` is stored. Codebase inspection confirms: no `src/app/api/` directory, no `src/lib/ai/` directory, no `src/lib/actions/` directory, and no `src/app/(app)/assets/[id]/extract/` route exist yet — all are new files for this phase.
 
 **Primary recommendation:** Use `generateText` + `Output.object()` with a Zod schema dynamically built from `getAIExtractableFields()`. Each field in the schema is typed as `z.object({ value: z.string().nullable(), confidence: z.enum(['high','medium','low']).nullable() })` so the model can return null for fields it cannot determine.
 
@@ -127,7 +127,7 @@ supabase/
 
 ### Pattern 1: Vercel AI SDK v6 — generateText with Output.object()
 
-`generateObject()` is deprecated. Use `generateText()` with `Output.object()`:
+`generateObject()` is deprecated in AI SDK v6 (confirmed: migration guide states "generateObject and streamObject have been deprecated. They will be removed in a future version."). Use `generateText()` with `Output.object()`:
 
 ```typescript
 // Source: https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data
@@ -338,7 +338,7 @@ Neither column has a NOT NULL constraint — both are nullable by default. `extr
 ## Common Pitfalls
 
 ### Pitfall 1: `generateObject()` is Deprecated
-**What goes wrong:** Code compiles but generates a deprecation warning; may break in AI SDK v7.
+**What goes wrong:** Code compiles but generates a deprecation warning; will break in AI SDK v7.
 **Why it happens:** Most tutorials and Stack Overflow answers still show `generateObject()` — the deprecation happened in v6.
 **How to avoid:** Always import `Output` from `'ai'` and pass it to `generateText()`.
 **Warning signs:** TypeScript deprecation strikethrough on `generateObject`; JSDoc shows "deprecated".
@@ -469,11 +469,13 @@ These are sensible defaults based on what photos typically cannot capture for ea
 
 **Note:** Subtype-specific variations (e.g. Prime Mover vs Tipper within Truck) should use the same parent-type priority fields in v1. Jack will refine per-subtype during Phase 5 accuracy validation.
 
+**Important:** When adding `inspectionPriority: true` to schema files, verify the field key exists in that schema file before adding. If a listed key doesn't exist (e.g. `pin` might be named `serial_number` in earthmoving), use the closest equivalent and add a comment `// NOTE: Phase 5 — Jack to confirm field key`.
+
 ---
 
 ## DB Migration Required
 
-Two new columns on `assets` table. Neither existed in Phase 1 or Phase 2 migrations.
+Two new columns on `assets` table. Neither existed in Phase 1 or Phase 2 migrations (confirmed by inspection of `supabase/migrations/` — only `20260317000001_initial_schema.sql` and `20260317000002_photo_storage.sql` exist).
 
 ```sql
 -- supabase/migrations/20260318000003_extraction.sql
@@ -548,31 +550,30 @@ The photos page also gains `InspectionNotesSection` below the photo grid. "Run A
 |----------|-------|
 | Framework | Vitest 4.x |
 | Config file | `vitest.config.ts` |
-| Quick run command | `npm test` |
-| Full suite command | `npm test` |
+| Quick run command | `npm run test -- --run` |
+| Full suite command | `npm run test -- --run && npm run build` |
 
 ### Phase Requirements → Test Map
 | Req ID | Behavior | Test Type | Automated Command | File Exists? |
 |--------|----------|-----------|-------------------|-------------|
-| AI-01 | Schema builder produces correct Zod shape for each asset type | unit | `npm test -- --reporter=verbose extract` | ❌ Wave 0 |
-| AI-01 | `inspectionPriority` flag added to FieldDefinition type and schemas | unit | `npm test -- schema-registry` | ✅ (extend existing) |
-| AI-01 | Route Handler returns 401 for unauthenticated request | unit | `npm test -- extract.route` | ❌ Wave 0 |
-| AI-01 | Route Handler returns 404 when asset not found | unit | `npm test -- extract.route` | ❌ Wave 0 |
-| AI-02 | `extraction_result` written to DB on success; `assets.fields` NOT touched | unit (mock) | `npm test -- extract.route` | ❌ Wave 0 |
-| AI-02 | `extraction_stale` set to false on successful extraction | unit (mock) | `npm test -- extract.route` | ❌ Wave 0 |
-| AI-03 | `inspection_notes` saved via Server Action (auth check, DB write, revalidate) | unit | `npm test -- inspection.actions` | ❌ Wave 0 |
-| AI-03 | `InspectionNotesSection` renders correct fields for asset type | unit (component) | `npm test -- InspectionNotesSection` | ❌ Wave 0 |
+| AI-01 | Schema builder produces correct Zod shape for each asset type | unit | `npm run test -- --run` | ❌ Wave 0 |
+| AI-01 | `inspectionPriority` flag added to FieldDefinition type and schemas | unit | `npm run test -- --run` | ✅ (extend existing `schema-registry.test.ts`) |
+| AI-01 | Route Handler returns 401 for unauthenticated request | unit | `npm run test -- --run` | ❌ Wave 0 |
+| AI-01 | Route Handler returns 404 when asset not found | unit | `npm run test -- --run` | ❌ Wave 0 |
+| AI-02 | `extraction_result` written to DB on success; `assets.fields` NOT touched | unit (mock) | `npm run test -- --run` | ❌ Wave 0 |
+| AI-02 | `extraction_stale` set to false on successful extraction | unit (mock) | `npm run test -- --run` | ❌ Wave 0 |
+| AI-03 | `inspection_notes` saved via Server Action (auth check, DB write, revalidate) | unit | `npm run test -- --run` | ❌ Wave 0 |
+| AI-03 | `InspectionNotesSection` renders correct fields for asset type | unit (component) | `npm run test -- --run` | ❌ Wave 0 |
 
 ### Sampling Rate
-- **Per task commit:** `npm test`
-- **Per wave merge:** `npm test`
+- **Per task commit:** `npm run test -- --run`
+- **Per wave merge:** `npm run test -- --run && npm run build`
 - **Phase gate:** Full suite green before `/gsd:verify-work`
 
 ### Wave 0 Gaps
-- [ ] `src/__tests__/extract.route.test.ts` — covers AI-01 Route Handler auth/404/success/DB write (REQ AI-01, AI-02)
-- [ ] `src/__tests__/inspection.actions.test.ts` — covers saveInspectionNotes Server Action (REQ AI-03)
-- [ ] `src/__tests__/InspectionNotesSection.test.tsx` — component renders correct priority fields per asset type (REQ AI-03)
-- [ ] `src/__tests__/extraction-schema.test.ts` — buildExtractionSchema() produces correct Zod shape (REQ AI-01)
+- [ ] `src/__tests__/extraction-schema.test.ts` — covers buildExtractionSchema() Zod shape (REQ AI-01)
+- [ ] `src/__tests__/extract-route.test.ts` — covers Route Handler auth/404/success/DB write (REQ AI-01, AI-02)
+- [ ] `src/__tests__/inspection-actions.test.ts` — covers saveInspectionNotes Server Action (REQ AI-03)
 
 Note: `src/__tests__/schema-registry.test.ts` exists and will be extended with `inspectionPriority` assertions — no new file needed for that.
 
@@ -581,17 +582,17 @@ Note: `src/__tests__/schema-registry.test.ts` exists and will be extended with `
 ## Sources
 
 ### Primary (HIGH confidence)
-- `https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data` — Output.object() pattern, generateText usage
+- `https://ai-sdk.dev/docs/ai-sdk-core/generating-structured-data` — Output.object() pattern, generateText usage (verified 2026-03-18)
 - `https://ai-sdk.dev/docs/foundations/prompts` — image content array structure (URL, base64, Buffer)
-- `https://ai-sdk.dev/docs/migration-guides/migration-guide-6-0` — generateObject deprecation confirmed, migration path
+- `https://ai-sdk.dev/docs/migration-guides/migration-guide-6-0` — generateObject deprecation confirmed: "generateObject and streamObject have been deprecated. They will be removed in a future version." (verified 2026-03-18)
 - `https://ai-sdk.dev/providers/ai-sdk-providers/openai` — OpenAI provider config, model IDs, OPENAI_API_KEY
 - Project source: `src/lib/schema-registry/` — all 7 schemas read directly; `getAIExtractableFields()` helper confirmed
-- Project source: `supabase/migrations/` — DB state confirmed (extraction_result and inspection_notes do NOT exist yet)
-- Project source: `package.json` — confirmed `ai` and `@ai-sdk/openai` are NOT installed; `zod@^4.3.6` IS installed
+- Project source: `supabase/migrations/` — DB state confirmed (extraction_result and inspection_notes do NOT exist yet; only 2 migration files present)
+- Project source: `package.json` — confirmed `ai` and `@ai-sdk/openai` are NOT installed; `zod@^4.3.6` IS installed; `next@16.1.7`
 
 ### Secondary (MEDIUM confidence)
 - `https://vercel.com/blog/ai-sdk-6` — AI SDK 6 announcement, confirmed v6 current stable, breaking changes summary
-- npm search results — `@ai-sdk/openai` v3.0.41 current; `ai` v6.x current
+- npm search results — `@ai-sdk/openai` v3.x current; `ai` v6.x current
 
 ### Tertiary (LOW confidence)
 - WebSearch results on Zod 4 + AI SDK compatibility — some user reports of lingering issues in v5; v6 considered resolved; LOW because not verified against official changelog
