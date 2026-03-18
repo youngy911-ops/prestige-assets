@@ -64,11 +64,12 @@ Plans:
   4. User sees a loading state while extraction is in progress
   5. When a field cannot be determined from photos or notes, the app shows it as unextracted rather than guessing
   6. Extraction results are never auto-saved — the user must proceed to the review step before any data is written
-**Plans**: 2 plans
+**Plans**: 3 plans
 
 Plans:
 - [ ] 03-01-PLAN.md — DB migration + Schema Registry (inspectionPriority flag) + saveInspectionNotes Server Action + buildExtractionSchema + /api/extract Route Handler + Wave 0 test scaffolds (Wave 1)
 - [ ] 03-02-PLAN.md — ConfidenceBadge + InspectionNotesSection + ExtractionTriggerState + ExtractionLoadingState + ExtractionResultPanel + ExtractionFailureState + /assets/[id]/extract page + photos page extension + human checkpoint (Wave 2)
+- [ ] 03-03-PLAN.md — Fix stale test assertions (truck field count, route response shape) + remove dead import in route.ts (Wave 3, gap closure)
 
 ### Phase 4: Review Form + Save
 **Goal**: Staff must confirm all AI-extracted data in an editable form, work through a missing-information checklist, and save — there is no path to skip these steps
@@ -126,7 +127,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Foundation + Schema Registry | 3/3 | Complete   | 2026-03-17 |
 | 2. Photo Capture + Storage | 3/3 | Complete   | 2026-03-17 |
-| 3. AI Extraction | 2/2 | Complete   | 2026-03-18 |
+| 3. AI Extraction | 2/3 | Gap closure in progress | 2026-03-18 |
 | 4. Review Form + Save | 0/2 | Not started | - |
 | 5. Output Generation | 0/3 | Not started | - |
 | 6. Asset List + Navigation | 0/2 | Not started | - |
