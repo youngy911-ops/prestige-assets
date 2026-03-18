@@ -92,5 +92,5 @@ export async function POST(req: NextRequest) {
     .eq('id', assetId)
     .eq('user_id', user.id)
 
-  return Response.json({ success: true })
+  return Response.json({ success: true, extraction_result: output })
 }

@@ -30,7 +30,6 @@ export const truckSchema: AssetSchema = {
     { key: 'compliance_date',     label: 'Compliance Date',      sfOrder: 16, inputType: 'text',     aiExtractable: false, required: false },
     { key: 'odometer',            label: 'Odometer',             sfOrder: 17, inputType: 'number',   aiExtractable: false, inspectionPriority: true, required: false },
     { key: 'registration_number', label: 'Registration Number',  sfOrder: 18, inputType: 'text',     aiExtractable: false, inspectionPriority: true, required: false },
-    { key: 'registration_expiry', label: 'Registration Expiry',  sfOrder: 19, inputType: 'text',     aiExtractable: false, inspectionPriority: true, required: false },
     { key: 'colour',              label: 'Colour',               sfOrder: 20, inputType: 'text',     aiExtractable: false, required: false },
     { key: 'body_type',           label: 'Body Type',            sfOrder: 21, inputType: 'text',     aiExtractable: false, required: false },
     { key: 'hourmeter',           label: 'Hourmeter',            sfOrder: 22, inputType: 'number',   aiExtractable: false, inspectionPriority: true, required: false },

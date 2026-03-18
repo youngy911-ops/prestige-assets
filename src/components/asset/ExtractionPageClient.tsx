@@ -43,10 +43,9 @@ export function ExtractionPageClient({
         body: JSON.stringify({ assetId }),
       })
       if (!res.ok) throw new Error('Extraction failed')
-      // Navigate to /extract — Server Component remounts and reads fresh extraction_result from DB.
-      // Do NOT use router.refresh(): it does not remount the Server Component, leaving
-      // extractionResult state null and blocking the result panel render guard.
-      router.push(`/assets/${assetId}/extract`)
+      const data = await res.json()
+      setExtractionResult(data.extraction_result)
+      setStatus('success')
     } catch {
       setStatus('failure')
     }
