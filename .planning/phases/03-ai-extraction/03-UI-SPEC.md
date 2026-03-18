@@ -45,12 +45,16 @@ Exceptions:
 - Touch targets for CTA buttons: `h-11` (44px) — matches existing photos page pattern
 - Page outer padding: `px-4` (16px) horizontal, `pt-8` (32px) top — inherits established layout
 - Page max-width: `max-w-[480px] mx-auto` — matches existing photos page
+- `12px`: compact field row density within card; used as `py-12px` on result rows and as gap between inspection fields — smaller than `md` (16px) to keep the list scannable without excess whitespace
+- `80px`: safe-area sticky footer clearance; used in `pb-[calc(env(safe-area-inset-bottom)+80px)]` to prevent the sticky CTA from obscuring the last result row on iOS
 
 Source: `src/app/(app)/assets/[id]/photos/page.tsx` established pattern
 
 ---
 
 ## Typography
+
+Two weights only: 400 (regular) and 600 (semibold).
 
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
@@ -62,8 +66,8 @@ Source: `src/app/(app)/assets/[id]/photos/page.tsx` established pattern
 Notes:
 - Page heading uses `text-xl font-semibold` — matches existing `/photos` page `h1`
 - Field labels in the extraction result list use `text-sm` weight 400
-- Field values in the extraction result list use `text-sm` weight 600 (semibold) when extracted, weight 400 muted when not found
-- Subheading / section label inside inspection notes block uses `text-sm font-medium`
+- Field values in the extraction result list use `text-sm font-semibold` when extracted, weight 400 muted when not found
+- Subheading / section label inside inspection notes block uses `text-sm font-semibold` (600) — not `font-medium`; the two-weight budget is 400 + 600 only
 - Display size (28px) reserved for prominent extraction-complete summary if needed; default is heading (20px)
 
 Source: `src/app/(app)/assets/[id]/photos/page.tsx` existing `text-xl font-semibold` / `text-sm` pattern
@@ -203,13 +207,16 @@ Destructive actions in this phase: none. Re-running extraction silently overwrit
 ## Layout Spec
 
 ### Photos Page Addition (InspectionNotesSection)
+
+Focal point: the "Run AI Extraction" primary CTA button — full-width navy, `h-11`, positioned immediately below the inspection notes card. It is the only high-contrast interactive element on this page surface and acts as the visual terminus of the form flow.
+
 ```
 max-w-[480px] mx-auto px-4
 
 [existing photo grid]
 [gap: 24px]
 [InspectionNotesSection card]
-  heading: "Inspection Notes"  (text-sm font-medium, mb-8px)
+  heading: "Inspection Notes"  (text-sm font-semibold, mb-8px)
   [structured priority fields — up to 5, asset-type driven]
     each: Label (text-xs text-white/65) + Input (text-sm h-9)
     gap between fields: 12px
@@ -222,6 +229,11 @@ max-w-[480px] mx-auto px-4
 ```
 
 ### Extract Page — Result State
+
+Focal point per state:
+- Trigger state: the "Run AI Extraction" button (`h-11` full-width navy) — sole high-contrast element; draws the eye to the primary action.
+- Result state: the "Proceed to Review" sticky CTA (`h-11` full-width navy, pinned to bottom) — remains visible as the user scrolls the field list and anchors the completion action.
+
 ```
 max-w-[480px] mx-auto px-4 pt-8 pb-[calc(env(safe-area-inset-bottom)+80px)]
 
