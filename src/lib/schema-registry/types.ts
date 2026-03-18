@@ -22,6 +22,7 @@ export type FieldDefinition = {
   inputType: 'text' | 'number' | 'select' | 'textarea'
   options?: string[]       // only for inputType: 'select'
   aiExtractable: boolean   // true if AI vision extraction should attempt this field
+  inspectionPriority?: boolean  // true = show as structured input on photos page (up to 5 per type)
   required: boolean        // true if the field must be populated before output generation
 }
 

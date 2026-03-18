@@ -1,4 +1,4 @@
-import type { AssetType, AssetSchema, AssetSubtype } from './types'
+import type { AssetType, AssetSchema, AssetSubtype, FieldDefinition } from './types'
 import { truckSchema } from './schemas/truck'
 import { trailerSchema } from './schemas/trailer'
 import { earthmovingSchema } from './schemas/earthmoving'
@@ -7,7 +7,7 @@ import { forkliftSchema } from './schemas/forklift'
 import { caravanSchema } from './schemas/caravan'
 import { generalGoodsSchema } from './schemas/general-goods'
 
-export type { AssetType, AssetSchema, AssetSubtype } from './types'
+export type { AssetType, AssetSchema, AssetSubtype, FieldDefinition } from './types'
 export { ASSET_TYPES } from './types'
 
 export const SCHEMA_REGISTRY: Record<AssetType, AssetSchema> = {
@@ -36,4 +36,10 @@ export function getAIExtractableFields(assetType: AssetType): string[] {
 
 export function getFieldsSortedBySfOrder(assetType: AssetType) {
   return [...SCHEMA_REGISTRY[assetType].fields].sort((a, b) => a.sfOrder - b.sfOrder)
+}
+
+export function getInspectionPriorityFields(assetType: AssetType): FieldDefinition[] {
+  return SCHEMA_REGISTRY[assetType].fields
+    .filter(f => f.inspectionPriority === true)
+    .sort((a, b) => a.sfOrder - b.sfOrder)
 }
