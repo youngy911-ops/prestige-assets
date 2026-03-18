@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-18T09:37:02.114Z"
+stopped_at: Completed 03-ai-extraction-01-PLAN.md
+last_updated: "2026-03-18T11:03:48.496Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
+  total_plans: 8
+  completed_plans: 7
   percent: 17
 ---
 
@@ -56,6 +56,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 02-photo-capture-storage P01 | 3 | 2 tasks | 8 files |
 | Phase 02-photo-capture-storage P02 | 3 | 2 tasks | 5 files |
 | Phase 02-photo-capture-storage P03 | 3 | 2 tasks | 5 files |
+| Phase 03-ai-extraction P01 | 7 | 2 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,8 @@ Recent decisions affecting current work:
 - [Phase 02-photo-capture-storage]: PhotoThumbnail accepts dnd-kit passthrough props (dragHandleProps, style, isDragging) but does not call useSortable itself — PhotoThumbnailGrid owns drag logic
 - [Phase 02-photo-capture-storage]: Test used container.querySelectorAll('img') not getAllByRole('img') — img alt='' has ARIA role=presentation, not img
 - [Phase 02-photo-capture-storage]: PhotoThumbnailGrid owns removePhoto calls; duplicate handleRemove removed from PhotoUploadZone
+- [Phase 03-ai-extraction]: Used generateText + Output.object() from AI SDK v6 — generateObject is deprecated
+- [Phase 03-ai-extraction]: getInspectionPriorityFields() returns FieldDefinition[] sorted by sfOrder ascending
 
 ### Pending Todos
 
@@ -93,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-18T09:37:02.112Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-ai-extraction/03-CONTEXT.md
+Last session: 2026-03-18T11:03:48.494Z
+Stopped at: Completed 03-ai-extraction-01-PLAN.md
+Resume file: None

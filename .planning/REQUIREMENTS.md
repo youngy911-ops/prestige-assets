@@ -25,8 +25,10 @@
 
 ### AI Extraction
 
-- [ ] **AI-01**: App extracts VIN/PIN/Serial, make, model, and year from build plate photos using AI vision with per-field confidence scores
-- [ ] **AI-02**: User must review and confirm all AI-extracted data on a dedicated screen before the record is saved (no skip path)
+- [x] **AI-01**: App extracts only the Salesforce fields defined in the Schema Registry for the selected asset subtype (e.g. fields for a Tipper differ from a Prime Mover; Excavator differs from Wheel Loader) — never a generic field dump. Extraction uses AI vision across all uploaded photos — build plate, compliance plate, weight rating plate, cab card, instrument cluster (odometer km reading, hour meter reading), and any other visible plates or markings — with per-field confidence scores. Photos-only is a fully supported workflow. When make/model/year are identified, AI also uses its training knowledge of manufacturer specifications to infer weight ratings and other known-spec fields (prefilled with "inferred" confidence, not "detected").
+- [x] **AI-02**: User must review and confirm all AI-extracted data on a dedicated screen before the record is saved (no skip path)
+- [x] **AI-03**: Staff can optionally enter freeform "Inspection notes" (VIN, rego, km, hours, dimensions, body manufacturer, number of keys, service history etc.) before triggering extraction — when provided, notes are passed to AI alongside photos to improve accuracy and fill gaps photos cannot cover
+- [ ] **AI-04**: Before saving, a "Missing information" checklist shows every field AI could not confidently extract — items are blocking (VIN, rego) requiring manual entry or explicit "unknown/not available" override (e.g. no rego plate affixed, asset arrived locked/no keys), or dismissible (e.g. engine hours on a car) — checklist state (flagged / dismissed-na / confirmed / unknown) is persisted to Supabase
 
 ### Asset Form
 
@@ -41,9 +43,13 @@
 
 ## v2 Requirements
 
+### Photo Intelligence
+
+- **PHOTO-04**: AI-suggested photo ordering — after extraction, AI recommends a logical photo sequence for Salesforce (exterior → build plate → compliance plate → instrument cluster → interior → damage) that staff can accept or override
+
 ### Data Enrichment
 
-- **ENRICH-01**: QLD rego lookup — auto-populate VIN, tare, GVM, GCM, axle weights from registration number for registered assets
+- **ENRICH-01**: QLD rego lookup — auto-populate VIN, tare, GVM, GCM, axle weights from registration number for registered assets (staff can manually enter rego for lookup; full auto-check from photo is a later step)
 - **ENRICH-02**: Spec research pipeline — RitchieSpecs / manufacturer auto-fill of remaining Salesforce fields given make and model
 - **ENRICH-03**: Auction comp pricing — surface market value context from IronPlanet, Pickles, Grays, Mascus
 
@@ -92,8 +98,10 @@
 | PHOTO-01 | Phase 2 | Complete |
 | PHOTO-02 | Phase 2 | Complete |
 | PHOTO-03 | Phase 2 | Complete |
-| AI-01 | Phase 3 | Pending |
-| AI-02 | Phase 3 | Pending |
+| AI-01 | Phase 3 | Complete |
+| AI-02 | Phase 3 | Complete |
+| AI-03 | Phase 3 | Complete |
+| AI-04 | Phase 4 | Pending |
 | FORM-01 | Phase 4 | Pending |
 | FORM-02 | Phase 4 | Pending |
 | SF-01 | Phase 5 | Pending |
@@ -103,8 +111,8 @@
 | ASSET-04 | Phase 6 | Pending |
 
 **Coverage:**
-- v1 requirements: 16 total
-- Mapped to phases: 16
+- v1 requirements: 18 total
+- Mapped to phases: 18
 - Unmapped: 0
 
 ---
