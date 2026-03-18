@@ -38,17 +38,22 @@ key_files:
     - src/__tests__/extraction-result.test.tsx
   modified:
     - src/app/(app)/assets/[id]/photos/page.tsx (DB select + InspectionNotesSection + PhotosPageCTA)
+    - src/components/asset/ExtractionPageClient.tsx (UAT fix: set result from API response directly)
+    - src/app/api/extract/route.ts (UAT fix: returns extraction_result in response body)
+    - src/lib/schema-registry/schemas/truck.ts (removed registration_expiry — not a Salesforce field)
 decisions:
-  - "router.push used (not router.refresh) after extraction POST — push causes Server Component remount, reading fresh extraction_result from DB; refresh alone does not remount Server Component"
+  - "Result from API response (not router.push): triggerExtraction reads data.extraction_result from POST response, calls setExtractionResult + setStatus success directly — no navigation needed, avoids state reset"
+  - "/api/extract returns extraction_result in response body so ExtractionPageClient can consume result without a DB round-trip"
+  - "truck.ts registration_expiry removed during UAT — field does not exist in Salesforce schema for trucks"
   - "ExtractionPageClient owns the state machine (idle/loading/success/failure) — Server Component only reads DB and passes initialExtractionResult as prop"
   - "PhotosPageCTA uses fire-and-navigate: POST fires but is not awaited; user navigates immediately to /extract where loading state is shown"
-  - "ConfidenceBadge comment includes router.refresh() in explanation text — acceptance criterion grep for router.refresh hits comment but not actual call; this is intentional documentation"
+requirements-completed: [AI-01, AI-02, AI-03]
 metrics:
-  duration: "5 minutes"
+  duration: "~45min (including UAT)"
   completed: "2026-03-18"
-  tasks_completed: 2
+  tasks_completed: 3
   files_created: 11
-  files_modified: 1
+  files_modified: 4
 ---
 
 # Phase 03 Plan 02: Extraction UI Components + Extract Page Summary
@@ -96,10 +101,32 @@ Two atomic commits delivering the complete extraction UI layer:
 
 The acceptance criterion `grep "router.refresh" src/components/asset/ExtractionPageClient.tsx returns no output` technically fails because `router.refresh()` appears in a code comment explaining why NOT to use it. The actual implementation correctly uses `router.push()` only — no actual call to `router.refresh()` exists. The comment is intentional documentation of the architectural decision.
 
-### Checkpoint Status
+### UAT Fixes Applied (Task 3)
 
-Task 3 (human-verify checkpoint) reached — plan paused awaiting browser verification.
+**1. [Rule 1 - Bug] ExtractionPageClient loading state bug — result panel never rendered after extraction**
+- **Found during:** Task 3 (UAT browser verification)
+- **Issue:** Original implementation called `router.push('/assets/${assetId}/extract')` after successful POST. This navigated away, resetting component state — `extractionResult` became null and `status` reset to 'idle', so the result panel guard `status === 'success' && extractionResult` never passed.
+- **Fix:** Read `data.extraction_result` from the API response, call `setExtractionResult(data.extraction_result)` and `setStatus('success')` in-place. No navigation needed.
+- **Files modified:** `src/components/asset/ExtractionPageClient.tsx`, `src/app/api/extract/route.ts`
+- **Committed in:** `11fe207`
+
+**2. [Rule 1 - Bug] truck.ts registration_expiry field removed**
+- **Found during:** Task 3 (UAT browser verification)
+- **Issue:** Truck schema included `registration_expiry` as an `inspectionPriority` field but this field does not exist in Salesforce for trucks — caused an unexpected extra input in InspectionNotesSection.
+- **Fix:** Removed `registration_expiry` from truck schema.
+- **Files modified:** `src/lib/schema-registry/schemas/truck.ts`
+- **Committed in:** `11fe207`
+
+### Human Checkpoint: APPROVED
+
+Browser verification completed and approved by user. All extraction workflow states verified in browser.
+
+## Task Commits
+
+1. **Task 1** - `be678bd` feat(03-02): ConfidenceBadge, InspectionNotesSection, ExtractionTriggerState, ExtractionLoadingState, ExtractionFailureState
+2. **Task 2** - `aeeae6a` feat(03-02): ExtractionResultPanel, ExtractionPageClient, PhotosPageCTA, /extract page, photos page extension
+3. **Task 3 (UAT fixes)** - `11fe207` fix(03-02): UAT fixes — result from API response, truck schema, route returns extraction_result
 
 ## Self-Check: PASSED
 
-All 11 created files found on disk. Both task commits (be678bd, aeeae6a) verified in git log. Build and all new tests pass.
+All 11 created files found on disk. Task commits (be678bd, aeeae6a, 11fe207) verified in git log. Build and tests pass. UAT checkpoint approved.

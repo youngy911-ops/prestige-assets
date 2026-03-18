@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: "Checkpoint: 03-02 Task 3 human-verify — awaiting browser verification"
-last_updated: "2026-03-18T11:10:57.065Z"
+stopped_at: Completed 03-ai-extraction-02-PLAN.md — Phase 03 complete
+last_updated: "2026-03-18T13:11:14.463Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 6
@@ -58,6 +58,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 02-photo-capture-storage P03 | 3 | 2 tasks | 5 files |
 | Phase 03-ai-extraction P01 | 7 | 2 tasks | 16 files |
 | Phase 03-ai-extraction P02 | 5 | 2 tasks | 12 files |
+| Phase 03-ai-extraction P02 | 45 | 3 tasks | 15 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,9 @@ Recent decisions affecting current work:
 - [Phase 03-ai-extraction]: getInspectionPriorityFields() returns FieldDefinition[] sorted by sfOrder ascending
 - [Phase 03-ai-extraction]: router.push used (not router.refresh) after extraction POST — push causes Server Component remount, reading fresh extraction_result from DB
 - [Phase 03-ai-extraction]: PhotosPageCTA uses fire-and-navigate pattern: POST fires but not awaited; user navigates immediately to /extract
+- [Phase 03-ai-extraction]: Result from API response (not router.push): triggerExtraction reads data.extraction_result from POST, sets state in-place — avoids navigation-induced state reset
+- [Phase 03-ai-extraction]: /api/extract returns extraction_result in response body so ExtractionPageClient can consume result without DB round-trip
+- [Phase 03-ai-extraction]: truck.ts registration_expiry removed during UAT — field does not exist in Salesforce schema for trucks
 
 ### Pending Todos
 
@@ -99,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-18T11:10:57.062Z
-Stopped at: Checkpoint: 03-02 Task 3 human-verify — awaiting browser verification
+Last session: 2026-03-18T13:11:14.460Z
+Stopped at: Completed 03-ai-extraction-02-PLAN.md — Phase 03 complete
 Resume file: None
