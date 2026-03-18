@@ -120,7 +120,7 @@ describe('POST /api/extract', () => {
     const res = await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
     expect(res.status).toBe(200)
     const body = await res.json()
-    expect(body).toEqual({ success: true })
+    expect(body).toEqual({ success: true, extraction_result: expect.any(Object) })
     expect(mockGenerateText).toHaveBeenCalledTimes(1)
   })
 

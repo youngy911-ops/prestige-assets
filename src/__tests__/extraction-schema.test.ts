@@ -4,10 +4,10 @@ import { getInspectionPriorityFields, getAIExtractableFields } from '@/lib/schem
 // Wave 0 scaffolds for Task 1: getInspectionPriorityFields
 // Fields are returned sorted by sfOrder ascending
 describe('getInspectionPriorityFields', () => {
-  it('truck returns [odometer, registration_number, registration_expiry, hourmeter, service_history] sorted by sfOrder', () => {
-    // sfOrders: odometer=17, registration_number=18, registration_expiry=19, hourmeter=22, service_history=32
+  it('truck returns [odometer, registration_number, hourmeter, service_history] sorted by sfOrder', () => {
+    // sfOrders: odometer=17, registration_number=18, hourmeter=22, service_history=32
     const fields = getInspectionPriorityFields('truck').map(f => f.key)
-    expect(fields).toEqual(['odometer', 'registration_number', 'registration_expiry', 'hourmeter', 'service_history'])
+    expect(fields).toEqual(['odometer', 'registration_number', 'hourmeter', 'service_history'])
   })
 
   it('earthmoving returns [pin, serial, hourmeter, odometer] sorted by sfOrder', () => {
@@ -45,8 +45,8 @@ describe('getInspectionPriorityFields', () => {
     expect(fields).toEqual([])
   })
 
-  it('truck returns exactly 5 priority fields', () => {
-    expect(getInspectionPriorityFields('truck')).toHaveLength(5)
+  it('truck returns exactly 4 priority fields', () => {
+    expect(getInspectionPriorityFields('truck')).toHaveLength(4)
   })
 })
 
@@ -75,12 +75,12 @@ describe('buildExtractionSchema', () => {
     for (const key of aiFields) {
       testObj[key] = { value: null, confidence: null }
     }
-    // odometer is NOT aiExtractable for truck — adding it should be stripped (Zod strips by default)
-    testObj['odometer'] = { value: '12345', confidence: 'high' }
+    // chassis_number is NOT aiExtractable for truck — adding it should be stripped (Zod strips by default)
+    testObj['chassis_number'] = { value: '12345', confidence: 'high' }
     const result = schema.safeParse(testObj)
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data).not.toHaveProperty('odometer')
+      expect(result.data).not.toHaveProperty('chassis_number')
     }
   })
 
