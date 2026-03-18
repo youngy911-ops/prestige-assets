@@ -2,7 +2,7 @@
 phase: 3
 slug: ai-extraction
 status: draft
-nyquist_compliant: false
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-03-18
 ---
@@ -52,9 +52,9 @@ created: 2026-03-18
 
 ## Wave 0 Requirements
 
-- [ ] `__tests__/extract-schema.test.ts` — unit tests for Zod schema construction from Schema Registry fields; verifies null/undefined for unextracted fields; verifies confidence enum values
+- [ ] `__tests__/extraction-schema.test.ts` — unit tests for Zod schema construction from Schema Registry fields; verifies null/undefined for unextracted fields; verifies confidence enum values
 - [ ] `__tests__/extract-route.test.ts` — stubs for `/api/extract` Route Handler; mock AI SDK; verify request validation, auth check, response shape
-- [ ] `__tests__/inspection-notes.test.ts` — tests for notes auto-save Server Action debounce and DB write
+- [ ] `__tests__/inspection-actions.test.ts` — tests for notes auto-save Server Action and DB write
 
 *If vitest not yet configured: add `vitest` to devDependencies and create `vitest.config.ts`.*
 
@@ -73,11 +73,11 @@ created: 2026-03-18
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 30s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 30s
+- [x] `nyquist_compliant: true` set in frontmatter
 
 **Approval:** pending
