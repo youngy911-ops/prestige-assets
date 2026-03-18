@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 03-ai-extraction-01-PLAN.md
-last_updated: "2026-03-18T11:03:48.496Z"
+stopped_at: "Checkpoint: 03-02 Task 3 human-verify — awaiting browser verification"
+last_updated: "2026-03-18T11:10:57.065Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 8
-  completed_plans: 7
+  completed_plans: 8
   percent: 17
 ---
 
@@ -57,6 +57,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 02-photo-capture-storage P02 | 3 | 2 tasks | 5 files |
 | Phase 02-photo-capture-storage P03 | 3 | 2 tasks | 5 files |
 | Phase 03-ai-extraction P01 | 7 | 2 tasks | 16 files |
+| Phase 03-ai-extraction P02 | 5 | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,8 @@ Recent decisions affecting current work:
 - [Phase 02-photo-capture-storage]: PhotoThumbnailGrid owns removePhoto calls; duplicate handleRemove removed from PhotoUploadZone
 - [Phase 03-ai-extraction]: Used generateText + Output.object() from AI SDK v6 — generateObject is deprecated
 - [Phase 03-ai-extraction]: getInspectionPriorityFields() returns FieldDefinition[] sorted by sfOrder ascending
+- [Phase 03-ai-extraction]: router.push used (not router.refresh) after extraction POST — push causes Server Component remount, reading fresh extraction_result from DB
+- [Phase 03-ai-extraction]: PhotosPageCTA uses fire-and-navigate pattern: POST fires but not awaited; user navigates immediately to /extract
 
 ### Pending Todos
 
@@ -96,6 +99,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-18T11:03:48.494Z
-Stopped at: Completed 03-ai-extraction-01-PLAN.md
+Last session: 2026-03-18T11:10:57.062Z
+Stopped at: Checkpoint: 03-02 Task 3 human-verify — awaiting browser verification
 Resume file: None
