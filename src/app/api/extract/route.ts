@@ -3,7 +3,6 @@ import { createClient } from '@/lib/supabase/server'
 import { generateText, Output } from 'ai'
 import { openai } from '@ai-sdk/openai'
 import { buildExtractionSchema, buildSystemPrompt, buildUserPrompt } from '@/lib/ai/extraction-schema'
-import { getInspectionPriorityFields } from '@/lib/schema-registry'
 import type { AssetType } from '@/lib/schema-registry/types'
 
 export async function POST(req: NextRequest) {
@@ -55,11 +54,7 @@ export async function POST(req: NextRequest) {
   const schema = buildExtractionSchema(assetType)
   const systemPrompt = buildSystemPrompt(asset.asset_type, asset.asset_subtype ?? '')
 
-  // Priority fields are for UI display — their values come through inspection_notes text
-  // No separate structured fields parsing needed; inspection_notes is plain text from staff
   const structuredFields: Record<string, string> = {}
-  // Suppress unused variable warning
-  void getInspectionPriorityFields(assetType)
 
   const userPrompt = buildUserPrompt(asset.inspection_notes, structuredFields)
 
