@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { PhotoUploadZone } from '@/components/asset/PhotoUploadZone'
 import type { PhotoItem } from '@/components/asset/PhotoUploadZone'
+import { InspectionNotesSection } from '@/components/asset/InspectionNotesSection'
+import { PhotosPageCTA } from '@/components/asset/PhotosPageCTA'
+import type { AssetType } from '@/lib/schema-registry/types'
 
 interface PhotosPageProps {
   params: Promise<{ id: string }>
@@ -20,7 +23,7 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
   // Load asset (RLS ensures user owns it)
   const { data: asset } = await supabase
     .from('assets')
-    .select('id, asset_type, asset_subtype, extraction_stale, fields')
+    .select('id, asset_type, asset_subtype, extraction_stale, fields, inspection_notes')
     .eq('id', assetId)
     .single()
 
@@ -51,19 +54,12 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
   const hasPhotos = photosWithUrls.length > 0
   const isExtractionStale = asset.extraction_stale && hasPhotos
 
-  // "Next" destination: extraction if photos present, review form if no photos
-  const nextHref = hasPhotos
-    ? `/assets/${assetId}/extract`
-    : `/assets/${assetId}/review`
-
-  const nextLabel = hasPhotos ? 'Run AI Extraction' : 'Skip to Manual Entry'
-
   return (
     <div className="max-w-[480px] mx-auto px-4 pt-8 pb-[calc(env(safe-area-inset-bottom)+24px)]">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <Link
-          href={`/assets/${assetId}/edit-type`}
+          href="/"
           className="text-white/65 hover:text-white transition-colors p-1 -ml-1"
           aria-label="Back"
         >
@@ -113,18 +109,31 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
         initialPhotos={photosWithUrls}
       />
 
+      {/* Inspection notes — below photo grid, above CTA */}
+      <div className="mt-6">
+        <InspectionNotesSection
+          assetId={assetId}
+          assetType={asset.asset_type as AssetType}
+          initialNotes={asset.inspection_notes ?? null}
+        />
+      </div>
+
       {/* Next action */}
       <div className="mt-6">
-        <Link
-          href={nextHref}
-          className="flex items-center justify-center w-full h-11 rounded-md bg-[oklch(0.29_0.07_248)] hover:bg-[oklch(0.29_0.07_248)]/90 text-white font-medium text-sm transition-colors"
-        >
-          {nextLabel}
-        </Link>
-        {!hasPhotos && (
-          <p className="text-xs text-white/65 text-center mt-2">
-            No photos? You can enter all fields manually.
-          </p>
+        {hasPhotos ? (
+          <PhotosPageCTA assetId={assetId} />
+        ) : (
+          <>
+            <Link
+              href={`/assets/${assetId}/review`}
+              className="flex items-center justify-center w-full h-11 rounded-md bg-[oklch(0.29_0.07_248)] hover:bg-[oklch(0.29_0.07_248)]/90 text-white font-medium text-sm transition-colors"
+            >
+              Skip to Manual Entry
+            </Link>
+            <p className="text-xs text-white/65 text-center mt-2">
+              No photos? You can enter all fields manually.
+            </p>
+          </>
         )}
       </div>
     </div>
