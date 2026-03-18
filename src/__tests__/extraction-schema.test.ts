@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getInspectionPriorityFields } from '@/lib/schema-registry'
+import { getInspectionPriorityFields, getAIExtractableFields } from '@/lib/schema-registry'
 
 // Wave 0 scaffolds for Task 1: getInspectionPriorityFields
 // Fields are returned sorted by sfOrder ascending
@@ -50,12 +50,85 @@ describe('getInspectionPriorityFields', () => {
   })
 })
 
-// Wave 0 scaffolds for Task 2: buildExtractionSchema (scaffolded here, implemented in Task 2)
+// Wave 0 scaffolds for Task 2: buildExtractionSchema
 describe('buildExtractionSchema', () => {
-  it.todo('truck schema contains all aiExtractable field keys with { value, confidence } shape')
-  it.todo('truck schema does NOT include keys not in getAIExtractableFields("truck")')
-  it.todo('general_goods returns z.object({}) (no aiExtractable fields)')
-  it.todo('parsing { vin: { value: null, confidence: null } } against truck schema succeeds')
-  it.todo('parsing { vin: { value: "123", confidence: "high" } } against truck schema succeeds')
-  it.todo('parsing { vin: { value: "123", confidence: "invalid" } } against truck schema fails')
+  it('truck schema contains all aiExtractable field keys with { value, confidence } shape', async () => {
+    const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
+    const schema = buildExtractionSchema('truck')
+    const aiFields = getAIExtractableFields('truck')
+    expect(aiFields.length).toBeGreaterThan(0)
+    // Parse a valid object with all aiExtractable fields set to null
+    const testObj: Record<string, unknown> = {}
+    for (const key of aiFields) {
+      testObj[key] = { value: null, confidence: null }
+    }
+    const result = schema.safeParse(testObj)
+    expect(result.success).toBe(true)
+  })
+
+  it('truck schema does NOT include keys not in getAIExtractableFields("truck")', async () => {
+    const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
+    const schema = buildExtractionSchema('truck')
+    const aiFields = getAIExtractableFields('truck')
+    // Try parsing an object with an extra key not in aiExtractable fields
+    const testObj: Record<string, unknown> = {}
+    for (const key of aiFields) {
+      testObj[key] = { value: null, confidence: null }
+    }
+    // odometer is NOT aiExtractable for truck — adding it should be stripped (Zod strips by default)
+    testObj['odometer'] = { value: '12345', confidence: 'high' }
+    const result = schema.safeParse(testObj)
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data).not.toHaveProperty('odometer')
+    }
+  })
+
+  it('general_goods returns z.object({}) (no aiExtractable fields)', async () => {
+    const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
+    const schema = buildExtractionSchema('general_goods')
+    const result = schema.safeParse({})
+    expect(result.success).toBe(true)
+  })
+
+  it('parsing { vin: { value: null, confidence: null } } against truck schema succeeds', async () => {
+    const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
+    const schema = buildExtractionSchema('truck')
+    // Build a minimal valid object — all aiExtractable fields need to be present
+    const aiFields = getAIExtractableFields('truck')
+    const testObj: Record<string, unknown> = {}
+    for (const key of aiFields) {
+      testObj[key] = { value: null, confidence: null }
+    }
+    // Specifically set vin
+    testObj['vin'] = { value: null, confidence: null }
+    const result = schema.safeParse(testObj)
+    expect(result.success).toBe(true)
+  })
+
+  it('parsing { vin: { value: "123", confidence: "high" } } against truck schema succeeds', async () => {
+    const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
+    const schema = buildExtractionSchema('truck')
+    const aiFields = getAIExtractableFields('truck')
+    const testObj: Record<string, unknown> = {}
+    for (const key of aiFields) {
+      testObj[key] = { value: null, confidence: null }
+    }
+    testObj['vin'] = { value: '123', confidence: 'high' }
+    const result = schema.safeParse(testObj)
+    expect(result.success).toBe(true)
+  })
+
+  it('parsing { vin: { value: "123", confidence: "invalid" } } against truck schema fails', async () => {
+    const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
+    const schema = buildExtractionSchema('truck')
+    const aiFields = getAIExtractableFields('truck')
+    const testObj: Record<string, unknown> = {}
+    for (const key of aiFields) {
+      testObj[key] = { value: null, confidence: null }
+    }
+    testObj['vin'] = { value: '123', confidence: 'invalid' }
+    const result = schema.safeParse(testObj)
+    expect(result.success).toBe(false)
+  })
 })
