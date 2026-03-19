@@ -1,7 +1,6 @@
 export const BLOCKING_FIELD_KEYS = new Set([
   'vin',
   'registration_number',
-  'pin',
   'serial',
 ])
 

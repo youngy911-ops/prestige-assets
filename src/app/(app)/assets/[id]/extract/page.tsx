@@ -45,7 +45,7 @@ export default async function ExtractPage({ params }: ExtractPageProps) {
         </Link>
         <div>
           <h1 className="text-xl font-semibold text-white">AI Extraction</h1>
-          <p className="text-sm text-white/65">
+          <p className="text-sm text-white/65 capitalize">
             {asset.asset_subtype
               ? `${asset.asset_type} — ${asset.asset_subtype}`
               : asset.asset_type}

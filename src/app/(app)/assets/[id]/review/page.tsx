@@ -21,7 +21,6 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
     .from('assets')
     .select('id, asset_type, asset_subtype, extraction_result, inspection_notes, fields, checklist_state')
     .eq('id', assetId)
-    .eq('user_id', user.id)
     .single()
 
   if (!asset) redirect('/assets/new')
@@ -39,7 +38,7 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
         </Link>
         <div>
           <h1 className="text-xl font-semibold text-white">Review Extracted Data</h1>
-          <p className="text-sm text-white/65">
+          <p className="text-sm text-white/65 capitalize">
             {asset.asset_subtype
               ? `${asset.asset_type} — ${asset.asset_subtype}`
               : asset.asset_type}

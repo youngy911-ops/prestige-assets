@@ -67,7 +67,7 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
         </Link>
         <div>
           <h1 className="text-xl font-semibold text-white">Photos</h1>
-          <p className="text-sm text-white/65">
+          <p className="text-sm text-white/65 capitalize">
             {asset.asset_subtype
               ? `${asset.asset_type} — ${asset.asset_subtype}`
               : asset.asset_type}
