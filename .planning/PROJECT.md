@@ -69,7 +69,7 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - **Salesforce API**: Not available for MVP — output must be copy-paste ready
 - **Platform**: Web app only — phone browser (on-site capture) + desktop browser (review + copy-paste). No native app.
 - **ISO 27001**: Slattery is ISO 27001 certified — data handling must be appropriate (client asset data is sensitive)
-- **Description format**: Strict per-type formatting rules — no dot points, no marketing language, deterministic templates only (no AI text generation for descriptions)
+- **Description format**: Strict per-type formatting rules — no dot points, no marketing language, specific template per asset subtype. Descriptions are AI-generated (Claude API with web search) using a locked system prompt — AI researches competitor listings (Machines4U, IronPlanet, TradeMachines, Truck Sales, Carsales etc.) to confirm specs; uses TBC for anything unconfirmed
 - **AI keys**: OpenAI/Anthropic API keys must never be in client-side code — all AI calls from server
 
 ## Key Decisions
@@ -81,7 +81,7 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 | Drop all enrichment features for v1 | QLD rego, spec research, auction comps, vendor management, auction mgmt all deferred — MVP is the core AI→output flow only | — Decided 2026-03-17 |
 | Simple auth only (no roles) | Multi-role auth deferred until workflow is validated and team adoption confirmed | — Decided 2026-03-17 |
 | No PPSR lock for v1 | Hard lock adds UI complexity; deferred until after core workflow is proven | — Decided 2026-03-17 |
-| Deterministic description templates | No AI text generation for descriptions — templates from Schema Registry control structure; AI only supplies field values | — Decided 2026-03-17 |
+| ~~Deterministic description templates~~ → AI-generated descriptions | Original plan was hard-coded string templates; changed 2026-03-19. Claude API generates descriptions from photos + confirmed fields using a locked system prompt with per-subtype templates. AI researches the asset to fill spec gaps; uses TBC for unconfirmed specs. Format rules (no dot points, no marketing language, correct footer) enforced in prompt. | — Changed 2026-03-19 |
 
 ---
-*Last updated: 2026-03-17 after initialization — clean-slate web-only rebuild, MVP scope*
+*Last updated: 2026-03-19 — description generation changed from deterministic templates to Claude API*
