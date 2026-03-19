@@ -82,12 +82,12 @@ Plans:
   4. Staff can update inspection notes and re-trigger AI extraction from the review screen to fill gaps
   5. Staff cannot reach the output view without completing the review form and resolving or dismissing all checklist items
   6. Saved field values plus checklist state (flagged / dismissed-na / confirmed / unknown) are correctly persisted to Supabase and survive a page reload
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 04-01: DynamicFieldForm component — RHF + Zod, schema-driven field rendering, pre-fill from extraction result, low-confidence visual highlighting
-- [ ] 04-02: MissingInfoChecklist component — per-field gap analysis, blocking vs dismissible classification, "not applicable" and "mark as unknown" actions, re-trigger extraction from notes update
-- [ ] 04-03: Save Server Action — upsert asset record with confirmed field values + checklist state, revalidation, route to output view on success
+- [ ] 04-01-PLAN.md — DB migration (checklist_state), npm installs (react-hook-form, shadcn textarea/checkbox/select), blocking-fields.ts, build-form-schema.ts, build-checklist.ts with TDD (Wave 1)
+- [ ] 04-02-PLAN.md — FieldRow, DynamicFieldForm, ChecklistItem, MissingInfoChecklist components with TDD (Wave 2)
+- [ ] 04-03-PLAN.md — saveReview Server Action (TDD) + ReviewPageClient + /assets/[id]/review page + human checkpoint (Wave 3)
 
 ### Phase 5: Output Generation
 **Goal**: After confirming the review form, staff get two copy-paste-ready blocks correctly formatted for Salesforce — structured fields and description
@@ -128,6 +128,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Foundation + Schema Registry | 3/3 | Complete   | 2026-03-17 |
 | 2. Photo Capture + Storage | 3/3 | Complete   | 2026-03-17 |
 | 3. AI Extraction | 3/3 | Complete   | 2026-03-18 |
-| 4. Review Form + Save | 0/2 | Not started | - |
+| 4. Review Form + Save | 0/3 | Not started | - |
 | 5. Output Generation | 0/3 | Not started | - |
 | 6. Asset List + Navigation | 0/2 | Not started | - |
