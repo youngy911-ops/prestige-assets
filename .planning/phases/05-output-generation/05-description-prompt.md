@@ -194,9 +194,10 @@ Return the completed description as plain text only, exactly matching the correc
 
 ## Implementation Notes
 
-- Either Claude API (claude-sonnet-4-6+) or OpenAI (gpt-4o+) — both can do web search; researcher to recommend based on current web search capability and cost
-- Web search is required: model must search Machines4U, IronPlanet, TradeMachines, Truck Sales, Carsales to confirm specs
-- Input to the API call: confirmed field values from Phase 4 review form + original photos (as image attachments) + inspection notes
-- Output: plain text description, no markdown, no commentary
+- **Use GPT-4o** — same model already used for Phase 3 extraction; no new API integration needed
+- **No web search required** — GPT-4o already used its training knowledge to infer specs during Phase 3 extraction. By Phase 5, confirmed fields are in the DB. Description generation is just a second GPT-4o call that formats what the model already knows.
+- **Input:** confirmed field values from Phase 4 review form + original photos (passed as base64 image attachments, same pattern as Phase 3) + inspection notes
+- **Output:** plain text description, no markdown, no commentary
 - This call happens server-side (Route Handler, not Server Action) — API key is never client-side
 - The `descriptionTemplate` stubs in Schema Registry schemas are now obsolete — this prompt replaces them
+- The system prompt's "research" instruction still applies — GPT-4o will draw on training knowledge of that specific make/model/year rather than literal web search

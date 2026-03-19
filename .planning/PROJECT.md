@@ -69,7 +69,7 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - **Salesforce API**: Not available for MVP — output must be copy-paste ready
 - **Platform**: Web app only — phone browser (on-site capture) + desktop browser (review + copy-paste). No native app.
 - **ISO 27001**: Slattery is ISO 27001 certified — data handling must be appropriate (client asset data is sensitive)
-- **Description format**: Strict per-type formatting rules — no dot points, no marketing language, specific template per asset subtype. Descriptions are AI-generated (Claude API with web search) using a locked system prompt — AI researches competitor listings (Machines4U, IronPlanet, TradeMachines, Truck Sales, Carsales etc.) to confirm specs; uses TBC for anything unconfirmed
+- **Description format**: Strict per-type formatting rules — no dot points, no marketing language, specific template per asset subtype. Descriptions are AI-generated via a second GPT-4o call (same model as extraction) — takes confirmed fields + original photos and generates the description from training knowledge; uses TBC for anything unconfirmed. No web search needed.
 - **AI keys**: OpenAI/Anthropic API keys must never be in client-side code — all AI calls from server
 
 ## Key Decisions
