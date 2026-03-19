@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Phase 4 context gathered (partial — form layout area only discussed)
-last_updated: "2026-03-18T13:57:15.900Z"
+stopped_at: Completed 04-review-form-save-01-PLAN.md
+last_updated: "2026-03-19T10:41:23.266Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 9
-  completed_plans: 9
+  total_plans: 12
+  completed_plans: 10
   percent: 17
 ---
 
@@ -60,6 +60,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 03-ai-extraction P02 | 5 | 2 tasks | 12 files |
 | Phase 03-ai-extraction P02 | 45 | 3 tasks | 15 files |
 | Phase 03-ai-extraction P03 | 2 | 2 tasks | 3 files |
+| Phase 04-review-form-save P01 | 3 | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,9 @@ Recent decisions affecting current work:
 - [Phase 03-ai-extraction]: /api/extract returns extraction_result in response body so ExtractionPageClient can consume result without DB round-trip
 - [Phase 03-ai-extraction]: truck.ts registration_expiry removed during UAT — field does not exist in Salesforce schema for trucks
 - [Phase 03-ai-extraction]: Stale strip-test updated to use chassis_number (not odometer) as non-aiExtractable truck sentinel — odometer became aiExtractable during UAT expansion
+- [Phase 04-review-form-save]: @hookform/resolvers v5.2.2 used (not v3.9 minimum specified in plan) — v5.x is the current major, supports Zod v4 natively
+- [Phase 04-review-form-save]: number inputType maps to z.string().regex(/^\d*$/).or(z.literal('')) — all form values stay strings, numeric validation is string-based to avoid RHF type coercion issues
+- [Phase 04-review-form-save]: buildChecklist excludes fields with medium confidence + non-null value — medium is 'good enough', only low/null trigger checklist inclusion
 
 ### Pending Todos
 
@@ -105,6 +109,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-18T13:57:15.897Z
-Stopped at: Phase 4 context gathered (partial — form layout area only discussed)
-Resume file: .planning/phases/04-review-form-save/04-CONTEXT.md
+Last session: 2026-03-19T10:41:23.263Z
+Stopped at: Completed 04-review-form-save-01-PLAN.md
+Resume file: None

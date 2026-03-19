@@ -28,12 +28,12 @@
 - [x] **AI-01**: App extracts only the Salesforce fields defined in the Schema Registry for the selected asset subtype (e.g. fields for a Tipper differ from a Prime Mover; Excavator differs from Wheel Loader) — never a generic field dump. Extraction uses AI vision across all uploaded photos — build plate, compliance plate, weight rating plate, cab card, instrument cluster (odometer km reading, hour meter reading), and any other visible plates or markings — with per-field confidence scores. Photos-only is a fully supported workflow. When make/model/year are identified, AI also uses its training knowledge of manufacturer specifications to infer weight ratings and other known-spec fields (prefilled with "inferred" confidence, not "detected").
 - [x] **AI-02**: User must review and confirm all AI-extracted data on a dedicated screen before the record is saved (no skip path)
 - [x] **AI-03**: Staff can optionally enter freeform "Inspection notes" (VIN, rego, km, hours, dimensions, body manufacturer, number of keys, service history etc.) before triggering extraction — when provided, notes are passed to AI alongside photos to improve accuracy and fill gaps photos cannot cover
-- [ ] **AI-04**: Before saving, a "Missing information" checklist shows every field AI could not confidently extract — items are blocking (VIN, rego) requiring manual entry or explicit "unknown/not available" override (e.g. no rego plate affixed, asset arrived locked/no keys), or dismissible (e.g. engine hours on a car) — checklist state (flagged / dismissed-na / confirmed / unknown) is persisted to Supabase
+- [x] **AI-04**: Before saving, a "Missing information" checklist shows every field AI could not confidently extract — items are blocking (VIN, rego) requiring manual entry or explicit "unknown/not available" override (e.g. no rego plate affixed, asset arrived locked/no keys), or dismissible (e.g. engine hours on a car) — checklist state (flagged / dismissed-na / confirmed / unknown) is persisted to Supabase
 
 ### Asset Form
 
-- [ ] **FORM-01**: App displays and captures data using the correct Salesforce field schema for the selected asset type (e.g. Truck shows ~35 truck-specific fields; Earthmoving shows 2-page schema)
-- [ ] **FORM-02**: Low-confidence AI-extracted fields are visually highlighted in the review form to prompt verification
+- [x] **FORM-01**: App displays and captures data using the correct Salesforce field schema for the selected asset type (e.g. Truck shows ~35 truck-specific fields; Earthmoving shows 2-page schema)
+- [x] **FORM-02**: Low-confidence AI-extracted fields are visually highlighted in the review form to prompt verification
 
 ### Salesforce Output
 
@@ -101,9 +101,9 @@
 | AI-01 | Phase 3 | Complete |
 | AI-02 | Phase 3 | Complete |
 | AI-03 | Phase 3 | Complete |
-| AI-04 | Phase 4 | Pending |
-| FORM-01 | Phase 4 | Pending |
-| FORM-02 | Phase 4 | Pending |
+| AI-04 | Phase 4 | Complete |
+| FORM-01 | Phase 4 | Complete |
+| FORM-02 | Phase 4 | Complete |
 | SF-01 | Phase 5 | Pending |
 | SF-02 | Phase 5 | Pending |
 | SF-03 | Phase 5 | Pending |
