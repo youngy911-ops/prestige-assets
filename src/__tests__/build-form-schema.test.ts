@@ -25,19 +25,19 @@ const textareaField: FieldDefinition = {
 describe('isBlocking', () => {
   it('returns true for vin', () => expect(isBlocking('vin')).toBe(true))
   it('returns true for registration_number', () => expect(isBlocking('registration_number')).toBe(true))
-  it('returns true for pin', () => expect(isBlocking('pin')).toBe(true))
+  it('returns false for pin', () => expect(isBlocking('pin')).toBe(false))
   it('returns true for serial', () => expect(isBlocking('serial')).toBe(true))
   it('returns false for make', () => expect(isBlocking('make')).toBe(false))
   it('returns false for extras', () => expect(isBlocking('extras')).toBe(false))
 })
 
 describe('BLOCKING_FIELD_KEYS', () => {
-  it('contains exactly vin, registration_number, pin, serial', () => {
+  it('contains exactly vin, registration_number, serial', () => {
     expect(BLOCKING_FIELD_KEYS.has('vin')).toBe(true)
     expect(BLOCKING_FIELD_KEYS.has('registration_number')).toBe(true)
-    expect(BLOCKING_FIELD_KEYS.has('pin')).toBe(true)
+    expect(BLOCKING_FIELD_KEYS.has('pin')).toBe(false)
     expect(BLOCKING_FIELD_KEYS.has('serial')).toBe(true)
-    expect(BLOCKING_FIELD_KEYS.size).toBe(4)
+    expect(BLOCKING_FIELD_KEYS.size).toBe(3)
   })
 })
 
