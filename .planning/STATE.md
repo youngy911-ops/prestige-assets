@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 04-review-form-save-01-PLAN.md
-last_updated: "2026-03-19T10:41:23.266Z"
+stopped_at: Completed 04-review-form-save-02-PLAN.md
+last_updated: "2026-03-19T10:47:15.356Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 12
-  completed_plans: 10
+  completed_plans: 11
   percent: 17
 ---
 
@@ -61,6 +61,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 03-ai-extraction P02 | 45 | 3 tasks | 15 files |
 | Phase 03-ai-extraction P03 | 2 | 2 tasks | 3 files |
 | Phase 04-review-form-save P01 | 3 | 3 tasks | 11 files |
+| Phase 04-review-form-save P02 | 10 | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,8 @@ Recent decisions affecting current work:
 - [Phase 04-review-form-save]: @hookform/resolvers v5.2.2 used (not v3.9 minimum specified in plan) — v5.x is the current major, supports Zod v4 natively
 - [Phase 04-review-form-save]: number inputType maps to z.string().regex(/^\d*$/).or(z.literal('')) — all form values stay strings, numeric validation is string-based to avoid RHF type coercion issues
 - [Phase 04-review-form-save]: buildChecklist excludes fields with medium confidence + non-null value — medium is 'good enough', only low/null trigger checklist inclusion
+- [Phase 04-review-form-save]: RHF Controller mock pattern: empty {} as Control fails in JSDOM — use useForm wrapper component in tests for RHF-connected components
+- [Phase 04-review-form-save]: All number inputType fields use type=text with inputMode=numeric — avoids RHF type coercion issues, consistent with existing string-based form values
 
 ### Pending Todos
 
@@ -109,6 +112,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-19T10:41:23.263Z
-Stopped at: Completed 04-review-form-save-01-PLAN.md
+Last session: 2026-03-19T10:47:15.354Z
+Stopped at: Completed 04-review-form-save-02-PLAN.md
 Resume file: None
