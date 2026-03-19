@@ -1,0 +1,29 @@
+'use server'
+import { createClient } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+
+export async function saveReview(
+  assetId: string,
+  fields: Record<string, string>,
+  checklistState: Record<string, string>
+): Promise<{ error: string } | void> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Not authenticated' }
+
+  const { error } = await supabase
+    .from('assets')
+    .update({
+      fields,
+      checklist_state: checklistState,
+      status: 'confirmed',
+    })
+    .eq('id', assetId)
+    .eq('user_id', user.id)
+
+  if (error) return { error: error.message }
+
+  revalidatePath(`/assets/${assetId}/review`)
+  redirect(`/assets/${assetId}/output`)
+}
