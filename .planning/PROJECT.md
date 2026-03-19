@@ -27,7 +27,7 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - [ ] App displays and captures data using the correct Salesforce field schema for the selected asset type
 - [ ] App generates a copy-paste-ready structured fields block with fields in correct Salesforce order and labels
 - [ ] App generates a correctly formatted description block per asset type (correct line ordering, no dot points, no marketing language, "Sold As Is, Untested & Unregistered." footer)
-- [ ] For Caravan/Motor Home assets, app generates a Glass's Valuation block (Max Offer, Est. Trade, RRP, Est. Retail) as a third copyable section
+- ~~For Caravan/Motor Home assets, app generates a Glass's Valuation block~~ — removed from scope permanently
 - [ ] User can log in and stay logged in across sessions (Supabase auth)
 
 ### Out of Scope

@@ -38,7 +38,7 @@
 ### Salesforce Output
 
 - [ ] **SF-01**: App generates a copy-paste-ready structured fields block for each asset with fields in the correct Salesforce order and correct field labels for that asset type
-- [ ] **SF-02**: App generates a correctly formatted description block per asset subtype (Excavator, Dozer, Grader, Wheel Loader, Truck, Trailer, Caravan, etc.) using deterministic templates — correct line ordering, no dot points, no marketing language, "Sold As Is, Untested & Unregistered." footer
+- [ ] **SF-02**: App generates a correctly formatted description block per asset subtype (Excavator, Dozer, Grader, Wheel Loader, Truck, Trailer, Caravan, etc.) using GPT-4o with a locked system prompt — correct line ordering, no dot points, no marketing language, "Sold As Is, Untested & Unregistered." footer; output is editable before copy-paste
 - [ ] **SF-03**: Each output section has its own copy-to-clipboard button with visual confirmation
 
 ## v2 Requirements
@@ -83,7 +83,7 @@
 | Public-facing bidding interface | Handled by existing platforms (i-bidder, Bidspotter) |
 | Automated valuation engine | Manual input only; comp pricing provides context but not a calculated value |
 | Email / notification system | Not part of the book-in workflow |
-| Glass's Valuation block (Caravan) | Deferred to v2 — not needed for core copy-paste workflow validation |
+| Glass's Valuation block (Caravan) | Permanently out of scope — not needed in any version of this project |
 
 ## Traceability
 
