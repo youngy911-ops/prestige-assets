@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 04-review-form-save-03-PLAN.md (checkpoint pending)
-last_updated: "2026-03-19T10:53:14.669Z"
+stopped_at: Completed 04-review-form-save 04-03-PLAN.md
+last_updated: "2026-03-19T11:55:11.195Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 6
@@ -63,6 +63,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 04-review-form-save P01 | 3 | 3 tasks | 11 files |
 | Phase 04-review-form-save P02 | 10 | 2 tasks | 7 files |
 | Phase 04-review-form-save P03 | 4 | 2 tasks | 4 files |
+| Phase 04-review-form-save P03 | 90 | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -103,6 +104,9 @@ Recent decisions affecting current work:
 - [Phase 04-review-form-save]: All number inputType fields use type=text with inputMode=numeric — avoids RHF type coercion issues, consistent with existing string-based form values
 - [Phase 04-review-form-save]: zodResolver typed as any in ReviewPageClient — RHF v5 Resolver<Record<string,string>> vs Record<string,unknown> mismatch; safe since schema is correctly typed
 - [Phase 04-review-form-save]: saveReview uses .eq('user_id', user.id) ownership guard in addition to RLS — defense in depth
+- [Phase 04-review-form-save]: pin removed from BLOCKING_FIELD_KEYS — PIN is optional per business rules, incorrectly blocked Save for most asset types
+- [Phase 04-review-form-save]: review/page.tsx omits .eq('user_id', user.id) filter — double filter after .single() returns null in Supabase; RLS enforces ownership
+- [Phase 04-review-form-save]: supabase/server.ts setAll wrapped in try-catch — suppresses Server Component cookie mutation error; middleware handles session refresh
 
 ### Pending Todos
 
@@ -115,6 +119,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-19T10:53:14.667Z
-Stopped at: Completed 04-review-form-save-03-PLAN.md (checkpoint pending)
+Last session: 2026-03-19T11:55:11.192Z
+Stopped at: Completed 04-review-form-save 04-03-PLAN.md
 Resume file: None
