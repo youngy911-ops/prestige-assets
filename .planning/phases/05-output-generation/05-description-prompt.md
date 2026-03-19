@@ -194,8 +194,8 @@ Return the completed description as plain text only, exactly matching the correc
 
 ## Implementation Notes
 
-- Claude API call (not OpenAI) — must use `claude-sonnet-4-6` or later with web search tool enabled
-- Web search is required: Claude must search Machines4U, IronPlanet, TradeMachines, Truck Sales, Carsales to confirm specs
+- Either Claude API (claude-sonnet-4-6+) or OpenAI (gpt-4o+) — both can do web search; researcher to recommend based on current web search capability and cost
+- Web search is required: model must search Machines4U, IronPlanet, TradeMachines, Truck Sales, Carsales to confirm specs
 - Input to the API call: confirmed field values from Phase 4 review form + original photos (as image attachments) + inspection notes
 - Output: plain text description, no markdown, no commentary
 - This call happens server-side (Route Handler, not Server Action) — API key is never client-side
