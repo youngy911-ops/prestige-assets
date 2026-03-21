@@ -1,0 +1,136 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generateFieldsBlock > snapshot: earthmoving with all fields empty 1`] = `
+"PIN: 
+Serial: 
+VIN: 
+Type: 
+Make: 
+Hourmeter: 
+Model: 
+Year: 
+Odometer: 
+Engine Manufacturer: 
+Engine Model: 
+Engine Number: 
+Horsepower: 
+Gross HP: 
+Fuel Type: 
+Emissions Tier: 
+Drive Type: 
+Transmission: 
+Speeds: 
+Torque RPM: 
+Boom Length: 
+Steering: 
+Final Drive: 
+Cabin: 
+Operator Station: 
+Attachments: 
+Config: 
+Screen Size: 
+Tare: 
+Capacity: 
+Rims: 
+PTO: 
+Remotes: 
+Extras: "
+`;
+
+exports[`generateFieldsBlock > snapshot: general_goods with all fields empty 1`] = `"Description: "`;
+
+exports[`generateFieldsBlock > snapshot: trailer with all fields empty 1`] = `
+"Make: 
+Model: 
+VIN: 
+Type: 
+Chassis Number: 
+Colour: 
+Body Type: 
+Compliance Date: 
+Year: 
+Registration: 
+Trailer Length: 
+Hubometer: 
+Height: 
+Rims: 
+Suspension: 
+ATM: 
+Axle Config: 
+Tare: 
+Power: 
+Brakes: 
+Tyre Size: 
+PIN Sizes: 
+Extras: "
+`;
+
+exports[`generateFieldsBlock > snapshot: truck with all fields empty 1`] = `
+"Chassis Number: 
+VIN: 
+Make: 
+Model: 
+Year: 
+Cab Type: 
+Gearbox Make: 
+Drive Type: 
+Engine Manufacturer: 
+Engine Series: 
+Engine Type: 
+Engine Number: 
+Engine Size: 
+Fuel Type: 
+Variant: 
+Compliance Date: 
+Odometer: 
+Registration Number: 
+Colour: 
+Body Type: 
+Hourmeter: 
+Tyre Size: 
+Transmission: 
+Rims: 
+Suspension: 
+Axle Configuration: 
+Brakes: 
+GCM: 
+GVM: 
+NW: 
+Service History: 
+Extras: "
+`;
+
+exports[`generateFieldsBlock > snapshot: truck with representative field values 1`] = `
+"Chassis Number: 
+VIN: 1FUJA6CK49DAB1234
+Make: Kenworth
+Model: T610
+Year: 2019
+Cab Type: 
+Gearbox Make: 
+Drive Type: 
+Engine Manufacturer: 
+Engine Series: 
+Engine Type: 
+Engine Number: 
+Engine Size: 
+Fuel Type: 
+Variant: 
+Compliance Date: 
+Odometer: 450000
+Registration Number: 
+Colour: 
+Body Type: 
+Hourmeter: 
+Tyre Size: 
+Transmission: 
+Rims: 
+Suspension: 
+Axle Configuration: 
+Brakes: 
+GCM: 
+GVM: 
+NW: 
+Service History: 
+Extras: "
+`;
