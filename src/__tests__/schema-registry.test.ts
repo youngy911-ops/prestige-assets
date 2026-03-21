@@ -93,3 +93,23 @@ describe('AI-extractable fields', () => {
     expect(getAIExtractableFields('general_goods')).toHaveLength(0)
   })
 })
+
+describe('aiHint convention enforcement', () => {
+  it('every aiExtractable: true field with non-textarea inputType has aiHint defined', () => {
+    for (const type of ASSET_TYPES) {
+      const schema = getSchema(type)
+      for (const field of schema.fields) {
+        if (field.aiExtractable && field.inputType !== 'textarea') {
+          expect(
+            field.aiHint,
+            `${type}.${field.key} is aiExtractable but missing aiHint`
+          ).toBeDefined()
+          expect(
+            field.aiHint!.length,
+            `${type}.${field.key} aiHint is empty string`
+          ).toBeGreaterThan(0)
+        }
+      }
+    }
+  })
+})

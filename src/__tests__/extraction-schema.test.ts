@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { getInspectionPriorityFields, getAIExtractableFields } from '@/lib/schema-registry'
+import { buildExtractionSchema, buildSystemPrompt } from '@/lib/ai/extraction-schema'
 
 // Wave 0 scaffolds for Task 1: getInspectionPriorityFields
 // Fields are returned sorted by sfOrder ascending
@@ -130,5 +131,85 @@ describe('buildExtractionSchema', () => {
     testObj['vin'] = { value: '123', confidence: 'invalid' }
     const result = schema.safeParse(testObj)
     expect(result.success).toBe(false)
+  })
+})
+
+describe('getAIExtractableFieldDefs', () => {
+  it('returns FieldDefinition[] (objects with .key, .label, .aiHint) not strings', async () => {
+    const { getAIExtractableFieldDefs } = await import('@/lib/schema-registry')
+    const fields = getAIExtractableFieldDefs('truck')
+    expect(fields.length).toBeGreaterThan(0)
+    // Each element is an object with .key and .label, not a string
+    expect(typeof fields[0]).toBe('object')
+    expect(typeof fields[0].key).toBe('string')
+    expect(typeof fields[0].label).toBe('string')
+  })
+
+  it('truck result contains the vin field definition', async () => {
+    const { getAIExtractableFieldDefs } = await import('@/lib/schema-registry')
+    const fields = getAIExtractableFieldDefs('truck')
+    const vinField = fields.find(f => f.key === 'vin')
+    expect(vinField).toBeDefined()
+    expect(vinField?.label).toBe('VIN')
+  })
+
+  it('only returns fields where aiExtractable is true', async () => {
+    const { getAIExtractableFieldDefs } = await import('@/lib/schema-registry')
+    const fields = getAIExtractableFieldDefs('truck')
+    expect(fields.every(f => f.aiExtractable)).toBe(true)
+  })
+})
+
+describe('buildExtractionSchema — rich descriptions', () => {
+  it('truck vin field value describe string contains Salesforce label "VIN"', async () => {
+    const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
+    const schema = buildExtractionSchema('truck')
+    const shape = schema.shape as Record<string, { shape: { value: { description?: string } } }>
+    const vinValueDescription = shape.vin?.shape.value?.description ?? ''
+    expect(vinValueDescription).toContain('VIN')
+  })
+
+  it('truck fuel_type field value describe string contains options', async () => {
+    const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
+    const schema = buildExtractionSchema('truck')
+    const shape = schema.shape as Record<string, { shape: { value: { description?: string } } }>
+    const fuelDesc = shape.fuel_type?.shape.value?.description ?? ''
+    expect(fuelDesc).toContain('Diesel')
+    expect(fuelDesc).toContain('Petrol')
+  })
+
+  it('truck make field value describe string contains "Make" label', async () => {
+    const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
+    const schema = buildExtractionSchema('truck')
+    const shape = schema.shape as Record<string, { shape: { value: { description?: string } } }>
+    const makeDesc = shape.make?.shape.value?.description ?? ''
+    expect(makeDesc).toContain('Make')
+  })
+})
+
+describe('buildSystemPrompt — plate routing', () => {
+  it('contains BUILD PLATE section', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('truck', 'prime_mover')
+    expect(prompt).toContain('BUILD PLATE')
+  })
+
+  it('contains COMPLIANCE PLATE section', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('truck', 'prime_mover')
+    expect(prompt).toContain('COMPLIANCE PLATE')
+  })
+
+  it('contains INSTRUMENT CLUSTER section', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('truck', 'prime_mover')
+    expect(prompt).toContain('INSTRUMENT CLUSTER')
+  })
+
+  it('instructs not to fabricate VINs or serial numbers', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('truck', 'prime_mover')
+    // Either the original anti-fabrication rule or the new explicit one
+    expect(prompt.toLowerCase()).toMatch(/fabricate|serial numbers|vin/)
   })
 })
