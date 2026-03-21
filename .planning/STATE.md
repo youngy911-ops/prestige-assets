@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Pre-fill & Quality
 status: planning
-stopped_at: Completed 09-pre-extraction-structured-inputs/09-01-PLAN.md
-last_updated: "2026-03-21T04:50:13.791Z"
-last_activity: 2026-03-21 — v1.1 roadmap created; phases 8–10 defined
+stopped_at: Completed 09-pre-extraction-structured-inputs (all plans + human verify checkpoint passed)
+last_updated: "2026-03-21T00:00:00.000Z"
+last_activity: 2026-03-21 — phase 09 complete; pre-extraction structured inputs shipped
 progress:
   total_phases: 3
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 3
-  completed_plans: 2
-  percent: 35
+  completed_plans: 3
+  percent: 67
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-21)
 
 **Core value:** Photo a build plate → AI extracts identifiers → app generates copy-paste-ready Salesforce fields and a correctly formatted description — turning an hour of manual research into minutes.
-**Current focus:** Phase 8 — Session Auth Fix
+**Current focus:** Phase 10 — Description Template
 
 ## Current Position
 
-Phase: 8 of 10 (Session Auth Fix)
+Phase: 10 of 10 (Description Template)
 Plan: 0 of TBD in current phase
 Status: Ready to plan
-Last activity: 2026-03-21 — v1.1 roadmap created; phases 8–10 defined
+Last activity: 2026-03-21 — Phase 09 complete; pre-extraction structured inputs live
 
-Progress: [███████░░░░░░░░░░░░░] 35% (v1.0 complete; v1.1 not started)
+Progress: [██████████████░░░░░░] 67% (v1.0 complete; v1.1 phases 8+9 complete)
 
 ## Performance Metrics
 
@@ -72,7 +72,7 @@ None.
 
 ### Blockers/Concerns
 
-- **Phase 9 pre-decision required:** Confirm with project owner: (1) Forklift pre-fill label "Unladen Weight" vs Salesforce key `truck_weight`; (2) Caravan length — ft only or also metric?
+None.
 
 ## Session Continuity
 
