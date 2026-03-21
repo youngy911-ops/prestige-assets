@@ -1,6 +1,7 @@
 'use client'
 import { useCallback, useRef } from 'react'
 import { Input } from '@/components/ui/input'
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { getInspectionPriorityFields } from '@/lib/schema-registry'
@@ -29,6 +30,10 @@ const FIELD_PLACEHOLDERS: Record<string, string> = {
   serial: 'e.g. 1234567',
   vin: 'e.g. 1HGCM82633A123456',
   max_lift_capacity: 'e.g. 3,000 kg',
+  suspension: 'Select suspension type',
+  truck_weight: 'e.g. 4,500 kg',
+  max_lift_height: 'e.g. 4,500 mm',
+  trailer_length: 'e.g. 20 ft',
 }
 
 export function InspectionNotesSection({
@@ -85,12 +90,30 @@ export function InspectionNotesSection({
             >
               {field.label}
             </Label>
-            <Input
-              id={`field-${field.key}`}
-              className="h-9 text-sm bg-white/5 border-white/15 text-white placeholder:text-white/30 focus:ring-[oklch(0.29_0.07_248)]"
-              placeholder={FIELD_PLACEHOLDERS[field.key] ?? ''}
-              onChange={(e) => handleStructuredChange(field.key, e.target.value)}
-            />
+            {field.inputType === 'select' ? (
+              <Select onValueChange={(value: string | null) => handleStructuredChange(field.key, value ?? '')}>
+                <SelectTrigger
+                  id={`field-${field.key}`}
+                  className="h-9 text-sm bg-white/5 border-white/15 text-white focus:ring-[oklch(0.29_0.07_248)]"
+                >
+                  <SelectValue placeholder={FIELD_PLACEHOLDERS[field.key] ?? `Select ${field.label}`} className="placeholder:text-white/30" />
+                </SelectTrigger>
+                <SelectContent>
+                  {field.options?.map((opt) => (
+                    <SelectItem key={opt} value={opt}>
+                      {opt}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <Input
+                id={`field-${field.key}`}
+                className="h-9 text-sm bg-white/5 border-white/15 text-white placeholder:text-white/30 focus:ring-[oklch(0.29_0.07_248)]"
+                placeholder={FIELD_PLACEHOLDERS[field.key] ?? ''}
+                onChange={(e) => handleStructuredChange(field.key, e.target.value)}
+              />
+            )}
           </div>
         ))}
 
