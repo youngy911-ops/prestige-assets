@@ -39,7 +39,7 @@ Declared values (must be multiples of 4):
 |-------|-------|-------|
 | xs | 4px | Icon gaps, inline padding (e.g. gap-1 between icon and label in nav) |
 | sm | 8px | Compact element spacing (e.g. gap-2 between list card internals; py-2 list card vertical padding) |
-| md | 16px | Default element spacing (px-4 page container horizontal padding) |
+| md | 16px | Default element spacing (px-4 page container horizontal padding; gap-4 card list container) |
 | lg | 24px | Section padding (mb-6 between header and list) |
 | xl | 32px | Layout gaps (pt-8 page top padding) |
 | 2xl | 48px | Empty state vertical padding (py-16 = 64px — see exception below) |
@@ -163,7 +163,7 @@ Reused existing components:
   - Row 1: Asset type label (`text-sm text-white/65 uppercase tracking-wide`) + `AssetStatusBadge` (right-aligned)
   - Row 2: Make / model / year (`text-base text-white font-medium`) — or "No data yet" (`text-white/65 italic`) when `fields` is empty/null
   - Row 3: Relative timestamp (`text-xs text-white/65`) — e.g. "2h ago", "yesterday", "3 days ago"
-- Cards separated by `gap-3` in the list container.
+- Cards separated by `gap-4` (16px) in the list container.
 - Tap target: entire card is a link (no nested buttons).
 
 ### Resume Routing (from card tap)
