@@ -131,3 +131,16 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 4. Review Form + Save | 3/3 | Complete   | 2026-03-19 |
 | 5. Output Generation | 3/3 | Complete   | 2026-03-21 |
 | 6. Asset List + Navigation | 2/2 | Complete   | 2026-03-21 |
+
+### Phase 06.1: AI Extraction Quality (INSERTED)
+
+**Goal:** GPT-4o extracts significantly more fields per asset — field-specific descriptions (label + aiHint + options) embedded in the Zod schema replace generic prompts, new fields enabled across earthmoving/agriculture/forklift/trailer, and buildSystemPrompt gains explicit plate-type routing
+**Requirements**: none (quality improvement, no new v1 requirement IDs)
+**Depends on:** Phase 6
+**Plans:** 4 plans
+
+Plans:
+- [ ] 06.1-01-PLAN.md — Add aiHint to FieldDefinition, getAIExtractableFieldDefs, update buildExtractionSchema + buildSystemPrompt, add tests (Wave 1)
+- [ ] 06.1-02-PLAN.md — Add aiHint to all 21 aiExtractable truck fields (Wave 2, parallel)
+- [ ] 06.1-03-PLAN.md — Enable + annotate earthmoving (8 new fields) and agriculture (5 new fields) schemas (Wave 2, parallel)
+- [ ] 06.1-04-PLAN.md — Enable + annotate forklift (6 new fields), trailer (6 new fields), caravan (hints only) schemas (Wave 2, parallel)
