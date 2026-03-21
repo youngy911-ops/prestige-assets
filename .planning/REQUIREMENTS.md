@@ -3,42 +3,30 @@
 **Defined:** 2026-03-21
 **Core Value:** Photo a build plate → AI extracts identifiers → app generates copy-paste-ready Salesforce fields and a correctly formatted description — turning an hour of manual research into minutes.
 
-## v1.1 Requirements
+## v1.2 Requirements
 
-### Authentication
+Requirements for v1.2 milestone.
 
-- [x] **AUTH-01**: Authenticated user can navigate to the asset list via the Assets tab without being redirected to login
+### Pre-fill
 
-### Pre-Extraction Fields
-
-- [x] **PREFILL-01**: Truck asset shows dedicated input fields for VIN, Odometer, Hourmeter, and Suspension Type before AI extraction runs
-- [x] **PREFILL-02**: Trailer asset shows dedicated input fields for VIN and Suspension Type before AI extraction runs
-- [x] **PREFILL-03**: Forklift asset shows a dedicated "Unladen Weight" input field before AI extraction runs
-- [x] **PREFILL-04**: Caravan asset shows a dedicated "Length (ft)" input field before AI extraction runs
-- [ ] **PREFILL-05**: Staff-entered pre-extraction values appear in the Salesforce fields output and are not overridden by AI extraction
-
-### Description Quality
-
-- [x] **DESCR-01**: AI-generated description preserves specific values from inspection notes verbatim (e.g., `48" sleeper cab` is not paraphrased to `sleeper cab`)
+- [ ] **PREFILL-06**: User can return to an in-progress asset record and find all pre-extraction fields (VIN, odometer, hourmeter, suspension type, unladen weight, length) pre-populated with previously entered values
 
 ## Future Requirements
 
-### Pre-Extraction Fields
+Deferred to future release. Tracked but not in current roadmap.
 
-- **PREFILL-06**: Staff-entered pre-extraction values are restored when returning to an asset record (re-hydration from saved inspection_notes)
+### Pre-fill
 
-### Data Capture
-
-- **DATA-01**: PPSR check result can be recorded against an asset record (v2)
+- **PREFILL-07**: "Other notes" textarea shows only freeform notes (not serialised key:value lines) when returning to a record — companion display bug, same component
+- **PREFILL-08**: Pre-extraction edits made within 500ms of navigating away are not silently lost — unmount flush for debounced autosave
 
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| PPSR lookup within app | Jack runs PPSR through Salesforce separately; copy-paste result only (v2+) |
-| Pre-fill value restore on reload | Keep v1.1 simple; staff can re-enter if navigating away |
-| Salesforce API push | Blocked on IT/Connected App approval |
-| iOS / native app | Web-first; Expo overhead not justified |
+| `pre_extraction_fields JSONB` column | String serialisation round-trips correctly; DB migration not warranted unless parse approach proves fragile in practice |
+| URL search params for pre-fill | Data already persists to Supabase; client-side duplication adds complexity for no benefit |
+| Auto-save confirmation UI | Silent autosave is correct UX for this workflow; error state surface deferred |
 
 ## Traceability
 
@@ -46,19 +34,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 8 | Complete |
-| PREFILL-01 | Phase 9 | Complete |
-| PREFILL-02 | Phase 9 | Complete |
-| PREFILL-03 | Phase 9 | Complete |
-| PREFILL-04 | Phase 9 | Complete |
-| PREFILL-05 | Phase 9 | Pending |
-| DESCR-01 | Phase 10 | Complete |
+| PREFILL-06 | Phase 11 | Pending |
 
 **Coverage:**
-- v1.1 requirements: 7 total
-- Mapped to phases: 7
+- v1.2 requirements: 1 total
+- Mapped to phases: 1
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-03-21*
-*Last updated: 2026-03-21 after v1.1 roadmap creation*
+*Last updated: 2026-03-21 after initial v1.2 definition*
