@@ -55,7 +55,11 @@ Plans:
   3. Forklift asset form shows a dedicated Unladen Weight input above the extraction button
   4. Caravan asset form shows a dedicated Length (ft) input above the extraction button
   5. A value entered in a pre-extraction input appears correctly in the Salesforce fields output and is not overwritten by AI extraction
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 09-01-PLAN.md — Update priority field tests (RED) then apply schema flag, label, and select options changes (GREEN)
+- [ ] 09-02-PLAN.md — Add parseStructuredFields to extract route + InspectionNotesSection select rendering + human verify
 
 ### Phase 10: Description Verbatim Fidelity
 **Goal**: AI-generated descriptions preserve specific values from inspection notes exactly as staff entered them, without paraphrasing
@@ -64,7 +68,11 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. A specific measurement entered in inspection notes (e.g., `48" sleeper cab`) appears verbatim in the generated description, not paraphrased
   2. Generating a description for any asset type with notes containing specific values produces output that matches those values character-for-character
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 09-01-PLAN.md — Update priority field tests (RED) then apply schema flag, label, and select options changes (GREEN)
+- [ ] 09-02-PLAN.md — Add parseStructuredFields to extract route + InspectionNotesSection select rendering + human verify
 
 ## Progress
 
