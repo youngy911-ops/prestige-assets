@@ -38,7 +38,7 @@ Declared values (must be multiples of 4):
 | Token | Value | Usage |
 |-------|-------|-------|
 | xs | 4px | Icon gaps, inline padding (e.g. gap-1 between icon and label in nav) |
-| sm | 8px | Compact element spacing (e.g. gap-2 between list card internals) |
+| sm | 8px | Compact element spacing (e.g. gap-2 between list card internals; py-2 list card vertical padding) |
 | md | 16px | Default element spacing (px-4 page container horizontal padding) |
 | lg | 24px | Section padding (mb-6 between header and list) |
 | xl | 32px | Layout gaps (pt-8 page top padding) |
@@ -47,9 +47,10 @@ Declared values (must be multiples of 4):
 
 Exceptions:
 - Empty state uses `py-16` (64px vertical) — matches existing placeholder in `src/app/(app)/page.tsx`.
-- Bottom nav height: 56px (h-14) with `pb-[env(safe-area-inset-bottom)]` padding — matches existing `(app)/layout.tsx` safe-area pattern.
-- Touch targets on bottom nav items: minimum 44px height — iOS tap target standard.
-- List card vertical padding: `py-3` (12px) — compact enough for list scanning, wide enough for touch.
+
+Platform Constraints (not spacing tokens — not subject to 8-point scale):
+- Bottom nav height: 56px (`h-14`) — matches existing `(app)/layout.tsx` safe-area pattern; 56px is a multiple of 4 and matches the established layout height. Value is platform-matched, not a spacing scale token.
+- Touch targets on bottom nav items: minimum 44px height — iOS tap target standard (platform constraint, not a design token).
 
 Source: `src/app/(app)/page.tsx` placeholder + `src/app/(app)/layout.tsx` safe-area pattern.
 
@@ -62,13 +63,14 @@ Source: `src/app/(app)/page.tsx` placeholder + `src/app/(app)/layout.tsx` safe-a
 | Body | 16px (`text-base`) | 400 (regular) | 1.5 |
 | Label / secondary | 14px (`text-sm`) | 400 (regular) | 1.4 |
 | Heading | 20px (`text-xl`) | 600 (semibold) | 1.2 |
-| Badge / timestamp | 12px (`text-xs`) | 500 (medium) | 1.3 |
+| Badge / timestamp | 12px (`text-xs`) | 400 (regular) | 1.3 |
 
 Notes:
 - All page headings use `text-xl font-semibold text-white` — matches `src/app/(app)/page.tsx` (`h1 className="text-xl font-semibold text-white"`).
 - Secondary/muted text uses `text-white/65` — established pattern from output page and placeholder.
 - Asset type/subtype subtitle on cards uses `text-sm text-white/65` — matches output page subtitle pattern.
-- 4 sizes declared (12, 14, 16, 20); 2 weights (400 regular + 600 semibold); 500 used only for badge text.
+- Badge text uses `text-xs` at weight 400 (regular) — the 12px size and muted/navy background provide sufficient visual distinction without a third weight.
+- 4 sizes declared (12, 14, 16, 20); 2 weights declared (400 regular + 600 semibold).
 
 ---
 
@@ -92,6 +94,12 @@ Status badge colors (from Claude's Discretion — consistent with existing oklch
 - Confirmed badge: `bg-white/15 text-white/65` — muted white overlay, reads as "done/passive"
 
 Source: `src/app/globals.css` CSS custom properties.
+
+---
+
+## Visuals
+
+Primary focal point: the asset card list, with the "New Asset" bottom nav item as the persistent secondary anchor. On first visit, the branch selector screen is the focal point — the card list is hidden until a branch is chosen.
 
 ---
 
@@ -148,7 +156,7 @@ Reused existing components:
 ### Asset List Cards
 
 - Each card is a full-width tappable link (`<Link>`) wrapping an `AssetCard`.
-- Card padding: `px-4 py-3`.
+- Card padding: `px-4 py-2`.
 - Card background: `bg-[#14532D]` (card token).
 - Card border: `rounded-lg border border-[#1E3A5F]`.
 - Card layout (vertical stack):
