@@ -5,10 +5,10 @@ import { buildExtractionSchema, buildSystemPrompt } from '@/lib/ai/extraction-sc
 // Wave 0 scaffolds for Task 1: getInspectionPriorityFields
 // Fields are returned sorted by sfOrder ascending
 describe('getInspectionPriorityFields', () => {
-  it('truck returns [odometer, registration_number, hourmeter, service_history] sorted by sfOrder', () => {
-    // sfOrders: odometer=17, registration_number=18, hourmeter=22, service_history=32
+  it('truck returns [vin, odometer, registration_number, hourmeter, suspension, service_history] sorted by sfOrder', () => {
+    // sfOrders: vin=2, odometer=17, registration_number=18, hourmeter=22, suspension=26, service_history=32
     const fields = getInspectionPriorityFields('truck').map(f => f.key)
-    expect(fields).toEqual(['odometer', 'registration_number', 'hourmeter', 'service_history'])
+    expect(fields).toEqual(['vin', 'odometer', 'registration_number', 'hourmeter', 'suspension', 'service_history'])
   })
 
   it('earthmoving returns [pin, serial, hourmeter, odometer] sorted by sfOrder', () => {
@@ -17,22 +17,22 @@ describe('getInspectionPriorityFields', () => {
     expect(fields).toEqual(['pin', 'serial', 'hourmeter', 'odometer'])
   })
 
-  it('forklift returns [serial, max_lift_capacity, hours] sorted by sfOrder', () => {
-    // sfOrders: serial=5, max_lift_capacity=6, hours=9
+  it('forklift returns [serial, max_lift_capacity, max_lift_height, hours, truck_weight] sorted by sfOrder', () => {
+    // sfOrders: serial=5, max_lift_capacity=6, max_lift_height=7, hours=9, truck_weight=16
     const fields = getInspectionPriorityFields('forklift').map(f => f.key)
-    expect(fields).toEqual(['serial', 'max_lift_capacity', 'hours'])
+    expect(fields).toEqual(['serial', 'max_lift_capacity', 'max_lift_height', 'hours', 'truck_weight'])
   })
 
-  it('caravan returns [vin, serial, registration, odometer] sorted by sfOrder', () => {
-    // sfOrders: vin=5, serial=6, registration=13, odometer=14
+  it('caravan returns [vin, serial, registration, odometer, trailer_length] sorted by sfOrder', () => {
+    // sfOrders: vin=5, serial=6, registration=13, odometer=14, trailer_length=15
     const fields = getInspectionPriorityFields('caravan').map(f => f.key)
-    expect(fields).toEqual(['vin', 'serial', 'registration', 'odometer'])
+    expect(fields).toEqual(['vin', 'serial', 'registration', 'odometer', 'trailer_length'])
   })
 
-  it('trailer returns [registration, hubometer, atm, tare] sorted by sfOrder', () => {
-    // sfOrders: registration=10, hubometer=12, atm=16, tare=18
+  it('trailer returns [vin, registration, hubometer, suspension, atm, tare] sorted by sfOrder', () => {
+    // sfOrders: vin=3, registration=10, hubometer=12, suspension=15, atm=16, tare=18
     const fields = getInspectionPriorityFields('trailer').map(f => f.key)
-    expect(fields).toEqual(['registration', 'hubometer', 'atm', 'tare'])
+    expect(fields).toEqual(['vin', 'registration', 'hubometer', 'suspension', 'atm', 'tare'])
   })
 
   it('agriculture returns [pin, serial, hourmeter, odometer] sorted by sfOrder', () => {
@@ -46,8 +46,8 @@ describe('getInspectionPriorityFields', () => {
     expect(fields).toEqual([])
   })
 
-  it('truck returns exactly 4 priority fields', () => {
-    expect(getInspectionPriorityFields('truck')).toHaveLength(4)
+  it('truck returns exactly 6 priority fields', () => {
+    expect(getInspectionPriorityFields('truck')).toHaveLength(6)
   })
 })
 
