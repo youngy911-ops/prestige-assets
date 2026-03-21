@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Pre-fill & Quality
 status: planning
-stopped_at: Phase 10 context gathered
-last_updated: "2026-03-21T05:27:27.919Z"
+stopped_at: Completed 10-01-PLAN.md
+last_updated: "2026-03-21T06:12:54.023Z"
 last_activity: 2026-03-21 — Phase 09 complete; pre-extraction structured inputs live
 progress:
   total_phases: 3
   completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 5
+  completed_plans: 4
   percent: 67
 ---
 
@@ -50,6 +50,7 @@ Progress: [██████████████░░░░░░] 67% (v1
 - v1.0: 21 plans across 4 days
 - Trend: Stable
 | Phase 09-pre-extraction-structured-inputs P01 | 2min | 2 tasks | 5 files |
+| Phase 10-description-verbatim-fidelity P01 | 8min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -65,6 +66,8 @@ Recent decisions affecting current work:
 - [Phase 08-session-auth-fix]: Inverse auth guard in middleware: authenticated user at /login redirects to / — placed after existing unauthenticated guard
 - [Phase 09-pre-extraction-structured-inputs]: Suspension Type is select [Spring, Airbag, 6 Rod, Other] on truck and trailer — constrains AI extraction and UI to a fixed value set
 - [Phase 09-pre-extraction-structured-inputs]: Forklift truck_weight label renamed to 'Unladen Weight'; caravan trailer_length label renamed to 'Length (ft)' — Salesforce keys unchanged to avoid field mapping breakage
+- [Phase 10-description-verbatim-fidelity]: Import parseStructuredFields directly from extract/route.ts — no duplicate parser, no shared lib file needed
+- [Phase 10-description-verbatim-fidelity]: Verbatim block omitted gracefully when no structured key:value lines; freeform block omitted when no Notes: line — backward compatible with null inspection_notes
 
 ### Pending Todos
 
@@ -76,6 +79,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-21T05:27:27.917Z
-Stopped at: Phase 10 context gathered
-Resume file: .planning/phases/10-description-verbatim-fidelity/10-CONTEXT.md
+Last session: 2026-03-21T06:12:54.020Z
+Stopped at: Completed 10-01-PLAN.md
+Resume file: None
