@@ -86,5 +86,5 @@ Plans:
 | 6. Asset List + Navigation | v1.0 | 2/2 | Complete | 2026-03-21 |
 | 06.1. AI Extraction Quality (INSERTED) | v1.0 | 4/4 | Complete | 2026-03-21 |
 | 8. Session Auth Fix | 1/1 | Complete   | 2026-03-21 | - |
-| 9. Pre-Extraction Structured Inputs | v1.1 | 0/TBD | Not started | - |
+| 9. Pre-Extraction Structured Inputs | 1/2 | In Progress|  | - |
 | 10. Description Verbatim Fidelity | v1.1 | 0/TBD | Not started | - |

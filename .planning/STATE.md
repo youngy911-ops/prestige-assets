@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Pre-fill & Quality
 status: planning
-stopped_at: Phase 9 context gathered
-last_updated: "2026-03-21T04:09:34.930Z"
+stopped_at: Completed 09-pre-extraction-structured-inputs/09-01-PLAN.md
+last_updated: "2026-03-21T04:50:13.791Z"
 last_activity: 2026-03-21 — v1.1 roadmap created; phases 8–10 defined
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
+  total_plans: 3
+  completed_plans: 2
   percent: 35
 ---
 
@@ -49,6 +49,7 @@ Progress: [███████░░░░░░░░░░░░░] 35% (v1
 **Recent Trend:**
 - v1.0: 21 plans across 4 days
 - Trend: Stable
+| Phase 09-pre-extraction-structured-inputs P01 | 2min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -62,6 +63,8 @@ Recent decisions affecting current work:
 - v1.1 roadmap: Pre-fill reload re-hydration deferred to v1.2 (PREFILL-06); v1.1 uses string-parse on mount as MVP approach
 - [Phase 08-session-auth-fix]: Delete src/app/page.tsx entirely — (app) route group page.tsx becomes sole / handler, eliminating auth redirect loop
 - [Phase 08-session-auth-fix]: Inverse auth guard in middleware: authenticated user at /login redirects to / — placed after existing unauthenticated guard
+- [Phase 09-pre-extraction-structured-inputs]: Suspension Type is select [Spring, Airbag, 6 Rod, Other] on truck and trailer — constrains AI extraction and UI to a fixed value set
+- [Phase 09-pre-extraction-structured-inputs]: Forklift truck_weight label renamed to 'Unladen Weight'; caravan trailer_length label renamed to 'Length (ft)' — Salesforce keys unchanged to avoid field mapping breakage
 
 ### Pending Todos
 
@@ -73,6 +76,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-21T04:09:34.924Z
-Stopped at: Phase 9 context gathered
-Resume file: .planning/phases/09-pre-extraction-structured-inputs/09-CONTEXT.md
+Last session: 2026-03-21T04:50:13.789Z
+Stopped at: Completed 09-pre-extraction-structured-inputs/09-01-PLAN.md
+Resume file: None

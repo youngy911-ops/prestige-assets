@@ -11,10 +11,10 @@
 
 ### Pre-Extraction Fields
 
-- [ ] **PREFILL-01**: Truck asset shows dedicated input fields for VIN, Odometer, Hourmeter, and Suspension Type before AI extraction runs
-- [ ] **PREFILL-02**: Trailer asset shows dedicated input fields for VIN and Suspension Type before AI extraction runs
-- [ ] **PREFILL-03**: Forklift asset shows a dedicated "Unladen Weight" input field before AI extraction runs
-- [ ] **PREFILL-04**: Caravan asset shows a dedicated "Length (ft)" input field before AI extraction runs
+- [x] **PREFILL-01**: Truck asset shows dedicated input fields for VIN, Odometer, Hourmeter, and Suspension Type before AI extraction runs
+- [x] **PREFILL-02**: Trailer asset shows dedicated input fields for VIN and Suspension Type before AI extraction runs
+- [x] **PREFILL-03**: Forklift asset shows a dedicated "Unladen Weight" input field before AI extraction runs
+- [x] **PREFILL-04**: Caravan asset shows a dedicated "Length (ft)" input field before AI extraction runs
 - [ ] **PREFILL-05**: Staff-entered pre-extraction values appear in the Salesforce fields output and are not overridden by AI extraction
 
 ### Description Quality
@@ -47,10 +47,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | AUTH-01 | Phase 8 | Complete |
-| PREFILL-01 | Phase 9 | Pending |
-| PREFILL-02 | Phase 9 | Pending |
-| PREFILL-03 | Phase 9 | Pending |
-| PREFILL-04 | Phase 9 | Pending |
+| PREFILL-01 | Phase 9 | Complete |
+| PREFILL-02 | Phase 9 | Complete |
+| PREFILL-03 | Phase 9 | Complete |
+| PREFILL-04 | Phase 9 | Complete |
 | PREFILL-05 | Phase 9 | Pending |
 | DESCR-01 | Phase 10 | Pending |
 
