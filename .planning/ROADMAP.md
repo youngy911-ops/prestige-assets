@@ -40,7 +40,10 @@ Full archive: `.planning/milestones/v1.0-ROADMAP.md`
   1. Authenticated user can click the Assets tab and land on the asset list without being redirected
   2. Unauthenticated user navigating to the app is still redirected to login correctly
   3. Page reload while on the asset list does not trigger a login redirect
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 08-01-PLAN.md — Delete conflicting root page, patch middleware inverse guard, fix post-login redirect
 
 ### Phase 9: Pre-Extraction Structured Inputs
 **Goal**: Staff can enter known field values (VIN, odometer, suspension, weight, length) via dedicated inputs before running AI extraction, and those values are passed as authoritative overrides to the extraction prompt
@@ -74,6 +77,6 @@ Full archive: `.planning/milestones/v1.0-ROADMAP.md`
 | 5. Output Generation | v1.0 | 3/3 | Complete | 2026-03-21 |
 | 6. Asset List + Navigation | v1.0 | 2/2 | Complete | 2026-03-21 |
 | 06.1. AI Extraction Quality (INSERTED) | v1.0 | 4/4 | Complete | 2026-03-21 |
-| 8. Session Auth Fix | v1.1 | 0/TBD | Not started | - |
+| 8. Session Auth Fix | v1.1 | 0/1 | Not started | - |
 | 9. Pre-Extraction Structured Inputs | v1.1 | 0/TBD | Not started | - |
 | 10. Description Verbatim Fidelity | v1.1 | 0/TBD | Not started | - |
