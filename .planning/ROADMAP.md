@@ -26,7 +26,7 @@ Full archive: `.planning/milestones/v1.0-ROADMAP.md`
 
 **Milestone Goal:** Add structured pre-extraction input fields for critical per-type data, fix AI description verbatim fidelity, and resolve the asset list session auth bug.
 
-- [ ] **Phase 8: Session Auth Fix** - Authenticated users can navigate to the Assets tab without being redirected to login
+- [x] **Phase 8: Session Auth Fix** - Authenticated users can navigate to the Assets tab without being redirected to login (completed 2026-03-21)
 - [ ] **Phase 9: Pre-Extraction Structured Inputs** - Staff can enter known field values before AI extraction runs; values arrive as authoritative overrides in the AI prompt
 - [ ] **Phase 10: Description Verbatim Fidelity** - AI-generated descriptions preserve specific staff-entered measurements and values verbatim
 
@@ -77,6 +77,6 @@ Plans:
 | 5. Output Generation | v1.0 | 3/3 | Complete | 2026-03-21 |
 | 6. Asset List + Navigation | v1.0 | 2/2 | Complete | 2026-03-21 |
 | 06.1. AI Extraction Quality (INSERTED) | v1.0 | 4/4 | Complete | 2026-03-21 |
-| 8. Session Auth Fix | v1.1 | 0/1 | Not started | - |
+| 8. Session Auth Fix | 1/1 | Complete   | 2026-03-21 | - |
 | 9. Pre-Extraction Structured Inputs | v1.1 | 0/TBD | Not started | - |
 | 10. Description Verbatim Fidelity | v1.1 | 0/TBD | Not started | - |

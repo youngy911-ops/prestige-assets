@@ -7,7 +7,7 @@
 
 ### Authentication
 
-- [ ] **AUTH-01**: Authenticated user can navigate to the asset list via the Assets tab without being redirected to login
+- [x] **AUTH-01**: Authenticated user can navigate to the asset list via the Assets tab without being redirected to login
 
 ### Pre-Extraction Fields
 
@@ -46,7 +46,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase 8 | Pending |
+| AUTH-01 | Phase 8 | Complete |
 | PREFILL-01 | Phase 9 | Pending |
 | PREFILL-02 | Phase 9 | Pending |
 | PREFILL-03 | Phase 9 | Pending |

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Pre-fill & Quality
 status: planning
-stopped_at: Phase 8 context gathered
-last_updated: "2026-03-21T03:29:20.191Z"
+stopped_at: Completed 08-01-PLAN.md
+last_updated: "2026-03-21T03:52:56.593Z"
 last_activity: 2026-03-21 — v1.1 roadmap created; phases 8–10 defined
 progress:
   total_phases: 3
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  completed_phases: 1
+  total_plans: 1
+  completed_plans: 1
   percent: 35
 ---
 
@@ -60,6 +60,8 @@ Recent decisions affecting current work:
 - v1.1 roadmap: Phase 8 ships first to eliminate false login redirects during dev/test of phases 9 and 10
 - v1.1 roadmap: PREFILL-01–05 coupled — schema flag additions and extract route wiring must ship together in phase 9; schema-only is a silent no-op
 - v1.1 roadmap: Pre-fill reload re-hydration deferred to v1.2 (PREFILL-06); v1.1 uses string-parse on mount as MVP approach
+- [Phase 08-session-auth-fix]: Delete src/app/page.tsx entirely — (app) route group page.tsx becomes sole / handler, eliminating auth redirect loop
+- [Phase 08-session-auth-fix]: Inverse auth guard in middleware: authenticated user at /login redirects to / — placed after existing unauthenticated guard
 
 ### Pending Todos
 
@@ -71,6 +73,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-21T03:29:20.189Z
-Stopped at: Phase 8 context gathered
-Resume file: .planning/phases/08-session-auth-fix/08-CONTEXT.md
+Last session: 2026-03-21T03:52:56.591Z
+Stopped at: Completed 08-01-PLAN.md
+Resume file: None
