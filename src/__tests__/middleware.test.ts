@@ -25,4 +25,12 @@ describe('middleware', () => {
     const response = await middleware(request)
     expect(response.status).not.toBe(307)
   })
+
+  it('redirects authenticated user at /login to /', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-123' } } })
+    const request = new NextRequest('http://localhost/login')
+    const response = await middleware(request)
+    expect(response.status).toBe(307)
+    expect(response.headers.get('location')).toContain('/')
+  })
 })

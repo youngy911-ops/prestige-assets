@@ -3,8 +3,10 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 
 // Mock next/navigation
+const mockPush = vi.fn()
+const mockRefresh = vi.fn()
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
+  useRouter: () => ({ push: mockPush, refresh: mockRefresh }),
 }))
 
 // Mock @/lib/supabase/client
@@ -23,6 +25,8 @@ const { LoginForm } = await import('@/components/auth/LoginForm')
 describe('LoginForm', () => {
   beforeEach(() => {
     mockSignIn.mockReset()
+    mockPush.mockReset()
+    mockRefresh.mockReset()
   })
 
   it('calls signInWithPassword with email and password on submit', async () => {
@@ -49,6 +53,17 @@ describe('LoginForm', () => {
       expect(screen.getByRole('alert')).toHaveTextContent(
         'Incorrect email or password. Please try again.'
       )
+    })
+  })
+
+  it('redirects to / on successful login', async () => {
+    mockSignIn.mockResolvedValue({ error: null })
+    render(React.createElement(LoginForm))
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'test@example.com' } })
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'password123' } })
+    fireEvent.submit(screen.getByRole('button', { name: /sign in/i }).closest('form')!)
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith('/')
     })
   })
 })
