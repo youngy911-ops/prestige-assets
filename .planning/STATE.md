@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 05-01-PLAN.md (generateFieldsBlock + Wave 0 scaffolds)
-last_updated: "2026-03-21T00:17:18.844Z"
+stopped_at: Completed 05-output-generation-02-PLAN.md
+last_updated: "2026-03-21T00:17:54.401Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 15
-  completed_plans: 13
+  completed_plans: 14
   percent: 17
 ---
 
@@ -65,6 +65,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 04-review-form-save P03 | 4 | 2 tasks | 4 files |
 | Phase 04-review-form-save P03 | 90 | 3 tasks | 8 files |
 | Phase 05-output-generation P01 | 3 | 2 tasks | 5 files |
+| Phase 05-output-generation P02 | 8 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -110,6 +111,9 @@ Recent decisions affecting current work:
 - [Phase 04-review-form-save]: supabase/server.ts setAll wrapped in try-catch — suppresses Server Component cookie mutation error; middleware handles session refresh
 - [Phase 05-output-generation]: generateFieldsBlock uses ?? '' (nullish coalescing) — null, undefined, and empty string all render as blank; Salesforce operators paste entire block so no field omission
 - [Phase 05-output-generation]: describe-route.test.ts upgraded from Wave-0 .todo stubs to full test suite ahead of 05-02 — user-initiated, committed as-is since mock infrastructure matches spec
+- [Phase 05-output-generation]: generateText (not Output.object) for /api/describe — plain text output, reads result.text
+- [Phase 05-output-generation]: description: null in saveReview clears cached description on re-review — output page always regenerates
+- [Phase 05-output-generation]: user_id guard on assets update in /api/describe — defense in depth beyond RLS
 
 ### Pending Todos
 
@@ -122,6 +126,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T00:17:18.841Z
-Stopped at: Completed 05-01-PLAN.md (generateFieldsBlock + Wave 0 scaffolds)
+Last session: 2026-03-21T00:17:54.398Z
+Stopped at: Completed 05-output-generation-02-PLAN.md
 Resume file: None

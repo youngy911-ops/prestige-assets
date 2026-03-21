@@ -38,7 +38,7 @@
 ### Salesforce Output
 
 - [x] **SF-01**: App generates a copy-paste-ready structured fields block for each asset with fields in the correct Salesforce order and correct field labels for that asset type
-- [ ] **SF-02**: App generates a correctly formatted description block per asset subtype (Excavator, Dozer, Grader, Wheel Loader, Truck, Trailer, Caravan, etc.) using GPT-4o with a locked system prompt — correct line ordering, no dot points, no marketing language, "Sold As Is, Untested & Unregistered." footer; output is editable before copy-paste
+- [x] **SF-02**: App generates a correctly formatted description block per asset subtype (Excavator, Dozer, Grader, Wheel Loader, Truck, Trailer, Caravan, etc.) using GPT-4o with a locked system prompt — correct line ordering, no dot points, no marketing language, "Sold As Is, Untested & Unregistered." footer; output is editable before copy-paste
 - [ ] **SF-03**: Each output section has its own copy-to-clipboard button with visual confirmation
 
 ## v2 Requirements
@@ -105,7 +105,7 @@
 | FORM-01 | Phase 4 | Complete |
 | FORM-02 | Phase 4 | Complete |
 | SF-01 | Phase 5 | Complete |
-| SF-02 | Phase 5 | Pending |
+| SF-02 | Phase 5 | Complete |
 | SF-03 | Phase 5 | Pending |
 | ASSET-03 | Phase 6 | Pending |
 | ASSET-04 | Phase 6 | Pending |
