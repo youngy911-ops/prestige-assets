@@ -137,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 **Goal:** GPT-4o extracts significantly more fields per asset — field-specific descriptions (label + aiHint + options) embedded in the Zod schema replace generic prompts, new fields enabled across earthmoving/agriculture/forklift/trailer, and buildSystemPrompt gains explicit plate-type routing
 **Requirements**: none (quality improvement, no new v1 requirement IDs)
 **Depends on:** Phase 6
-**Plans:** 4 plans
+**Plans:** 2/4 plans executed
 
 Plans:
 - [ ] 06.1-01-PLAN.md — Add aiHint to FieldDefinition, getAIExtractableFieldDefs, update buildExtractionSchema + buildSystemPrompt, add tests (Wave 1)
