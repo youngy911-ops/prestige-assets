@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { generateText } from 'ai'
 import { openai } from '@ai-sdk/openai'
+import { parseStructuredFields } from '@/app/api/extract/route'
 
 // Verbatim system prompt from .planning/phases/05-output-generation/05-description-prompt.md
 // DO NOT paraphrase or shorten. The exact wording drives GPT-4o template selection.
@@ -22,6 +23,7 @@ UNIVERSAL RULES:
 - Blank line between each significant item or group
 - Short related items share a line separated by commas
 - Always closes with "Sold As Is, Untested & Unregistered." or "Sold As Is, Untested." for attachments and general goods
+- Values and measurements from inspection notes must appear verbatim in the description — do not paraphrase, convert units, or interpret. If notes say '48" sleeper cab', write '48" sleeper cab'
 
 TEMPLATES BY ASSET TYPE — select the correct template based on asset identified:
 
@@ -195,15 +197,33 @@ function buildDescriptionUserPrompt(asset: {
   const fieldLines = Object.entries(asset.fields ?? {})
     .map(([k, v]) => `${k}: ${v}`)
     .join('\n')
-  return [
+
+  const structured = parseStructuredFields(asset.inspection_notes)
+  const verbatimLines = Object.entries(structured)
+    .map(([k, v]) => `${k}: ${v}`)
+    .join('\n')
+
+  const freeformNotes = asset.inspection_notes
+    ? (asset.inspection_notes.split('\n').find(l => l.startsWith('Notes: '))?.slice('Notes: '.length) ?? '')
+    : ''
+
+  const parts: string[] = [
     `Asset type: ${asset.asset_type}`,
     `Subtype: ${asset.asset_subtype ?? 'unknown'}`,
     '',
     'Confirmed fields:',
     fieldLines,
-    '',
-    asset.inspection_notes ? `Inspection notes: ${asset.inspection_notes}` : '',
-  ].filter(Boolean).join('\n')
+  ]
+
+  if (verbatimLines) {
+    parts.push('', 'Staff-provided values (use verbatim):', verbatimLines)
+  }
+
+  if (freeformNotes) {
+    parts.push('', 'Inspection notes:', freeformNotes)
+  }
+
+  return parts.join('\n')
 }
 
 export async function POST(req: NextRequest) {
