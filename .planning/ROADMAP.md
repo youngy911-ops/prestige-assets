@@ -112,11 +112,11 @@ Plans:
   1. Staff can view a list of all asset records sorted by most recently created/updated, with enough detail to identify each record (asset type, make, model, status)
   2. Staff can tap or click a record in the list to resume editing it — returning to the review form for incomplete records or the output view for completed ones
   3. Navigation between list, new asset wizard, and record detail works correctly from both phone browser and desktop
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 06-01: Asset list page — Server Component, Supabase query sorted by recency, record summary display, routing to new asset and existing record detail
-- [ ] 06-02: Edit flow — load existing record into review form, basic asset status (draft / confirmed) tracking
+- [ ] 06-01-PLAN.md — Wave-0 test scaffolds + getAssets Server Action + relativeTime utility + BottomNav component + layout integration + createAsset revalidatePath fix (Wave 1)
+- [ ] 06-02-PLAN.md — AssetStatusBadge + AssetCard + BranchPickerScreen + AssetList + page.tsx replacement + output page cleanup + human checkpoint (Wave 2)
 
 ## Progress
 
