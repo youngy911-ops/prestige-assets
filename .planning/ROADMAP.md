@@ -28,7 +28,7 @@ Full archive: `.planning/milestones/v1.0-ROADMAP.md`
 
 - [x] **Phase 8: Session Auth Fix** - Authenticated users can navigate to the Assets tab without being redirected to login (completed 2026-03-21)
 - [ ] **Phase 9: Pre-Extraction Structured Inputs** - Staff can enter known field values before AI extraction runs; values arrive as authoritative overrides in the AI prompt
-- [ ] **Phase 10: Description Verbatim Fidelity** - AI-generated descriptions preserve specific staff-entered measurements and values verbatim
+- [x] **Phase 10: Description Verbatim Fidelity** - AI-generated descriptions preserve specific staff-entered measurements and values verbatim (completed 2026-03-21)
 
 ## Phase Details
 
@@ -87,4 +87,4 @@ Plans:
 | 06.1. AI Extraction Quality (INSERTED) | v1.0 | 4/4 | Complete | 2026-03-21 |
 | 8. Session Auth Fix | 1/1 | Complete   | 2026-03-21 | - |
 | 9. Pre-Extraction Structured Inputs | 1/2 | In Progress|  | - |
-| 10. Description Verbatim Fidelity | 1/2 | In Progress|  | - |
+| 10. Description Verbatim Fidelity | 2/2 | Complete   | 2026-03-21 | - |
