@@ -208,4 +208,275 @@ describe('POST /api/describe', () => {
     const body = await res.json()
     expect(body).toEqual({ success: true, description: 'Generated description text here.' })
   })
+
+  // --- Verbatim split behaviour tests (Task 1 RED) ---
+
+  it('system prompt contains the verbatim rule bullet', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockGenerateText.mockResolvedValue({ text: 'Generated description text here.' })
+
+    let callCount = 0
+    mockFrom.mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({
+                data: { id: 'asset-1', asset_type: 'truck', asset_subtype: 'prime_mover', fields: {}, inspection_notes: null },
+                error: null,
+              }),
+            }),
+          }),
+        }
+      }
+      if (callCount === 2) {
+        return {
+          select: () => ({
+            eq: () => ({
+              order: () => Promise.resolve({ data: [], error: null }),
+            }),
+          }),
+        }
+      }
+      return {
+        update: () => ({
+          eq: () => ({
+            eq: () => Promise.resolve({ error: null }),
+          }),
+        }),
+      }
+    })
+
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+
+    const callArgs = mockGenerateText.mock.calls[0][0]
+    expect(callArgs.messages[0].content).toContain('Values and measurements from inspection notes must appear verbatim')
+  })
+
+  it('buildDescriptionUserPrompt splits into verbatim and freeform blocks', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockGenerateText.mockResolvedValue({ text: 'Generated description text here.' })
+
+    let callCount = 0
+    mockFrom.mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({
+                data: {
+                  id: 'asset-1',
+                  asset_type: 'truck',
+                  asset_subtype: 'prime_mover',
+                  fields: {},
+                  inspection_notes: 'Suspension Type: Airbag\nOdometer: 187450\nNotes: 48" sleeper cab, needs clean',
+                },
+                error: null,
+              }),
+            }),
+          }),
+        }
+      }
+      if (callCount === 2) {
+        return {
+          select: () => ({
+            eq: () => ({
+              order: () => Promise.resolve({ data: [], error: null }),
+            }),
+          }),
+        }
+      }
+      return {
+        update: () => ({
+          eq: () => ({
+            eq: () => Promise.resolve({ error: null }),
+          }),
+        }),
+      }
+    })
+
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+
+    const callArgs = mockGenerateText.mock.calls[0][0]
+    const userContent = callArgs.messages[1].content
+    const textEntry = userContent.find((c: { type: string }) => c.type === 'text')
+    const promptText: string = textEntry.text
+
+    expect(promptText).toContain('Staff-provided values (use verbatim):')
+    expect(promptText).toContain('Suspension Type: Airbag')
+    expect(promptText).toContain('Odometer: 187450')
+    expect(promptText).toContain('Inspection notes:')
+    expect(promptText).toContain('48" sleeper cab, needs clean')
+    // 'Notes:' prefix must be stripped from freeform block
+    expect(promptText).not.toContain('Notes: 48" sleeper cab, needs clean')
+  })
+
+  it('structured fields are absent from freeform block', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockGenerateText.mockResolvedValue({ text: 'Generated description text here.' })
+
+    let callCount = 0
+    mockFrom.mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({
+                data: {
+                  id: 'asset-1',
+                  asset_type: 'truck',
+                  asset_subtype: 'prime_mover',
+                  fields: {},
+                  inspection_notes: 'Suspension Type: Airbag\nOdometer: 187450\nNotes: 48" sleeper cab, needs clean',
+                },
+                error: null,
+              }),
+            }),
+          }),
+        }
+      }
+      if (callCount === 2) {
+        return {
+          select: () => ({
+            eq: () => ({
+              order: () => Promise.resolve({ data: [], error: null }),
+            }),
+          }),
+        }
+      }
+      return {
+        update: () => ({
+          eq: () => ({
+            eq: () => Promise.resolve({ error: null }),
+          }),
+        }),
+      }
+    })
+
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+
+    const callArgs = mockGenerateText.mock.calls[0][0]
+    const userContent = callArgs.messages[1].content
+    const textEntry = userContent.find((c: { type: string }) => c.type === 'text')
+    const promptText: string = textEntry.text
+
+    // The Inspection notes: block should only contain freeform text, not structured fields
+    const inspectionNotesIdx = promptText.indexOf('Inspection notes:')
+    const afterInspectionNotes = promptText.slice(inspectionNotesIdx)
+    expect(afterInspectionNotes).not.toContain('Suspension Type: Airbag')
+  })
+
+  it('graceful fallback — no verbatim block when inspection_notes has no key:value lines', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockGenerateText.mockResolvedValue({ text: 'Generated description text here.' })
+
+    let callCount = 0
+    mockFrom.mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({
+                data: {
+                  id: 'asset-1',
+                  asset_type: 'truck',
+                  asset_subtype: 'prime_mover',
+                  fields: {},
+                  inspection_notes: 'Notes: Just some freeform text',
+                },
+                error: null,
+              }),
+            }),
+          }),
+        }
+      }
+      if (callCount === 2) {
+        return {
+          select: () => ({
+            eq: () => ({
+              order: () => Promise.resolve({ data: [], error: null }),
+            }),
+          }),
+        }
+      }
+      return {
+        update: () => ({
+          eq: () => ({
+            eq: () => Promise.resolve({ error: null }),
+          }),
+        }),
+      }
+    })
+
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+
+    const callArgs = mockGenerateText.mock.calls[0][0]
+    const userContent = callArgs.messages[1].content
+    const textEntry = userContent.find((c: { type: string }) => c.type === 'text')
+    const promptText: string = textEntry.text
+
+    expect(promptText).not.toContain('Staff-provided values (use verbatim):')
+    expect(promptText).toContain('Inspection notes:')
+    expect(promptText).toContain('Just some freeform text')
+  })
+
+  it('graceful fallback — no freeform block when inspection_notes has no Notes: line', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockGenerateText.mockResolvedValue({ text: 'Generated description text here.' })
+
+    let callCount = 0
+    mockFrom.mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({
+                data: {
+                  id: 'asset-1',
+                  asset_type: 'truck',
+                  asset_subtype: 'prime_mover',
+                  fields: {},
+                  inspection_notes: 'Suspension Type: Spring\nOdometer: 50000',
+                },
+                error: null,
+              }),
+            }),
+          }),
+        }
+      }
+      if (callCount === 2) {
+        return {
+          select: () => ({
+            eq: () => ({
+              order: () => Promise.resolve({ data: [], error: null }),
+            }),
+          }),
+        }
+      }
+      return {
+        update: () => ({
+          eq: () => ({
+            eq: () => Promise.resolve({ error: null }),
+          }),
+        }),
+      }
+    })
+
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+
+    const callArgs = mockGenerateText.mock.calls[0][0]
+    const userContent = callArgs.messages[1].content
+    const textEntry = userContent.find((c: { type: string }) => c.type === 'text')
+    const promptText: string = textEntry.text
+
+    expect(promptText).toContain('Staff-provided values (use verbatim):')
+    expect(promptText).toContain('Suspension Type: Spring')
+    expect(promptText).toContain('Odometer: 50000')
+    expect(promptText).not.toContain('Inspection notes:')
+  })
 })
