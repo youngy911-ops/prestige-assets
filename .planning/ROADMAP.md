@@ -71,8 +71,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 09-01-PLAN.md — Update priority field tests (RED) then apply schema flag, label, and select options changes (GREEN)
-- [ ] 09-02-PLAN.md — Add parseStructuredFields to extract route + InspectionNotesSection select rendering + human verify
+- [ ] 10-01-PLAN.md — Add failing tests (RED) then implement verbatim system prompt rule and restructure buildDescriptionUserPrompt (GREEN)
+- [ ] 10-02-PLAN.md — Human verify GPT-4o description contains verbatim values from inspection notes
 
 ## Progress
 
@@ -87,4 +87,4 @@ Plans:
 | 06.1. AI Extraction Quality (INSERTED) | v1.0 | 4/4 | Complete | 2026-03-21 |
 | 8. Session Auth Fix | 1/1 | Complete   | 2026-03-21 | - |
 | 9. Pre-Extraction Structured Inputs | 1/2 | In Progress|  | - |
-| 10. Description Verbatim Fidelity | v1.1 | 0/TBD | Not started | - |
+| 10. Description Verbatim Fidelity | v1.1 | 0/2 | Not started | - |
