@@ -18,6 +18,7 @@ export async function saveReview(
       fields,
       checklist_state: checklistState,
       status: 'confirmed',
+      description: null,  // Clear cached description — output page will regenerate for fresh fields
     })
     .eq('id', assetId)
     .eq('user_id', user.id)
