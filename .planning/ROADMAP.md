@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Photo Capture + Storage** - File picker, client-side resize with EXIF correction, Supabase Storage, drag-to-reorder with persistence (completed 2026-03-17)
 - [x] **Phase 3: AI Extraction** - Route Handler calling GPT-4o, per-field confidence scores, extraction UI and failure states (completed 2026-03-18)
 - [x] **Phase 4: Review Form + Save** - Dynamic RHF form pre-filled from extraction, low-confidence highlighting, mandatory save step (completed 2026-03-19)
-- [ ] **Phase 5: Output Generation** - GPT-4o description generation, deterministic fields block, copy-to-clipboard
+- [x] **Phase 5: Output Generation** - GPT-4o description generation, deterministic fields block, copy-to-clipboard (completed 2026-03-21)
 - [ ] **Phase 6: Asset List + Navigation** - Recency-sorted list view, routing, resume editing from list
 
 ## Phase Details
@@ -129,5 +129,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Photo Capture + Storage | 3/3 | Complete   | 2026-03-17 |
 | 3. AI Extraction | 3/3 | Complete   | 2026-03-18 |
 | 4. Review Form + Save | 3/3 | Complete   | 2026-03-19 |
-| 5. Output Generation | 2/3 | In Progress|  |
+| 5. Output Generation | 3/3 | Complete   | 2026-03-21 |
 | 6. Asset List + Navigation | 0/2 | Not started | - |
