@@ -24,7 +24,7 @@ export const caravanSchema: AssetSchema = {
     { key: 'tyres',               label: 'Tyres',               sfOrder: 12, inputType: 'text',     aiExtractable: false, required: false },
     { key: 'registration',        label: 'Registration',        sfOrder: 13, inputType: 'text',     aiExtractable: false, inspectionPriority: true, required: false },
     { key: 'odometer',            label: 'Odometer',            sfOrder: 14, inputType: 'number',   aiExtractable: false, inspectionPriority: true, required: false },
-    { key: 'trailer_length',      label: 'Trailer Length',      sfOrder: 15, inputType: 'text',     aiExtractable: false, required: false },
+    { key: 'trailer_length',      label: 'Length (ft)',         sfOrder: 15, inputType: 'text',     aiExtractable: false, inspectionPriority: true, required: false },
     { key: 'tare',                label: 'Tare',                sfOrder: 16, inputType: 'number',   aiExtractable: false, required: false },
     { key: 'height',              label: 'Height',              sfOrder: 17, inputType: 'text',     aiExtractable: false, required: false },
     { key: 'gvm',                 label: 'GVM',                 sfOrder: 18, inputType: 'number',   aiExtractable: false, required: false },

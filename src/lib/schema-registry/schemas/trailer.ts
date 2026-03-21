@@ -15,7 +15,7 @@ export const trailerSchema: AssetSchema = {
   fields: [
     { key: 'make',            label: 'Make',            sfOrder: 1,  inputType: 'text',     aiExtractable: true,  required: true,  aiHint: 'Build plate: manufacturer name (e.g. Vawdrey, Maxitrans, Lusty EMS, Freighter, Barker, Krueger).' },
     { key: 'model',           label: 'Model',           sfOrder: 2,  inputType: 'text',     aiExtractable: true,  required: true,  aiHint: 'Build plate: model designation. Read exactly as printed. May include trailer type suffix.' },
-    { key: 'vin',             label: 'VIN',             sfOrder: 3,  inputType: 'text',     aiExtractable: true,  required: false, aiHint: 'Build plate or chassis: 17-character VIN. Never infer — only extract if directly visible.' },
+    { key: 'vin',             label: 'VIN',             sfOrder: 3,  inputType: 'text',     aiExtractable: true,  inspectionPriority: true, required: false, aiHint: 'Build plate or chassis: 17-character VIN. Never infer — only extract if directly visible.' },
     { key: 'type',            label: 'Type',            sfOrder: 4,  inputType: 'text',     aiExtractable: false, required: false },
     { key: 'chassis_number',  label: 'Chassis Number',  sfOrder: 5,  inputType: 'text',     aiExtractable: false, required: false },
     { key: 'colour',          label: 'Colour',          sfOrder: 6,  inputType: 'text',     aiExtractable: true,  required: false, aiHint: 'Exterior colour from photos. Common trailer colours: White, Silver, Red, Blue, Black, Yellow, Orange.' },
@@ -27,7 +27,7 @@ export const trailerSchema: AssetSchema = {
     { key: 'hubometer',       label: 'Hubometer',       sfOrder: 12, inputType: 'number',   aiExtractable: false, inspectionPriority: true, required: false },
     { key: 'height',          label: 'Height',          sfOrder: 13, inputType: 'text',     aiExtractable: false, required: false },
     { key: 'rims',            label: 'Rims',            sfOrder: 14, inputType: 'text',     aiExtractable: false, required: false },
-    { key: 'suspension',      label: 'Suspension',      sfOrder: 15, inputType: 'text',     aiExtractable: true,  required: false, aiHint: 'Visual from under-trailer photos or infer from model. Common: Air, Leaf Spring, Hendrickson, Airbag.' },
+    { key: 'suspension',      label: 'Suspension',      sfOrder: 15, inputType: 'select',   options: ['Spring', 'Airbag', '6 Rod', 'Other'], aiExtractable: true,  inspectionPriority: true, required: false, aiHint: 'Visual from under-trailer photos or infer from model. Must be exactly one of: Spring, Airbag, 6 Rod, Other.' },
     { key: 'atm',             label: 'ATM',             sfOrder: 16, inputType: 'number',   aiExtractable: true,  inspectionPriority: true, required: false, aiHint: 'Compliance plate: ATM (Aggregate Trailer Mass). Digits only in kg. Common Australian compliance plate field.' },
     { key: 'axle_config',     label: 'Axle Config',     sfOrder: 17, inputType: 'text',     aiExtractable: true,  required: false, aiHint: 'Count axles from photos or infer from subtype/model. Format: e.g. Tri-Axle, Tandem, Single, 4-Axle.' },
     { key: 'tare',            label: 'Tare',            sfOrder: 18, inputType: 'number',   aiExtractable: true,  inspectionPriority: true, required: false, aiHint: 'Build plate or compliance plate: Tare weight. Digits only in kg. Well-documented for common models.' },
