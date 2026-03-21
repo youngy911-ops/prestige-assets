@@ -34,6 +34,10 @@ export function getAIExtractableFields(assetType: AssetType): string[] {
     .map(f => f.key)
 }
 
+export function getAIExtractableFieldDefs(assetType: AssetType): FieldDefinition[] {
+  return SCHEMA_REGISTRY[assetType].fields.filter(f => f.aiExtractable)
+}
+
 export function getFieldsSortedBySfOrder(assetType: AssetType) {
   return [...SCHEMA_REGISTRY[assetType].fields].sort((a, b) => a.sfOrder - b.sfOrder)
 }
