@@ -1,5 +1,14 @@
 # Prestige Assets — Slattery Auctions Book-In App (Web MVP)
 
+## Current Milestone: v1.1 Pre-fill & Quality
+
+**Goal:** Add structured pre-extraction input fields for critical per-type data and fix description quality so staff-entered notes are faithfully reflected in AI output.
+
+**Target features:**
+- Dedicated pre-extraction fields: Trucks (VIN, Odo, Hours, Suspension), Trailers (VIN, Suspension), Forklifts (Unladen Weight), Caravans (Length ft)
+- Description generation uses inspection notes verbatim for specific values
+- Asset tab session bug fixed
+
 ## What This Is
 
 An internal web tool for Slattery Auctions Brisbane that automates the asset book-in process. Staff upload photos of build plates and asset identifiers; AI extracts key data (VIN/PIN/Serial, make, model, year, weight ratings, hours, and many more schema-specific fields) and pre-fills the correct Salesforce field schema for that asset type. The app then generates copy-paste-ready Salesforce output (structured fields block + GPT-4o formatted description) — eliminating the manual research and data entry process currently done by hand.
@@ -35,7 +44,14 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 
 ### Active
 
-_(none — define with `/gsd:new-milestone` for v1.1)_
+<!-- v1.1: Pre-fill & Quality -->
+
+- [ ] User can enter VIN, Odometer, Hourmeter, and Suspension Type via dedicated input fields for Trucks before running AI extraction
+- [ ] User can enter VIN and Suspension Type via dedicated input fields for Trailers before running AI extraction
+- [ ] User can enter Unladen Weight via dedicated input field for Forklifts before running AI extraction
+- [ ] User can enter Length (in ft) via dedicated input field for Caravans before running AI extraction
+- [ ] Inspection notes content is faithfully reflected in the AI-generated description (specific values like "48\" sleeper cab" are preserved verbatim)
+- [ ] Clicking the asset list tab no longer redirects to login (session auth bug fixed)
 
 ### Out of Scope
 
@@ -94,4 +110,4 @@ _(none — define with `/gsd:new-milestone` for v1.1)_
 | getAIExtractableFieldDefs() added alongside getAIExtractableFields() | Avoids breaking existing callers while enabling richer schema access | ✓ Good — backward compatible |
 
 ---
-*Last updated: 2026-03-21 after v1.0 milestone*
+*Last updated: 2026-03-21 after v1.1 milestone start*

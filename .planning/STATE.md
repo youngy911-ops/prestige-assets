@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.1
-milestone_name: TBD
+milestone_name: Pre-fill & Quality
 status: planning
-stopped_at: v1.0 milestone completed 2026-03-21
+stopped_at: v1.1 milestone started 2026-03-21
 last_updated: "2026-03-21T00:00:00.000Z"
-last_activity: 2026-03-21 — v1.0 MVP shipped (7 phases, 21 plans, 140 commits)
+last_activity: 2026-03-21 — Milestone v1.1 started
 progress:
   total_phases: 0
   completed_phases: 0
@@ -21,12 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-21 after v1.0 milestone)
 
 **Core value:** Photo a build plate → AI extracts identifiers → app generates copy-paste-ready Salesforce fields and a correctly formatted description — turning an hour of manual research into minutes.
-**Current focus:** Planning v1.1 — use `/gsd:new-milestone`
+**Current focus:** v1.1 Pre-fill & Quality — defining requirements
 
 ## Current Position
 
-**v1.0 MVP — SHIPPED 2026-03-21**
-All 7 phases, 21 plans complete. Ready to define v1.1.
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-03-21 — Milestone v1.1 started
 
 ## Accumulated Context
 
