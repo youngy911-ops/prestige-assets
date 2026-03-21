@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: AI Extraction** - Route Handler calling GPT-4o, per-field confidence scores, extraction UI and failure states (completed 2026-03-18)
 - [x] **Phase 4: Review Form + Save** - Dynamic RHF form pre-filled from extraction, low-confidence highlighting, mandatory save step (completed 2026-03-19)
 - [x] **Phase 5: Output Generation** - GPT-4o description generation, deterministic fields block, copy-to-clipboard (completed 2026-03-21)
-- [ ] **Phase 6: Asset List + Navigation** - Recency-sorted list view, routing, resume editing from list
+- [x] **Phase 6: Asset List + Navigation** - Recency-sorted list view, routing, resume editing from list (completed 2026-03-21)
 
 ## Phase Details
 
@@ -130,4 +130,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. AI Extraction | 3/3 | Complete   | 2026-03-18 |
 | 4. Review Form + Save | 3/3 | Complete   | 2026-03-19 |
 | 5. Output Generation | 3/3 | Complete   | 2026-03-21 |
-| 6. Asset List + Navigation | 1/2 | In Progress|  |
+| 6. Asset List + Navigation | 2/2 | Complete   | 2026-03-21 |
