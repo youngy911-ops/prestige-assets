@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: "Completed 05-output-generation-03-PLAN.md (awaiting checkpoint:human-verify)"
-last_updated: "2026-03-21T00:24:10.126Z"
+stopped_at: "Completed 05-03-PLAN.md — checkpoint:human-verify approved"
+last_updated: "2026-03-21T00:39:13.460Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 6
@@ -116,6 +116,8 @@ Recent decisions affecting current work:
 - [Phase 05-output-generation]: description: null in saveReview clears cached description on re-review — output page always regenerates
 - [Phase 05-output-generation]: user_id guard on assets update in /api/describe — defense in depth beyond RLS
 - [Phase 05-output-generation]: Button asChild not available in base-ui/react; used styled Link for Book In New Asset navigation
+- [Phase 05-output-generation]: Button asChild not available (base-ui/react); used styled Link for Book In New Asset navigation — consistent with Phase 01 pattern
+- [Phase 05-output-generation]: DescriptionBlock uses localText state (not descriptionText prop) for copy — ensures copied text matches what user sees in textarea, including edits
 
 ### Pending Todos
 
@@ -128,6 +130,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T00:24:10.123Z
-Stopped at: Completed 05-output-generation-03-PLAN.md (awaiting checkpoint:human-verify)
+Last session: 2026-03-21T00:38:38.207Z
+Stopped at: Completed 05-03-PLAN.md — checkpoint:human-verify approved
 Resume file: None
