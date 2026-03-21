@@ -1,10 +1,11 @@
 # Prestige Assets — Slattery Auctions Book-In App (Web MVP)
 
-## Current Status: v1.1 Shipped — Planning v1.2
+## Current Milestone: v1.2 Pre-fill Restoration
 
-**Shipped v1.1 (2026-03-21):** Structured pre-extraction inputs for all 4 asset types, verbatim description fidelity, and session auth fix. All 6 v1.1 requirements delivered.
+**Goal:** Restore staff-entered pre-extraction values when returning to an asset record, completing the stateful inspection form experience.
 
-**Next milestone:** v1.2 — pre-fill value restoration on reload (PREFILL-06) and any additional quality improvements.
+**Target features:**
+- Pre-fill value restoration on reload (PREFILL-06)
 
 ## What This Is
 
@@ -112,4 +113,4 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 | Select uncontrolled in InspectionNotesSection (no value/defaultValue) (Phase 9) | Re-hydration deferred to v1.2 (PREFILL-06); uncontrolled avoids state complexity for MVP | — Re-evaluate in v1.2 |
 
 ---
-*Last updated: 2026-03-21 after v1.1 milestone*
+*Last updated: 2026-03-21 after v1.2 milestone start*
