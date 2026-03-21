@@ -5,6 +5,21 @@ import { openai } from '@ai-sdk/openai'
 import { buildExtractionSchema, buildSystemPrompt, buildUserPrompt } from '@/lib/ai/extraction-schema'
 import type { AssetType } from '@/lib/schema-registry/types'
 
+export function parseStructuredFields(notes: string | null): Record<string, string> {
+  if (!notes) return {}
+  const result: Record<string, string> = {}
+  for (const line of notes.split('\n')) {
+    const colonIdx = line.indexOf(': ')
+    if (colonIdx === -1) continue
+    const key = line.slice(0, colonIdx).trim()
+    const value = line.slice(colonIdx + 2).trim()
+    // 'Notes' is the freeform textarea key — not a structured field
+    if (key === 'Notes' || !key || !value) continue
+    result[key] = value
+  }
+  return result
+}
+
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
 
@@ -54,7 +69,7 @@ export async function POST(req: NextRequest) {
   const schema = buildExtractionSchema(assetType)
   const systemPrompt = buildSystemPrompt(asset.asset_type, asset.asset_subtype ?? '')
 
-  const structuredFields: Record<string, string> = {}
+  const structuredFields = parseStructuredFields(asset.inspection_notes)
 
   const userPrompt = buildUserPrompt(asset.inspection_notes, structuredFields)
 
