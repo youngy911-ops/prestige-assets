@@ -103,16 +103,18 @@ None — all components implemented cleanly on first attempt; all 207 tests pass
 
 None — no external service configuration required.
 
-## Next Steps (Human Checkpoint)
+## Human Verification (Task 3)
 
-Task 3 is a `checkpoint:human-verify` requiring manual browser verification:
-1. Run `npm run dev`
-2. Verify branch picker on first visit (no localStorage)
-3. Verify asset list loads after branch selection
-4. Verify branch chip changes branch and re-fetches
-5. Verify resume routing (draft → /review, confirmed → /output)
-6. Verify bottom nav active states
-7. Verify "Book In New Asset" navigates to /assets/new
+Task 3 `checkpoint:human-verify` — **APPROVED on 2026-03-21.**
+
+All 15 verification steps confirmed:
+- Branch picker shown on first visit (no localStorage)
+- Asset list loads after branch selection
+- Branch chip changes branch and re-fetches
+- Resume routing: draft → /review, confirmed → /output
+- Bottom nav active states correct
+- "Book In New Asset" navigates to /assets/new
+- No content obscured by bottom nav
 
 ## Self-Check: PASSED
 
