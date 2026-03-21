@@ -1,344 +1,314 @@
 # Architecture Research
 
 **Domain:** AI-powered internal data-capture web app (Next.js + Supabase)
-**Researched:** 2026-03-21 (updated for v1.1 Pre-fill & Quality)
-**Confidence:** HIGH — based on direct codebase analysis plus Supabase official docs
+**Researched:** 2026-03-21 (updated for v1.2 Pre-fill Restoration)
+**Confidence:** HIGH — based on direct codebase analysis; all integration points verified from source
 
 ---
 
-## v1.1 Integration Points
+## v1.2 Integration Points — Pre-fill Value Restoration (PREFILL-06)
 
-This section is the primary focus of the v1.1 research. The base architecture (App Router, Schema Registry, route handler split, Supabase client patterns) is stable and documented below. The new work touches three precise locations.
+This section is the primary focus of the v1.2 research. The base architecture and v1.1 changes are stable and documented below. The new work touches a small, well-defined set of files.
 
 ---
+
+### Problem Statement
+
+`InspectionNotesSection` already saves structured field values to `assets.inspection_notes` correctly. When the extract page reloads, `initialNotes` (the full structured string) is passed to the component as a prop. However:
+
+1. All `<Input>` fields render with no `defaultValue` — they are blank on reload.
+2. The `<Select>` (Suspension Type) has no `value` or `defaultValue` — it is blank on reload.
+3. The `<textarea>` (Other notes) receives `defaultValue={initialNotes}` — the **entire** structured string, including `vin: ...`, `odometer: ...` lines, not just the freeform notes portion.
+4. `structuredValuesRef.current` initialises as `{}` — if staff reload without making changes, a subsequent autosave would erase all previously stored structured values.
+
+The data is in Supabase and already reaching the component. The bug is purely in the component's failure to parse and distribute it to the correct inputs on mount.
+
+---
+
+### Persistence Decision: Keep `inspection_notes text` Column
+
+**No migration required.** Use the existing column as-is.
+
+Rationale:
+
+- `parseStructuredFields()` already exists in `extract/route.ts`. It splits `"key: value\n"` lines into `Record<string, string>`. Moving it to a shared location and calling it from `InspectionNotesSection` is all that is needed.
+- Adding separate columns (`inspection_vin`, `inspection_odometer`, etc.) would require: a migration, changes to `saveInspectionNotes`, changes to all `parseStructuredFields` callers, and new SELECT columns in `ExtractPage`. That is eight touch points for zero user-visible benefit.
+- The serialisation format is already correct. The round-trip `save → reload → parse → re-save` produces an identical string, so the extraction prompt is unaffected.
+- The `Notes:` line (freeform textarea) is already excluded from structured field parsing via the `key === 'Notes'` guard. This boundary is stable.
+
+---
+
+### Current (broken) Data Flow
+
+```
+Supabase: inspection_notes = "vin: 1HGCM82633A123456\nodometer: 187450\nsuspension: Airbag\nNotes: 48\" sleeper"
+    ↓
+ExtractPage (Server): SELECT inspection_notes → prop: inspectionNotes = raw string
+    ↓
+ExtractionPageClient: passes as initialNotes to InspectionNotesSection
+    ↓
+InspectionNotesSection:
+  - notesRef.current       = raw string (FULL structured string — wrong)
+  - structuredValuesRef    = {}          (empty — values lost)
+  - <Input vin>            → no defaultValue → blank
+  - <Input odometer>       → no defaultValue → blank
+  - <Select suspension>    → no value/defaultValue → blank
+  - <textarea Other notes> → defaultValue={raw string} → shows serialisation format
+```
+
+### Target (correct) Data Flow
+
+```
+Supabase: inspection_notes = "vin: 1HGCM82633A123456\nodometer: 187450\nsuspension: Airbag\nNotes: 48\" sleeper"
+    ↓
+ExtractPage (Server): SELECT inspection_notes → prop: inspectionNotes = raw string
+    ↓
+ExtractionPageClient: passes as initialNotes to InspectionNotesSection
+    ↓
+InspectionNotesSection (synchronous, in component function body):
+  - parsedMap = parseStructuredFields(initialNotes)
+    → { vin: "1HGCM82633A123456", odometer: "187450", suspension: "Airbag" }
+  - freeformNotes = extractFreeformNotes(initialNotes)
+    → "48\" sleeper"
+  - notesRef.current       = freeformNotes (correct — only freeform)
+  - structuredValuesRef    = parsedMap     (correct — pre-populated)
+  - <Input vin>            → defaultValue="1HGCM82633A123456"
+  - <Input odometer>       → defaultValue="187450"
+  - <Select suspension>    → defaultValue="Airbag" (or controlled)
+  - <textarea Other notes> → defaultValue="48\" sleeper"
+    ↓
+Staff triggers extraction without changes → structuredValuesRef already populated
+persistNotes() → same "key: value\n..." string → correct AI prompt (unchanged)
+```
+
+---
+
+### What Needs to Change
+
+#### 1. Extract `parseStructuredFields` to a shared utility
+
+**Current location:** `src/app/api/extract/route.ts` (exported, already imported by `describe/route.ts`).
+
+**Problem:** `InspectionNotesSection` is a `'use client'` component. It cannot import from a route handler. The parser must move to a client-accessible location.
+
+**Action:** Create `src/lib/utils/parseStructuredFields.ts`. Move the existing 12-line function there. Add a companion `extractFreeformNotes(notes: string | null): string` helper that extracts the value after the `Notes: ` prefix.
+
+Update import paths:
+- `src/app/api/extract/route.ts` — remove inline definition, add import
+- `src/app/api/describe/route.ts` — update import path
+- `src/__tests__/extract-route.test.ts` — update import path if the test imports `parseStructuredFields` directly
+
+No behaviour change. Pure refactor.
+
+#### 2. Parse `initialNotes` in `InspectionNotesSection` on mount
+
+At the top of the component function body (synchronous, before render):
+
+```typescript
+const parsedInitial = parseStructuredFields(initialNotes)
+const freeformInitial = extractFreeformNotes(initialNotes)
+```
+
+Initialise refs with parsed values:
+```typescript
+const structuredValuesRef = useRef<Record<string, string>>(parsedInitial)
+const notesRef = useRef<string>(freeformInitial)
+```
+
+These are `useRef` initialisations — they run once on mount. No `useEffect` needed.
+
+#### 3. Add `defaultValue` to `<Input>` fields
+
+```tsx
+<Input
+  defaultValue={parsedInitial[field.key] ?? ''}
+  onChange={(e) => handleStructuredChange(field.key, e.target.value)}
+/>
+```
+
+Uncontrolled with `defaultValue` — correct pattern for the debounced-autosave flow. `defaultValue` sets the initial DOM value once; `onChange` keeps the ref in sync.
+
+#### 4. Restore `<Select>` (Suspension Type)
+
+The `<Select>` component has no `value` or `defaultValue`. Two approaches:
+
+**Option A — `defaultValue` prop (attempt first):** Pass `defaultValue={parsedInitial[field.key] ?? undefined}` to `<Select>`. The Base UI / Radix Select component supports `defaultValue` for uncontrolled initialisation. If the library honours it, no state is required.
+
+**Option B — controlled with local state (fallback):** If the library does not honour `defaultValue` visually, add `useState` for select fields only:
+
+```typescript
+const [selectValues, setSelectValues] = useState<Record<string, string>>(() =>
+  Object.fromEntries(
+    priorityFields
+      .filter(f => f.inputType === 'select')
+      .map(f => [f.key, parsedInitial[f.key] ?? ''])
+  )
+)
+```
+
+Then pass `value={selectValues[field.key]}` to `<Select>` and update both `selectValues` and `structuredValuesRef` on change. This is the minimal controlled-state surface: only select fields, lazily initialised.
+
+Only one select field exists across all asset types (Suspension Type on Truck/Trailer), so the state cost is minimal either way.
+
+#### 5. Fix `<textarea>` `defaultValue`
+
+Change from:
+```tsx
+defaultValue={initialNotes ?? ''}
+```
+to:
+```tsx
+defaultValue={freeformInitial}
+```
+
+---
+
+### Integration Points
+
+#### Modified: New File
+
+| File | Change | Purpose |
+|------|--------|---------|
+| `src/lib/utils/parseStructuredFields.ts` | **New** | Shared parser: `parseStructuredFields()` + `extractFreeformNotes()` |
+
+#### Modified: Existing Files
+
+| File | Change | What Changes |
+|------|--------|--------------|
+| `src/components/asset/InspectionNotesSection.tsx` | **Modified** | Parse initialNotes on mount; add defaultValue to inputs; fix Select; fix textarea |
+| `src/app/api/extract/route.ts` | **Modified** | Remove inline `parseStructuredFields`; import from shared lib |
+| `src/app/api/describe/route.ts` | **Modified** | Update import path for `parseStructuredFields` |
+| `src/__tests__/extract-route.test.ts` | **Modified** | Update import path if test imports `parseStructuredFields` directly |
+
+#### Unchanged
+
+| File | Reason |
+|------|--------|
+| `src/lib/actions/inspection.actions.ts` | Save path is correct; no changes |
+| `src/app/(app)/assets/[id]/extract/page.tsx` | Already selects and passes `inspection_notes` |
+| `src/components/asset/ExtractionPageClient.tsx` | Already passes `inspectionNotes` prop |
+| Supabase schema / all migrations | No new columns; existing column is sufficient |
+| `/api/extract` prompt building | Reads from DB at extraction time; unaffected |
+
+---
+
+### Build Order
+
+```
+Step 1: Create src/lib/utils/parseStructuredFields.ts
+        — move parseStructuredFields()
+        — add extractFreeformNotes()
+        — no callers updated yet (both exports exist in original location still)
+
+Step 2: Update route imports (independent, parallel)
+        2a. extract/route.ts — remove inline fn, import from shared lib
+        2b. describe/route.ts — update import path
+        2c. extract-route.test.ts — update import path
+
+Step 3: Update InspectionNotesSection.tsx
+        3a. Import parseStructuredFields + extractFreeformNotes
+        3b. Compute parsedInitial + freeformInitial at top of component
+        3c. Initialise structuredValuesRef and notesRef with parsed values
+        3d. Add defaultValue to all <Input> fields
+        3e. Add defaultValue (or value) to <Select>
+        3f. Fix <textarea> defaultValue to freeformInitial
+
+Step 4: Verify in dev — load existing asset with inspection_notes, confirm restore
+```
+
+Steps 2a–2c are independent of each other. Step 3 depends on Step 1 being complete. The total change is 1 new file + 4 modified files. No migration, no new dependencies, no new components.
+
+---
+
+### System Overview (v1.2)
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  BROWSER (Client)                                                    │
+│                                                                      │
+│  InspectionNotesSection (MODIFIED for v1.2)                         │
+│    ├── parseStructuredFields(initialNotes) ← NEW: shared lib call   │
+│    ├── extractFreeformNotes(initialNotes)  ← NEW: shared lib call   │
+│    ├── structuredValuesRef = parsedInitial ← FIXED: was always {}   │
+│    ├── notesRef = freeformInitial          ← FIXED: was full string  │
+│    ├── <Input defaultValue={parsedInitial[key]} /> ← FIXED: restored│
+│    ├── <Select defaultValue={parsedInitial[key]} /> ← FIXED: restored│
+│    └── <textarea defaultValue={freeformInitial} /> ← FIXED: freeform│
+│                                                                      │
+└────────────────────────────┬────────────────────────────────────────┘
+                             │ Server Action (debounced 500ms, unchanged)
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│  NEXT.JS SERVER                                                      │
+│                                                                      │
+│  src/lib/utils/parseStructuredFields.ts ← NEW shared utility        │
+│    — parseStructuredFields(notes) → Record<string, string>          │
+│    — extractFreeformNotes(notes) → string                           │
+│                                                                      │
+│  extract/route.ts — imports from shared lib (MODIFIED import only)  │
+│  describe/route.ts — imports from shared lib (MODIFIED import only) │
+│                                                                      │
+│  ExtractPage (Server Component) — UNCHANGED                         │
+│    SELECT inspection_notes → prop to ExtractionPageClient           │
+│                                                                      │
+└────────────────────────────┬────────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│  SUPABASE — UNCHANGED                                                │
+│  assets.inspection_notes text — existing column, no migration        │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Anti-Patterns to Avoid (v1.2 specific)
+
+#### Anti-Pattern: Adding per-field database columns
+
+**What goes wrong:** Adding `inspection_vin text`, `inspection_odometer integer`, `inspection_suspension text` columns to `assets`.
+
+**Why wrong:** Requires migration + changes to 5+ callers. The structured text format already handles this generically and will accommodate any future `inspectionPriority` fields without schema changes.
+
+**Do instead:** Parse `inspection_notes` on read via the shared utility.
+
+#### Anti-Pattern: Passing raw `initialNotes` to textarea `defaultValue`
+
+**What goes wrong:** `<textarea defaultValue={initialNotes} />` — the current bug. Staff see the serialisation format (`vin: ...\nodometer: ...`) in the freeform textarea, not their own notes.
+
+**Do instead:** Extract only the freeform notes portion (value after `Notes: ` prefix) and pass that as `defaultValue`.
+
+#### Anti-Pattern: Controlled state for all inputs to support restore
+
+**What goes wrong:** Converting every `<Input>` to controlled (`value={state[key]}`) to support initial value display. Causes re-renders on every keystroke.
+
+**Do instead:** Use `defaultValue` for text/number inputs (uncontrolled). Use controlled state only for `<Select>` fields if the library requires it (and only for the select fields).
+
+#### Anti-Pattern: `useEffect` to fetch inspection_notes client-side
+
+**What goes wrong:** Adding a `useEffect` that calls Supabase from the browser to reload `inspection_notes`.
+
+**Why wrong:** `initialNotes` is already passed as a prop from the Server Component. A client fetch duplicates the data load, adds latency, and is unnecessary.
+
+**Do instead:** Parse the `initialNotes` prop synchronously in the component function body. No effect needed.
+
+---
+
+## v1.1 Integration Points (reference)
+
+*(Preserved for context — implemented and shipped 2026-03-21)*
 
 ### 1. Pre-Extraction Structured Input Fields
 
-#### What exists today
-
-`InspectionNotesSection` already renders structured per-type input fields using `getInspectionPriorityFields(assetType)`, which filters schema fields where `inspectionPriority: true`. Values are serialised into a single `inspection_notes` string and saved to the DB via `saveInspectionNotes()`. The extract route handler reads `asset.inspection_notes` and passes it to `buildUserPrompt()`.
-
-`buildUserPrompt()` already has a `structuredFields: Record<string, string>` parameter with full support for injecting key-value pairs as "Staff-provided field values (use these directly)" — **but this parameter is always called with an empty object** (`const structuredFields: Record<string, string> = {}` in `route.ts` line 57).
-
-#### What v1.1 needs
-
-Dedicated fields for four types: Truck (VIN, Odo, Hours, Suspension), Trailer (VIN, Suspension), Forklift (Unladen Weight / `truck_weight`), Caravan (Length ft / `trailer_length`). These are fields that staff type in before extraction — values should be injected as authoritative (not just hints) and bypass AI extraction confidence scoring.
-
-#### Where the fields live in the schema today
-
-Checking current `inspectionPriority` flags per schema:
-
-| Type | Fields with `inspectionPriority: true` today |
-|------|----------------------------------------------|
-| Truck | `odometer`, `registration_number`, `hourmeter`, `service_history` |
-| Trailer | `registration`, `hubometer`, `atm`, `tare` |
-| Forklift | `serial`, `max_lift_capacity`, `hours` |
-| Caravan | `vin`, `serial`, `registration`, `odometer` |
-
-The v1.1 required fields (`vin` for truck/trailer, `suspension` for truck/trailer, `hourmeter` for truck, `odometer` for truck, `truck_weight` for forklift, `trailer_length` for caravan) are **either already present with `inspectionPriority: true` or are missing that flag**.
-
-Specifically:
-- Truck `vin` — not currently `inspectionPriority` (aiExtractable only)
-- Truck `suspension` — not currently `inspectionPriority`
-- Trailer `vin` — not currently `inspectionPriority`
-- Trailer `suspension` — not currently `inspectionPriority`
-- Forklift `truck_weight` — not `inspectionPriority`, not `aiExtractable`
-- Caravan `trailer_length` — not `inspectionPriority`, not `aiExtractable`
-
-#### Integration approach (NEW vs MODIFIED)
-
-**Modified: schema files (4 files)**
-Add `inspectionPriority: true` to the required fields for Truck, Trailer, Forklift, Caravan. This makes them appear in `InspectionNotesSection` automatically — no component changes needed for rendering.
-
-**Modified: `route.ts` — extraction route handler**
-Currently `structuredFields` is hardcoded as `{}`. Instead, parse `inspection_notes` to extract structured key-value lines (format: `key: value\n`) and pass them to `buildUserPrompt()` as the `structuredFields` argument. This causes the AI to receive them as authoritative overrides, not just advisory hints.
-
-Alternatively — and more robustly — store structured fields separately in the DB rather than encoding them into `inspection_notes`. This requires:
-
-**Option A (simpler):** Parse structured lines out of `inspection_notes` string at extract time. The `InspectionNotesSection` already formats them as `key: value\n` lines. Route handler splits on newlines, builds the `structuredFields` map, and calls `buildUserPrompt()` correctly. No DB schema change required.
-
-**Option B (cleaner):** Add a `pre_extraction_fields: jsonb` column to the `assets` table. `InspectionNotesSection` saves structured values there separately. Route handler reads both `inspection_notes` and `pre_extraction_fields`. Requires a DB migration but eliminates the string-parsing hack.
-
-**Recommendation: Option A first** — the parsing logic is simple (lines matching `^(\w+): (.+)$`), the format is already being written by `InspectionNotesSection`, and it avoids a migration. If it proves fragile after testing, migrate to Option B.
-
-**No new components required.** The existing `InspectionNotesSection` already renders structured fields and already has placeholder text support. Adding `inspectionPriority: true` to the right schema fields is sufficient for the UI.
-
-#### Data flow for pre-extraction fields (v1.1)
-
-```
-Schema field gets inspectionPriority: true
-    ↓
-getInspectionPriorityFields(assetType) returns it
-    ↓
-InspectionNotesSection renders structured input
-    ↓
-handleStructuredChange → structuredValuesRef → persistNotes()
-    ↓
-saveInspectionNotes(assetId, combined)
-    — combined = "vin: 1HGCM82633A123456\nsuspension: Air\nNotes: <freetext>"
-    ↓
-inspection_notes saved to DB
-    ↓
-/api/extract POST → asset.inspection_notes loaded
-    ↓
-NEW: parse structured lines from inspection_notes
-    → structuredFields = { vin: "1HGCM82633A...", suspension: "Air" }
-    ↓
-buildUserPrompt(freetext, structuredFields)
-    — AI receives: "Staff-provided field values (use these directly): vin: 1HGCM..."
-    ↓
-AI treats these as high-confidence, no-override values
-```
-
----
+Schema files for Truck, Trailer, Forklift, Caravan had `inspectionPriority: true` added to target fields. `extract/route.ts` was updated to parse structured fields from `inspection_notes` and pass them to `buildUserPrompt()` as authoritative overrides (Option A from the research recommendation).
 
 ### 2. Notes-to-Description Fidelity
 
-#### What exists today
+`buildDescriptionUserPrompt()` in `describe/route.ts` was updated to label freeform notes as authoritative. A "Staff-provided values (use verbatim)" block was added. Belt-and-suspenders approach: system prompt rule + structured user prompt block. Runtime-verified in production.
 
-`/api/describe/route.ts` builds a user prompt via `buildDescriptionUserPrompt()` which includes:
+### 3. Session Auth Bug
 
-```
-Asset type: truck
-Subtype: prime_mover
-
-Confirmed fields:
-make: Kenworth
-model: T908
-...
-
-Inspection notes: 48" sleeper cab, diff locks, full service history
-```
-
-The description system prompt already instructs GPT-4o to research the asset and "only include a spec if confirmed from photos, inspection notes, or research." However, the notes are appended at the bottom of the user message as a freeform string. GPT-4o may not weight them sufficiently when the confirmed fields contradict them (e.g., a generic confirmed field value vs. a specific note value).
-
-#### Where the problem is
-
-The `buildDescriptionUserPrompt` function treats `inspection_notes` as supplementary ("additional context") rather than authoritative. Specific values in notes (cab size, custom specs, confirmed damage) should be preserved verbatim in the description. The current prompt does not explicitly instruct GPT-4o to prefer note values over generic inferences.
-
-#### Fix location
-
-**Modified: `buildDescriptionUserPrompt()` in `/api/describe/route.ts`**
-
-Change the framing from:
-
-```
-Inspection notes: <notes>
-```
-
-to:
-
-```
-Inspection notes (AUTHORITATIVE — use verbatim in description where applicable):
-<notes>
-```
-
-And add an explicit instruction line in the user prompt:
-
-```
-IMPORTANT: Any specific values in the inspection notes (dimensions, cab specs, confirmed options)
-must be preserved exactly as written in the description — do not substitute with generic specs.
-```
-
-This is a single targeted change to `buildDescriptionUserPrompt()`. No schema changes, no route changes, no new components.
-
-**Optionally:** Pre-process `inspection_notes` at describe time to separate structured key-value lines (already known format from InspectionNotesSection) from freeform notes. Pass freeform notes section as the "verbatim" block. This prevents the structured `vin: X` lines from being included in the description body (which would be wrong per the "no serial numbers in description" rule).
-
-#### Data flow for description fidelity (v1.1)
-
-```
-/api/describe POST → asset loaded (fields + inspection_notes)
-    ↓
-NEW: split inspection_notes into:
-    - structured lines (key: value) → exclude from description verbatim block
-    - freeform notes → include as authoritative description context
-    ↓
-buildDescriptionUserPrompt with:
-    - confirmed fields block (unchanged)
-    - freeform notes flagged as AUTHORITATIVE
-    ↓
-GPT-4o preserves specific values (cab sizes, noted options)
-```
-
----
-
-### 3. Session Auth Bug — Tab Click Redirects to Login
-
-#### What the bug is
-
-Clicking the "Assets" tab (which navigates to `/`) causes a redirect to `/login` during an active session. This happens inconsistently (not on every click).
-
-#### Root cause analysis
-
-The `(app)/page.tsx` (the Assets list page at `/`) is a `'use client'` component. The `(app)/layout.tsx` is a Server Component that calls `supabase.auth.getUser()` and redirects if no user found.
-
-The bug is in the middleware `setAll` cookie handler. Current code:
-
-```typescript
-setAll(cookiesToSet) {
-  cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-  supabaseResponse = NextResponse.next({ request })          // ← creates NEW response
-  cookiesToSet.forEach(({ name, value, options }) =>
-    supabaseResponse.cookies.set(name, value, options)
-  )
-},
-```
-
-When `setAll` is called, it discards the original `supabaseResponse` and creates a new `NextResponse.next({ request })`. Any response headers already set on the original `supabaseResponse` are lost. More critically: the new response object is created from `{ request }` — but at this point, `request.cookies` has already been mutated with the new cookie values on the first line. This means the response is created with the updated cookies in the request, but the cookie propagation back to the client depends on the `supabaseResponse.cookies.set()` calls afterward.
-
-The Supabase docs have explicit guidance on this: **you must not create a new response object after `createServerClient` is called, and the original `supabaseResponse` must be returned**. Creating a new `NextResponse.next({ request })` inside `setAll` breaks the cookie-writing chain on some request types.
-
-Additionally: middleware only runs on navigation requests (full page loads and prefetch), not on in-page client-side navigations via `useRouter().push()`. However, Next.js App Router soft navigation to a route that has a Server Component layout will trigger a server fetch for that layout. The `(app)/layout.tsx` is a Server Component, so navigating to any `(app)/` route triggers a server render of the layout — which calls `supabase.auth.getUser()` using the server client. If the session token has expired and the middleware did not refresh it (because the last navigation was a client-side navigation without a middleware run), then `getUser()` returns null and the layout redirects.
-
-#### Fix
-
-**Modified: `middleware.ts`**
-
-The correct pattern per Supabase official docs is to NOT recreate `supabaseResponse` inside `setAll`. Instead, update the existing response's cookies:
-
-```typescript
-export async function middleware(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({ request })
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          // Step 1: update request cookies (for downstream server reads)
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value)
-          )
-          // Step 2: update the existing supabaseResponse cookies (for client)
-          // DO NOT recreate supabaseResponse here
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
-        },
-      },
-    }
-  )
-
-  // IMPORTANT: must call getUser() to trigger session refresh
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user && !request.nextUrl.pathname.startsWith('/login')) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
-
-  // IMPORTANT: must return the original supabaseResponse, not a new response
-  return supabaseResponse
-}
-```
-
-The single change: remove `supabaseResponse = NextResponse.next({ request })` from inside the `setAll` callback.
-
-**Verification:** After this fix, navigating between tabs should not redirect to login. The session cookie will be refreshed correctly on each server render pass through the middleware.
-
-**Note on client-only navigation:** If the tab nav uses `<Link href="/">` (which it does via `BottomNav`), Next.js performs a soft navigation. The layout Server Component re-renders on the server, going through middleware. The fixed middleware writes the refreshed cookie correctly. The redirect loop is broken.
-
----
-
-## Build Order for v1.1
-
-Dependencies are minimal — three independent changes with one ordering constraint:
-
-```
-1. Auth bug fix (middleware.ts)
-   - Single file change, no deps
-   - Fix first: prevents testing pain from false login redirects during development
-   - MUST COMPLETE BEFORE: any integration testing
-
-2a. Schema updates (4 schema files: truck, trailer, forklift, caravan)
-    - Add inspectionPriority: true to required pre-extraction fields
-    - No downstream component changes needed
-    - Independent of description fix
-
-2b. Description fidelity fix (/api/describe/route.ts)
-    - Modify buildDescriptionUserPrompt() to weight notes as authoritative
-    - Independent of schema updates
-    - Can be done in parallel with 2a
-
-3. Extract route handler fix (route.ts)
-   - Parse structured fields from inspection_notes
-   - Pass to buildUserPrompt() as structuredFields
-   - DEPENDS ON 2a: schema updates must be in place so fields are being saved correctly before testing extraction quality
-```
-
----
-
-## System Overview (updated for v1.1)
-
-```
-┌────────────────────────────────────────────────────────────────────┐
-│  CLIENT LAYER (Browser — phone or desktop)                          │
-│                                                                     │
-│  ┌──────────────────────────────────────────────────────────────┐  │
-│  │ InspectionNotesSection (MODIFIED for v1.1)                   │  │
-│  │  - Renders structured fields via getInspectionPriorityFields │  │
-│  │  - Saves as "key: value\n" lines in inspection_notes         │  │
-│  │  - Schema adds new fields with inspectionPriority: true      │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-│                                                                     │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────┐  │
-│  │ PhotoCapture │  │ ReviewForm   │  │ OutputPanel              │  │
-│  │ (unchanged)  │  │ (unchanged)  │  │ (unchanged)              │  │
-│  └──────────────┘  └──────────────┘  └──────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────┘
-                              │ HTTPS
-┌─────────────────────────────┼──────────────────────────────────────┐
-│  NEXT.JS SERVER LAYER       │                                       │
-│                             │                                       │
-│  ┌──────────────────────────▼────────────────────────────────────┐  │
-│  │  middleware.ts (FIXED for v1.1)                               │  │
-│  │  — setAll no longer recreates supabaseResponse               │  │
-│  │  — session cookie refresh now propagates correctly            │  │
-│  └──────────────────────────┬────────────────────────────────────┘  │
-│                             │                                       │
-│  ┌──────────────────────────▼────────────────────────────────────┐  │
-│  │  /api/extract/route.ts (MODIFIED for v1.1)                    │  │
-│  │  — parses structured fields from inspection_notes             │  │
-│  │  — passes them to buildUserPrompt() as authoritative values   │  │
-│  └──────────────────────────────────────────────────────────────┘  │
-│                                                                     │
-│  ┌───────────────────────────────────────────────────────────────┐  │
-│  │  /api/describe/route.ts (MODIFIED for v1.1)                   │  │
-│  │  — buildDescriptionUserPrompt() marks notes as AUTHORITATIVE  │  │
-│  │  — separates structured key-value lines from freeform notes   │  │
-│  └───────────────────────────────────────────────────────────────┘  │
-│                                                                     │
-│  ┌───────────────────────────────────────────────────────────────┐  │
-│  │  lib/schema-registry/schemas/ (4 files MODIFIED for v1.1)     │  │
-│  │  truck.ts, trailer.ts, forklift.ts, caravan.ts               │  │
-│  │  — add inspectionPriority: true to target fields              │  │
-│  └───────────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────────┘
-                              │
-┌─────────────────────────────┼──────────────────────────────────────┐
-│  SUPABASE (unchanged)       │                                       │
-│  PostgreSQL + Storage + Auth│                                       │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Component Responsibilities (v1.1 changes only)
-
-| Component | v1.1 Change | What Changes |
-|-----------|-------------|--------------|
-| `middleware.ts` | FIXED | Remove `supabaseResponse = NextResponse.next({ request })` from inside `setAll` callback |
-| `lib/schema-registry/schemas/truck.ts` | MODIFIED | Add `inspectionPriority: true` to `vin`, `suspension` (already on `odometer`, `hourmeter`) |
-| `lib/schema-registry/schemas/trailer.ts` | MODIFIED | Add `inspectionPriority: true` to `vin`, `suspension` |
-| `lib/schema-registry/schemas/forklift.ts` | MODIFIED | Add `inspectionPriority: true` to `truck_weight` |
-| `lib/schema-registry/schemas/caravan.ts` | MODIFIED | Add `inspectionPriority: true` to `trailer_length` |
-| `app/api/extract/route.ts` | MODIFIED | Parse structured key-value lines from `inspection_notes`; pass as `structuredFields` to `buildUserPrompt()` |
-| `app/api/describe/route.ts` | MODIFIED | Update `buildDescriptionUserPrompt()` to flag freeform notes as authoritative; exclude structured key-value lines from the verbatim block |
-| `InspectionNotesSection` | UNCHANGED | Schema changes cause new fields to appear automatically |
-| All other components | UNCHANGED | No changes required |
+`middleware.ts` fixed: removed `supabaseResponse = NextResponse.next({ request })` from inside the `setAll` callback. Session cookie refresh now propagates correctly.
 
 ---
 
@@ -346,9 +316,9 @@ Dependencies are minimal — three independent changes with one ordering constra
 
 ### Server Actions vs Route Handlers
 
-**Server Actions (`'use server'`):** All DB mutations — create asset, save fields, save inspection notes, reorder photos. These are form-adjacent mutation operations.
+**Server Actions (`'use server'`):** All DB mutations — create asset, save fields, save inspection notes, reorder photos. Form-adjacent mutation operations.
 
-**Route Handlers (POST):** `/api/extract` (GPT-4o vision call) and `/api/describe` (GPT-4o description generation). Both are long-running (~5-15 seconds) calls unsuitable for Server Actions (which are queued/sequential per Next.js docs).
+**Route Handlers (POST):** `/api/extract` and `/api/describe`. Both are long-running (~5-15 seconds) AI calls unsuitable for Server Actions (which are queued/sequential).
 
 ### Supabase Client Patterns
 
@@ -357,45 +327,30 @@ Two distinct clients. Using the wrong one causes auth failures.
 ```typescript
 // lib/supabase/client.ts — use in 'use client' components only
 import { createBrowserClient } from '@supabase/ssr'
-export function createClient() {
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
-}
 
 // lib/supabase/server.ts — use in Server Components, Actions, Route Handlers
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-export async function createClient() {
-  const cookieStore = await cookies()
-  return createServerClient(..., { cookies: { getAll, setAll } })
-}
 ```
 
 ### Schema Registry
 
-Static TypeScript in `lib/schema-registry/`. Per-type field definitions with `key`, `label`, `sfOrder`, `inputType`, `aiExtractable`, `aiHint`, `inspectionPriority`, `required`. The registry is the single source of truth for:
-
-- Which fields the AI should attempt to extract (`aiExtractable: true`)
-- Which fields to show as structured inputs before extraction (`inspectionPriority: true`)
-- How to order fields in the Salesforce output (`sfOrder`)
-- What type of input to render in the review form (`inputType`, `options`)
+Static TypeScript in `lib/schema-registry/`. Per-type field definitions with `key`, `label`, `sfOrder`, `inputType`, `aiExtractable`, `aiHint`, `inspectionPriority`, `required`. The registry is the single source of truth for field rendering, AI extraction, Salesforce output ordering, and structured input display.
 
 ### JSONB Fields Storage
 
-`assets.fields` is a `jsonb` column. Field values are stored as `Record<string, string>` keyed by `FieldDefinition.key`. No per-field columns — schema differences across asset types make a normalised schema impractical.
+`assets.fields` is a `jsonb` column storing `Record<string, string>` keyed by `FieldDefinition.key`. No per-field columns. `assets.inspection_notes` is `text` storing the `"key: value\n"` structured format. `assets.extraction_result` is `jsonb` storing the full AI output object.
 
 ### Route Structure
 
 ```
 app/
-├── (auth)/login/page.tsx         — public, no auth required
+├── (auth)/login/page.tsx         — public
 ├── (app)/
 │   ├── layout.tsx                — Server Component, auth check + BottomNav
-│   ├── page.tsx                  — 'use client', Asset list (localStorage branch)
+│   ├── page.tsx                  — Asset list
 │   └── assets/
-│       ├── new/page.tsx          — create flow: type select + branch
+│       ├── new/page.tsx          — create flow
 │       └── [id]/
 │           ├── photos/page.tsx   — photo upload + InspectionNotesSection
 │           ├── extract/page.tsx  — AI extraction trigger
@@ -409,37 +364,13 @@ middleware.ts                     — auth guard + session refresh
 
 ---
 
-## Anti-Patterns to Avoid (v1.1 specific)
-
-### Anti-Pattern: Notes as Supplementary Context
-
-**What goes wrong:** Passing `inspection_notes` as "additional context" at the end of the describe prompt. GPT-4o will use it as reference but not necessarily preserve verbatim values.
-
-**Do instead:** Explicitly label freeform notes as authoritative with "use verbatim in description where applicable" instruction. Ensure structured key-value lines are excluded from the verbatim block to avoid serial numbers appearing in description text.
-
-### Anti-Pattern: Recreating Response in Middleware setAll
-
-**What goes wrong:** `supabaseResponse = NextResponse.next({ request })` inside `setAll` discards the original response and creates a new one. Supabase requires returning the exact same response object that was created before `createServerClient`. A new response breaks cookie propagation.
-
-**Do instead:** Update `supabaseResponse.cookies.set()` on the existing object — never reassign `supabaseResponse` inside `setAll`.
-
-### Anti-Pattern: Passing Inspection Notes as Both Structured Overrides and Free Text
-
-**What goes wrong:** If structured lines (`vin: 1HGCM...`) from `inspection_notes` are passed to both `structuredFields` (in extraction) and the freeform notes block, GPT may encounter them twice. In description generation, `vin: X` appearing in the notes block could cause serial numbers to appear in the description (violating the "no serial numbers in description" rule).
-
-**Do instead:** In the extract route, strip structured lines from the freeform notes portion when calling `buildUserPrompt()`. In the describe route, strip structured lines from the notes before passing as the verbatim description context.
-
----
-
 ## Sources
 
+- Direct codebase analysis: `InspectionNotesSection.tsx`, `extract/route.ts`, `describe/route.ts`, `extract/page.tsx`, `inspection.actions.ts`, all schema files, all migrations (verified 2026-03-21)
+- Project context: `.planning/PROJECT.md` — v1.2 milestone, PREFILL-06 requirement
 - Supabase SSR Next.js docs: https://supabase.com/docs/guides/auth/server-side/nextjs
-- Supabase troubleshooting guide (Next.js + Supabase auth): https://supabase.com/docs/guides/troubleshooting/how-do-you-troubleshoot-nextjs---supabase-auth-issues-riMCZV
-- Supabase SSR cookies/setAll issue discussion: https://github.com/supabase/ssr/issues/36
-- Multiple GoTrueClient instances warning: https://github.com/orgs/supabase/discussions/37755
-- Direct codebase analysis: `middleware.ts`, `route.ts` (extract + describe), `InspectionNotesSection.tsx`, all 4 schema files, `(app)/layout.tsx`
 
 ---
 
-*Architecture research for: prestige_assets v1.1 Pre-fill & Quality*
+*Architecture research for: prestige_assets v1.2 Pre-fill Value Restoration*
 *Researched: 2026-03-21*

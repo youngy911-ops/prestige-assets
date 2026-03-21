@@ -1,181 +1,172 @@
 # Project Research Summary
 
-**Project:** Prestige Assets — Slattery Auctions internal asset book-in tool (v1.1 Pre-fill & Quality)
-**Domain:** AI-powered internal data-capture web app (Next.js + Supabase + GPT-4o)
+**Project:** Prestige Assets v1.2 — Pre-fill Value Restoration (PREFILL-06)
+**Domain:** Pre-extraction form persistence and restoration — internal AI-powered asset data-capture tool (Next.js + Supabase)
 **Researched:** 2026-03-21
-**Confidence:** HIGH
+**Confidence:** HIGH — all four research areas based on direct codebase analysis; no speculative assumptions
 
-> Note: This file supersedes the v1.0 summary (2026-03-17). v1.0 is shipped and validated. This summary covers the three v1.1 issues only.
+> Note: This file supersedes the v1.1 summary (2026-03-21). v1.1 is shipped and validated (phases 08, 09, 10 complete). This summary covers v1.2 PREFILL-06 only.
 
 ## Executive Summary
 
-v1.1 (Pre-fill & Quality) is a targeted patch milestone on a fully-built, production app. All three reported issues — pre-extraction structured inputs not surfacing the right fields, AI descriptions paraphrasing staff notes instead of preserving them verbatim, and the Assets tab redirecting authenticated users to login — are solvable by modifying existing files. Zero new dependencies are required. The infrastructure for each fix already exists in the codebase: the `inspectionPriority` field rendering mechanism is live, the `structuredFields` path in `buildUserPrompt` is already written, and the `(app)/layout.tsx` auth guard already works correctly. The gaps are six missing schema flags, an absent verbatim instruction in a system prompt, and a conflicting root-level `page.tsx` that shadows the real assets list page.
+PREFILL-06 is a tightly scoped bug fix and restoration feature for `InspectionNotesSection`, an internal form component used by auction staff to capture structured asset data (VIN, odometer, suspension type, etc.) before AI extraction. The data is already being saved correctly to a single `inspection_notes text` column in Supabase using a `key: value\n` serialisation format. The bug is purely on the read side: the component does not parse `initialNotes` back into its structured inputs on mount, so fields appear blank on every reload. A companion bug causes the freeform "Other notes" textarea to display the entire serialised string (including structured key-value lines) instead of just the staff's freeform notes.
 
-The recommended approach is sequential delivery in three independent units, ordered to eliminate the session bug first (it causes false login redirects during development of the other changes), then the schema flag additions and extraction route wiring together (these are coupled and must ship as one unit), then the description prompt fix independently. Each unit is one to three file changes and can be verified in isolation. No shared state exists between units; a failure in one does not block the others.
+The recommended approach requires zero new dependencies and no database migrations. The fix involves three coordinated changes: (1) extracting the already-written `parseStructuredFields` function to a shared utility accessible by client components, (2) calling it synchronously in the `InspectionNotesSection` component body on mount to derive `parsedInitial` and `freeformInitial` maps, and (3) passing these values as `defaultValue` to text inputs, as `defaultValue` or controlled `value` to the Radix/Base UI Select, and as `defaultValue` to the textarea. The `structuredValuesRef` and `notesRef` refs must also be seeded from the parsed maps at mount — failing to do this causes a silent data-loss bug where the first autosave after reload overwrites all saved structured values with an empty object.
 
-The primary risk is the "silent no-op" trap: adding `inspectionPriority: true` to schema fields makes the inputs appear in the UI, but unless the extraction route is also updated to parse structured values out of `inspection_notes` and pass them to `buildUserPrompt`, staff-entered values arrive in the AI prompt as unstructured text rather than authoritative overrides. Schema changes and route parse step must ship together. A secondary risk is pre-fill inputs rendering blank after a page reload because `structuredValuesRef` is always initialised to `{}` on mount — the storage strategy (string-parse on mount vs. a new `pre_fill_fields` JSONB column) must be decided before implementation, not during.
+The main implementation risk is timing. Radix Select's `defaultValue` is read-once at mount — if parsing is deferred to a `useEffect`, the Select will mount with no value and will not recover. All parsing must happen synchronously in the component function body. A secondary risk is the existing 500ms debounce without an unmount flush: if staff navigate away mid-edit, in-progress changes are silently lost. Adding a `useEffect` cleanup that flushes `persistNotes()` on unmount is a required part of this implementation and should not be deferred — PREFILL-06 is the only planned code window to touch this component.
+
+---
 
 ## Key Findings
 
 ### Recommended Stack
 
-All v1.1 changes are within the existing validated stack. No new packages, no version changes, no DB migrations required for MVP scope. The existing stack (`next@16.1.7`, `@supabase/ssr@^0.9.0`, `ai@^6.0.116`, `zod@^4.3.6`, `react-hook-form@^7.71.2`) requires no changes. GPT-4o verbatim preservation is achievable via prompt engineering alone — no structured output schema or streaming changes are needed.
+No new technology is introduced for v1.2. The entire fix operates within the existing stack. `parseStructuredFields` (already written and tested in `extract/route.ts`) is moved to `src/lib/utils/parseStructuredFields.ts`; a companion `extractFreeformNotes` function (5 lines) is added alongside it. React `defaultValue` handles text input restoration; a minimal `useState` handles the Radix/Base UI Select if `defaultValue` alone proves unreliable on hydration.
 
-**Core technologies (all unchanged):**
-- `Next.js App Router`: routing, Server Components, middleware — no changes to framework usage
-- `@supabase/ssr`: auth, DB — middleware cookie handling bug fixed by removing one line inside `setAll` callback
-- `GPT-4o` via Vercel AI SDK: extraction and description — both improved by prompt edits only
-- Schema Registry (static TypeScript): single source of truth for field definitions — `inspectionPriority` flag additions drive all UI changes without component rewrites
+**Core technologies (all existing):**
+- `inspection_notes text` (Supabase): Storage for all pre-extraction values — no schema change needed; data is already present and correctly saved
+- `parseStructuredFields` (existing function, moved to shared lib): Pure parser from `"key: value\n"` string to `Record<string, string>` — already handles all edge cases including the `Notes:` freeform exclusion guard
+- `extractFreeformNotes` (new companion function, ~5 lines): Extracts the value after `Notes: ` prefix for the freeform textarea `defaultValue`
+- React `defaultValue` (React 19, existing): Sets initial DOM value for uncontrolled text inputs once on mount — compatible with the existing `onChange` → ref pattern; requires synchronous parse before first render
+- React controlled `value` + `useState` (React 19, existing): Required for Radix/Base UI Select when initial value comes from a server-rendered prop if `defaultValue` risks a blank trigger on hydration timing differences
 
-See `.planning/research/STACK.md` for the full per-feature file change table.
+See `.planning/research/STACK.md` for the full per-file change table and version compatibility notes.
 
 ### Expected Features
 
-v1.1 is not greenfield — it closes three specific gaps in a working app. Feature scope is tightly bounded by direct code analysis.
+**Must have (table stakes — all P1 for PREFILL-06):**
+- Structured text inputs (`<Input>`) pre-populated on reload — staff should never re-enter VIN, odometer, etc. after saving them once
+- Suspension `<Select>` pre-selected on reload — currently displays placeholder despite saved value being present in DB; primary visible symptom reported
+- `structuredValuesRef` seeded from parsed values at mount — hidden correctness requirement; without this, the first autosave after reload silently erases all saved structured values even if inputs display correctly
+- Freeform textarea shows only freeform notes portion — secondary display bug fixed as part of the same change; `notesRef` must also be initialised from freeform-only portion to prevent double-serialisation on next autosave
 
-**Must have (table stakes for v1.1):**
-- Pre-extraction structured input for Truck VIN and Suspension — fields not readable from photos; staff know them on-site
-- Pre-extraction structured input for Trailer VIN and Suspension — same reasoning
-- Pre-extraction structured input for Forklift Unladen Weight (`truck_weight`) — not extractable; staff read from data plate
-- Pre-extraction structured input for Caravan Length in ft (`trailer_length`) — not extractable; Salesforce requires ft
-- Staff-entered structured values passed as authoritative overrides to `buildUserPrompt` — the `structuredFields` wiring already exists but is hardcoded empty (`{}`)
-- Description system prompt verbatim instruction — prevents GPT-4o paraphrasing specific staff-entered values; XML delimiters prevent accidental prompt injection
-- Session bug fix: delete `src/app/page.tsx` which unconditionally redirects `/` to `/login`, blocking authenticated Assets tab navigation
-
-**Should have (quality improvements, v1.1.x after validation):**
-- Pre-fill field values persisted across page reload — `structuredValuesRef` always initialises to `{}` on mount; values are in the DB but not re-parsed into inputs on return
-- Suspension field as select input (Air / Leaf Spring / Airbag) — text input with placeholder is acceptable for v1.1
+**Should have (add after validation):**
+- Save failure inline error state — surface `saveInspectionNotes` errors to the user; currently fails silently
 
 **Defer (v2+):**
-- `pre_fill_fields` JSONB column — clean separation of structured vs. freeform notes; required for reliable reload persistence at scale; avoids string-parsing fragility
-- Pre-fill inputs for additional asset types (earthmoving, agriculture)
+- `pre_extraction_fields JSONB` column — eliminates the string serialisation contract entirely; only warranted if the parse approach proves fragile in practice (unlikely given app-controlled format)
 
-See `.planning/research/FEATURES.md` for full feature dependency graph and prioritisation matrix.
+See `.planning/research/FEATURES.md` for the full feature dependency graph, MVP checklist, and prioritisation matrix.
 
 ### Architecture Approach
 
-All three v1.1 integration points are targeted modifications to existing components. The modified surface is minimal: four schema files, two API route handlers, and one file deletion. No new components, no new routes, no DB migrations. The one decision with architectural weight is how to separate structured key-value lines from freeform notes when building the extraction and description prompts — both routes need to strip `key: value` lines from the freeform notes block to avoid structured fields appearing in description prose (violates the "no serial numbers in description" rule) or being double-counted as both hints and authoritative overrides.
+The change is self-contained within five files: one new shared utility, three import-path updates (no logic change), and one component modification. No Server Components, no API routes, no database schema, and no new React component boundaries change. The architecture decision to keep data in the existing text column (rather than adding per-field columns) is explicitly supported: any new `inspectionPriority` fields added to the schema registry automatically participate in the round-trip without a migration.
 
-**Components modified in v1.1:**
-1. `lib/schema-registry/schemas/{truck,trailer,forklift,caravan}.ts` — add `inspectionPriority: true` to 6 fields; `InspectionNotesSection` picks them up automatically via `getInspectionPriorityFields()`
-2. `app/api/extract/route.ts` — parse structured `key: value` lines from `inspection_notes`; pass as `structuredFields` to `buildUserPrompt()`; strip structured lines from freeform notes block
-3. `app/api/describe/route.ts` — update `buildDescriptionUserPrompt()`: mark freeform notes as authoritative, add verbatim instruction, wrap notes in XML delimiters, exclude structured key-value lines from the verbatim block; add rule block to `DESCRIPTION_SYSTEM_PROMPT`
-4. `src/app/page.tsx` — deleted; resolves root route conflict with `src/app/(app)/page.tsx`
+**Files changed:**
+1. `src/lib/utils/parseStructuredFields.ts` (new) — shared utility: `parseStructuredFields()` + `extractFreeformNotes()`
+2. `src/components/asset/InspectionNotesSection.tsx` (modified) — synchronous parse on mount; `defaultValue` on inputs; Select fix; textarea fix; unmount flush
+3. `src/app/api/extract/route.ts` (modified) — remove inline definition; import from shared lib
+4. `src/app/api/describe/route.ts` (modified) — update import path
+5. `src/__tests__/extract-route.test.ts` (modified) — update import path if test imports the function directly
 
-**Components unchanged:** `InspectionNotesSection`, `middleware.ts` (no changes needed beyond the session fix), all other components.
+**Unchanged:** Server Components, all Server Actions, all route handler logic, `ExtractionPageClient.tsx`, `inspection.actions.ts`, entire Supabase schema
 
-See `.planning/research/ARCHITECTURE.md` for data flow diagrams, build order, and the full system overview diagram.
+See `.planning/research/ARCHITECTURE.md` for the current vs. target data flow diagrams, step-by-step build order, and the annotated system overview diagram.
 
 ### Critical Pitfalls
 
-Full detail with prevention strategies and phase assignments in `.planning/research/PITFALLS.md`.
+Full detail with warning signs, recovery steps, and verification checklists in `.planning/research/PITFALLS.md`.
 
-1. **Structured fields wired as no-op** — `structuredFields = {}` in extract route is hardcoded. Adding schema flags without also updating the route parse step means staff values arrive as unstructured notes, not authoritative overrides. The "staff-provided field values (use these directly)" path in `buildUserPrompt` is never exercised. Schema changes and route changes must ship together in the same phase.
+1. **Radix Select `defaultValue` timing** — `defaultValue` is read-once at mount; if parsing runs in a `useEffect`, the Select mounts with no value and ignores all later changes. Parse `initialNotes` synchronously in the component body (or `useMemo`) before the first render — never in an effect.
 
-2. **Pre-fill inputs blank on reload** — `structuredValuesRef` always initialises to `{}` regardless of saved `initialNotes`. Values are in the DB but not re-surfaced in the UI. Must be resolved before staff use the feature at scale — re-entering a different VIN after reload corrupts the saved data. Storage strategy must be decided upfront.
+2. **`structuredValuesRef` not seeded — silent data loss** — Adding `defaultValue` to inputs without also seeding `structuredValuesRef.current` means the first autosave after reload serialises an empty object, overwriting VIN, odometer, etc. already in the DB. Both the display props and the ref initialisation must be fixed together in the same commit.
 
-3. **Root route conflict (session bug)** — `src/app/page.tsx` unconditionally calls `redirect('/login')`, taking precedence over `src/app/(app)/page.tsx` for the `/` route. Deleting the file is the correct fix. The `(app)/layout.tsx` auth guard and middleware already handle all auth protection without it.
+3. **Unmount flush missing — race condition on navigation** — The existing 500ms debounce has no `useEffect` cleanup. Staff who navigate away within 500ms of an edit lose the change. Add a synchronous `persistNotes()` call in `useEffect` cleanup. This is a pre-existing bug that must be fixed in PREFILL-06 — it has no other planned implementation window.
 
-4. **Notes passed raw to description prompt** — without XML delimiters and an explicit verbatim instruction, GPT-4o paraphrases staff-entered measurements and names by default. Delimiters must accompany the verbatim instruction to also prevent accidental instruction injection from note content.
+4. **Uncontrolled → controlled switching warning** — Use `defaultValue` (uncontrolled) for text inputs. Do not pass `value={parsedValues[key]}` to inputs that currently have no `value` prop. For Radix Select: if using controlled `value`, initialise to `''` (never `undefined`) to remain unambiguously controlled throughout the component lifetime.
 
-5. **Field key mismatch on Forklift** — v1.1 requirement says "Unladen Weight" but the existing Salesforce field key is `truck_weight`. Adding a new field under a different key creates a DB split and Salesforce output gap. Fix: set `inspectionPriority: true` on the existing `truck_weight` field, not a new one.
+5. **`parseStructuredFields` key format contract** — Serialisation uses `field.key` verbatim as the line prefix; restoration must look up by the exact same key. A schema key change silently breaks restoration without any error or warning. Unit-test the round-trip across all priority fields before shipping.
+
+---
 
 ## Implications for Roadmap
 
-Based on research, the three v1.1 features map cleanly to three independent phases ordered by development dependency and test-feedback value.
+PREFILL-06 is a single focused milestone with a clear dependency order. The research points to one implementation phase with four sequential steps that should proceed in order to prevent broken intermediate states.
 
-### Phase 1: Session Auth Bug Fix
+### Phase 1: Shared Utility Extraction
 
-**Rationale:** The Assets tab redirect-to-login bug affects every navigation during development and testing of the other changes. Fixing it first eliminates false failures and keeps test feedback clean for Phases 2 and 3. It is also the simplest change: one file deleted, zero dependencies, immediately verifiable.
+**Rationale:** `InspectionNotesSection` is a `'use client'` component that cannot import from a route handler. The shared utility must exist before the component can be updated. This step is a pure refactor with no behaviour change — safe to implement and verify in isolation before touching the UI.
+**Delivers:** `src/lib/utils/parseStructuredFields.ts` with both `parseStructuredFields` and `extractFreeformNotes`; updated import paths in `extract/route.ts`, `describe/route.ts`, and the test file. All existing tests pass unchanged.
+**Addresses:** Pitfall 5 (key format contract) — the shared utility becomes the single authoritative implementation, eliminating the risk of divergent copies
+**Avoids:** Duplicating parse logic in the component (identified as a common mistake in integration gotchas)
 
-**Delivers:** Authenticated users can click the Assets tab without being redirected to login. Unauthenticated users continue to be redirected correctly by middleware and `(app)/layout.tsx`.
+### Phase 2: Component Restoration
 
-**Addresses:** Session auth issue (table stakes)
+**Rationale:** Depends on Phase 1. All four restoration requirements — text inputs, Select, textarea, ref seeding — must be implemented together. Partial restoration (e.g., textarea only) is explicitly worse than none: it creates false confidence that values are saved while silently allowing data loss on autosave.
+**Delivers:** `InspectionNotesSection` fully restores all structured inputs and the freeform textarea on reload; `structuredValuesRef` and `notesRef` seeded correctly from parsed values; no console warnings
+**Implements:** Synchronous `parseStructuredFields` + `extractFreeformNotes` calls at top of component body; `defaultValue` on all text `<Input>` fields; controlled `useState` on `<Select>` (or `defaultValue` if library honours it); `freeformInitial` on textarea; `parsedInitial` seeded into both refs
+**Avoids:** Pitfalls 1 (Select timing), 2 (ref not seeded), 4 (controlled/uncontrolled switch)
 
-**Avoids:** Pitfall 6 (root route conflict), Pitfall 7 (confirm middleware matcher remains inclusive of all routes after fix — no narrowing to exclude `/api/`)
+**Decision required before implementation:** Test whether Base UI `<Select>` honours `defaultValue` correctly for server-rendered initial values in dev. If the trigger renders correctly → use `defaultValue` (simpler). If blank → switch to controlled `value` + `useState`. The fallback path is fully designed in STACK.md and ARCHITECTURE.md; it is a two-line change.
 
-**No deeper research needed:** Root cause confirmed by direct code inspection. Fix is one file deletion. Middleware correctness verified against official Supabase SSR docs — no changes to middleware needed.
+### Phase 3: Unmount Flush
 
-### Phase 2: Pre-Extraction Structured Input Fields
+**Rationale:** Can be in the same PR as Phase 2, but called out separately because it addresses a distinct pre-existing race condition rather than the restoration display bug. It must not be deferred — PREFILL-06 is the only planned code window for `InspectionNotesSection`.
+**Delivers:** `useEffect` cleanup that calls `persistNotes()` synchronously on unmount; in-progress edits no longer silently lost on fast navigation
+**Avoids:** Pitfall 3 (stale value race / data loss on unmount)
 
-**Rationale:** Schema flag additions are the lowest-risk changes and unlock the pre-fill UI automatically. The route parse step must ship in the same phase — shipping the schema changes alone produces the critical silent no-op. The two sub-tasks are coupled and must be delivered together as one unit.
+### Phase 4: Test Coverage
 
-**Delivers:** Staff can enter VIN, suspension type, unladen weight, and caravan length before extraction. These values arrive in the AI prompt as authoritative overrides under "Staff-provided field values (use these directly)", bypassing photo-based extraction uncertainty for fields that photos cannot reliably supply.
-
-**Addresses:** Pre-extraction structured inputs for all four asset types (table stakes), structured fields wired to `buildUserPrompt` (differentiator)
-
-**Uses:** Schema Registry `inspectionPriority` flag, `buildUserPrompt` `structuredFields` parameter (already exists), `inspection_notes` string parse in extract route
-
-**Avoids:** Pitfall 1 (no-op wiring — ship schema and route changes together), Pitfall 3 (duplicate field UX confusion — requires clear "Enter known values before extraction" section label), Pitfall 8 (forklift field key — use existing `truck_weight`, not a new field), Pitfall 9 (caravan length — add explicit ft placeholder text)
-
-**Decision required before implementation:** State re-hydration on reload (Pitfall 2). Option A: parse `initialNotes` back into `structuredValuesRef` on mount (string-parse, fragile but no migration). Option B: `pre_fill_fields` JSONB column (clean, requires migration). Research recommends Option A for v1.1 MVP with Option B tracked for v1.2. Must decide and document before Phase 2 begins — not mid-implementation.
-
-### Phase 3: Description Verbatim Fidelity
-
-**Rationale:** Fully independent of Phases 1 and 2; can be verified against any existing asset record. Placed third because it has the fewest dependencies and the simplest test path (enter specific dimension in notes, generate description, assert verbatim match). High confidence, single-file change.
-
-**Delivers:** AI-generated descriptions preserve specific staff-entered measurements, custom fitments, and condition notes verbatim. XML delimiters around inspection notes prevent accidental instruction injection from note content.
-
-**Addresses:** Staff-entered notes preserved verbatim (table stakes), notes-verbatim improvement for all asset types (differentiator)
-
-**Implements:** `buildDescriptionUserPrompt()` verbatim instruction + XML delimiters; `DESCRIPTION_SYSTEM_PROMPT` verbatim rule block; exclusion of structured key-value lines from the description verbatim context
-
-**Avoids:** Pitfall 4 (notes paraphrased — explicit verbatim instruction required), Pitfall 5 (prompt injection from notes content — XML delimiters required)
-
-**No deeper research needed:** GPT-4o verbatim preservation via explicit system prompt instruction is a documented, high-confidence pattern. Single-file prompt edit with no schema, component, or DB side effects.
+**Rationale:** The `parseStructuredFields` key format is an implicit contract. Unit tests validate the round-trip across all asset types and field keys, providing a regression barrier if schema keys change in future phases.
+**Delivers:** Unit tests: `parseStructuredFields(serialised)` recovers each field key correctly for all priority fields across all asset types; `extractFreeformNotes` edge cases covered (no Notes line, empty Notes value)
+**Addresses:** Pitfall 5 (key mismatch); provides ongoing confidence in the text-column approach as the schema registry grows
 
 ### Phase Ordering Rationale
 
-- Session bug first eliminates false login redirects during development and testing of Phases 2 and 3
-- Schema flag additions and extraction route wiring are coupled (must ship together); description fix is independent but logically follows the extraction workflow (describe comes after extract)
-- Description fix last because it is the most independent and easiest to test in isolation against existing asset data
-- No phase requires a DB migration; all phases are git-revertible without data loss
+- Phase 1 must precede Phase 2 because the client component cannot import from a route handler — this is a hard dependency
+- Phases 2 and 3 can be implemented in a single PR; separating them conceptually ensures the unmount flush is treated as mandatory, not optional
+- Phase 4 should be in the same PR as Phases 2–3 — tests should be written before the PR is merged, not as a follow-up
+- The entire milestone is one logical PR: 1 new file, 4 modified files, 0 migrations, 0 new dependencies
 
 ### Research Flags
 
-Phases needing a decision before implementation begins:
+Phases with standard patterns (no deeper research needed):
+- **All phases:** Patterns are fully established from direct codebase analysis. React `defaultValue`, Next.js Server Component prop threading, and Server Action autosave patterns are all well-documented and verified in existing code.
 
-- **Phase 2:** Pre-fill state re-hydration on reload — must choose between string-parse on mount (Option A, fragile, MVP-acceptable) and a separate `pre_fill_fields` JSONB column (Option B, clean, requires migration). Defer the migration to v1.2 but document the limitation explicitly in Phase 2 notes so it is not treated as "working correctly."
+Phases that need one validation point during implementation:
+- **Phase 2 (Select restoration):** Verify Base UI `<Select>` `defaultValue` behaviour with a server-rendered initial value in dev before finalising the approach. STACK.md provides the controlled fallback (Option B). This is a one-decision point, not a research gap.
 
-Phases with standard patterns (no additional research needed):
-
-- **Phase 1:** Next.js App Router route group precedence is documented and confirmed by code inspection. One file deletion.
-- **Phase 3:** GPT-4o verbatim instruction pattern is well-documented in the OpenAI prompting guide. One file prompt edit.
+---
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | All conclusions from direct codebase inspection; zero new dependencies; no compatibility concerns within existing package versions |
-| Features | HIGH | Three concrete, scoped features on a fully understood codebase; field keys verified against live schema files; field-by-field gap analysis completed |
-| Architecture | HIGH | Component boundaries confirmed by code analysis; Supabase official docs pattern confirmed for middleware; data flow traced end-to-end in code |
-| Pitfalls | HIGH | Critical pitfalls identified from direct code inspection (structuredFields no-op, root route conflict, structuredValuesRef initialisation, field key mismatch); GPT-4o verbatim behaviour from OpenAI prompting guide (MEDIUM — empirical confirmation needed) |
+| Stack | HIGH | Direct codebase analysis; all files verified; zero new dependencies means zero version compatibility uncertainty |
+| Features | HIGH | Problem is precisely specified in PROJECT.md as a deliberate v1.2 deferral; scope is unambiguous; all field keys verified against live schema files |
+| Architecture | HIGH | All integration points verified from source; import constraint (route handler not importable by client component) is a hard fact; build order is provably correct |
+| Pitfalls | HIGH (4 of 5 critical) / MEDIUM (Radix Select defaultValue sub-case) | React controlled/uncontrolled and unmount behaviour are stable guarantees; Radix Select `defaultValue` edge case documented via GitHub issues, not official release notes — hence MEDIUM for that specific sub-case only |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Pre-fill state on reload (storage strategy):** Whether to parse `initialNotes` back into `structuredValuesRef` on mount (Option A) or introduce a `pre_fill_fields` JSONB column (Option B) is unresolved. Both options are documented in FEATURES.md and PITFALLS.md. Must be decided before Phase 2 implementation. Recommendation: ship Phase 2 with Option A (string-parse on mount, minimal scope), create a v1.2 tracking item for Option B.
+- **Radix/Base UI Select `defaultValue` vs controlled:** STACK.md recommends controlled `value` + `useState` as the safe default. ARCHITECTURE.md suggests attempting `defaultValue` first. Test in dev during Phase 2 implementation. If the trigger renders the saved value correctly → use `defaultValue` (simpler). If blank → switch to controlled. The fallback path is already fully designed; no additional research needed.
 
-- **Forklift "Unladen Weight" vs "Truck Weight" label:** PITFALLS.md notes that `truck_weight` is the existing Salesforce field key but v1.1 requirements use the term "Unladen Weight." Confirm with project owner whether the Salesforce field label should be updated or whether "Truck Weight" is acceptable in the pre-fill UI.
+- **`extractFreeformNotes` edge cases:** Function is straightforward (~5 lines) but should be verified against: (a) assets where `inspection_notes` has no `Notes:` line — must return `''`; (b) `Notes: ` with empty value — must return `''`; (c) assets where freeform notes themselves contain `Notes:` mid-text — confirm split behaviour. Write these as explicit unit test cases in Phase 4.
 
-- **Caravan length unit convention:** `trailer_length` is a text field. v1.1 says "Length in ft." Confirm with project owner whether metric input should also be accepted or whether ft is the exclusive unit for Salesforce.
+---
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- Codebase direct inspection: `src/app/page.tsx`, `src/app/(app)/page.tsx`, `src/components/nav/BottomNav.tsx`, `src/components/asset/InspectionNotesSection.tsx`, `src/app/api/extract/route.ts`, `src/app/api/describe/route.ts`, `middleware.ts`, `src/lib/schema-registry/schemas/{truck,trailer,forklift,caravan}.ts`
-- Supabase SSR Next.js guide: https://supabase.com/docs/guides/auth/server-side/nextjs — `getUser()` over `getSession()`, middleware cookie handling, `createServerClient` patterns
-- Next.js App Router routing documentation — route group precedence, `(group)` directories do not add path segments; non-grouped `page.tsx` wins for same URL
+- `src/components/asset/InspectionNotesSection.tsx` — uncontrolled inputs, `structuredValuesRef` initialisation to `{}`, `persistNotes` serialisation format, `notesRef` initialisation, debounce without unmount flush
+- `src/app/api/extract/route.ts` — `parseStructuredFields` function confirmed exported and round-trip correct
+- `src/lib/actions/inspection.actions.ts` — `inspection_notes text` column confirmed; write path serialisation confirmed
+- `src/app/(app)/assets/[id]/extract/page.tsx` — Server Component already selects and passes `inspection_notes`
+- `src/components/asset/ExtractionPageClient.tsx` — prop threading to `InspectionNotesSection` as `initialNotes` confirmed; hide-on-success confirmed
+- `src/app/(app)/assets/[id]/photos/page.tsx` — Server Component passes `initialNotes` confirmed
+- `supabase/migrations/20260318000003_extraction.sql` — `inspection_notes text` column; no JSONB structured fields column
+- `.planning/PROJECT.md` — PREFILL-06 explicitly deferred from v1.1; scope confirmed
+- React official documentation — `defaultValue` sets initial uncontrolled value once at mount; switching controlled/uncontrolled is forbidden and triggers warning
+- Next.js official documentation — hydration error docs; `useEffect` for client-only state; server component prop serialisation
 
 ### Secondary (MEDIUM confidence)
-- Supabase SSR GitHub issue #107 — AuthSessionMissingError in Next.js 14.2+/15; confirms middleware matcher must include API routes
-- Supabase troubleshooting guide: https://supabase.com/docs/guides/troubleshooting/how-do-you-troubleshoot-nextjs---supabase-auth-issues-riMCZV
-- Supabase SSR issue #36 — middleware response recreation anti-pattern (`supabaseResponse = NextResponse.next()` inside `setAll`)
-- OpenAI GPT-4.1 prompting guide — verbatim instruction behaviour; XML delimiter convention for separating data from instructions
+- Radix UI GitHub issues #1223, #1569, #1808, #3556 — Select `defaultValue` edge cases on hydration; controlled/uncontrolled switch behaviour
+- `@base-ui/react ^1.3.0` release notes — controlled `value` prop for Select supported; `onValueChange` callback signature
 
-### Tertiary (LOW confidence)
-- None — all v1.1 research findings have at least medium-confidence sources backed by direct code inspection
+### Tertiary (LOW confidence — no action required)
+- Supabase Realtime conflict patterns — not applicable to v1.2; no Realtime subscriptions in codebase (confirmed by grep, zero results); noted only as a constraint if Realtime is ever scoped in a future phase
 
 ---
 *Research completed: 2026-03-21*
