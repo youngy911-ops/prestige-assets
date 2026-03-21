@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: "Completed 06-02-PLAN.md — Phase 6 complete (human verified)"
-last_updated: "2026-03-21T02:00:00.000Z"
+stopped_at: Completed 06.1-01-PLAN.md
+last_updated: "2026-03-21T02:21:44.152Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 6
-  total_plans: 17
-  completed_plans: 17
+  total_plans: 21
+  completed_plans: 18
   percent: 17
 ---
 
@@ -69,8 +69,13 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 05-output-generation P03 | 4 | 2 tasks | 5 files |
 | Phase 06 P01 | 5 | 2 tasks | 9 files |
 | Phase 06-asset-list-navigation P02 | 3 | 2 tasks | 6 files |
+| Phase 06.1-ai-extraction-quality P01 | 12 | 2 tasks | 5 files |
 
 ## Accumulated Context
+
+### Roadmap Evolution
+
+- Phase 6.1 inserted after Phase 6: AI Extraction Quality — richer field descriptions, aiHint schema properties, stronger knowledge-inference prompts (URGENT)
 
 ### Decisions
 
@@ -125,6 +130,9 @@ Recent decisions affecting current work:
 - [Phase 06-asset-list-navigation]: page.tsx is a use client component with undefined initial state to prevent hydration mismatch
 - [Phase 06-asset-list-navigation]: Book In New Asset is Link-only (no confirmAsset action) — saveReview already sets status confirmed per RESEARCH Pitfall 5
 - [Phase 06-asset-list-navigation]: Branch change UI is inline expand/collapse list in AssetList (not a native select) for visual consistency
+- [Phase 06.1-ai-extraction-quality]: getAIExtractableFields() (string[]) kept unchanged — getAIExtractableFieldDefs() added alongside to avoid breaking callers
+- [Phase 06.1-ai-extraction-quality]: Convention enforcement test intentionally RED — establishes contract for Plans 02-04; aiHint not back-filled in this plan
+- [Phase 06.1-ai-extraction-quality]: buildSystemPrompt Steps 1+2 replaced with explicit plate-type list and per-asset-class inference lists
 
 ### Pending Todos
 
@@ -137,6 +145,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T02:00:00.000Z
-Stopped at: Completed 06-02-PLAN.md — Phase 6 complete (human verified)
+Last session: 2026-03-21T02:21:44.149Z
+Stopped at: Completed 06.1-01-PLAN.md
 Resume file: None
