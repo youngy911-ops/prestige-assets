@@ -1,13 +1,10 @@
 # Prestige Assets — Slattery Auctions Book-In App (Web MVP)
 
-## Current Milestone: v1.1 Pre-fill & Quality
+## Current Status: v1.1 Shipped — Planning v1.2
 
-**Goal:** Add structured pre-extraction input fields for critical per-type data and fix description quality so staff-entered notes are faithfully reflected in AI output.
+**Shipped v1.1 (2026-03-21):** Structured pre-extraction inputs for all 4 asset types, verbatim description fidelity, and session auth fix. All 6 v1.1 requirements delivered.
 
-**Target features:**
-- Dedicated pre-extraction fields: Trucks (VIN, Odo, Hours, Suspension), Trailers (VIN, Suspension), Forklifts (Unladen Weight), Caravans (Length ft)
-- Description generation uses inspection notes verbatim for specific values
-- Asset tab session bug fixed
+**Next milestone:** v1.2 — pre-fill value restoration on reload (PREFILL-06) and any additional quality improvements.
 
 ## What This Is
 
@@ -41,17 +38,16 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - ✓ User can view all asset records sorted by recency — v1.0
 - ✓ User can resume editing an asset record from the list — v1.0
 - ✓ AI extraction quality: field-specific aiHint annotations embedded in Zod schema, 25+ new fields enabled across earthmoving/agriculture/forklift/trailer, explicit plate-type routing in system prompt — v1.0
+- ✓ Authenticated user can navigate to the asset list via the Assets tab without being redirected to login — v1.1
+- ✓ Truck/Trailer/Forklift/Caravan asset forms show dedicated input fields for type-specific values (VIN, Odometer, Hourmeter, Suspension Type, Unladen Weight, Length ft) before AI extraction — v1.1
+- ✓ Staff-entered pre-extraction values flow to AI extraction prompt as authoritative overrides; values appear in Salesforce fields output and are not overridden by AI — v1.1
+- ✓ AI-generated descriptions preserve specific values from inspection notes verbatim (e.g. `48" sleeper cab`, `Airbag` suspension) — runtime-verified in production — v1.1
 
 ### Active
 
-<!-- v1.1: Pre-fill & Quality -->
+<!-- v1.2 candidates -->
 
-- [ ] User can enter VIN, Odometer, Hourmeter, and Suspension Type via dedicated input fields for Trucks before running AI extraction
-- [ ] User can enter VIN and Suspension Type via dedicated input fields for Trailers before running AI extraction
-- [ ] User can enter Unladen Weight via dedicated input field for Forklifts before running AI extraction
-- [ ] User can enter Length (in ft) via dedicated input field for Caravans before running AI extraction
-- [ ] Inspection notes content is faithfully reflected in the AI-generated description (specific values like "48\" sleeper cab" are preserved verbatim)
-- [ ] Clicking the asset list tab no longer redirects to login (session auth bug fixed)
+- [ ] Pre-fill value restoration on reload — staff-entered pre-extraction values restored when returning to an asset record (PREFILL-06, deferred from v1.1)
 
 ### Out of Scope
 
@@ -69,12 +65,13 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - **Business**: Slattery Auctions Brisbane — ISO 27001 certified. Family run. 131-153 Main Beach Rd, Pinkenba QLD 4008.
 - **Asset categories (v1)**: Trucks, Trailers, Earthmoving, Forklifts, Agriculture, Caravans/Motor Homes, General Goods.
 - **Shipped v1.0**: 2026-03-21. ~6,975 LOC TypeScript. 4-day build from blank repo to working tool.
-- **Tech stack**: Next.js 15 (App Router), Supabase (Postgres + Storage + Auth), GPT-4o (Vercel AI SDK v6), react-hook-form + Zod, dnd-kit, shadcn/ui, Tailwind v4, vitest + testing-library.
+- **Shipped v1.1**: 2026-03-21. ~7,348 LOC TypeScript. Single-day polish — 3 phases, 5 plans, ~3.5 hours.
+- **Tech stack**: Next.js 15 (App Router), Supabase (Postgres + Storage + Auth), GPT-4o (Vercel AI SDK v6), react-hook-form + Zod, dnd-kit, Base UI, Tailwind v4, vitest + testing-library.
 - **Prior project**: `asset_sales_force` — same concept but built as a Next.js + Expo monorepo. Got bogged down in iOS scaffolding before the core workflow was proven.
 - **Current workflow**: App replaces Jack's manual Claude chat workflow with a persistent, team-usable tool.
 - **Platform**: Web app — phone browser for on-site capture (file picker from camera roll), desktop browser for review and copy-paste.
 - **Description formatting**: Strict per-type rules — no dot points, no marketing language, specific field ordering per asset subtype (Excavator vs Dozer vs Truck vs Trailer etc.), "Sold As Is, Untested & Unregistered." footer always.
-- **Known open items**: GPT-4o extraction quality with real Slattery photos is empirical (not yet tested in production); exact Earthmoving description subtype field ordering requires Jack's confirmation.
+- **Known open items**: Exact Earthmoving description subtype field ordering (Excavator vs Dozer vs Grader etc.) requires Jack's confirmation. Pre-fill value restore on reload deferred to v1.2 (PREFILL-06).
 
 ## Salesforce Field Schemas (per asset type)
 
@@ -108,6 +105,11 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 | /api/extract Route Handler (not Server Action) | Server Actions are queued/sequential, unsuitable for long-running AI calls | ✓ Good |
 | aiHint embedded in Zod schema (not prompt engineering) | Field-specific context in schema description is more maintainable and more accurate than generic prompt engineering | ✓ Good — phase 06.1 confirmed improvement |
 | getAIExtractableFieldDefs() added alongside getAIExtractableFields() | Avoids breaking existing callers while enabling richer schema access | ✓ Good — backward compatible |
+| Delete src/app/page.tsx entirely (Phase 8) | Conflicting root redirect was causing auth loop; (app) route group page.tsx becomes sole / handler — deletion simpler than replacing | ✓ Good — surgical 1-file fix |
+| Suspension Type as `inputType: 'select'` with fixed options (Phase 9) | Constrains AI extraction and UI to a predictable value set; avoids free-text variation like "air bag" vs "airbag" | ✓ Good — cleaner output |
+| parseStructuredFields exported from extract/route.ts; imported directly in describe/route.ts (Phase 9–10) | No duplicate parser, no shared lib overhead — direct cross-route import worked without TypeScript errors | ✓ Good — DRY without over-engineering |
+| Belt-and-suspenders verbatim constraint: system prompt rule + structured user prompt block (Phase 10) | System prompt rule alone insufficient for GPT-4o fidelity; labelled "Staff-provided values (use verbatim):" block reinforces intent | ✓ Good — runtime-verified |
+| Select uncontrolled in InspectionNotesSection (no value/defaultValue) (Phase 9) | Re-hydration deferred to v1.2 (PREFILL-06); uncontrolled avoids state complexity for MVP | — Re-evaluate in v1.2 |
 
 ---
-*Last updated: 2026-03-21 after v1.1 milestone start*
+*Last updated: 2026-03-21 after v1.1 milestone*

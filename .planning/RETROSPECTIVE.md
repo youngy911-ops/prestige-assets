@@ -59,6 +59,53 @@
 
 ---
 
+## Milestone: v1.1 — Pre-fill & Quality
+
+**Shipped:** 2026-03-21
+**Phases:** 3 (8–10) | **Plans:** 5 | **Timeline:** single day, ~3.5 hours
+
+### What Was Built
+
+- Bidirectional middleware auth guards — deleted conflicting root page, fixed post-login redirect to asset list
+- `inspectionPriority` schema flag promoted to 6 fields across Truck/Trailer/Forklift/Caravan, with Suspension Type as a constrained select input
+- `parseStructuredFields` parser wires pre-entered values to AI extract prompt as authoritative overrides; uncontrolled Select in InspectionNotesSection renders these fields
+- Belt-and-suspenders GPT-4o verbatim constraint: system prompt rule + restructured `buildDescriptionUserPrompt` splitting notes into labelled verbatim/freeform blocks
+- Runtime verification confirmed DESCR-01 with real Slattery asset data
+
+### What Worked
+
+- **Schema-first for pre-fill (Plan 01 before Plan 02)**: Doing the schema changes (inspectionPriority flags, select options) in Phase 9 Plan 01 before the UI wiring in Plan 02 meant Plan 02 had a clean, tested data layer to consume. No schema work leaked into the UI plan.
+- **TDD guard on schema changes**: Updating test assertions to RED before modifying schemas proved the guard was live and prevented silent regressions. Added confidence when touching multiple schemas in one plan.
+- **parseStructuredFields reuse across routes via direct import**: Importing directly from `extract/route.ts` into `describe/route.ts` worked without TypeScript or edge-runtime issues — avoided creating a shared lib file for a single shared function.
+- **Uncontrolled Select with explicit deferral note**: Deciding up-front to leave Select uncontrolled (no re-hydration) and documenting it in the SUMMARY was cleaner than a half-implemented re-hydration. PREFILL-06 is a clear v1.2 task.
+- **Single-day milestone**: 3 phases, 5 plans, ~3.5 hours end-to-end. Tight scope with well-defined success criteria made this feel effortless compared to v1.0's 4-day sprint.
+
+### What Was Inefficient
+
+- **PREFILL-05 tracking gap**: Phase 9 Plan 02 SUMMARY.md listed PREFILL-05 as completed, but REQUIREMENTS.md traceability table was never updated (remained "Pending"). Caused a false alarm during milestone completion. Requirements should be updated atomically with the plan completion commit.
+- **No milestone audit**: Skipped `/gsd:audit-milestone` again. For a 3-phase milestone this was acceptable, but the pattern of skipping is becoming a habit.
+- **Phase 9 roadmap checkbox not updated**: ROADMAP.md showed Phase 9 as `[ ]` at milestone time despite both plans being complete. Progress table also had malformed columns. Roadmap accuracy should be maintained during execution, not just at archival.
+
+### Patterns Established
+
+- **Select uncontrolled pattern for pre-fill inputs**: No `value`/`defaultValue` prop on `Select.Root` in InspectionNotesSection — re-hydration is explicitly deferred to v1.2. Pattern is: uncontrolled + `onValueChange` callback + `handleStructuredChange` storing to state.
+- **`onValueChange` typed as `(value: string | null)` with null guard**: Base UI Select Root `onValueChange` resolves to `unknown` without explicit type parameter. Pattern: type as `string | null` and apply `value ?? ''` null guard in the callback.
+- **Cross-route function reuse via direct import**: Share utility functions between Next.js route files with direct import — no need to move to `src/lib/` for single-consumer functions.
+
+### Key Lessons
+
+1. **Requirements traceability must be updated atomically with plan completion**: The PREFILL-05 tracking gap showed that requirements status and plan summaries can diverge if not updated in the same commit. Add requirements update to the plan completion checklist.
+2. **Scope discipline enabled single-day delivery**: v1.1 shipped in ~3.5 hours because the scope was minimal and well-defined. Deferring PREFILL-06 (re-hydration) was the correct call — it would have added complexity without proportional user value at this stage.
+3. **Verbatim fidelity needs structural, not just instructional, constraints**: A system prompt rule alone was insufficient — GPT-4o still paraphrased. Restructuring the user prompt to label values as "Staff-provided values (use verbatim):" was the key fix. Both mechanisms together reliably enforce the constraint.
+
+### Cost Observations
+
+- Model mix: ~100% sonnet-4 (balanced profile)
+- Sessions: ~3–4
+- Notable: 5 plans in 3.5 hours — fastest milestone yet; tight scope and clean dependencies made execution near-frictionless
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -66,15 +113,19 @@
 | Milestone | Days | Phases | Plans | Key Change |
 |-----------|------|--------|-------|------------|
 | v1.0 MVP | 4 | 7 | 21 | Greenfield — established Schema Registry pattern and TDD wave structure |
+| v1.1 Pre-fill & Quality | <1 | 3 | 5 | Tight polish milestone — schema-first layering, cross-route function reuse, uncontrolled Select deferral pattern |
 
 ### Cumulative Quality
 
 | Milestone | Tests | Key Pattern |
 |-----------|-------|-------------|
 | v1.0 | 200+ vitest | Wave 0 failing stubs → Wave N implementation; Server Action + Route Handler mocking |
+| v1.1 | 229+ vitest | TDD guard on schema changes; exported helpers for direct unit testing without HTTP |
 
 ### Top Lessons (Verified Across Milestones)
 
 1. Schema Registry as single source of truth eliminates drift across AI, form, and output layers
 2. Route Handlers (not Server Actions) for long-running AI calls
 3. Decimal phase numbering for urgent insertions keeps history clean
+4. Requirements traceability must be updated atomically with plan completion — divergence causes false alarms at milestone time
+5. Structural prompt constraints (labelled user prompt blocks) more reliable than instructional rules alone for GPT-4o fidelity

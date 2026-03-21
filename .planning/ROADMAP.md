@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 MVP** — Phases 1–6.1 (shipped 2026-03-21)
-- 🚧 **v1.1 Pre-fill & Quality** — Phases 8–10 (in progress)
+- ✅ **v1.1 Pre-fill & Quality** — Phases 8–10 (shipped 2026-03-21)
 
 ## Phases
 
@@ -22,57 +22,16 @@ Full archive: `.planning/milestones/v1.0-ROADMAP.md`
 
 </details>
 
-### 🚧 v1.1 Pre-fill & Quality (In Progress)
+<details>
+<summary>✅ v1.1 Pre-fill & Quality (Phases 8–10) — SHIPPED 2026-03-21</summary>
 
-**Milestone Goal:** Add structured pre-extraction input fields for critical per-type data, fix AI description verbatim fidelity, and resolve the asset list session auth bug.
+- [x] Phase 8: Session Auth Fix (1/1 plans) — completed 2026-03-21
+- [x] Phase 9: Pre-Extraction Structured Inputs (2/2 plans) — completed 2026-03-21
+- [x] Phase 10: Description Verbatim Fidelity (2/2 plans) — completed 2026-03-21
 
-- [x] **Phase 8: Session Auth Fix** - Authenticated users can navigate to the Assets tab without being redirected to login (completed 2026-03-21)
-- [ ] **Phase 9: Pre-Extraction Structured Inputs** - Staff can enter known field values before AI extraction runs; values arrive as authoritative overrides in the AI prompt
-- [x] **Phase 10: Description Verbatim Fidelity** - AI-generated descriptions preserve specific staff-entered measurements and values verbatim (completed 2026-03-21)
+Full archive: `.planning/milestones/v1.1-ROADMAP.md`
 
-## Phase Details
-
-### Phase 8: Session Auth Fix
-**Goal**: Authenticated users can navigate to the Assets tab without being redirected to login
-**Depends on**: Nothing (independent fix)
-**Requirements**: AUTH-01
-**Success Criteria** (what must be TRUE):
-  1. Authenticated user can click the Assets tab and land on the asset list without being redirected
-  2. Unauthenticated user navigating to the app is still redirected to login correctly
-  3. Page reload while on the asset list does not trigger a login redirect
-**Plans**: 1 plan
-
-Plans:
-- [ ] 08-01-PLAN.md — Delete conflicting root page, patch middleware inverse guard, fix post-login redirect
-
-### Phase 9: Pre-Extraction Structured Inputs
-**Goal**: Staff can enter known field values (VIN, odometer, suspension, weight, length) via dedicated inputs before running AI extraction, and those values are passed as authoritative overrides to the extraction prompt
-**Depends on**: Phase 8
-**Requirements**: PREFILL-01, PREFILL-02, PREFILL-03, PREFILL-04, PREFILL-05
-**Success Criteria** (what must be TRUE):
-  1. Truck asset form shows dedicated inputs for VIN, Odometer, Hourmeter, and Suspension Type above the extraction button
-  2. Trailer asset form shows dedicated inputs for VIN and Suspension Type above the extraction button
-  3. Forklift asset form shows a dedicated Unladen Weight input above the extraction button
-  4. Caravan asset form shows a dedicated Length (ft) input above the extraction button
-  5. A value entered in a pre-extraction input appears correctly in the Salesforce fields output and is not overwritten by AI extraction
-**Plans**: 2 plans
-
-Plans:
-- [ ] 09-01-PLAN.md — Update priority field tests (RED) then apply schema flag, label, and select options changes (GREEN)
-- [ ] 09-02-PLAN.md — Add parseStructuredFields to extract route + InspectionNotesSection select rendering + human verify
-
-### Phase 10: Description Verbatim Fidelity
-**Goal**: AI-generated descriptions preserve specific values from inspection notes exactly as staff entered them, without paraphrasing
-**Depends on**: Phase 8
-**Requirements**: DESCR-01
-**Success Criteria** (what must be TRUE):
-  1. A specific measurement entered in inspection notes (e.g., `48" sleeper cab`) appears verbatim in the generated description, not paraphrased
-  2. Generating a description for any asset type with notes containing specific values produces output that matches those values character-for-character
-**Plans**: 2 plans
-
-Plans:
-- [ ] 10-01-PLAN.md — Add failing tests (RED) then implement verbatim system prompt rule and restructure buildDescriptionUserPrompt (GREEN)
-- [ ] 10-02-PLAN.md — Human verify GPT-4o description contains verbatim values from inspection notes
+</details>
 
 ## Progress
 
@@ -85,6 +44,6 @@ Plans:
 | 5. Output Generation | v1.0 | 3/3 | Complete | 2026-03-21 |
 | 6. Asset List + Navigation | v1.0 | 2/2 | Complete | 2026-03-21 |
 | 06.1. AI Extraction Quality (INSERTED) | v1.0 | 4/4 | Complete | 2026-03-21 |
-| 8. Session Auth Fix | 1/1 | Complete   | 2026-03-21 | - |
-| 9. Pre-Extraction Structured Inputs | 1/2 | In Progress|  | - |
-| 10. Description Verbatim Fidelity | 2/2 | Complete    | 2026-03-21 | - |
+| 8. Session Auth Fix | v1.1 | 1/1 | Complete | 2026-03-21 |
+| 9. Pre-Extraction Structured Inputs | v1.1 | 2/2 | Complete | 2026-03-21 |
+| 10. Description Verbatim Fidelity | v1.1 | 2/2 | Complete | 2026-03-21 |
