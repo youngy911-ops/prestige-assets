@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 06.1-03-PLAN.md
-last_updated: "2026-03-21T02:25:36.541Z"
+stopped_at: Completed 06.1-04-PLAN.md
+last_updated: "2026-03-21T02:26:45.455Z"
 last_activity: 2026-03-17 — Schema Registry (7 asset types), New Asset wizard complete
 progress:
   total_phases: 7
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 21
-  completed_plans: 20
+  completed_plans: 21
   percent: 17
 ---
 
@@ -72,6 +72,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 06.1-ai-extraction-quality P01 | 12 | 2 tasks | 5 files |
 | Phase 06.1-ai-extraction-quality P02 | 5 | 1 tasks | 1 files |
 | Phase 06.1-ai-extraction-quality P03 | 5 | 2 tasks | 2 files |
+| Phase 06.1-ai-extraction-quality P04 | 3 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -138,6 +139,9 @@ Recent decisions affecting current work:
 - [Phase 06.1-ai-extraction-quality]: Truck schema has 27 aiExtractable fields (not 21) — all received aiHint; documentation discrepancy in plan
 - [Phase 06.1-ai-extraction-quality]: earthmoving hourmeter intentionally remains aiExtractable: false — not reliably readable from build plate photos
 - [Phase 06.1-ai-extraction-quality]: emissions_tier added to earthmoving with year-based inference rule (Tier 4 Final post-2014, Tier 4 Interim 2011-2014, Tier 3 2006-2011)
+- [Phase 06.1-ai-extraction-quality]: Forklift 6 new fields enabled (engine_model, max_lift_capacity, max_lift_height, colour, transmission, fuel_type) and all 12 aiExtractable fields annotated with aiHint
+- [Phase 06.1-ai-extraction-quality]: Trailer 6 new fields enabled (colour, compliance_date, suspension, axle_config, tare, atm) and all 10 aiExtractable fields annotated with aiHint
+- [Phase 06.1-ai-extraction-quality]: Caravan: no new fields enabled (specs vary too widely); aiHint added to 6 existing aiExtractable fields
 
 ### Pending Todos
 
@@ -150,6 +154,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T02:25:36.538Z
-Stopped at: Completed 06.1-03-PLAN.md
+Last session: 2026-03-21T02:26:45.452Z
+Stopped at: Completed 06.1-04-PLAN.md
 Resume file: None
