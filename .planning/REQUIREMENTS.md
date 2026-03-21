@@ -46,19 +46,19 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | Phase ? | Pending |
-| PREFILL-01 | Phase ? | Pending |
-| PREFILL-02 | Phase ? | Pending |
-| PREFILL-03 | Phase ? | Pending |
-| PREFILL-04 | Phase ? | Pending |
-| PREFILL-05 | Phase ? | Pending |
-| DESCR-01 | Phase ? | Pending |
+| AUTH-01 | Phase 8 | Pending |
+| PREFILL-01 | Phase 9 | Pending |
+| PREFILL-02 | Phase 9 | Pending |
+| PREFILL-03 | Phase 9 | Pending |
+| PREFILL-04 | Phase 9 | Pending |
+| PREFILL-05 | Phase 9 | Pending |
+| DESCR-01 | Phase 10 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 7 total
-- Mapped to phases: 0
-- Unmapped: 7 ⚠️
+- Mapped to phases: 7
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-03-21*
-*Last updated: 2026-03-21 after initial v1.1 definition*
+*Last updated: 2026-03-21 after v1.1 roadmap creation*

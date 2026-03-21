@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 MVP** — Phases 1–6.1 (shipped 2026-03-21)
-- 📋 **v1.1** — TBD (use `/gsd:new-milestone` to define)
+- 🚧 **v1.1 Pre-fill & Quality** — Phases 8–10 (in progress)
 
 ## Phases
 
@@ -22,9 +22,46 @@ Full archive: `.planning/milestones/v1.0-ROADMAP.md`
 
 </details>
 
-### 📋 v1.1 (Planned)
+### 🚧 v1.1 Pre-fill & Quality (In Progress)
 
-_(Define with `/gsd:new-milestone`)_
+**Milestone Goal:** Add structured pre-extraction input fields for critical per-type data, fix AI description verbatim fidelity, and resolve the asset list session auth bug.
+
+- [ ] **Phase 8: Session Auth Fix** - Authenticated users can navigate to the Assets tab without being redirected to login
+- [ ] **Phase 9: Pre-Extraction Structured Inputs** - Staff can enter known field values before AI extraction runs; values arrive as authoritative overrides in the AI prompt
+- [ ] **Phase 10: Description Verbatim Fidelity** - AI-generated descriptions preserve specific staff-entered measurements and values verbatim
+
+## Phase Details
+
+### Phase 8: Session Auth Fix
+**Goal**: Authenticated users can navigate to the Assets tab without being redirected to login
+**Depends on**: Nothing (independent fix)
+**Requirements**: AUTH-01
+**Success Criteria** (what must be TRUE):
+  1. Authenticated user can click the Assets tab and land on the asset list without being redirected
+  2. Unauthenticated user navigating to the app is still redirected to login correctly
+  3. Page reload while on the asset list does not trigger a login redirect
+**Plans**: TBD
+
+### Phase 9: Pre-Extraction Structured Inputs
+**Goal**: Staff can enter known field values (VIN, odometer, suspension, weight, length) via dedicated inputs before running AI extraction, and those values are passed as authoritative overrides to the extraction prompt
+**Depends on**: Phase 8
+**Requirements**: PREFILL-01, PREFILL-02, PREFILL-03, PREFILL-04, PREFILL-05
+**Success Criteria** (what must be TRUE):
+  1. Truck asset form shows dedicated inputs for VIN, Odometer, Hourmeter, and Suspension Type above the extraction button
+  2. Trailer asset form shows dedicated inputs for VIN and Suspension Type above the extraction button
+  3. Forklift asset form shows a dedicated Unladen Weight input above the extraction button
+  4. Caravan asset form shows a dedicated Length (ft) input above the extraction button
+  5. A value entered in a pre-extraction input appears correctly in the Salesforce fields output and is not overwritten by AI extraction
+**Plans**: TBD
+
+### Phase 10: Description Verbatim Fidelity
+**Goal**: AI-generated descriptions preserve specific values from inspection notes exactly as staff entered them, without paraphrasing
+**Depends on**: Phase 8
+**Requirements**: DESCR-01
+**Success Criteria** (what must be TRUE):
+  1. A specific measurement entered in inspection notes (e.g., `48" sleeper cab`) appears verbatim in the generated description, not paraphrased
+  2. Generating a description for any asset type with notes containing specific values produces output that matches those values character-for-character
+**Plans**: TBD
 
 ## Progress
 
@@ -37,3 +74,6 @@ _(Define with `/gsd:new-milestone`)_
 | 5. Output Generation | v1.0 | 3/3 | Complete | 2026-03-21 |
 | 6. Asset List + Navigation | v1.0 | 2/2 | Complete | 2026-03-21 |
 | 06.1. AI Extraction Quality (INSERTED) | v1.0 | 4/4 | Complete | 2026-03-21 |
+| 8. Session Auth Fix | v1.1 | 0/TBD | Not started | - |
+| 9. Pre-Extraction Structured Inputs | v1.1 | 0/TBD | Not started | - |
+| 10. Description Verbatim Fidelity | v1.1 | 0/TBD | Not started | - |

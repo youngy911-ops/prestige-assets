@@ -3,11 +3,11 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Pre-fill & Quality
 status: planning
-stopped_at: v1.1 milestone started 2026-03-21
+stopped_at: v1.1 roadmap created — phases 8-10 defined, ready to plan phase 8
 last_updated: "2026-03-21T00:00:00.000Z"
-last_activity: 2026-03-21 — Milestone v1.1 started
+last_activity: 2026-03-21 — v1.1 roadmap written
 progress:
-  total_phases: 0
+  total_phases: 3
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -18,38 +18,59 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-21 after v1.0 milestone)
+See: .planning/PROJECT.md (updated 2026-03-21)
 
 **Core value:** Photo a build plate → AI extracts identifiers → app generates copy-paste-ready Salesforce fields and a correctly formatted description — turning an hour of manual research into minutes.
-**Current focus:** v1.1 Pre-fill & Quality — defining requirements
+**Current focus:** Phase 8 — Session Auth Fix
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-03-21 — Milestone v1.1 started
+Phase: 8 of 10 (Session Auth Fix)
+Plan: 0 of TBD in current phase
+Status: Ready to plan
+Last activity: 2026-03-21 — v1.1 roadmap created; phases 8–10 defined
+
+Progress: [███████░░░░░░░░░░░░░] 35% (v1.0 complete; v1.1 not started)
+
+## Performance Metrics
+
+**Velocity:**
+- Total plans completed: 21 (v1.0)
+- Average duration: ~15 min (v1.0 estimate)
+- Total execution time: ~5 hours (v1.0)
+
+**By Phase:**
+
+| Phase | Plans | Total | Avg/Plan |
+|-------|-------|-------|----------|
+| v1.0 phases 1–6.1 | 21 | ~5h | ~15 min |
+| v1.1 phases 8–10 | 0 | - | - |
+
+**Recent Trend:**
+- v1.0: 21 plans across 4 days
+- Trend: Stable
 
 ## Accumulated Context
 
 ### Decisions
 
-All key decisions logged in PROJECT.md Key Decisions table.
+Decisions are logged in PROJECT.md Key Decisions table.
+Recent decisions affecting current work:
 
-### Open Items for v1.1 Consideration
+- v1.1 roadmap: Phase 8 ships first to eliminate false login redirects during dev/test of phases 9 and 10
+- v1.1 roadmap: PREFILL-01–05 coupled — schema flag additions and extract route wiring must ship together in phase 9; schema-only is a silent no-op
+- v1.1 roadmap: Pre-fill reload re-hydration deferred to v1.2 (PREFILL-06); v1.1 uses string-parse on mount as MVP approach
 
-- GPT-4o extraction quality with real Slattery photos is empirical — needs in-production testing and iteration
-- Exact Earthmoving description subtype field ordering (Excavator vs Dozer vs Grader vs Wheel Loader) requires Jack's confirmation
-- STATE.md fell behind during v1.0 — update atomically with each phase commit in v1.1
-- Consider adding `one_liner` field to SUMMARY.md frontmatter for automated milestone accomplishment extraction
+### Pending Todos
+
+None.
 
 ### Blockers/Concerns
 
-- GPT-4o structured output prompt for industrial build plates needs empirical testing with real Slattery photos
-- Exact description subtype field ordering (Excavator vs Dozer vs Grader within Earthmoving) requires Jack's direct confirmation
+- **Phase 9 pre-decision required:** Confirm with project owner: (1) Forklift pre-fill label "Unladen Weight" vs Salesforce key `truck_weight`; (2) Caravan length — ft only or also metric?
 
 ## Session Continuity
 
 Last session: 2026-03-21
-Stopped at: v1.0 milestone complete
+Stopped at: v1.1 roadmap written; phases 8, 9, 10 defined; REQUIREMENTS.md traceability updated
 Resume file: None
