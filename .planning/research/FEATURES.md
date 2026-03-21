@@ -1,8 +1,24 @@
 # Feature Research
 
-**Domain:** Internal asset data capture tool — photo capture, AI extraction, structured output
-**Researched:** 2026-03-17
-**Confidence:** HIGH (domain is well-defined; this is an internal tool replacing a known workflow with explicit requirements)
+**Domain:** Internal asset data capture tool — v1.1 Pre-fill & Quality milestone
+**Researched:** 2026-03-21
+**Confidence:** HIGH (three concrete, scoped features on a fully understood existing codebase)
+
+> Note: v1.0 feature research (2026-03-17) is superseded by this file. All v1.0 features are shipped and validated.
+> This file covers the three v1.1 features only.
+
+---
+
+## Context: What Already Exists
+
+The three features below are additions to a working app. Key existing infrastructure that the new features depend on:
+
+- `InspectionNotesSection` component — already renders `inspectionPriority` fields as structured inputs, then combines them with freeform notes into a single `inspection_notes` string before saving. Currently renders only fields already flagged `inspectionPriority: true` in the schema.
+- `buildUserPrompt()` in `extraction-schema.ts` — already accepts a `structuredFields` parameter to inject staff-provided field values as authoritative overrides. Currently called with an empty `structuredFields = {}` object. The wiring exists; it is not yet connected to real data.
+- `/api/extract` route — reads `inspection_notes` from DB and passes it to `buildUserPrompt`. Does not yet parse structured fields from `inspection_notes` back into the `structuredFields` argument.
+- `/api/describe` route — receives `inspection_notes` and passes it to `buildDescriptionUserPrompt`. Notes are forwarded but the system prompt does not instruct GPT to preserve specific values verbatim.
+- Middleware at `middleware.ts` — uses `createServerClient` from `@supabase/ssr` with a `setAll` cookie handler, calls `supabase.auth.getUser()`, and redirects unauthenticated requests. The `supabaseResponse` variable is recreated inside `setAll` instead of mutated in-place, which can cause cookie desync.
+- Schema `FieldDefinition` type has `inspectionPriority?: boolean` — the mechanism for marking which fields get structured inputs already exists.
 
 ---
 
@@ -10,138 +26,94 @@
 
 ### Table Stakes (Users Expect These)
 
-Features the tool cannot function without. Missing any of these means the workflow breaks — staff fall back to the manual Claude chat.
+For v1.1, table stakes means: features that complete the existing workflow in a way that staff expect to work based on how the app behaves today.
 
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| Photo upload via file input (camera roll or file system) | Core capture step — no photo upload, no workflow | LOW | `<input type="file" accept="image/*" capture="environment">` on mobile gives direct camera. Multiple file select for batch upload. |
-| Client-side image resize before upload | Photos from modern phones are 10-20MB. Without resize, upload is slow on-site (mobile data) and storage costs blow out fast. | LOW | Canvas API resize to max 2MP (≈1600x1200) before Supabase Storage upload. |
-| Asset type selector before AI extraction | AI prompt and field schema are both type-dependent. Wrong type = wrong fields extracted. | LOW | 7 types: Truck, Trailer, Earthmoving, Agriculture, Forklift, Caravan/Motor Home, General Goods. Must be set before extraction runs. |
-| AI extraction of VIN/PIN/Serial, make, model, year | This is the core value — the reason the tool exists. Without it, staff are back to manual research. | MEDIUM | Vision model with structured JSON output. Needs clear photo of build plate. Confidence scores on extracted fields are important for review. |
-| Editable review form for AI-extracted values | AI is imperfect. Staff must be able to correct every field before copy-paste. A single wrong VIN destroys the Salesforce record. | MEDIUM | All extracted fields editable. Changes should not re-trigger AI extraction automatically. |
-| Per-asset-type field schema form | Salesforce fields differ by asset type (Truck ~35 fields, Earthmoving 2 pages). Wrong field names break copy-paste into Salesforce. | MEDIUM | Schema Registry per type. Field labels must exactly match Salesforce column names. |
-| Copy-paste-ready structured fields block | The final output — the whole reason the tool exists. Must generate fields in Salesforce-correct order with correct labels. | LOW | Formatted text block. One-click copy. |
-| Copy-paste-ready description block | Per-type formatted description with strict rules: no dot points, no marketing language, specific field ordering per subtype, "Sold As Is, Untested & Unregistered." footer. | MEDIUM | Deterministic templates per subtype (Excavator vs Dozer vs Truck vs Trailer etc.) — not AI-generated text. |
-| Session-persistent login | On-site work spans multiple assets across a day. Re-logging in between assets is a blocker. | LOW | Supabase auth with persistent session token. JWT refresh. |
-| Asset record persistence | Staff photograph on-site, complete the record on desktop later. Records must persist across sessions and devices. | LOW | Supabase row per asset. Postgres. |
-| Mobile-usable layout | On-site capture happens on a phone browser. If the UI is desktop-only, the capture step is broken. | MEDIUM | Responsive layout. Touch-friendly tap targets. Large upload button visible above fold. |
+| Pre-extraction fields for VIN on Trucks and Trailers | VIN is never readable from build plate photos at typical on-site photo quality. Staff know the VIN from a separate sticker or from their paperwork. Entering it before extraction means it flows into AI as authoritative — current workflow loses it. | LOW | `vin` field exists in both truck and trailer schemas. Must add `inspectionPriority: true` to truck schema `vin` field. Trailer schema `vin` already `aiExtractable: true` but lacks `inspectionPriority`. |
+| Pre-extraction odometer/hourmeter for Trucks | Cluster readings are unreadable in photos at any realistic distance. Staff read them on-site. Currently these go into freeform notes and the AI guesses from the text. | LOW | `odometer` and `hourmeter` already have `inspectionPriority: true` in truck schema — they already appear as structured inputs. This is already built. Verify behaviour end-to-end. |
+| Pre-extraction suspension type for Trucks and Trailers | Suspension cannot be determined from standard exterior photos. Staff know it from under-vehicle inspection or chassis plate. Without a structured field it goes into notes and may not make it into the AI extraction reliably. | LOW | `suspension` on truck: `aiExtractable: true` but no `inspectionPriority`. `suspension` on trailer: same. Add `inspectionPriority: true` to both. Also need select input — "Air" / "Leaf Spring" / "Airbag" are the three common values. |
+| Pre-extraction unladen weight for Forklifts | `truck_weight` is the Salesforce field for forklift unladen weight. Not visible from photos. Staff read from data plate or weigh ticket. Without it the Salesforce record is always incomplete. | LOW | `truck_weight` in forklift schema: `aiExtractable: false`, no `inspectionPriority`. Add `inspectionPriority: true`. No AI extraction needed — this is staff-provided only. |
+| Pre-extraction length in ft for Caravans | Caravan length in feet (not metres) is a Salesforce-specific requirement. Not readable from build plate photos. Staff measure or read from compliance plate. | LOW | `trailer_length` in caravan schema: `aiExtractable: false`, no `inspectionPriority`. Add `inspectionPriority: true`. Need to clarify unit: ft vs m — PROJECT.md says "Length in ft". |
+| Staff-entered notes preserved verbatim in AI description | Staff note "48-inch sleeper cab" before extraction. The description should read "48-inch sleeper cab", not "Sleeper Cab" or "TBC". Currently the description system prompt does not instruct GPT-4o to treat specific measurements from notes as authoritative. | MEDIUM | Prompt engineering change to `/api/describe` system prompt + user prompt. GPT-4o follows explicit "use verbatim" instructions reliably when the instruction is specific and in the system prompt. |
+| Tab navigation not causing login redirect | Staff click the Assets tab while on a deep page within an asset record. The middleware should refresh the session token and continue, not redirect to login. This is a session desync caused by the current middleware `setAll` implementation. | MEDIUM | Supabase SSR middleware bug: `setAll` recreates `supabaseResponse` with `NextResponse.next({ request })` but the outer `supabaseResponse` already has auth cookies set. Recreating it inside `setAll` loses the cookies already set by the initial `NextResponse.next`. Fix: single `supabaseResponse` variable, set cookies on it directly in `setAll`. |
 
-### Differentiators (What Makes This Better Than Claude Chat)
+### Differentiators (Competitive Advantage)
 
-The current workflow is: photograph → write briefing doc → paste into Claude → copy structured output → paste into Salesforce. These are features that make the app materially better than that baseline — not just equivalent.
+For v1.1, differentiation means: improvements beyond fixing broken workflows that make the tool materially better than the Claude chat baseline.
 
 | Feature | Value Proposition | Complexity | Notes |
 |---------|-------------------|------------|-------|
-| Persistent asset records | Claude chat produces no record — once the tab closes, the extraction is gone. Persistent records allow partial completion, multi-session work, and retrospective lookup. | LOW | Already the default with Supabase storage. The persistence itself is the differentiator. |
-| Cover photo + drag-to-reorder with persist | Claude chat has no photo management. App gives staff control over asset presentation order (cover photo = hero in Salesforce listing). | MEDIUM | Drag handles in photo grid. Cover photo designation (star/badge). Order stored as integer index on photo rows. Must survive page refresh. |
-| Pre-filled field schema by asset type | In the Claude chat workflow, Jack has to remember which fields apply to which asset type. The app enforces the correct schema automatically — no missed fields, no wrong labels. | MEDIUM | Schema Registry drives both the AI extraction prompt and the review form. Single source of truth. |
-| AI extraction confidence indicators | Claude chat gives no signal about which extracted values it's unsure about. App can flag low-confidence fields (e.g., partially obscured VIN) so staff know what to double-check. | MEDIUM | Structured AI output includes a `confidence` property per field (high/medium/low). Low-confidence fields highlighted in review form. |
-| One-click copy per output section | Claude chat requires selecting text manually, which is error-prone (missed fields, formatting broken). One-click copy per section (Fields block, Description block, Glass's Valuation block) eliminates that friction. | LOW | Clipboard API. Visual feedback on copy (button state change, toast). Separate copy button per output section. |
-| Glass's Valuation block for Caravan/Motor Home | In the Claude chat workflow, this section must be manually formatted. App generates it as a third copyable section automatically when asset type is Caravan/Motor Home. | LOW | Conditional section — only rendered for Caravan/Motor Home type. Four fields: Max Offer, Est. Trade, RRP, Est. Retail. |
-| Strict description template enforcement | AI-generated descriptions in Claude chat vary — sometimes they include dot points, marketing language, or wrong field ordering. Deterministic templates guarantee format compliance every time. | MEDIUM | Template engine per subtype (not LLM text generation). Templates compiled from Schema Registry rules. Output is always structurally identical. |
-| No briefing doc overhead | Current workflow requires staff to write a structured briefing prompt for Claude. App eliminates this step entirely — upload photo, select type, done. | LOW | This is the workflow itself — captured as a differentiator because it represents significant time saving vs the baseline. |
+| Structured inputs pre-populate AI extraction as authoritative overrides | Staff enter VIN and it arrives in the AI prompt under "Staff-provided field values (use these directly)" — not as a hint but as the answer. Eliminates the AI overwriting a known-good VIN with a misread one. | LOW | `buildUserPrompt()` already accepts `structuredFields` and renders them under the "use these directly" header. The only missing piece is connecting `InspectionNotesSection` structured values to the API call. |
+| Structured inputs persist across page reload | If staff enter VIN on the photos page and then reload before running extraction, the value is not lost. Currently structured values are held in `structuredValuesRef` (component memory only) — they serialize into `inspection_notes` on debounce, so they do persist via the notes string. This is already correct but should be verified. | LOW | Depends on whether the initial `structuredValuesRef` values are populated from `initialNotes` on mount. Current code initialises to `{}` — so on reload, structured fields are empty even though the combined notes string contains "vin: 1HGCM...". Need to parse `initialNotes` back into structured field values on mount. |
+| Notes-verbatim instruction improves description quality for all types | Fixing the description system prompt to preserve specific values from notes benefits every asset type, not just trucks with sleeper cabs. Inspection notes with "full service history, 3 keys, Webasto heater" should appear word-for-word in the description rather than being paraphrased or dropped. | LOW | Low complexity because it is a prompt change only — no schema or component changes needed. High value because the description is the primary human-readable output that staff review before copy-paste. |
 
-### Anti-Features (Deliberately NOT Building in MVP)
+### Anti-Features (Commonly Requested, Often Problematic)
 
-Features that seem like good ideas but would bloat the MVP scope, introduce complexity before the core workflow is validated, or contradict the design decisions already made.
-
-| Feature | Why Requested | Why Anti-Feature for MVP | Alternative |
-|---------|---------------|--------------------------|-------------|
-| Auto-save extracted data without review | Saves a step — why make staff confirm? | A single wrong VIN in Salesforce is a serious data quality problem. Auction records are legally significant. Review is mandatory, not optional. | Always require explicit confirmation before saving. The review step is a feature, not friction. |
-| Real-time AI extraction while uploading | Feels faster — start extraction before user completes upload | Creates complex state (what if more photos added after extraction starts?), race conditions, and confusing UX (fields appearing and changing). Adds no real time saving for a 2-second wait. | Extract on explicit "Run Extraction" action. Clear button state shows progress. |
-| Multi-asset batch processing | Staff might want to book in several assets at once | Batch processing multiplies error surface — wrong type assignment, mixed photos, review becomes confusing. Each asset is a distinct Salesforce record requiring individual confirmation. | Asset-by-asset workflow. Fast enough for the volume. |
-| Salesforce API push | Eliminate copy-paste entirely | Blocked by IT approval process. Coupling the app to Salesforce API before core workflow is validated creates a dependency that could stall the entire project. | Copy-paste is a feature for MVP, not a limitation. Salesforce API integration is v2+ once IT approval is obtained. |
-| Free-text AI description generation | Let AI write the description | Slattery's descriptions have strict formatting rules. AI-generated text is non-deterministic and will produce variants that don't comply. Quality control overhead exceeds the time saved. | Deterministic templates per subtype. AI only extracts field values; templates control structure. |
-| QLD rego lookup integration | Auto-populate fields from rego number | API dependencies, auth overhead, rate limits, cost. Adds complexity before the core photo→AI→output workflow is proven. | Manual entry in MVP. Add as enrichment in v2. |
-| Multi-user role management (valuer/admin) | Team scale requires different access levels | Single authenticated user in MVP. Role complexity is premature until the workflow is validated and team adoption is confirmed. | Simple auth (any logged-in user can do everything). Roles in v2. |
-| In-app PPSR check | Verify VIN against PPSR before saving | Jack runs PPSR separately via the PPSR portal. In-app PPSR adds API integration, cost per query, and legal/data considerations. | Staff manually run PPSR; app stores the result as a text field. PPSR lock/integration is v2. |
-| Pagination or infinite scroll for asset list | Expected for any data list | The asset list is an internal tool used by 1-3 people. Volume does not justify pagination complexity in MVP. | Simple list view with basic sort. Pagination only when list grows to the point of genuine performance issues. |
-| Offline/PWA mode | On-site work might have poor connectivity | Supabase Storage uploads require connectivity. An offline queue adds substantial complexity (conflict resolution, failed upload handling) for an edge case that can be mitigated by download-before-site. | On-site, capture photos to camera roll offline. Upload when connected. This is the current workflow anyway. |
-| Duplicate detection | Prevent booking the same asset twice | In MVP, staff manage this operationally. Duplicate detection requires VIN uniqueness constraints and UI handling that adds complexity before the base workflow is stable. | Add as a data quality feature in v1.x once base workflow is running. |
+| Feature | Why Requested | Why Problematic | Alternative |
+|---------|---------------|-----------------|-------------|
+| Parse structured fields back from `inspection_notes` string on mount | Staff reload page and expect structured field inputs to be pre-populated | The combined `inspection_notes` string format (`vin: ABC\nodometer: 123456\nNotes: free text`) is fragile to parse — freeform notes with colons break the heuristic. Also couples the storage format to the UI structure. | Add a separate `pre_fill_fields` JSONB column to assets table, or parse only the known field keys explicitly. Either is cleaner than regex-parsing the notes string. See Feature Dependencies. |
+| Auto-select input type for structured fields based on schema `inputType` | Suspension is a select — show a dropdown. Odometer is a number — show numeric input. Makes the form feel polished. | Adds conditional rendering complexity. For a 2-4 field panel, text inputs with placeholder hints are sufficient. Suspension type has only 3 values — a text input with a placeholder "e.g. Air / Leaf Spring / Airbag" works. | Use text inputs for all pre-fill fields in v1.1. Add select inputs if staff report confusion. |
+| Auto-populate structured inputs from AI extraction result | After extraction runs, back-populate the pre-fill fields with AI-extracted values so staff can see what the AI found | Creates UX confusion: did the AI read this or did I enter it? Also the pre-fill panel is hidden in the success state (`status !== 'success'`). | Leave extraction result in the review form. Pre-fill panel is pre-extraction only. |
+| Separate `pre_fill_fields` DB column vs encoding in `inspection_notes` | Storing structured pre-fill values in their own JSONB column is cleaner and avoids parsing issues | Requires a DB migration (new column) and changes to all relevant DB queries and actions. More work for a small gain in this milestone. | Encode structured pre-fill values in `inspection_notes` with a known prefix format. Parse only known field keys. Keep the freeform notes separate. Document the format. |
 
 ---
 
 ## Feature Dependencies
 
 ```
-[Asset Type Selector]
-    └──required by──> [AI Extraction]
-                          └──required by──> [Extraction Review Form]
-                                                └──required by──> [Salesforce Output Generation]
-                                                                      └──required by──> [Copy-Paste Blocks]
+[Schema: inspectionPriority flags]
+    └──drives──> [InspectionNotesSection structured inputs]
+                     └──serialises to──> [inspection_notes DB column]
+                                             └──read by──> [/api/extract buildUserPrompt structuredFields]
+                                             └──read by──> [/api/describe buildDescriptionUserPrompt]
 
-[Photo Upload]
-    └──required by──> [AI Extraction]
+[InspectionNotesSection structured inputs]
+    └──needs persist/reload support──> [parse initialNotes back into structuredValuesRef on mount]
 
-[Client-Side Resize]
-    └──enhances──> [Photo Upload] (makes upload viable on mobile data)
+[/api/describe system prompt]
+    └──notes-verbatim instruction──> [description quality improvement]
+    (independent of schema changes — can be deployed separately)
 
-[Schema Registry per type]
-    └──drives──> [AI Extraction prompt]
-    └──drives──> [Extraction Review Form fields]
-    └──drives──> [Description Template]
-    └──drives──> [Salesforce Output field order and labels]
-
-[Cover Photo + Reorder]
-    └──enhances──> [Photo Upload] (adds presentation control)
-
-[AI Confidence Scores]
-    └──enhances──> [Extraction Review Form] (highlights fields needing attention)
-
-[Glass's Valuation Block]
-    └──conditional on──> [Asset Type Selector = Caravan/Motor Home]
-
-[Auth / Session]
-    └──gates──> [All features] (no auth = no access)
+[middleware.ts supabaseResponse bug]
+    └──independent of all other changes──> [fix session cookie desync]
+    (zero dependencies on schema, components, or API routes)
 ```
 
 ### Dependency Notes
 
-- **Asset Type Selector must come before AI Extraction:** The type determines the AI prompt (what fields to look for) and the field schema. If type is wrong, extraction produces wrong fields. No way to recover without re-running extraction.
-- **Schema Registry is the central dependency:** It must exist before the review form, before the AI prompt builder, before the description template engine, and before the output formatter. This is the first non-trivial implementation to design.
-- **Photo Upload is a prerequisite for everything:** Without at least one photo, there is nothing to extract from. The UI should prevent triggering extraction with no photos uploaded.
-- **Client-Side Resize enhances Photo Upload:** Not strictly required (extraction would work on large files) but practically required for mobile usability. Without it, a 15MB phone photo will fail or time out on mobile data.
-- **Confidence Indicators enhance Review Form:** Optional for launch but significantly improve accuracy — staff know which fields the AI was uncertain about. Medium complexity; worth building in v1 rather than retrofitting.
+- **Schema `inspectionPriority` flag changes are the prerequisite for new pre-fill fields.** Adding the flag to `vin` (truck), `suspension` (truck, trailer), `trailer_length` (caravan), `truck_weight` (forklift) is all that is needed for the fields to appear in `InspectionNotesSection`. The component already calls `getInspectionPriorityFields()` and renders whatever it returns.
+
+- **`buildUserPrompt` structured fields wiring is already written but not connected.** The `/api/extract` route already has a `structuredFields` variable (currently hardcoded `{}`). Connecting it requires: (1) parse `inspection_notes` from DB to extract known-key values before calling `buildUserPrompt`, or (2) add a `pre_fill_fields` column. Option 1 is lower scope for v1.1.
+
+- **Description quality fix is independent.** It only touches the system prompt in `/api/describe`. No schema changes, no component changes, no DB changes. Can be done first.
+
+- **Middleware session bug is fully independent.** Zero dependencies on other v1.1 changes. Fix it in isolation and test it.
+
+- **Structured input persistence on reload** depends on schema flag changes being done first (so the fields exist), and then requires either (a) parsing `inspection_notes` back into structured values on mount, or (b) a `pre_fill_fields` column. This is the most complex dependency chain in v1.1 — it may be deferred to v1.2 if the simpler approach (don't pre-populate on reload, accept re-entry) is acceptable.
 
 ---
 
 ## MVP Definition
 
-### Launch With (v1)
+### v1.1 Launch With
 
-Minimum viable for the tool to replace the Claude chat workflow.
+Minimum set to close the three reported issues.
 
-- [ ] **Auth with persistent session** — without this, staff cannot use the tool across the workday
-- [ ] **Asset type selector (7 types)** — required before any other step
-- [ ] **Photo upload with client-side resize** — the capture step; resize is required for mobile viability
-- [ ] **Cover photo + reorder with persist** — low complexity, high value; gives staff control over asset presentation
-- [ ] **AI extraction (VIN/PIN/Serial, make, model, year) with confidence scores** — the core value proposition; confidence scores add minimal complexity but significantly improve review accuracy
-- [ ] **Editable review form driven by Schema Registry** — mandatory confirmation step; no auto-save path
-- [ ] **Copy-paste fields block (Salesforce field order, correct labels)** — primary output; whole reason tool exists
-- [ ] **Copy-paste description block (deterministic template per subtype)** — secondary output; strict format rules mean AI text is not viable
-- [ ] **Glass's Valuation block (Caravan/Motor Home only)** — low complexity conditional section; completes the output for that asset type
-- [ ] **Asset record list view** — staff need to see and return to records in progress
+- [ ] **Schema: add `inspectionPriority: true` to truck `vin`, truck `suspension`, trailer `vin`, trailer `suspension`, forklift `truck_weight`, caravan `trailer_length`** — this surfaces the new pre-fill inputs at zero implementation cost beyond the schema change
+- [ ] **Connect structured pre-fill values to `buildUserPrompt` `structuredFields`** — parse known-key structured values out of `inspection_notes` before the AI call, pass them as authoritative overrides
+- [ ] **Description system prompt: add verbatim preservation instruction** — explicit instruction to treat inspection notes values as authoritative, preserve specific measurements and model notes word-for-word
+- [ ] **Fix middleware `supabaseResponse` cookie desync** — single `supabaseResponse` variable; `setAll` must mutate it rather than recreating it; return the same object
 
-### Add After Validation (v1.x)
+### Add After Validation (v1.1.x)
 
-Once core workflow is running and staff are using it daily.
-
-- [ ] **Duplicate VIN detection** — add as data quality guard once base workflow is stable; requires VIN uniqueness index + UI warning
-- [ ] **PPSR result storage field** — trivial field addition; deferred only because it requires confirming the exact field position in the Salesforce schema
-- [ ] **Bulk photo management (delete, re-upload)** — add when staff report friction with photo corrections
-- [ ] **Asset status tracking (draft / complete / in Salesforce)** — operational tracking once volume justifies it
+- [ ] **Pre-fill field values persist across page reload** — parse `initialNotes` back into structured field values on mount (or introduce `pre_fill_fields` JSONB column). Deferred because re-entry is acceptable in the short term and the implementation requires a clear decision on storage strategy.
+- [ ] **Suspension field as select input** — replace text input with Air / Leaf Spring / Airbag / Hendrickson dropdown for truck and trailer suspension. Low complexity but not blocking.
 
 ### Future Consideration (v2+)
 
-Deferred until core workflow is validated and management approval received.
-
-- [ ] **QLD rego lookup** — API integration, cost per query, auth overhead; not warranted until base workflow is proven
-- [ ] **RitchieSpecs / manufacturer spec research** — enrichment pipeline; significant integration complexity
-- [ ] **Auction comp pricing (IronPlanet, Pickles, Grays, Mascus)** — market research feature; requires multiple third-party integrations
-- [ ] **Salesforce API push** — eliminates copy-paste entirely; blocked on IT approval
-- [ ] **Multi-user role management (valuer/admin/management)** — premature until team adoption confirmed
-- [ ] **Vendor / consignor records** — consignor management is a separate data domain
-- [ ] **Auction management** — sale event creation, lot ordering; entirely separate feature set
+- [ ] **`pre_fill_fields` JSONB column** — dedicated storage column for pre-extraction structured values, decoupled from `inspection_notes` freeform text. Prerequisite for reliable reload persistence and for displaying pre-fill values separately from notes in the output.
+- [ ] **Pre-fill fields for more asset types** — earthmoving PIN/Serial are already `inspectionPriority` but could be promoted to dedicated pre-fill UI; agriculture similarly.
 
 ---
 
@@ -149,127 +121,140 @@ Deferred until core workflow is validated and management approval received.
 
 | Feature | User Value | Implementation Cost | Priority |
 |---------|------------|---------------------|----------|
-| Auth / session persistence | HIGH | LOW | P1 |
-| Asset type selector | HIGH | LOW | P1 |
-| Photo upload + client-side resize | HIGH | LOW | P1 |
-| AI extraction with confidence scores | HIGH | MEDIUM | P1 |
-| Editable review form (Schema Registry) | HIGH | MEDIUM | P1 |
-| Copy-paste fields block | HIGH | LOW | P1 |
-| Copy-paste description block (templates) | HIGH | MEDIUM | P1 |
-| Glass's Valuation block | HIGH | LOW | P1 |
-| Cover photo + reorder with persist | MEDIUM | MEDIUM | P1 |
-| Asset record list view | MEDIUM | LOW | P1 |
-| Duplicate VIN detection | MEDIUM | LOW | P2 |
-| PPSR result storage field | LOW | LOW | P2 |
-| Asset status tracking | MEDIUM | LOW | P2 |
-| Bulk photo management | LOW | MEDIUM | P2 |
-| QLD rego lookup | HIGH | HIGH | P3 |
-| Salesforce API push | HIGH | HIGH | P3 |
-| Spec research pipeline | MEDIUM | HIGH | P3 |
-| Auction comp pricing | MEDIUM | HIGH | P3 |
+| Schema flag additions (new pre-fill fields visible) | HIGH | LOW | P1 |
+| Connect structured fields to AI extraction prompt | HIGH | LOW | P1 |
+| Description verbatim notes instruction | HIGH | LOW | P1 |
+| Middleware session bug fix | HIGH | LOW | P1 |
+| Pre-fill field values persist on reload | MEDIUM | MEDIUM | P2 |
+| Suspension as select input | LOW | LOW | P2 |
+| `pre_fill_fields` JSONB column | MEDIUM | MEDIUM | P3 |
 
 **Priority key:**
-- P1: Must have for launch — without this, the tool does not replace the Claude chat workflow
-- P2: Should have, add in v1.x after core workflow is validated
-- P3: Future consideration, v2+
+- P1: Must have for v1.1 release — directly addresses the three reported issues
+- P2: Should add before staff adoption scales — quality-of-life improvements
+- P3: Architectural improvement — defer until usage patterns confirm the need
 
 ---
 
-## Workflow-Based Analysis
+## Implementation Notes by Feature
 
-### Photo Management UX
+### Feature 1: Pre-extraction Structured Input Fields
 
-**Table stakes:**
-- Multiple file select in a single action (not one-at-a-time)
-- Visible thumbnail grid after upload (staff need to confirm the right photos are attached)
-- Client-side resize — non-negotiable for mobile-data uploads of phone camera photos
-- Delete photo from record
+**What needs to change (in order):**
 
-**Differentiating:**
-- Drag-to-reorder with cover photo badge — gives staff control over Salesforce listing photo order
-- Order persistence across refresh — critical for a tool used across two sessions (on-site capture, desktop review)
+1. `truck.ts` schema: add `inspectionPriority: true` to `vin` field (sfOrder 2).
+2. `truck.ts` schema: add `inspectionPriority: true` to `suspension` field (sfOrder 26).
+3. `trailer.ts` schema: add `inspectionPriority: true` to `vin` field (sfOrder 3).
+4. `trailer.ts` schema: add `inspectionPriority: true` to `suspension` field (sfOrder 15).
+5. `forklift.ts` schema: add `inspectionPriority: true` to `truck_weight` field (sfOrder 16).
+6. `caravan.ts` schema: add `inspectionPriority: true` to `trailer_length` field (sfOrder 15).
 
-**Anti-patterns:**
-- Camera-only capture (no file picker): some photos may come from a camera roll taken earlier; `capture="environment"` on mobile still allows file picker fallback
-- Mandatory photo before other steps: staff should be able to set asset type first; photo upload should not gate that step
+These six schema changes make the fields appear in `InspectionNotesSection` automatically. No component changes needed.
 
-### AI Extraction Review Flow
+**Connecting structured values to AI extraction:**
 
-**Table stakes:**
-- Every extracted field is editable — no read-only fields in review
-- Review is a mandatory step, never skippable
-- Form submits only after staff confirm (explicit "Save" or "Confirm" action)
-- Clear visual distinction between AI-populated fields and user-edited fields
+`InspectionNotesSection` already serialises structured field values into `inspection_notes` as `key: value` lines. The `/api/extract` route reads `inspection_notes` from DB. To connect:
 
-**Differentiating:**
-- Confidence scores per field — staff attention goes to fields the AI was unsure about, not to rechecking every field
-- Extraction status indicators — "Extraction complete", "Partial extraction (2 fields missing)", "Extraction failed" each need distinct UI states
-- Photo visible during review — staff should be able to see the build plate photo while reviewing the extracted values without switching views
+- In `/api/extract`, after loading `asset.inspection_notes`, parse lines matching `^(\w+): (.+)$` and match keys against known `inspectionPriority` field keys for the asset type.
+- Pass parsed key-value pairs as `structuredFields` to `buildUserPrompt`.
+- GPT-4o already receives these under "Staff-provided field values (use these directly)" and treats them as authoritative.
 
-**Anti-patterns:**
-- Auto-triggering re-extraction when user edits a field: creates a loop where user edits are overwritten
-- Single-field extraction (one field at a time): structured JSON output in one API call is more reliable and cheaper than iterative extraction
-- Showing raw AI JSON output to the user: parse into a form; raw JSON is not a usable review interface
+This approach is LOW complexity because `buildUserPrompt` already handles the formatting. The only new code is the `inspection_notes` → `structuredFields` parse step in the route.
 
-### Form Generation from Schema
+**Risk:** If a staff member writes something in freeform notes that looks like a structured field line (e.g. "vin: not visible"), it will be parsed as a structured field override. Mitigation: only parse keys that match known `inspectionPriority` field keys for the asset type — do not parse arbitrary key-value patterns.
 
-**Table stakes:**
-- Field order exactly matches Salesforce column order (copy-paste depends on this)
-- Field labels exactly match Salesforce column names (copy-paste depends on this)
-- Schema is per-asset-type (7 different schemas)
-- Optional fields gracefully handled (empty field = excluded from output block, not "null" or "N/A")
+### Feature 2: Verbatim Notes in AI Description
 
-**Differentiating:**
-- Schema Registry as single source of truth driving AI prompt, review form, and output — changes to field names propagate everywhere from one edit
-- Per-subtype description templates (Excavator vs Dozer vs Grader within Earthmoving type) — the current Claude chat workflow requires Jack to remember these distinctions
+**What needs to change:**
 
-**Anti-patterns:**
-- Hardcoding field lists in multiple places (prompt, form, output formatter) — any schema change requires updates in 3+ places, guaranteed to drift
-- Free-form field entry — fields must be constrained to the defined schema; extra fields not in the schema should not appear in the Salesforce output block
+Only the system prompt in `/api/describe`. No schema, component, or DB changes.
 
-### Output / Copy-Paste Patterns
+The existing system prompt says "4. Only include a spec if confirmed from photos, inspection notes, or research — never guess". This does not instruct GPT-4o to preserve the exact wording from notes.
 
-**Table stakes:**
-- One-click copy per output section (not select-all-text manual selection)
-- Visual copy confirmation (button state change or toast — something to confirm the clipboard write succeeded)
-- Output sections clearly labelled (Fields block, Description block, Glass's Valuation block)
-- Output formatted as plain text, not HTML (Salesforce accepts plain text paste)
+Add an explicit instruction: when a specific measurement, value, or fact appears in inspection notes (e.g. "48-inch sleeper cab", "full log books", "Webasto heater"), include that exact phrasing in the description rather than paraphrasing or replacing with TBC.
 
-**Differentiating:**
-- Three distinct copy sections (Fields, Description, Glass's) — lets staff paste each section into the correct Salesforce area separately rather than one monolithic block
-- Copy button remains active after copy (allows re-copy if staff need to paste again)
-- Output preview inline with the form (no separate "output" screen; staff can see what they're copying)
+The system prompt already passes `Inspection notes: ${asset.inspection_notes}` in the user prompt. The change is purely instructional — tell GPT-4o what to do with values it finds there.
 
-**Anti-patterns:**
-- Single "Copy All" button: Salesforce has separate fields for the fields block and description. Staff need to paste them in different places.
-- Formatted/rich text output: Salesforce text fields accept plain text; rich text (bold, bullets) will break the paste or produce visible formatting characters
-- Requiring a separate "generate output" step after confirm: output should be generated at confirm time and visible immediately
+**Confidence:** HIGH. GPT-4o follows explicit "use verbatim" instructions reliably when the instruction is specific, in the system prompt, and backed by a concrete example. The OpenAI prompting guide confirms that a single clarifying sentence is usually sufficient to steer the model.
+
+### Feature 3: Session Auth Bug Fix
+
+**Root cause analysis from code review:**
+
+Current `middleware.ts` (lines 10-19):
+```
+let supabaseResponse = NextResponse.next({ request })
+const supabase = createServerClient(..., {
+  cookies: {
+    getAll() { return request.cookies.getAll() },
+    setAll(cookiesToSet) {
+      cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
+      supabaseResponse = NextResponse.next({ request })   // BUG: creates new response, loses prior cookies
+      cookiesToSet.forEach(({ name, value, options }) =>
+        supabaseResponse.cookies.set(name, value, options)
+      )
+    },
+  },
+})
+```
+
+When `setAll` is called during session refresh, it reassigns `supabaseResponse` to a brand-new `NextResponse.next({ request })`. This new response does not carry any cookies that the Supabase client had already set. The result: the browser receives a response without refreshed auth cookies. On the next navigation, the Server Component `createClient()` reads stale cookies, `getUser()` fails (token expired), and the layout redirects to `/login`.
+
+**The fix:**
+
+The official Supabase SSR docs pattern (as confirmed by search results) requires that `setAll` mutate `supabaseResponse.cookies` without replacing the response object. The outer `supabaseResponse` must be the same object from start to finish.
+
+The corrected pattern:
+```typescript
+let supabaseResponse = NextResponse.next({ request })
+const supabase = createServerClient(..., {
+  cookies: {
+    getAll() { return request.cookies.getAll() },
+    setAll(cookiesToSet) {
+      // Set on request for Server Component access
+      cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
+      // Recreate once with updated request, then set cookies on it
+      supabaseResponse = NextResponse.next({ request })
+      cookiesToSet.forEach(({ name, value, options }) =>
+        supabaseResponse.cookies.set(name, value, options)
+      )
+    },
+  },
+})
+```
+
+Wait — the existing code does exactly this. The issue may not be in `setAll` at all.
+
+**Revised diagnosis:** Looking more carefully at the code: the existing middleware does call `NextResponse.next({ request })` inside `setAll` after setting cookies on `request`. This is actually the correct pattern — the `request` object has the new cookies set on it, so `NextResponse.next({ request })` creates a response with those cookies in the request context. Then `supabaseResponse.cookies.set` adds them to the response cookies.
+
+The actual bug is likely in how `(app)/layout.tsx` handles the auth check. It calls `supabase.auth.getUser()` from a Server Component, which is correct. But `src/app/page.tsx` does `redirect('/login')` unconditionally. If the root `/` path is visited while authenticated (which happens when the Assets tab navigates to `/`), this redirect fires before the auth layout check runs — because `/` is not inside the `(app)` route group.
+
+**Revised diagnosis:** The Assets tab (`BottomNav.tsx`) links to `href="/"`. The root `page.tsx` unconditionally redirects to `/login`. But the `(app)` layout at `src/app/(app)/page.tsx` renders the asset list. The root `/` is a redirect-to-login page, not the asset list. The BottomNav `assetsActive` check uses `pathname === '/'` but the actual app homepage is under `(app)` which maps to `/`. This may be fine in Next.js route groups (the `(app)` group folder does not add a path segment), but the root `page.tsx` redirect to `/login` is the likely culprit.
+
+**Verification needed:** Confirm whether `/` routes to `src/app/page.tsx` (redirect to login) or `src/app/(app)/page.tsx` (asset list) in Next.js App Router. In App Router, both cannot exist simultaneously — one takes precedence. If `src/app/page.tsx` takes precedence, clicking the Assets tab always redirects to login regardless of auth state.
+
+**Confidence:** MEDIUM. The middleware cookie pattern appears correct in the existing code. The more likely bug is the route collision between `src/app/page.tsx` and `src/app/(app)/page.tsx`. Requires confirming which route wins at runtime.
 
 ---
 
-## Competitor Feature Analysis
+## Feature Dependencies for Roadmap Ordering
 
-This is an internal tool — no direct competitors. The baseline is the current Claude chat workflow. The relevant comparison is: does this feature make the tool better than opening Claude.ai and pasting a briefing doc?
+The three features are independent of each other and can be implemented in any order. Recommended sequence based on risk and value:
 
-| Feature | Current Claude Chat Workflow | This App |
-|---------|------------------------------|----------|
-| Photo management | Upload to Claude chat, no persistence, no reorder | Persistent photo storage, reorder, cover photo |
-| Asset type schema | Jack must know which fields apply to which type | Schema Registry enforces correct fields automatically |
-| AI extraction | Implicit in briefing prompt, no confidence signal | Structured JSON output, confidence per field, editable review |
-| Description formatting | Varies — Claude sometimes adds dot points or marketing language | Deterministic templates guarantee format compliance |
-| Output copy | Select text in Claude chat manually | One-click copy per output section with confirmation |
-| Record persistence | None — gone when tab closes | Persistent Supabase record, accessible on any device |
-| Session continuity | Start over each asset | Asset list, resume from where left off |
+1. **Middleware / session bug first** — foundational; a broken session undermines all other work. Zero dependencies. Trivial to verify.
+2. **Schema flag additions + structured field wiring second** — schema changes are trivial; wiring is the main implementation. Affects the extraction pipeline.
+3. **Description verbatim instruction last** — prompt-only change. Can be tested independently. No risk of side effects on other features.
 
 ---
 
 ## Sources
 
-- Project context: `/home/jack/projects/prestige_assets/.planning/PROJECT.md` (HIGH confidence — source of truth for requirements)
-- Domain analysis: Internal tool workflow analysis (HIGH confidence — replacing a known, described workflow)
-- Salesforce field schemas: Documented in PROJECT.md (HIGH confidence — specific field names provided)
-- UX patterns: Assessment based on established web app patterns for mobile file upload, AI review flows, and clipboard API (MEDIUM confidence — no external source verification; well-established patterns)
+- Project codebase: `/home/jack/projects/prestige_assets/src/` (HIGH confidence — direct code inspection)
+- `InspectionNotesSection.tsx`, `ExtractionPageClient.tsx`, `extraction-schema.ts`, `/api/extract/route.ts`, `/api/describe/route.ts`, `middleware.ts`, schema files — all read and analysed directly
+- Supabase SSR docs and GitHub issues: session desync root cause documented in official Supabase troubleshooting and community discussions (MEDIUM confidence — searched 2026-03-21, cross-referenced with code)
+- OpenAI GPT-4.1 prompting guide: verbatim instruction behaviour confirmed (MEDIUM confidence — WebSearch 2026-03-21)
+- PROJECT.md v1.1 requirements: field specifications confirmed (HIGH confidence — primary source)
 
 ---
-*Feature research for: Prestige Assets — Slattery Auctions Book-In App*
-*Researched: 2026-03-17*
+*Feature research for: Prestige Assets v1.1 Pre-fill & Quality*
+*Researched: 2026-03-21*
