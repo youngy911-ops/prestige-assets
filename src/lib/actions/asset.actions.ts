@@ -25,6 +25,31 @@ export async function createAsset(
     .single()
 
   if (error) return { error: error.message }
-  revalidatePath('/assets')
+  revalidatePath('/')
   return { assetId: data.id }
+}
+
+export type AssetSummary = {
+  id: string
+  asset_type: string
+  asset_subtype: string | null
+  fields: Record<string, string>
+  status: 'draft' | 'confirmed'
+  updated_at: string
+}
+
+export async function getAssets(branch: string): Promise<AssetSummary[] | { error: string }> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Not authenticated' }
+
+  const { data, error } = await supabase
+    .from('assets')
+    .select('id, asset_type, asset_subtype, fields, status, updated_at')
+    .eq('user_id', user.id)
+    .eq('branch', branch)
+    .order('updated_at', { ascending: false })
+
+  if (error) return { error: error.message }
+  return (data ?? []) as AssetSummary[]
 }

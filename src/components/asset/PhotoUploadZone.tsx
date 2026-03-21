@@ -49,12 +49,13 @@ export function PhotoUploadZone({
     const files = e.target.files
     if (!files || files.length === 0) return
 
+    // Snapshot files into array BEFORE resetting input (resetting clears the FileList reference)
+    const remaining = 80 - photos.length
+    const fileArray = Array.from(files).slice(0, remaining)
+
     // Reset input so same file can be re-selected
     e.target.value = ''
 
-    // Slice to remaining capacity
-    const remaining = 80 - photos.length
-    const fileArray = Array.from(files).slice(0, remaining)
     if (fileArray.length === 0) return
 
     setIsUploading(true)
@@ -69,6 +70,7 @@ export function PhotoUploadZone({
       setUploadingIds((prev) => new Set([...prev, tempId]))
 
       try {
+        // 1. EXIF correct + compress to max 2MP
         // 1. EXIF correct + compress to max 2MP
         const processed = await processImageForUpload(file)
 
