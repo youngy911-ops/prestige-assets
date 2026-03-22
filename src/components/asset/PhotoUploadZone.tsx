@@ -134,7 +134,6 @@ export function PhotoUploadZone({
           type="file"
           accept="image/*"
           multiple
-          capture="environment"
           className="hidden"
           onChange={handleFilesSelected}
           disabled={isUploading || atCap}
@@ -200,7 +199,6 @@ export function PhotoUploadZone({
         type="file"
         accept="image/*"
         multiple
-        capture="environment"
         className="hidden"
         onChange={handleFilesSelected}
         disabled={isUploading || atCap}

@@ -42,12 +42,12 @@ describe('PhotoUploadZone', () => {
     expect(screen.getByText('No photos yet')).toBeTruthy()
   })
 
-  it('file input has accept="image/*", multiple, and capture="environment" attributes', () => {
+  it('file input has accept="image/*" and multiple attributes', () => {
     render(<PhotoUploadZone {...defaultProps} />)
     const input = screen.getByTestId('photo-file-input')
     expect(input).toHaveAttribute('accept', 'image/*')
     expect(input).toHaveAttribute('multiple')
-    expect(input).toHaveAttribute('capture', 'environment')
+    expect(input).not.toHaveAttribute('capture')
   })
 
   it('Add Photos button is disabled when photo count is 80', () => {

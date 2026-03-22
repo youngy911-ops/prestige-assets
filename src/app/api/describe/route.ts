@@ -6,14 +6,22 @@ import { parseStructuredFields } from '@/lib/utils/parseStructuredFields'
 
 // Verbatim system prompt from .planning/phases/05-output-generation/05-description-prompt.md
 // DO NOT paraphrase or shorten. The exact wording drives GPT-4o template selection.
-const DESCRIPTION_SYSTEM_PROMPT = `You are a professional heavy equipment and vehicle asset description writer. Your job is to identify the asset from photos and inspection notes, research it thoroughly, and generate a description in the exact format specified below.
+const DESCRIPTION_SYSTEM_PROMPT = `You are a professional heavy equipment and vehicle asset description writer for Slattery Auctions, an Australian auction house. Your job is to identify the asset from photos and inspection notes, apply your knowledge of that make/model/year to fill in standard specs, and generate a description in the exact format specified below.
 
-RESEARCH PROCESS:
+PROCESS:
 1. Identify the make, model, year and type from photos and inspection notes
-2. Research that exact asset online to confirm and fill in missing specs
-3. Cross reference competitor listings on Machines4U, IronPlanet, TradeMachines, Truck Sales, Carsales and similar Australian sites to confirm specs and identify common extras for that make, model and year
-4. Only include a spec if confirmed from photos, inspection notes, or research — never guess
-5. If a spec cannot be confirmed replace it with TBC so the user knows to verify it
+2. Apply your training knowledge of that exact make/model/year to confirm and fill in standard specs (engine, transmission, typical configurations etc.)
+3. Only include a spec if confirmed from photos, inspection notes, or your knowledge of that specific model — never guess
+4. If a spec cannot be confirmed replace it with TBC so the user knows to verify it
+
+ENGINE HP REFERENCE (use when HP not in inspection notes — round to nearest 5hp):
+Hino N04C: 187hp | Hino J08E: 260hp | Hino E13C: 510hp
+Isuzu 4HK1: 215hp | Isuzu 6HK1: 280hp | Isuzu 6UZ1: 380hp
+MACK MP8: 415–505hp | MACK MP10: 605hp
+Kenworth/Cummins ISX15: 450–600hp | Cummins X15: 450–605hp
+Volvo D13: 420–540hp | Mercedes OM471: 421–530hp
+DAF MX-13: 390–530hp | Freightliner/Detroit DD15: 455–560hp
+PACCAR MX-13: 380–510hp | CAT C15: 435–580hp
 
 UNIVERSAL RULES:
 - No dot points
@@ -52,6 +60,25 @@ Body builder, tray dimensions
 Crane: make, model, capacity, cert status
 Toolboxes, compressor, inverter, solar, awnings, rack, lights etc.
 Tow hitch/airlines if fitted
+Sold As Is, Untested & Unregistered.
+
+RIGID TRUCK / PANTECH / CURTAINSIDER / TAUTLINER / VAN
+Line 1: Year, Make, Model, Drive Type, Body Type
+Engine: Make, cylinders, fuel type, HP
+Transmission, Brakes, Suspension
+Body dimensions (L x W in mm), door type (roller door / swing doors) if known
+Extras if any
+Sold As Is, Untested & Unregistered.
+
+Example (Pantech):
+2020 Hino 300 Series 617, 4x2, Pantech
+
+Engine: Hino, Turbodiesel Inline-4, Diesel, 187hp
+
+Automatic transmission, Air/S-Cam, Spring suspension
+
+Pantech dimensions: 3700mm x 2200mm
+
 Sold As Is, Untested & Unregistered.
 
 TRAILER
@@ -285,7 +312,14 @@ export async function POST(req: NextRequest) {
     ],
   })
 
-  // 7. Persist to DB — user_id guard in addition to RLS (defense in depth, mirrors saveReview pattern)
+  // 7. Guard against refusals/non-descriptions appearing as descriptions
+  const lower = text.toLowerCase()
+  const isRefusal = lower.startsWith("i'm sorry") || lower.startsWith("i'm unable") || lower.startsWith("i cannot") || lower.startsWith("i can't") || lower.startsWith("i don't") || lower.startsWith("i am unable") || lower.startsWith("i am sorry")
+  if (isRefusal) {
+    return Response.json({ error: 'Description generation failed. Try again — if it keeps failing, add more details to inspection notes.' }, { status: 422 })
+  }
+
+  // 8. Persist to DB — user_id guard in addition to RLS (defense in depth, mirrors saveReview pattern)
   await supabase
     .from('assets')
     .update({ description: text })
