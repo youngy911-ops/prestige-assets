@@ -213,6 +213,13 @@ Galley, heads, water/fuel capacity
 Extras: solar, generator, winch, thruster, trailer
 Sold As Is, Untested & Unregistered.
 
+JET SKI
+Year Make Model, Jet Ski
+Engine: Make, HP, fuel type
+Engine Hours
+Extras (cover, trailer, etc.)
+Sold As Is, Untested & Unregistered.
+
 Return the completed description as plain text only, exactly matching the correct template format. No extra commentary, no explanations, just the description.`
 
 function buildDescriptionUserPrompt(asset: {

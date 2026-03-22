@@ -480,3 +480,111 @@ describe('POST /api/describe', () => {
     expect(promptText).not.toContain('Inspection notes:')
   })
 })
+
+describe('DESCRIPTION_SYSTEM_PROMPT — marine templates', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('contains existing MARINE section (Boat/Yacht template)', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockGenerateText.mockResolvedValue({ text: 'Marine description.' })
+
+    let callCount = 0
+    mockFrom.mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({
+                data: { id: 'asset-1', asset_type: 'marine', asset_subtype: 'boat', fields: {}, inspection_notes: null },
+                error: null,
+              }),
+            }),
+          }),
+        }
+      }
+      if (callCount === 2) {
+        return {
+          select: () => ({
+            eq: () => ({
+              order: () => Promise.resolve({ data: [], error: null }),
+            }),
+          }),
+        }
+      }
+      return {
+        update: () => ({
+          eq: () => ({
+            eq: () => Promise.resolve({ error: null }),
+          }),
+        }),
+      }
+    })
+
+    await POST(new Request('http://localhost/api/describe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ assetId: 'asset-1' }),
+    }) as Parameters<typeof POST>[0])
+
+    const callArgs = mockGenerateText.mock.calls[0][0]
+    const systemContent: string = callArgs.messages[0].content
+    expect(systemContent).toContain('MARINE')
+    expect(systemContent).toContain('LOA: XXft | Beam: XXft | Draft: XXft')
+    expect(systemContent).toContain('Hull Material')
+  })
+
+  it('contains JET SKI section as a distinct named block', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockGenerateText.mockResolvedValue({ text: 'Jet ski description.' })
+
+    let callCount = 0
+    mockFrom.mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({
+                data: { id: 'asset-1', asset_type: 'marine', asset_subtype: 'jet_ski', fields: {}, inspection_notes: null },
+                error: null,
+              }),
+            }),
+          }),
+        }
+      }
+      if (callCount === 2) {
+        return {
+          select: () => ({
+            eq: () => ({
+              order: () => Promise.resolve({ data: [], error: null }),
+            }),
+          }),
+        }
+      }
+      return {
+        update: () => ({
+          eq: () => ({
+            eq: () => Promise.resolve({ error: null }),
+          }),
+        }),
+      }
+    })
+
+    await POST(new Request('http://localhost/api/describe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ assetId: 'asset-1' }),
+    }) as Parameters<typeof POST>[0])
+
+    const callArgs = mockGenerateText.mock.calls[0][0]
+    const systemContent: string = callArgs.messages[0].content
+    expect(systemContent).toContain('JET SKI')
+    expect(systemContent).toContain('Year Make Model, Jet Ski')
+    expect(systemContent).toContain('Engine: Make, HP, fuel type')
+    // JET SKI section must be distinct — must appear AFTER the MARINE section
+    const marineIdx = systemContent.indexOf('MARINE')
+    const jetSkiIdx = systemContent.indexOf('JET SKI')
+    expect(jetSkiIdx).toBeGreaterThan(marineIdx)
+  })
+})

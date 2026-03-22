@@ -213,3 +213,33 @@ describe('buildSystemPrompt — plate routing', () => {
     expect(prompt.toLowerCase()).toMatch(/fabricate|serial numbers|vin/)
   })
 })
+
+describe('marine schema — AI extraction integration', () => {
+  it('buildExtractionSchema("marine") returns a valid Zod schema that accepts all 14 aiExtractable fields', async () => {
+    const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
+    const { getAIExtractableFields } = await import('@/lib/schema-registry')
+    const schema = buildExtractionSchema('marine')
+    const aiFields = getAIExtractableFields('marine')
+    // marine has 15 aiExtractable fields
+    expect(aiFields.length).toBe(15)
+    const testObj: Record<string, unknown> = {}
+    for (const key of aiFields) {
+      testObj[key] = { value: null, confidence: null }
+    }
+    const result = schema.safeParse(testObj)
+    expect(result.success).toBe(true)
+  })
+
+  it('buildSystemPrompt contains MARINE inference block', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('marine', 'boat')
+    expect(prompt).toContain('MARINE: infer hull_material')
+    expect(prompt).toContain('motor_type from photo')
+  })
+
+  it('getInspectionPriorityFields("marine") returns [hin, engine_hours, loa] sorted by sfOrder', async () => {
+    const { getInspectionPriorityFields } = await import('@/lib/schema-registry')
+    const fields = getInspectionPriorityFields('marine').map((f: { key: string }) => f.key)
+    expect(fields).toEqual(['hin', 'engine_hours', 'loa'])
+  })
+})
