@@ -30,14 +30,16 @@ describe('SCHEMA_REGISTRY structure', () => {
     expect(subtypes.map(s => s.key)).not.toContain('general')
   })
 
-  it('truck has exactly 14 subtypes with no rigid_truck or crane_truck', () => {
+  it('truck has exactly 15 subtypes including other', () => {
     const subtypes = getSubtypes('truck')
-    expect(subtypes).toHaveLength(14)
+    expect(subtypes).toHaveLength(15)
     expect(subtypes.map(s => s.key)).not.toContain('rigid_truck')
     expect(subtypes.map(s => s.key)).not.toContain('crane_truck')
     expect(subtypes.map(s => s.key)).not.toContain('service_truck')
     expect(subtypes.map(s => s.key)).toContain('prime_mover')
     expect(subtypes.map(s => s.key)).toContain('service')
+    expect(subtypes.map(s => s.key)).toContain('other')
+    expect(subtypes[subtypes.length - 1].key).toBe('other')
   })
 
   it('trailer has exactly 11 subtypes with correct keys', () => {
@@ -48,9 +50,9 @@ describe('SCHEMA_REGISTRY structure', () => {
     expect(subtypes.map(s => s.key)).not.toContain('semi_trailer')
   })
 
-  it('earthmoving has exactly 10 subtypes with renamed keys', () => {
+  it('earthmoving has exactly 12 subtypes with bulldozer, crawler_tractor, other', () => {
     const subtypes = getSubtypes('earthmoving')
-    expect(subtypes).toHaveLength(10)
+    expect(subtypes).toHaveLength(12)
     expect(subtypes.map(s => s.key)).toContain('skid_steer_loader')
     expect(subtypes.map(s => s.key)).toContain('motor_grader')
     expect(subtypes.map(s => s.key)).toContain('backhoe_loader')
@@ -58,6 +60,11 @@ describe('SCHEMA_REGISTRY structure', () => {
     expect(subtypes.map(s => s.key)).not.toContain('skid_steer')
     expect(subtypes.map(s => s.key)).not.toContain('grader')
     expect(subtypes.map(s => s.key)).not.toContain('backhoe')
+    expect(subtypes.map(s => s.key)).not.toContain('dozer')
+    expect(subtypes.map(s => s.key)).toContain('bulldozer')
+    expect(subtypes.map(s => s.key)).toContain('crawler_tractor')
+    expect(subtypes.map(s => s.key)).toContain('other')
+    expect(subtypes[subtypes.length - 1].key).toBe('other')
   })
 
   it('caravan has hasGlassValuation: true', () => {
