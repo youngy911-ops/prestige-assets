@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { Input } from '@/components/ui/input'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { getInspectionPriorityFields } from '@/lib/schema-registry'
 import { saveInspectionNotes } from '@/lib/actions/inspection.actions'
 import type { AssetType } from '@/lib/schema-registry/types'
+import { parseStructuredFields, extractFreeformNotes } from '@/lib/utils/parseStructuredFields'
 
 interface InspectionNotesSectionProps {
   assetId: string
@@ -42,8 +43,8 @@ export function InspectionNotesSection({
   initialNotes,
 }: InspectionNotesSectionProps) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const notesRef = useRef<string>(initialNotes ?? '')
-  const structuredValuesRef = useRef<Record<string, string>>({})
+  const notesRef = useRef<string>(extractFreeformNotes(initialNotes))
+  const structuredValuesRef = useRef<Record<string, string>>(parseStructuredFields(initialNotes))
 
   const priorityFields = getInspectionPriorityFields(assetType)
 
@@ -64,6 +65,14 @@ export function InspectionNotesSection({
   const scheduleAutosave = useCallback(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(persistNotes, 500)
+  }, [persistNotes])
+
+  // Unmount flush — cancel in-flight debounce timer and persist synchronously on navigation
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+      persistNotes()
+    }
   }, [persistNotes])
 
   const handleStructuredChange = (key: string, value: string) => {
@@ -91,7 +100,10 @@ export function InspectionNotesSection({
               {field.label}
             </Label>
             {field.inputType === 'select' ? (
-              <Select onValueChange={(value: string | null) => handleStructuredChange(field.key, value ?? '')}>
+              <Select
+                defaultValue={structuredValuesRef.current[field.key] ?? undefined}
+                onValueChange={(value: string | null) => handleStructuredChange(field.key, value ?? '')}
+              >
                 <SelectTrigger
                   id={`field-${field.key}`}
                   className="h-9 text-sm bg-white/5 border-white/15 text-white focus:ring-[oklch(0.29_0.07_248)]"
@@ -109,6 +121,7 @@ export function InspectionNotesSection({
             ) : (
               <Input
                 id={`field-${field.key}`}
+                defaultValue={structuredValuesRef.current[field.key] ?? ''}
                 className="h-9 text-sm bg-white/5 border-white/15 text-white placeholder:text-white/30 focus:ring-[oklch(0.29_0.07_248)]"
                 placeholder={FIELD_PLACEHOLDERS[field.key] ?? ''}
                 onChange={(e) => handleStructuredChange(field.key, e.target.value)}
@@ -125,7 +138,7 @@ export function InspectionNotesSection({
             id="other-notes"
             className="w-full min-h-[80px] rounded-md border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[oklch(0.29_0.07_248)] resize-y"
             placeholder="VIN, rego, dimensions, body builder, service history, number of keys, condition notes…"
-            defaultValue={initialNotes ?? ''}
+            defaultValue={notesRef.current}
             onChange={(e) => handleNotesChange(e.target.value)}
           />
         </div>

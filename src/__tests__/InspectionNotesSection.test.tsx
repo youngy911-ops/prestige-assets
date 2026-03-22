@@ -34,7 +34,7 @@ describe('InspectionNotesSection', () => {
     render(
       <InspectionNotesSection
         {...DEFAULT_PROPS}
-        initialNotes="vin: 1HGCM82633A123456\nodometer: 187450\nNotes: runs well"
+        initialNotes={`vin: 1HGCM82633A123456\nodometer: 187450\nNotes: runs well`}
       />
     )
     const vinInput = screen.getByDisplayValue('1HGCM82633A123456')
@@ -48,7 +48,7 @@ describe('InspectionNotesSection', () => {
     render(
       <InspectionNotesSection
         {...DEFAULT_PROPS}
-        initialNotes="vin: 1HGCM82633A123456\nodometer: 187450"
+        initialNotes={`vin: 1HGCM82633A123456\nodometer: 187450`}
       />
     )
     const odometerInput = screen.getByDisplayValue('187450')
@@ -64,7 +64,7 @@ describe('InspectionNotesSection', () => {
     render(
       <InspectionNotesSection
         {...DEFAULT_PROPS}
-        initialNotes="vin: ABC123\nNotes: runs well"
+        initialNotes={`vin: ABC123\nNotes: runs well`}
       />
     )
     const textarea = screen.getByRole('textbox', { name: /other notes/i })
@@ -75,7 +75,7 @@ describe('InspectionNotesSection', () => {
     render(
       <InspectionNotesSection
         {...DEFAULT_PROPS}
-        initialNotes="vin: ABC123"
+        initialNotes={`vin: ABC123`}
       />
     )
     const textarea = screen.getByRole('textbox', { name: /other notes/i })
@@ -87,7 +87,7 @@ describe('InspectionNotesSection', () => {
     const { unmount } = render(
       <InspectionNotesSection
         {...DEFAULT_PROPS}
-        initialNotes="vin: ABC123\nodometer: 50000"
+        initialNotes={`vin: ABC123\nodometer: 50000`}
       />
     )
     const vinInput = screen.getByDisplayValue('ABC123')
