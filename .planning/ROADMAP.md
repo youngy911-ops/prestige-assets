@@ -75,15 +75,16 @@ Plans:
 **Depends on**: Phase 12
 **Requirements**: TRUCK-01, TRAIL-01, EARTH-01, GOODS-01
 **Success Criteria** (what must be TRUE):
-  1. Truck type selector shows all 14 new subtypes; Rigid Truck and Crane Truck are gone
+  1. Truck type selector shows all 15 subtypes including Other; Rigid Truck and Crane Truck are gone
   2. Trailer type selector shows all 11 updated subtypes
-  3. Earthmoving type selector shows all 10 updated subtypes (Excavator through Trencher)
+  3. Earthmoving type selector shows all 12 updated subtypes including Bulldozer, Crawler Tractor, and Other
   4. General Goods type selector shows 5 subtypes (Tools & Equipment, Attachments, Workshop Equipment, Office & IT, Miscellaneous)
-**Plans**: 2 plans
+**Plans**: 3 plans
 
 Plans:
 - [ ] 13-01-PLAN.md — Replace subtypes arrays in truck.ts, trailer.ts, earthmoving.ts, general-goods.ts with final v1.3 values
 - [ ] 13-02-PLAN.md — Update stale test assertions in schema-registry.test.ts to match new subtype counts and keys
+- [ ] 13-03-PLAN.md — Gap closure: append other to truck subtypes, add bulldozer/crawler_tractor/other to earthmoving subtypes, update test assertions
 
 ### Phase 14: Description Quality
 **Goal**: GPT-4o generates correctly formatted descriptions for all truck and earthmoving subtypes, and every description ends with the required footer
@@ -91,7 +92,7 @@ Plans:
 **Requirements**: TRUCK-02, DESC-01, DESC-02
 **Success Criteria** (what must be TRUE):
   1. Generated description for any truck subtype (e.g. Prime Mover, Tipper, EWP) uses a format appropriate to that body type
-  2. Generated description for any earthmoving subtype (e.g. Dozer, Telehandler, Trencher) uses a format appropriate to that machine type
+  2. Generated description for any earthmoving subtype (e.g. Bulldozer, Telehandler, Trencher) uses a format appropriate to that machine type
   3. Every generated description across all asset types closes with "Sold As Is, Untested & Unregistered." — no exceptions
 **Plans**: TBD
 
@@ -120,6 +121,6 @@ Plans:
 | 10. Description Verbatim Fidelity | v1.1 | 2/2 | Complete | 2026-03-21 |
 | 11. Pre-fill Value Restoration | v1.2 | 2/2 | Complete | 2026-03-22 |
 | 12. Marine Asset Type | 2/2 | Complete    | 2026-03-22 | - |
-| 13. Subtype Expansions | 2/2 | Complete   | 2026-03-22 | - |
+| 13. Subtype Expansions | 3/3 | In progress | 2026-03-22 | - |
 | 14. Description Quality | v1.3 | 0/TBD | Not started | - |
 | 15. Pre-fill Bug Fixes | v1.3 | 0/TBD | Not started | - |
