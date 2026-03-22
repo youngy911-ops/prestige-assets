@@ -58,24 +58,24 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MARINE-01 | TBD | Pending |
-| MARINE-02 | TBD | Pending |
-| MARINE-03 | TBD | Pending |
-| TRUCK-01 | TBD | Pending |
-| TRUCK-02 | TBD | Pending |
-| TRAIL-01 | TBD | Pending |
-| EARTH-01 | TBD | Pending |
-| GOODS-01 | TBD | Pending |
-| DESC-01 | TBD | Pending |
-| DESC-02 | TBD | Pending |
-| PREFILL-07 | TBD | Pending |
-| PREFILL-08 | TBD | Pending |
+| MARINE-01 | Phase 12 | Pending |
+| MARINE-02 | Phase 12 | Pending |
+| MARINE-03 | Phase 12 | Pending |
+| TRUCK-01 | Phase 13 | Pending |
+| TRAIL-01 | Phase 13 | Pending |
+| EARTH-01 | Phase 13 | Pending |
+| GOODS-01 | Phase 13 | Pending |
+| TRUCK-02 | Phase 14 | Pending |
+| DESC-01 | Phase 14 | Pending |
+| DESC-02 | Phase 14 | Pending |
+| PREFILL-07 | Phase 15 | Pending |
+| PREFILL-08 | Phase 15 | Pending |
 
 **Coverage:**
 - v1.3 requirements: 12 total
-- Mapped to phases: 0
-- Unmapped: 12 ⚠️
+- Mapped to phases: 12
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-03-22*
-*Last updated: 2026-03-22 after initial definition*
+*Last updated: 2026-03-22 — traceability mapped after roadmap creation*
