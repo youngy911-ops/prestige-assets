@@ -4,7 +4,11 @@ export const generalGoodsSchema: AssetSchema = {
   assetType: 'general_goods',
   displayName: 'General Goods',
   subtypes: [
-    { key: 'general', label: 'General' },
+    { key: 'tools_equipment',    label: 'Tools & Equipment' },
+    { key: 'attachments',        label: 'Attachments' },
+    { key: 'workshop_equipment', label: 'Workshop Equipment' },
+    { key: 'office_it',          label: 'Office & IT' },
+    { key: 'miscellaneous',      label: 'Miscellaneous' },
   ],
   hasGlassValuation: false,
   fields: [
