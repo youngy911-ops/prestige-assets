@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Asset Expansion
 status: planning
-stopped_at: Completed 13-subtype-expansions-01-PLAN.md
-last_updated: "2026-03-22T08:14:57.249Z"
+stopped_at: Completed 13-subtype-expansions-02-PLAN.md
+last_updated: "2026-03-22T09:27:28.312Z"
 last_activity: 2026-03-22 — v1.3 roadmap created; phases 12–15 defined
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 3
+  completed_plans: 4
   percent: 0
 ---
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░░░░░░░░░░░] v1.3 0%
 | Phase 12-marine-asset-type P01 | 2 | 1 tasks | 5 files |
 | Phase 12-marine-asset-type P02 | 4 | 2 tasks | 4 files |
 | Phase 13-subtype-expansions P01 | 1 | 2 tasks | 4 files |
+| Phase 13-subtype-expansions P02 | 5 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,7 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 12-marine-asset-type]: Use dynamic import() not require() for @/ aliased modules in vitest ESM environment
 - [Phase 13-subtype-expansions]: skid_steer_loader/motor_grader/backhoe_loader used as compound keys for earthmoving subtypes — more precise than bare skid_steer/grader/backhoe
 - [Phase 13-subtype-expansions]: general_goods 'general' catch-all key removed; replaced with 5 categorical subtypes (tools_equipment, attachments, workshop_equipment, office_it, miscellaneous)
+- [Phase 13-subtype-expansions]: Test assertions for subtypes assert both correct count and explicit negative checks for removed keys (rigid_truck, crane_truck, skid_steer bare, grader bare, backhoe bare, general)
 
 ### Pending Todos
 
@@ -80,6 +82,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-22T08:14:57.244Z
-Stopped at: Completed 13-subtype-expansions-01-PLAN.md
+Last session: 2026-03-22T09:27:28.309Z
+Stopped at: Completed 13-subtype-expansions-02-PLAN.md
 Resume file: None
