@@ -1,7 +1,8 @@
 ---
 phase: 12
 slug: marine-asset-type
-status: draft
+status: approved
+reviewed_at: 2026-03-22T00:00:00Z
 shadcn_initialized: true
 preset: base-nova / neutral / css-variables
 created: 2026-03-22
