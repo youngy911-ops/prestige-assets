@@ -61,64 +61,73 @@ export function PhotoUploadZone({
     setIsUploading(true)
     setUploadErrors([])
 
-    for (let i = 0; i < fileArray.length; i++) {
-      const file = fileArray[i]
-      // Use a temp id for the uploading placeholder
-      const tempId = `uploading-${Date.now()}-${i}`
+    // Add all placeholders upfront so the user sees all photos queued immediately
+    const tempIds = fileArray.map((_, i) => `uploading-${Date.now()}-${i}`)
+    setUploadingIds((prev) => new Set([...prev, ...tempIds]))
 
-      // Add uploading placeholder to UI
-      setUploadingIds((prev) => new Set([...prev, tempId]))
+    const baseOrder = photos.length
 
-      try {
-        // 1. EXIF correct + compress to max 2MP
-        // 1. EXIF correct + compress to max 2MP
-        const processed = await processImageForUpload(file)
+    const results = await Promise.allSettled(
+      fileArray.map(async (file, i) => {
+        try {
+          // 1. EXIF correct + compress to max 2MP
+          const processed = await processImageForUpload(file)
 
-        // 2. Upload to Supabase Storage (direct BrowserClient — not via Server Action)
-        const storagePath = `${userId}/${assetId}/${Date.now()}-${processed.name}`
-        const { data, error: uploadError } = await supabase.storage
-          .from('photos')
-          .upload(storagePath, processed, { contentType: 'image/jpeg', upsert: false })
+          // 2. Upload to Supabase Storage (direct BrowserClient — not via Server Action)
+          const storagePath = `${userId}/${assetId}/${Date.now()}-${i}-${processed.name}`
+          const { data, error: uploadError } = await supabase.storage
+            .from('photos')
+            .upload(storagePath, processed, { contentType: 'image/jpeg', upsert: false })
 
-        if (uploadError) throw new Error(uploadError.message)
+          if (uploadError) throw new Error(uploadError.message)
 
-        // 3. Persist to asset_photos table via Server Action
-        const insertResult = await insertPhoto({
-          assetId,
-          storagePath: data.path,
-          sortOrder: photos.length + i,
-        })
-        if ('error' in insertResult) throw new Error(insertResult.error)
+          // 3. Persist to asset_photos table via Server Action
+          const insertResult = await insertPhoto({
+            assetId,
+            storagePath: data.path,
+            sortOrder: baseOrder + i,
+          })
+          if ('error' in insertResult) throw new Error(insertResult.error)
 
-        // 4. Get presigned URL for immediate display (1 hour expiry)
-        const urlResult = await getSignedUrl(data.path)
-        if ('error' in urlResult) throw new Error(urlResult.error)
+          // 4. Get presigned URL for immediate display (1 hour expiry)
+          const urlResult = await getSignedUrl(data.path)
+          if ('error' in urlResult) throw new Error(urlResult.error)
 
-        // 5. Add to committed photos state
-        const newPhoto: PhotoItem = {
-          id: insertResult.id,
-          storagePath: data.path,
-          signedUrl: urlResult.signedUrl,
-          sortOrder: photos.length + i,
+          return {
+            id: insertResult.id,
+            storagePath: data.path,
+            signedUrl: urlResult.signedUrl,
+            sortOrder: baseOrder + i,
+          } satisfies PhotoItem
+        } finally {
+          setUploadingIds((prev) => {
+            const next = new Set(prev)
+            next.delete(tempIds[i])
+            return next
+          })
         }
-        setPhotos((prev) => {
-          const updated = [...prev, newPhoto]
-          onPhotosChange?.(updated)
-          return updated
-        })
-      } catch (err) {
-        setUploadErrors((prev) => [
-          ...prev,
-          { filename: file.name, message: String(err) },
-        ])
-      } finally {
-        setUploadingIds((prev) => {
-          const next = new Set(prev)
-          next.delete(tempId)
-          return next
-        })
+      })
+    )
+
+    const newPhotos: PhotoItem[] = []
+    const errors: { filename: string; message: string }[] = []
+
+    results.forEach((result, i) => {
+      if (result.status === 'fulfilled') {
+        newPhotos.push(result.value)
+      } else {
+        errors.push({ filename: fileArray[i].name, message: String(result.reason) })
       }
+    })
+
+    if (newPhotos.length > 0) {
+      setPhotos((prev) => {
+        const updated = [...prev, ...newPhotos].sort((a, b) => a.sortOrder - b.sortOrder)
+        onPhotosChange?.(updated)
+        return updated
+      })
     }
+    if (errors.length > 0) setUploadErrors(errors)
 
     setIsUploading(false)
   }
