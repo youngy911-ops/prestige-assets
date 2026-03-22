@@ -79,7 +79,11 @@ Plans:
   2. Trailer type selector shows all 11 updated subtypes
   3. Earthmoving type selector shows all 10 updated subtypes (Excavator through Trencher)
   4. General Goods type selector shows 5 subtypes (Tools & Equipment, Attachments, Workshop Equipment, Office & IT, Miscellaneous)
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 13-01-PLAN.md — Replace subtypes arrays in truck.ts, trailer.ts, earthmoving.ts, general-goods.ts with final v1.3 values
+- [ ] 13-02-PLAN.md — Update stale test assertions in schema-registry.test.ts to match new subtype counts and keys
 
 ### Phase 14: Description Quality
 **Goal**: GPT-4o generates correctly formatted descriptions for all truck and earthmoving subtypes, and every description ends with the required footer
@@ -116,6 +120,6 @@ Plans:
 | 10. Description Verbatim Fidelity | v1.1 | 2/2 | Complete | 2026-03-21 |
 | 11. Pre-fill Value Restoration | v1.2 | 2/2 | Complete | 2026-03-22 |
 | 12. Marine Asset Type | 2/2 | Complete    | 2026-03-22 | - |
-| 13. Subtype Expansions | v1.3 | 0/TBD | Not started | - |
+| 13. Subtype Expansions | v1.3 | 0/2 | Not started | - |
 | 14. Description Quality | v1.3 | 0/TBD | Not started | - |
 | 15. Pre-fill Bug Fixes | v1.3 | 0/TBD | Not started | - |
