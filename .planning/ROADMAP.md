@@ -51,11 +51,11 @@ Full archive: `.planning/milestones/v1.1-ROADMAP.md`
   2. The Suspension Type select displays the previously chosen option (Spring, Airbag, 6 Rod, or Other) rather than a blank placeholder
   3. The "Other notes" textarea shows only the freeform notes staff typed, not the serialised key:value lines from structured fields
   4. Changes made immediately before navigating away are not silently lost — fast navigation does not discard unsaved edits
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 11-01: Extract parseStructuredFields to shared utility and update import paths
-- [ ] 11-02: Restore all structured inputs, Select, textarea, and seed refs in InspectionNotesSection; add unmount flush
+- [ ] 11-01-PLAN.md — Extract parseStructuredFields and extractFreeformNotes to shared utility; write unit tests; update route.ts import; fix extract-route.test.ts import path
+- [ ] 11-02-PLAN.md — Seed structuredValuesRef and notesRef at mount; wire defaultValue on Input/Select/textarea; add unmount flush useEffect; write component tests
 
 ## Progress
 
