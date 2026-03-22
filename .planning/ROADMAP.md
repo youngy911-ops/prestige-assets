@@ -120,6 +120,6 @@ Plans:
 | 10. Description Verbatim Fidelity | v1.1 | 2/2 | Complete | 2026-03-21 |
 | 11. Pre-fill Value Restoration | v1.2 | 2/2 | Complete | 2026-03-22 |
 | 12. Marine Asset Type | 2/2 | Complete    | 2026-03-22 | - |
-| 13. Subtype Expansions | v1.3 | 0/2 | Not started | - |
+| 13. Subtype Expansions | 1/2 | In Progress|  | - |
 | 14. Description Quality | v1.3 | 0/TBD | Not started | - |
 | 15. Pre-fill Bug Fixes | v1.3 | 0/TBD | Not started | - |

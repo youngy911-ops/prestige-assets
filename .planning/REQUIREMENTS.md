@@ -13,20 +13,20 @@
 
 ### Truck Subtypes
 
-- [ ] **TRUCK-01**: Truck subtypes updated to: Prime Mover, Flat Deck, Cab Chassis, Tipper, Pantech, Refrigerated Pantech, Curtainsider, Beavertail, Tilt Tray, Vacuum, Concrete Pump, Concrete Agitator, EWP, Service (Rigid Truck and Crane Truck removed)
+- [x] **TRUCK-01**: Truck subtypes updated to: Prime Mover, Flat Deck, Cab Chassis, Tipper, Pantech, Refrigerated Pantech, Curtainsider, Beavertail, Tilt Tray, Vacuum, Concrete Pump, Concrete Agitator, EWP, Service (Rigid Truck and Crane Truck removed)
 - [ ] **TRUCK-02**: Description template exists for each truck subtype so GPT-4o generates correctly formatted output
 
 ### Trailer Subtypes
 
-- [ ] **TRAIL-01**: Trailer subtypes updated to: Flat Deck, Side Loader, Tipper, Extendable, Drop Deck, Skel, Pig, Plant, Tag, Box, Low Loader
+- [x] **TRAIL-01**: Trailer subtypes updated to: Flat Deck, Side Loader, Tipper, Extendable, Drop Deck, Skel, Pig, Plant, Tag, Box, Low Loader
 
 ### Earthmoving Subtypes
 
-- [ ] **EARTH-01**: Earthmoving subtypes updated to include: Excavator, Skid Steer Loader, Compactor, Dozer, Motor Grader, Wheel Loader, Backhoe Loader, Telehandler, Dump Truck, Trencher
+- [x] **EARTH-01**: Earthmoving subtypes updated to include: Excavator, Skid Steer Loader, Compactor, Dozer, Motor Grader, Wheel Loader, Backhoe Loader, Telehandler, Dump Truck, Trencher
 
 ### General Goods Subtypes
 
-- [ ] **GOODS-01**: General Goods subtypes added: Tools & Equipment, Attachments, Workshop Equipment, Office & IT, Miscellaneous
+- [x] **GOODS-01**: General Goods subtypes added: Tools & Equipment, Attachments, Workshop Equipment, Office & IT, Miscellaneous
 
 ### Description Quality
 
@@ -61,10 +61,10 @@
 | MARINE-01 | Phase 12 | Complete |
 | MARINE-02 | Phase 12 | Complete |
 | MARINE-03 | Phase 12 | Complete |
-| TRUCK-01 | Phase 13 | Pending |
-| TRAIL-01 | Phase 13 | Pending |
-| EARTH-01 | Phase 13 | Pending |
-| GOODS-01 | Phase 13 | Pending |
+| TRUCK-01 | Phase 13 | Complete |
+| TRAIL-01 | Phase 13 | Complete |
+| EARTH-01 | Phase 13 | Complete |
+| GOODS-01 | Phase 13 | Complete |
 | TRUCK-02 | Phase 14 | Pending |
 | DESC-01 | Phase 14 | Pending |
 | DESC-02 | Phase 14 | Pending |
