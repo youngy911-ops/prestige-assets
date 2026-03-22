@@ -38,12 +38,30 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - ✓ AI-generated descriptions preserve specific values from inspection notes verbatim (e.g. `48" sleeper cab`, `Airbag` suspension) — runtime-verified in production — v1.1
 - ✓ Staff can return to an in-progress asset record and find all pre-extraction fields (VIN, odometer, hourmeter, suspension type, unladen weight, length) pre-populated with previously entered values — v1.2
 
+## Current Milestone: v1.3 Asset Expansion
+
+**Goal:** Add Marine asset type, expand truck/trailer/earthmoving/general goods subtypes, and fix description generation quality across all types.
+
+**Target features:**
+- Marine asset type (Boat, Yacht, Jet Ski) with full Salesforce schema and description template
+- Truck subtypes expanded and corrected (Prime Mover, Flat Deck, Cab Chassis, Tipper, Pantech, Refrigerated Pantech, Curtainsider, Beavertail, Tilt Tray, Vacuum, Concrete Pump, Concrete Agitator, EWP, Service)
+- Trailer subtypes expanded (Flat Deck, Side Loader, Tipper, Extendable, Drop Deck, Skel, Pig, Plant, Tag, Box, Low Loader)
+- Earthmoving subtypes expanded (Excavator, Skid Steer Loader, Compactor, Dozer, Motor Grader, Wheel Loader, Backhoe Loader, Telehandler, Dump Truck, Trencher)
+- General Goods subtypes (Tools & Equipment, Attachments, Workshop Equipment, Office & IT, Miscellaneous)
+- Description templates per subtype for all new types; always "Sold As Is, Untested & Unregistered."
+
 ### Active
 
-<!-- next milestone candidates -->
-
-- [ ] "Other notes" textarea shows only freeform notes (not serialised key:value lines) when returning to a record — companion display bug, same component (PREFILL-07)
-- [ ] Pre-extraction edits made within 500ms of navigating away are not silently lost — unmount flush for debounced autosave (PREFILL-08)
+- [ ] Marine asset type with Salesforce schema and AI extraction (MARINE-01)
+- [ ] Marine description template with subtype examples (MARINE-02)
+- [ ] Truck subtypes updated — remove Rigid Truck/Crane Truck, add 9 new body types (TRUCK-01)
+- [ ] Truck description templates per body type (TRUCK-02)
+- [ ] Trailer subtypes expanded to 11 types (TRAIL-01)
+- [ ] Earthmoving subtypes expanded to 10 types (EARTH-01)
+- [ ] General Goods subtypes added (GOODS-01)
+- [ ] Description always closes "Sold As Is, Untested & Unregistered." (DESC-01)
+- [ ] "Other notes" textarea shows only freeform notes when returning to a record (PREFILL-07)
+- [ ] Pre-extraction edits within 500ms of navigating away are not silently lost (PREFILL-08)
 
 ### Out of Scope
 
@@ -112,4 +130,4 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 | Unmount flush as `useEffect` cleanup dependent on `[persistNotes]` (Phase 11) | Synchronous on unmount, no Promise — cancels debounce and persists immediately | ✓ Good — correct pattern for uncontrolled fast-navigation safety |
 
 ---
-*Last updated: 2026-03-22 after v1.2 milestone*
+*Last updated: 2026-03-22 after v1.3 milestone started*
