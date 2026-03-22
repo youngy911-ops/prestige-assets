@@ -23,10 +23,41 @@ describe('SCHEMA_REGISTRY structure', () => {
     }
   })
 
-  it('general_goods has exactly 1 subtype with key "general"', () => {
+  it('general_goods has exactly 5 subtypes with correct keys', () => {
     const subtypes = getSubtypes('general_goods')
-    expect(subtypes).toHaveLength(1)
-    expect(subtypes[0].key).toBe('general')
+    expect(subtypes).toHaveLength(5)
+    expect(subtypes[0].key).toBe('tools_equipment')
+    expect(subtypes.map(s => s.key)).not.toContain('general')
+  })
+
+  it('truck has exactly 14 subtypes with no rigid_truck or crane_truck', () => {
+    const subtypes = getSubtypes('truck')
+    expect(subtypes).toHaveLength(14)
+    expect(subtypes.map(s => s.key)).not.toContain('rigid_truck')
+    expect(subtypes.map(s => s.key)).not.toContain('crane_truck')
+    expect(subtypes.map(s => s.key)).not.toContain('service_truck')
+    expect(subtypes.map(s => s.key)).toContain('prime_mover')
+    expect(subtypes.map(s => s.key)).toContain('service')
+  })
+
+  it('trailer has exactly 11 subtypes with correct keys', () => {
+    const subtypes = getSubtypes('trailer')
+    expect(subtypes).toHaveLength(11)
+    expect(subtypes.map(s => s.key)).toContain('low_loader')
+    expect(subtypes.map(s => s.key)).not.toContain('flat_top')
+    expect(subtypes.map(s => s.key)).not.toContain('semi_trailer')
+  })
+
+  it('earthmoving has exactly 10 subtypes with renamed keys', () => {
+    const subtypes = getSubtypes('earthmoving')
+    expect(subtypes).toHaveLength(10)
+    expect(subtypes.map(s => s.key)).toContain('skid_steer_loader')
+    expect(subtypes.map(s => s.key)).toContain('motor_grader')
+    expect(subtypes.map(s => s.key)).toContain('backhoe_loader')
+    expect(subtypes.map(s => s.key)).toContain('trencher')
+    expect(subtypes.map(s => s.key)).not.toContain('skid_steer')
+    expect(subtypes.map(s => s.key)).not.toContain('grader')
+    expect(subtypes.map(s => s.key)).not.toContain('backhoe')
   })
 
   it('caravan has hasGlassValuation: true', () => {
