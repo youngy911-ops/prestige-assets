@@ -1,5 +1,20 @@
 # Milestones
 
+## v1.2 Pre-fill Restoration (Shipped: 2026-03-22)
+
+**Phases completed:** 1 phase (11), 2 plans, 4 tasks
+**Timeline:** 2026-03-22 (~16 minutes)
+**Stats:** 11 files changed, 345 insertions / 44 deletions, ~7,532 lines of TypeScript total
+
+**Key accomplishments:**
+1. Extracted `parseStructuredFields` and `extractFreeformNotes` to `src/lib/utils/parseStructuredFields.ts` — shared pure utility importable by both client components and route handlers
+2. Fixed broken import in `describe/route.ts` that would have been caused by removing the function from `extract/route.ts`
+3. Wired all 5 pre-fill restoration fixes into `InspectionNotesSection.tsx`: ref seeding at mount, Input/Select `defaultValue`, textarea freeform-only display, and synchronous unmount flush
+4. Added 16 tests (11 unit + 5 component) covering all restoration behaviours — 245/245 tests passing with no regressions
+5. PREFILL-06 fulfilled: staff can return to an in-progress asset record and find all pre-extraction fields restored
+
+---
+
 ## v1.1 Pre-fill & Quality (Shipped: 2026-03-21)
 
 **Phases completed:** 3 phases (8–10), 5 plans, 8 tasks

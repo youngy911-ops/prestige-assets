@@ -1,12 +1,5 @@
 # Prestige Assets — Slattery Auctions Book-In App (Web MVP)
 
-## Current Milestone: v1.2 Pre-fill Restoration
-
-**Goal:** Restore staff-entered pre-extraction values when returning to an asset record, completing the stateful inspection form experience.
-
-**Target features:**
-- Pre-fill value restoration on reload (PREFILL-06)
-
 ## What This Is
 
 An internal web tool for Slattery Auctions Brisbane that automates the asset book-in process. Staff upload photos of build plates and asset identifiers; AI extracts key data (VIN/PIN/Serial, make, model, year, weight ratings, hours, and many more schema-specific fields) and pre-fills the correct Salesforce field schema for that asset type. The app then generates copy-paste-ready Salesforce output (structured fields block + GPT-4o formatted description) — eliminating the manual research and data entry process currently done by hand.
@@ -43,12 +36,14 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - ✓ Truck/Trailer/Forklift/Caravan asset forms show dedicated input fields for type-specific values (VIN, Odometer, Hourmeter, Suspension Type, Unladen Weight, Length ft) before AI extraction — v1.1
 - ✓ Staff-entered pre-extraction values flow to AI extraction prompt as authoritative overrides; values appear in Salesforce fields output and are not overridden by AI — v1.1
 - ✓ AI-generated descriptions preserve specific values from inspection notes verbatim (e.g. `48" sleeper cab`, `Airbag` suspension) — runtime-verified in production — v1.1
+- ✓ Staff can return to an in-progress asset record and find all pre-extraction fields (VIN, odometer, hourmeter, suspension type, unladen weight, length) pre-populated with previously entered values — v1.2
 
 ### Active
 
-<!-- v1.2 candidates -->
+<!-- next milestone candidates -->
 
-- [ ] Pre-fill value restoration on reload — staff-entered pre-extraction values restored when returning to an asset record (PREFILL-06, deferred from v1.1)
+- [ ] "Other notes" textarea shows only freeform notes (not serialised key:value lines) when returning to a record — companion display bug, same component (PREFILL-07)
+- [ ] Pre-extraction edits made within 500ms of navigating away are not silently lost — unmount flush for debounced autosave (PREFILL-08)
 
 ### Out of Scope
 
@@ -67,12 +62,13 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - **Asset categories (v1)**: Trucks, Trailers, Earthmoving, Forklifts, Agriculture, Caravans/Motor Homes, General Goods.
 - **Shipped v1.0**: 2026-03-21. ~6,975 LOC TypeScript. 4-day build from blank repo to working tool.
 - **Shipped v1.1**: 2026-03-21. ~7,348 LOC TypeScript. Single-day polish — 3 phases, 5 plans, ~3.5 hours.
+- **Shipped v1.2**: 2026-03-22. ~7,532 LOC TypeScript. Focused fix — 1 phase, 2 plans, ~16 minutes.
 - **Tech stack**: Next.js 15 (App Router), Supabase (Postgres + Storage + Auth), GPT-4o (Vercel AI SDK v6), react-hook-form + Zod, dnd-kit, Base UI, Tailwind v4, vitest + testing-library.
 - **Prior project**: `asset_sales_force` — same concept but built as a Next.js + Expo monorepo. Got bogged down in iOS scaffolding before the core workflow was proven.
 - **Current workflow**: App replaces Jack's manual Claude chat workflow with a persistent, team-usable tool.
 - **Platform**: Web app — phone browser for on-site capture (file picker from camera roll), desktop browser for review and copy-paste.
 - **Description formatting**: Strict per-type rules — no dot points, no marketing language, specific field ordering per asset subtype (Excavator vs Dozer vs Truck vs Trailer etc.), "Sold As Is, Untested & Unregistered." footer always.
-- **Known open items**: Exact Earthmoving description subtype field ordering (Excavator vs Dozer vs Grader etc.) requires Jack's confirmation. Pre-fill value restore on reload deferred to v1.2 (PREFILL-06).
+- **Known open items**: Exact Earthmoving description subtype field ordering (Excavator vs Dozer vs Grader etc.) requires Jack's confirmation. PREFILL-07 (textarea display bug) and PREFILL-08 (unmount flush) deferred to next milestone.
 
 ## Salesforce Field Schemas (per asset type)
 
@@ -110,7 +106,10 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 | Suspension Type as `inputType: 'select'` with fixed options (Phase 9) | Constrains AI extraction and UI to a predictable value set; avoids free-text variation like "air bag" vs "airbag" | ✓ Good — cleaner output |
 | parseStructuredFields exported from extract/route.ts; imported directly in describe/route.ts (Phase 9–10) | No duplicate parser, no shared lib overhead — direct cross-route import worked without TypeScript errors | ✓ Good — DRY without over-engineering |
 | Belt-and-suspenders verbatim constraint: system prompt rule + structured user prompt block (Phase 10) | System prompt rule alone insufficient for GPT-4o fidelity; labelled "Staff-provided values (use verbatim):" block reinforces intent | ✓ Good — runtime-verified |
-| Select uncontrolled in InspectionNotesSection (no value/defaultValue) (Phase 9) | Re-hydration deferred to v1.2 (PREFILL-06); uncontrolled avoids state complexity for MVP | — Re-evaluate in v1.2 |
+| Select uncontrolled in InspectionNotesSection (no value/defaultValue) (Phase 9) | Re-hydration deferred to v1.2 (PREFILL-06); uncontrolled avoids state complexity for MVP | ✓ Good — `defaultValue` worked without controlled fallback in v1.2 |
+| Shared parsing utility in `src/lib/utils/` (Phase 11) | Client components cannot import from route handlers; shared utility is the correct boundary | ✓ Good — clean Next.js boundary, importable by both server and client |
+| `defaultValue` (uncontrolled) for Select restoration (Phase 11) | jsdom tests pass; no controlled `useState` fallback needed — simpler implementation | ✓ Good — no regressions, 245/245 tests passing |
+| Unmount flush as `useEffect` cleanup dependent on `[persistNotes]` (Phase 11) | Synchronous on unmount, no Promise — cancels debounce and persists immediately | ✓ Good — correct pattern for uncontrolled fast-navigation safety |
 
 ---
-*Last updated: 2026-03-21 after v1.2 milestone start*
+*Last updated: 2026-03-22 after v1.2 milestone*

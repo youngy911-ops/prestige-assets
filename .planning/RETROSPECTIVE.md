@@ -106,6 +106,52 @@
 
 ---
 
+## Milestone: v1.2 — Pre-fill Restoration
+
+**Shipped:** 2026-03-22
+**Phases:** 1 (Phase 11) | **Plans:** 2 | **Timeline:** ~16 minutes
+
+### What Was Built
+
+- `parseStructuredFields` and `extractFreeformNotes` extracted from `extract/route.ts` to `src/lib/utils/parseStructuredFields.ts` — shared pure utility importable by client components
+- Fixed broken cross-route import in `describe/route.ts` that would have occurred after removing the function from its prior location
+- All 5 pre-fill restoration fixes wired into `InspectionNotesSection.tsx`: `structuredValuesRef` and `notesRef` seeded from parsed state at mount, Input/Select `defaultValue`, textarea freeform-only display, synchronous unmount flush
+- 16 tests added (11 unit + 5 component) — 245/245 full suite green
+
+### What Worked
+
+- **Strict Next.js boundary enforcement**: Recognising that client components cannot import from route handlers immediately pointed to the shared utility extraction as mandatory before any component fix. The boundary error was never hit at runtime — the approach was correct from the design phase.
+- **TDD with template literal discovery**: Writing tests first (RED) and then implementing (GREEN) caught the JSX string attribute/newline bug before it could mask implementation errors. The test-first discipline surfaced a genuine gotcha (`"vin: ABC\n"` vs `` `vin: ABC\n` `` in JSX) that would have been hard to debug after the fact.
+- **`defaultValue` uncontrolled approach validated**: The v1.1 decision to defer to v1.2 with a fully-designed fallback (controlled `useState`) paid off — `defaultValue` worked in jsdom without the fallback, keeping the implementation simpler.
+- **Milestone audit pre-flight**: Running `/gsd:audit-milestone` before completion surfaced tech debt items (browser verification gaps, inline function duplication) as non-blocking notes rather than surprises. Audit-first is now established practice.
+
+### What Was Inefficient
+
+- **`describe/route.ts` inline re-implementation**: During v1.1, `describe/route.ts` imported from `extract/route.ts` (cross-route). When the function moved to `src/lib/utils/` in v1.2, the import had to be updated. If `describe/route.ts` had also been updated to use the shared utility in Plan 11-02 rather than fixed as a side-effect of Plan 11-01, the duplication at lines 206–208 would have been caught. The fix was auto-applied but the underlying duplication remains.
+- **Browser-unverifiable behaviours**: Base UI Select `defaultValue` hydration and fast-navigation unmount flush both hit jsdom limitations — the audit correctly flagged these as needing manual human verification in a real browser. This is an inherent constraint of the test environment, not a process failure.
+
+### Patterns Established
+
+- **Shared parsing utilities in `src/lib/utils/`**: Functions used by both server (route handlers) and client components must live in `src/lib/utils/` — never in route handlers. Next.js enforces this boundary at build time.
+- **useRef initialiser seeding**: `useRef(parseStructuredFields(initialNotes))` — seed refs from parsed state at mount using the initialiser argument, never recalculate from props mid-lifecycle.
+- **Unmount flush pattern**: `useEffect(() => () => { clearTimeout(timer); persistFn() }, [persistFn])` — synchronous on unmount, no Promise, cancels debounce before flushing.
+- **Template literals required in JSX for multi-line strings**: `initialNotes={`vin: ABC\nodometer: 50000`}` not `initialNotes="vin: ABC\nodometer: 50000"` — JSX attribute strings don't interpret `\n` as newlines.
+
+### Key Lessons
+
+1. **Next.js server/client boundaries are enforced at build time, not runtime**: Shared utilities that cross the boundary must be in `src/lib/utils/` — discovering this at design time (via boundary analysis) is far cheaper than hitting a build error after implementation.
+2. **Test-first catches environment quirks early**: The JSX `\n` bug would have been a confusing runtime failure if discovered after implementation. TDD RED→GREEN forced the environment behaviour to be visible before the fix was applied.
+3. **jsdom limitations are a known constraint, not a test quality failure**: Base UI Select hydration and Server Action flush timing are legitimately untestable in jsdom. Document these as human-verification items rather than marking tests as incomplete.
+4. **16-minute milestone is possible when scope is exact**: One requirement, two sequential plans with clean dependency (utility extraction → component wiring), no ambiguity. Tight scope + clear dependency chain = near-zero overhead.
+
+### Cost Observations
+
+- Model mix: ~100% sonnet-4 (balanced profile)
+- Sessions: 1
+- Notable: 2 plans, 4 tasks, ~5 minutes of AI execution time — fastest milestone by any measure; the prior work of designing the approach in v1.1 eliminated all upfront research cost
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -114,6 +160,7 @@
 |-----------|------|--------|-------|------------|
 | v1.0 MVP | 4 | 7 | 21 | Greenfield — established Schema Registry pattern and TDD wave structure |
 | v1.1 Pre-fill & Quality | <1 | 3 | 5 | Tight polish milestone — schema-first layering, cross-route function reuse, uncontrolled Select deferral pattern |
+| v1.2 Pre-fill Restoration | <1 | 1 | 2 | Focused fix — shared utility extraction, defaultValue uncontrolled validation, unmount flush pattern |
 
 ### Cumulative Quality
 
@@ -121,6 +168,7 @@
 |-----------|-------|-------------|
 | v1.0 | 200+ vitest | Wave 0 failing stubs → Wave N implementation; Server Action + Route Handler mocking |
 | v1.1 | 229+ vitest | TDD guard on schema changes; exported helpers for direct unit testing without HTTP |
+| v1.2 | 245 vitest | Shared utility unit tests (11) + component tests (5); template literal gotcha in JSX tests |
 
 ### Top Lessons (Verified Across Milestones)
 
@@ -129,3 +177,5 @@
 3. Decimal phase numbering for urgent insertions keeps history clean
 4. Requirements traceability must be updated atomically with plan completion — divergence causes false alarms at milestone time
 5. Structural prompt constraints (labelled user prompt blocks) more reliable than instructional rules alone for GPT-4o fidelity
+6. Next.js server/client boundary must be enforced at design time — shared utilities go in `src/lib/utils/`, never in route handlers
+7. jsdom limitations are a known constraint — document untestable browser behaviours as human-verification items, not incomplete tests
