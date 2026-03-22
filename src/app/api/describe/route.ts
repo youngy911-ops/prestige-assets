@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { generateText } from 'ai'
 import { openai } from '@ai-sdk/openai'
-import { parseStructuredFields } from '@/app/api/extract/route'
+import { parseStructuredFields } from '@/lib/utils/parseStructuredFields'
 
 // Verbatim system prompt from .planning/phases/05-output-generation/05-description-prompt.md
 // DO NOT paraphrase or shorten. The exact wording drives GPT-4o template selection.

@@ -176,25 +176,25 @@ describe('POST /api/extract', () => {
 
 describe('parseStructuredFields', () => {
   it('parses "key: value\\nkey2: value2" into { key: value, key2: value2 }', async () => {
-    const { parseStructuredFields } = await import('@/app/api/extract/route')
+    const { parseStructuredFields } = await import('@/lib/utils/parseStructuredFields')
     const result = parseStructuredFields('vin: ABC123\nodometer: 187450')
     expect(result).toEqual({ vin: 'ABC123', odometer: '187450' })
   })
 
   it('excludes the Notes freeform key', async () => {
-    const { parseStructuredFields } = await import('@/app/api/extract/route')
+    const { parseStructuredFields } = await import('@/lib/utils/parseStructuredFields')
     const result = parseStructuredFields('vin: ABC123\nNotes: Some freeform notes here')
     expect(result).toEqual({ vin: 'ABC123' })
   })
 
   it('returns empty object for null input', async () => {
-    const { parseStructuredFields } = await import('@/app/api/extract/route')
+    const { parseStructuredFields } = await import('@/lib/utils/parseStructuredFields')
     const result = parseStructuredFields(null)
     expect(result).toEqual({})
   })
 
   it('excludes lines without ": " separator', async () => {
-    const { parseStructuredFields } = await import('@/app/api/extract/route')
+    const { parseStructuredFields } = await import('@/lib/utils/parseStructuredFields')
     const result = parseStructuredFields('malformed line\nvin: ABC123')
     expect(result).toEqual({ vin: 'ABC123' })
   })
