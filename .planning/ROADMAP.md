@@ -94,6 +94,7 @@ Plans:
   1. Generated description for any truck subtype (e.g. Prime Mover, Tipper, EWP) uses a format appropriate to that body type
   2. Generated description for any earthmoving subtype (e.g. Bulldozer, Telehandler, Trencher) uses a format appropriate to that machine type
   3. Every generated description across all asset types closes with "Sold As Is, Untested & Unregistered." — no exceptions
+  4. When photos are provided but specific details are unknown (dimensions, body size, etc.), AI estimates or infers plausible values rather than inserting "TBC" — unknown fields are either omitted or given a best-estimate with appropriate qualifier
 **Plans**: TBD
 
 ### Phase 15: Pre-fill Bug Fixes
@@ -121,6 +122,6 @@ Plans:
 | 10. Description Verbatim Fidelity | v1.1 | 2/2 | Complete | 2026-03-21 |
 | 11. Pre-fill Value Restoration | v1.2 | 2/2 | Complete | 2026-03-22 |
 | 12. Marine Asset Type | 2/2 | Complete    | 2026-03-22 | - |
-| 13. Subtype Expansions | 3/3 | In progress | 2026-03-22 | - |
+| 13. Subtype Expansions | 3/3 | Complete   | 2026-03-22 | - |
 | 14. Description Quality | v1.3 | 0/TBD | Not started | - |
 | 15. Pre-fill Bug Fixes | v1.3 | 0/TBD | Not started | - |
