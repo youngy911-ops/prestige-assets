@@ -18,6 +18,7 @@ export const truckSchema: AssetSchema = {
     { key: 'concrete_agitator',    label: 'Concrete Agitator' },
     { key: 'ewp',                  label: 'EWP' },
     { key: 'service',              label: 'Service' },
+    { key: 'other',                label: 'Other' },
   ],
   hasGlassValuation: false,
   fields: [
