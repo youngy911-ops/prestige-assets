@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Asset Expansion
 status: planning
-stopped_at: Completed 12-marine-asset-type-01-PLAN.md
-last_updated: "2026-03-22T06:51:45.287Z"
+stopped_at: Completed 12-marine-asset-type-02-PLAN.md
+last_updated: "2026-03-22T06:55:53.665Z"
 last_activity: 2026-03-22 — v1.3 roadmap created; phases 12–15 defined
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -50,6 +50,7 @@ Progress: [░░░░░░░░░░░░░░░░░░░░] v1.3 0%
 
 *Updated after each plan completion*
 | Phase 12-marine-asset-type P01 | 2 | 1 tasks | 5 files |
+| Phase 12-marine-asset-type P02 | 4 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -63,6 +64,8 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 12-marine-asset-type]: Anchor icon (lucide-react) chosen for marine in AssetTypeSelector
 - [Phase 12-marine-asset-type]: loa flagged inspectionPriority: true even though aiExtractable: false — measured on-site, not AI-extracted
 - [Phase 12-marine-asset-type]: hasGlassValuation: false for marine — no glass guide equivalent for boats
+- [Phase 12-marine-asset-type]: Marine aiExtractable count is 15 (plan said 14) — corrected test assertion to match actual schema
+- [Phase 12-marine-asset-type]: Use dynamic import() not require() for @/ aliased modules in vitest ESM environment
 
 ### Pending Todos
 
@@ -74,6 +77,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-22T06:51:45.284Z
-Stopped at: Completed 12-marine-asset-type-01-PLAN.md
+Last session: 2026-03-22T06:55:53.662Z
+Stopped at: Completed 12-marine-asset-type-02-PLAN.md
 Resume file: None

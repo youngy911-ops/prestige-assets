@@ -48,7 +48,7 @@ Full archive: `.planning/milestones/v1.2-ROADMAP.md`
 
 **Milestone Goal:** Add Marine asset type, expand truck/trailer/earthmoving/general goods subtypes, fix description quality across all types, and resolve two deferred pre-fill bugs.
 
-- [ ] **Phase 12: Marine Asset Type** - Full Marine schema, AI extraction, and description generation for Boat, Yacht, Jet Ski
+- [x] **Phase 12: Marine Asset Type** - Full Marine schema, AI extraction, and description generation for Boat, Yacht, Jet Ski (completed 2026-03-22)
 - [ ] **Phase 13: Subtype Expansions** - Update truck, trailer, earthmoving, and general goods subtype lists to final v1.3 values
 - [ ] **Phase 14: Description Quality** - Add description templates for all truck subtypes and earthmoving subtypes; enforce footer across all types
 - [ ] **Phase 15: Pre-fill Bug Fixes** - Fix "Other notes" textarea display and unmount-flush data loss
@@ -115,7 +115,7 @@ Plans:
 | 9. Pre-Extraction Structured Inputs | v1.1 | 2/2 | Complete | 2026-03-21 |
 | 10. Description Verbatim Fidelity | v1.1 | 2/2 | Complete | 2026-03-21 |
 | 11. Pre-fill Value Restoration | v1.2 | 2/2 | Complete | 2026-03-22 |
-| 12. Marine Asset Type | 1/2 | In Progress|  | - |
+| 12. Marine Asset Type | 2/2 | Complete   | 2026-03-22 | - |
 | 13. Subtype Expansions | v1.3 | 0/TBD | Not started | - |
 | 14. Description Quality | v1.3 | 0/TBD | Not started | - |
 | 15. Pre-fill Bug Fixes | v1.3 | 0/TBD | Not started | - |
