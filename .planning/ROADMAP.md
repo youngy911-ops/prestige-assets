@@ -71,4 +71,4 @@ Plans:
 | 8. Session Auth Fix | v1.1 | 1/1 | Complete | 2026-03-21 |
 | 9. Pre-Extraction Structured Inputs | v1.1 | 2/2 | Complete | 2026-03-21 |
 | 10. Description Verbatim Fidelity | v1.1 | 2/2 | Complete | 2026-03-21 |
-| 11. Pre-fill Value Restoration | v1.2 | 0/2 | Not started | - |
+| 11. Pre-fill Value Restoration | 1/2 | In Progress|  | - |

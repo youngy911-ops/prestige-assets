@@ -9,7 +9,7 @@ Requirements for v1.2 milestone.
 
 ### Pre-fill
 
-- [ ] **PREFILL-06**: User can return to an in-progress asset record and find all pre-extraction fields (VIN, odometer, hourmeter, suspension type, unladen weight, length) pre-populated with previously entered values
+- [x] **PREFILL-06**: User can return to an in-progress asset record and find all pre-extraction fields (VIN, odometer, hourmeter, suspension type, unladen weight, length) pre-populated with previously entered values
 
 ## Future Requirements
 
@@ -34,7 +34,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PREFILL-06 | Phase 11 | Pending |
+| PREFILL-06 | Phase 11 | Complete |
 
 **Coverage:**
 - v1.2 requirements: 1 total
