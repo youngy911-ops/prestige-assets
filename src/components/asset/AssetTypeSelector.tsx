@@ -1,7 +1,7 @@
 'use client'
 import { ASSET_TYPES, type AssetType } from '@/lib/schema-registry/types'
 import { SCHEMA_REGISTRY } from '@/lib/schema-registry/index'
-import { Truck, Container, HardHat, Tractor, Package2, Home, ShoppingBag } from 'lucide-react'
+import { Truck, Container, HardHat, Tractor, Package2, Home, ShoppingBag, Anchor } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { LucideIcon } from 'lucide-react'
 
@@ -13,6 +13,7 @@ const ASSET_TYPE_ICONS: Record<AssetType, LucideIcon> = {
   forklift:      Package2,
   caravan:       Home,
   general_goods: ShoppingBag,
+  marine:        Anchor,
 }
 
 interface AssetTypeSelectorProps {

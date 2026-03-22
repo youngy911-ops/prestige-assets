@@ -1,0 +1,156 @@
+import type { AssetSchema } from '../types'
+
+export const marineSchema: AssetSchema = {
+  assetType: 'marine',
+  displayName: 'Marine',
+  subtypes: [
+    { key: 'boat',    label: 'Boat' },
+    { key: 'yacht',   label: 'Yacht' },
+    { key: 'jet_ski', label: 'Jet Ski' },
+  ],
+  hasGlassValuation: false,
+  fields: [
+    {
+      key: 'hin', label: 'HIN', sfOrder: 1, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Hull Identification Number — 12-character alphanumeric stamped on transom (rear of hull). Never infer — only extract if directly visible.',
+      inspectionPriority: true, required: false,
+    },
+    {
+      key: 'make', label: 'Make', sfOrder: 2, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Brand name on hull or motor (e.g. Quintrex, Stacer, Haines Hunter, Riviera, Maritimo, Yamaha, Sea-Doo).',
+      required: true,
+    },
+    {
+      key: 'model', label: 'Model', sfOrder: 3, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Model name/number from hull badge or build plate. Read exactly as printed.',
+      required: true,
+    },
+    {
+      key: 'year', label: 'Year', sfOrder: 4, inputType: 'number',
+      aiExtractable: true,
+      aiHint: 'Build year from HIN (last 2 digits), compliance plate, or engine plate. 4-digit year only.',
+      required: true,
+    },
+    {
+      key: 'builder', label: 'Builder', sfOrder: 5, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Manufacturer of the hull — often same as Make but may differ for custom or OEM builds.',
+      required: false,
+    },
+    {
+      key: 'designer', label: 'Designer', sfOrder: 6, inputType: 'text',
+      aiExtractable: false,
+      required: false,
+    },
+    {
+      key: 'hull_material', label: 'Hull Material', sfOrder: 7, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Visual from photos — most common: Fibreglass, Aluminium, Timber, Steel. Infer from appearance if not labelled.',
+      required: false,
+    },
+    {
+      key: 'motor_type', label: 'Motor Type', sfOrder: 8, inputType: 'select',
+      options: ['Inboard', 'Outboard', 'Stern Drive', 'Jet Drive', 'Electric'],
+      aiExtractable: true,
+      aiHint: 'Visual from photos. Outboard = motor mounted on transom. Inboard = motor inside hull. Stern Drive = inboard engine with external drive leg. Jet Drive = water jet propulsion (common on jet skis). Must be exactly one of: Inboard, Outboard, Stern Drive, Jet Drive, Electric.',
+      required: false,
+    },
+    {
+      key: 'number_of_engines', label: 'Number of Engines', sfOrder: 9, inputType: 'number',
+      aiExtractable: true,
+      aiHint: 'Count visible motors/engines from exterior photos.',
+      required: false,
+    },
+    {
+      key: 'main_engine_details', label: 'Main Engine Details', sfOrder: 10, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Engine badge, cowling label, or build plate. Include make, model, and HP if visible (e.g. Yamaha F150, Mercury 90hp, Volvo Penta D4).',
+      required: false,
+    },
+    {
+      key: 'engine_hours', label: 'Engine Hours', sfOrder: 11, inputType: 'number',
+      aiExtractable: true,
+      aiHint: 'Engine hour meter display. Digits only. Only extract if clearly readable — do NOT guess.',
+      inspectionPriority: true, required: false,
+    },
+    {
+      key: 'fuel_tank_capacity', label: 'Fuel Tank Capacity', sfOrder: 12, inputType: 'text',
+      aiExtractable: false,
+      required: false,
+    },
+    {
+      key: 'water_tank_capacity', label: 'Water Tank Capacity', sfOrder: 13, inputType: 'text',
+      aiExtractable: false,
+      required: false,
+    },
+    {
+      key: 'steering_type', label: 'Steering Type', sfOrder: 14, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Infer from visible helm equipment — Hydraulic (most powered boats), Mechanical (tiller or cable), Electric (electric outboards).',
+      required: false,
+    },
+    {
+      key: 'beam', label: 'Beam', sfOrder: 15, inputType: 'text',
+      aiExtractable: false,
+      required: false,
+    },
+    {
+      key: 'draft', label: 'Draft', sfOrder: 16, inputType: 'text',
+      aiExtractable: false,
+      required: false,
+    },
+    {
+      key: 'loa', label: 'LOA', sfOrder: 17, inputType: 'text',
+      aiExtractable: false,
+      inspectionPriority: true, required: false,
+    },
+    {
+      key: 'trailer_length', label: 'Trailer Length', sfOrder: 18, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Visible on trailer compliance plate or infer from trailer photos if present.',
+      required: false,
+    },
+    {
+      key: 'launch_date', label: 'Launch Date', sfOrder: 19, inputType: 'text',
+      aiExtractable: false,
+      required: false,
+    },
+    {
+      key: 'sighted', label: 'Sighted', sfOrder: 20, inputType: 'text',
+      aiExtractable: false,
+      required: false,
+    },
+    {
+      key: 'winch', label: 'Winch', sfOrder: 21, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Visible on trailer bow roller — present if a winch strap and handle visible.',
+      required: false,
+    },
+    {
+      key: 'thrusters', label: 'Thrusters', sfOrder: 22, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Bow or stern thruster visible on hull — typically a tunnel thruster on larger vessels.',
+      required: false,
+    },
+    {
+      key: 'damage', label: 'Damage', sfOrder: 23, inputType: 'text',
+      aiExtractable: true,
+      aiHint: 'Visible hull damage, gelcoat crazing, stress cracks, collision marks, or corrosion from exterior photos.',
+      required: false,
+    },
+    {
+      key: 'damage_notes', label: 'Damage Notes', sfOrder: 24, inputType: 'textarea',
+      aiExtractable: false,
+      required: false,
+    },
+    {
+      key: 'extras', label: 'Extras', sfOrder: 25, inputType: 'textarea',
+      aiExtractable: false,
+      required: false,
+    },
+  ],
+  descriptionTemplate: (_fields, _subtype) => '',
+}

@@ -2,12 +2,12 @@ import { describe, it, expect } from 'vitest'
 import { SCHEMA_REGISTRY, ASSET_TYPES, getSchema, getSubtypes, getAIExtractableFields } from '@/lib/schema-registry/index'
 
 describe('SCHEMA_REGISTRY structure', () => {
-  it('contains exactly 7 asset types', () => {
-    expect(Object.keys(SCHEMA_REGISTRY)).toHaveLength(7)
+  it('contains exactly 8 asset types', () => {
+    expect(Object.keys(SCHEMA_REGISTRY)).toHaveLength(8)
   })
 
-  it('ASSET_TYPES tuple has exactly 7 entries', () => {
-    expect(ASSET_TYPES).toHaveLength(7)
+  it('ASSET_TYPES tuple has exactly 8 entries', () => {
+    expect(ASSET_TYPES).toHaveLength(8)
   })
 
   it('every asset type in ASSET_TYPES has a corresponding registry entry', () => {
