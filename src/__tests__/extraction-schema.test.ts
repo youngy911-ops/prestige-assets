@@ -41,9 +41,9 @@ describe('getInspectionPriorityFields', () => {
     expect(fields).toEqual(['pin', 'serial', 'hourmeter', 'odometer'])
   })
 
-  it('general_goods returns []', () => {
-    const fields = getInspectionPriorityFields('general_goods')
-    expect(fields).toEqual([])
+  it('general_goods returns [serial_number]', () => {
+    const fields = getInspectionPriorityFields('general_goods').map(f => f.key)
+    expect(fields).toEqual(['serial_number'])
   })
 
   it('truck returns exactly 6 priority fields', () => {
@@ -85,11 +85,10 @@ describe('buildExtractionSchema', () => {
     }
   })
 
-  it('general_goods returns z.object({}) (no aiExtractable fields)', async () => {
+  it('general_goods schema contains make, model, serial_number, dom fields', async () => {
     const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
     const schema = buildExtractionSchema('general_goods')
-    const result = schema.safeParse({})
-    expect(result.success).toBe(true)
+    expect(Object.keys(schema.shape)).toEqual(['make', 'model', 'serial_number', 'dom'])
   })
 
   it('parsing { vin: { value: null, confidence: null } } against truck schema succeeds', async () => {

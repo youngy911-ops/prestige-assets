@@ -89,8 +89,8 @@ describe('AI-extractable fields', () => {
     expect(fields).toContain('serial')
   })
 
-  it('general_goods has no aiExtractable fields', () => {
-    expect(getAIExtractableFields('general_goods')).toHaveLength(0)
+  it('general_goods has aiExtractable fields: make, model, serial_number, dom', () => {
+    expect(getAIExtractableFields('general_goods')).toEqual(['make', 'model', 'serial_number', 'dom'])
   })
 })
 

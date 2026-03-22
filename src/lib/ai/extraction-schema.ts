@@ -50,6 +50,7 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
 - FORKLIFTS: infer max_lift_capacity, max_lift_height, fuel_type, engine_manufacturer, engine_model
 - AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission
 - MARINE: infer hull_material from visual (fibreglass/aluminium most common), motor_type from photo (outboard vs inboard), number_of_engines from visible motors, steering_type from helm setup
+- GENERAL GOODS: read make/model/serial from build plate or data label. DOM from compliance plate if present. Many items (attachments, hand tools) have no build plate — return null for missing fields rather than inferring.
 
 Rules:
 - If a field value is not visible AND cannot be reasonably inferred from the identified vehicle, return null

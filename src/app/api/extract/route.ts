@@ -53,6 +53,17 @@ export async function POST(req: NextRequest) {
   // 6. Build extraction schema + prompts
   const assetType = asset.asset_type as AssetType
   const schema = buildExtractionSchema(assetType)
+
+  // Short-circuit: if no fields are AI-extractable (e.g. General Goods), skip the AI call
+  if (Object.keys(schema.shape).length === 0) {
+    await supabase
+      .from('assets')
+      .update({ extraction_result: {}, extraction_stale: false })
+      .eq('id', assetId)
+      .eq('user_id', user.id)
+    return Response.json({ success: true, extraction_result: {} })
+  }
+
   const systemPrompt = buildSystemPrompt(asset.asset_type, asset.asset_subtype ?? '')
 
   const structuredFields = parseStructuredFields(asset.inspection_notes)

@@ -37,7 +37,13 @@ Remotes:
 Extras: "
 `;
 
-exports[`generateFieldsBlock > snapshot: general_goods with all fields empty 1`] = `"Description: "`;
+exports[`generateFieldsBlock > snapshot: general_goods with all fields empty 1`] = `
+"Make: 
+Model: 
+Serial Number: 
+Date of Manufacture: 
+Extras: "
+`;
 
 exports[`generateFieldsBlock > snapshot: trailer with all fields empty 1`] = `
 "Make: 
