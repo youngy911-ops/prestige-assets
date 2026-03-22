@@ -38,7 +38,7 @@ Full archive: `.planning/milestones/v1.1-ROADMAP.md`
 
 **Milestone Goal:** Staff-entered pre-extraction values are restored when returning to an in-progress asset record — completing the stateful inspection form experience.
 
-- [ ] **Phase 11: Pre-fill Value Restoration** — Parse and restore all pre-extraction inputs, fix freeform textarea display, seed internal refs, and add unmount flush to prevent silent data loss on navigation
+- [x] **Phase 11: Pre-fill Value Restoration** — Parse and restore all pre-extraction inputs, fix freeform textarea display, seed internal refs, and add unmount flush to prevent silent data loss on navigation (completed 2026-03-22)
 
 ## Phase Details
 
@@ -71,4 +71,4 @@ Plans:
 | 8. Session Auth Fix | v1.1 | 1/1 | Complete | 2026-03-21 |
 | 9. Pre-Extraction Structured Inputs | v1.1 | 2/2 | Complete | 2026-03-21 |
 | 10. Description Verbatim Fidelity | v1.1 | 2/2 | Complete | 2026-03-21 |
-| 11. Pre-fill Value Restoration | 1/2 | In Progress|  | - |
+| 11. Pre-fill Value Restoration | 2/2 | Complete    | 2026-03-22 | - |
