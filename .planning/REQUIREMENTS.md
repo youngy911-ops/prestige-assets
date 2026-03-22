@@ -7,7 +7,7 @@
 
 ### Marine
 
-- [ ] **MARINE-01**: User can create a Marine asset with subtypes: Boat, Yacht, Jet Ski, and the full Salesforce marine field schema (HIN, Make, Model, Year, Builder, Designer, Motor Type, Number of Engines, Main Engine Details, Engine Hours, Fuel Tank Capacity, Water Tank Capacity, Steering Type, Beam, Draft, LOA, Trailer Length, Launch Date, Sighted, Winch, Thrusters, Damage, Damage Notes, Extras)
+- [x] **MARINE-01**: User can create a Marine asset with subtypes: Boat, Yacht, Jet Ski, and the full Salesforce marine field schema (HIN, Make, Model, Year, Builder, Designer, Motor Type, Number of Engines, Main Engine Details, Engine Hours, Fuel Tank Capacity, Water Tank Capacity, Steering Type, Beam, Draft, LOA, Trailer Length, Launch Date, Sighted, Winch, Thrusters, Damage, Damage Notes, Extras)
 - [ ] **MARINE-02**: AI extracts marine fields from photos and inspection notes with appropriate aiHints per field
 - [ ] **MARINE-03**: App generates a correctly formatted marine description per subtype using the established template (Jet Ski example: Year Make Model Type / Engine details / Hours / Extras / Trailer if supplied)
 
@@ -58,7 +58,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MARINE-01 | Phase 12 | Pending |
+| MARINE-01 | Phase 12 | Complete |
 | MARINE-02 | Phase 12 | Pending |
 | MARINE-03 | Phase 12 | Pending |
 | TRUCK-01 | Phase 13 | Pending |

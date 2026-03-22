@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Asset Expansion
 status: planning
-stopped_at: Phase 12 context gathered
-last_updated: "2026-03-22T06:21:52.235Z"
+stopped_at: Completed 12-marine-asset-type-01-PLAN.md
+last_updated: "2026-03-22T06:51:45.287Z"
 last_activity: 2026-03-22 — v1.3 roadmap created; phases 12–15 defined
 progress:
   total_phases: 4
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 1
   percent: 0
 ---
 
@@ -49,6 +49,7 @@ Progress: [░░░░░░░░░░░░░░░░░░░░] v1.3 0%
 | 15. Pre-fill Bug Fixes | TBD | - | - |
 
 *Updated after each plan completion*
+| Phase 12-marine-asset-type P01 | 2 | 1 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -59,6 +60,9 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - Phase 11: `parseStructuredFields` and `extractFreeformNotes` extracted to `src/lib/utils/parseStructuredFields.ts` — shared utility importable by both client and server
 - Phase 11: `defaultValue` (uncontrolled) for Select restoration — no controlled useState fallback needed
 - Phase 11: Unmount flush as `useEffect` cleanup on `[persistNotes]` — synchronous, cancels debounce, persists immediately
+- [Phase 12-marine-asset-type]: Anchor icon (lucide-react) chosen for marine in AssetTypeSelector
+- [Phase 12-marine-asset-type]: loa flagged inspectionPriority: true even though aiExtractable: false — measured on-site, not AI-extracted
+- [Phase 12-marine-asset-type]: hasGlassValuation: false for marine — no glass guide equivalent for boats
 
 ### Pending Todos
 
@@ -70,6 +74,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-22T06:21:52.233Z
-Stopped at: Phase 12 context gathered
-Resume file: .planning/phases/12-marine-asset-type/12-CONTEXT.md
+Last session: 2026-03-22T06:51:45.284Z
+Stopped at: Completed 12-marine-asset-type-01-PLAN.md
+Resume file: None
