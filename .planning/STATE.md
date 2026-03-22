@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Pre-fill Restoration
-status: planning
-stopped_at: Completed 11-01-PLAN.md
-last_updated: "2026-03-22T03:17:14.676Z"
-last_activity: 2026-03-21 — v1.2 roadmap created
+status: executing
+stopped_at: Completed 11-02-PLAN.md
+last_updated: "2026-03-22T03:22:24.793Z"
+last_activity: 2026-03-22 — Plan 11-01 complete
 progress:
   total_phases: 1
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
-  percent: 50
+  completed_plans: 2
+  percent: 100
 ---
 
 # Project State
@@ -26,24 +26,24 @@ See: .planning/PROJECT.md (updated 2026-03-21)
 ## Current Position
 
 Phase: 11 of 11 (Pre-fill Value Restoration)
-Plan: 1 of 2
-Status: In Progress
-Last activity: 2026-03-22 — Plan 11-01 complete
+Plan: 2 of 2
+Status: Complete
+Last activity: 2026-03-22 — Plan 11-02 complete
 
-Progress: [█████░░░░░] 50%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **v1.2 Velocity:**
-- Total plans completed: 1
-- Average duration: 2min
-- Total execution time: 2min
+- Total plans completed: 2
+- Average duration: 2.5min
+- Total execution time: 5min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 11. Pre-fill Value Restoration | 1/2 | 2min | 2min |
+| 11. Pre-fill Value Restoration | 2/2 | 5min | 2.5min |
 
 *Updated after each plan completion*
 
@@ -60,6 +60,8 @@ Key context for Phase 11:
 - `structuredValuesRef` and `notesRef` must be seeded from parsed values at mount — display fix alone without ref seeding causes silent data loss on first autosave after reload
 - [Phase 11]: Co-locate parseStructuredFields and extractFreeformNotes in same utility file — both parse the same inspection_notes string format
 - [Phase 11]: Shared parsing utilities go in src/lib/utils/ — not in route handlers — so client components can import them
+- [Phase 11]: JSX string attributes do not interpret newlines — test strings must use template literals for real newlines
+- [Phase 11]: Unmount flush pattern: useEffect cleanup cancels debounce and calls persistNotes synchronously
 
 ### Pending Todos
 
@@ -71,6 +73,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-22T03:17:14.674Z
-Stopped at: Completed 11-01-PLAN.md
+Last session: 2026-03-22T03:22:24.791Z
+Stopped at: Completed 11-02-PLAN.md
 Resume file: None
