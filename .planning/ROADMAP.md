@@ -64,7 +64,11 @@ Full archive: `.planning/milestones/v1.2-ROADMAP.md`
   2. AI extraction populates marine-specific fields (HIN, LOA, Beam, Draft, Motor Type, Engine Hours, etc.) from photos and inspection notes
   3. Generated description matches the marine subtype format (e.g. Jet Ski: Year Make Model Type / Engine details / Hours / Extras / Trailer if supplied)
   4. Marine Salesforce fields block renders with correct field labels in the correct order
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 12-01-PLAN.md — Create marine schema (25 fields, 3 subtypes), register in ASSET_TYPES + SCHEMA_REGISTRY, update test count assertions
+- [ ] 12-02-PLAN.md — Add MARINE inference to buildSystemPrompt, JET SKI template to DESCRIPTION_SYSTEM_PROMPT, Anchor icon to AssetTypeSelector, extend test suite
 
 ### Phase 13: Subtype Expansions
 **Goal**: All four expanded asset types show correct, complete subtype lists throughout the app
@@ -111,7 +115,7 @@ Full archive: `.planning/milestones/v1.2-ROADMAP.md`
 | 9. Pre-Extraction Structured Inputs | v1.1 | 2/2 | Complete | 2026-03-21 |
 | 10. Description Verbatim Fidelity | v1.1 | 2/2 | Complete | 2026-03-21 |
 | 11. Pre-fill Value Restoration | v1.2 | 2/2 | Complete | 2026-03-22 |
-| 12. Marine Asset Type | v1.3 | 0/TBD | Not started | - |
+| 12. Marine Asset Type | v1.3 | 0/2 | Not started | - |
 | 13. Subtype Expansions | v1.3 | 0/TBD | Not started | - |
 | 14. Description Quality | v1.3 | 0/TBD | Not started | - |
 | 15. Pre-fill Bug Fixes | v1.3 | 0/TBD | Not started | - |
