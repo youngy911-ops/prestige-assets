@@ -23,8 +23,10 @@ export function parseStructuredFields(notes: string | null): Record<string, stri
  */
 export function extractFreeformNotes(notes: string | null): string {
   if (!notes) return ''
-  for (const line of notes.split('\n')) {
-    if (line.startsWith('Notes: ')) return line.slice('Notes: '.length)
-  }
-  return ''
+  const lines = notes.split('\n')
+  const notesIdx = lines.findIndex((l) => l.startsWith('Notes: '))
+  if (notesIdx === -1) return ''
+  const firstLine = lines[notesIdx].slice('Notes: '.length)
+  const rest = lines.slice(notesIdx + 1)
+  return [firstLine, ...rest].join('\n').trimEnd()
 }

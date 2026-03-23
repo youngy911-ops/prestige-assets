@@ -48,7 +48,21 @@ describe('extractFreeformNotes', () => {
     expect(extractFreeformNotes('vin: ABC123\nNotes: ')).toBe('')
   })
 
-  it('works when Notes line appears before other lines', () => {
-    expect(extractFreeformNotes('Notes: runs well\nvin: ABC123')).toBe('runs well')
+  it('works when Notes line is not the first key in the blob', () => {
+    expect(extractFreeformNotes('vin: ABC123\nodometer: 50000\nNotes: runs well')).toBe('runs well')
+  })
+
+  it('returns all lines after "Notes: " joined with \\n for multi-line notes', () => {
+    expect(
+      extractFreeformNotes('vin: ABC\nNotes: line one\nline two\nline three')
+    ).toBe('line one\nline two\nline three')
+  })
+
+  it('returns continuation lines when Notes is the first line', () => {
+    expect(extractFreeformNotes('Notes: first\nsecond')).toBe('first\nsecond')
+  })
+
+  it('strips trailing newline from Notes content', () => {
+    expect(extractFreeformNotes('vin: A\nNotes: runs well\n')).toBe('runs well')
   })
 })
