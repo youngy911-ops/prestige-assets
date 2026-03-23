@@ -82,6 +82,90 @@ Pantech dimensions: 3700mm x 2200mm
 
 Sold As Is, Untested & Unregistered.
 
+FLAT DECK
+Line 1: Year, Make, Model, Drive Type, Flat Deck
+Engine: Make, cylinders, fuel type, HP
+Transmission, Exhaust Brake
+Deck dimensions: L x W in mm
+Headboard, toolboxes, tie rails, stoneguard if fitted
+Tow hitch/airlines if fitted
+Sold As Is, Untested & Unregistered.
+
+CAB CHASSIS
+Line 1: Year, Make, Model, Drive Type, Cab Chassis
+Engine: Make, cylinders, fuel type, HP
+Transmission, key chassis extras
+GVM
+Sold As Is, Untested & Unregistered.
+
+REFRIGERATED PANTECH
+Line 1: Year, Make, Model, Drive Type, Refrigerated Pantech
+Engine: Make, cylinders, fuel type, HP
+Transmission, Brakes, Suspension
+Body dimensions: L x W in mm
+Refrigeration unit: make, model, fuel type
+Temperature range
+Sold As Is, Untested & Unregistered.
+
+BEAVERTAIL
+Line 1: Year, Make, Model, Drive Type, Beavertail
+Engine: Make, cylinders, fuel type, HP
+Transmission, Exhaust Brake
+Deck dimensions: L x W in mm
+Beavertail/ramp type, winch if fitted
+Sold As Is, Untested & Unregistered.
+
+TILT TRAY
+Line 1: Year, Make, Model, Drive Type, Tilt Tray
+Engine: Make, cylinders, fuel type, HP
+Transmission
+Tray dimensions: L x W in mm
+Winch: capacity
+Capacity: Xt
+Sold As Is, Untested & Unregistered.
+
+VACUUM TRUCK
+Line 1: Year, Make, Model, Drive Type, Vacuum Truck
+Engine: Make, cylinders, fuel type, HP
+Transmission
+Tank capacity: XkL
+Vacuum pump: make, type, CFM rating
+Hose length, hose diameter
+Water tank capacity: XL
+Waste type: Wet / Dry
+Sold As Is, Untested & Unregistered.
+
+CONCRETE PUMP
+Line 1: Year, Make, Model, Drive Type, Concrete Pump
+Engine: Make, cylinders, fuel type, HP
+Transmission
+Pump type: Line Pump / Boom Pump
+Max vertical reach: Xm, Max horizontal reach: Xm (boom pumps)
+Pipeline diameter: Xmm
+Output: Xm³/hr
+Sold As Is, Untested & Unregistered.
+
+CONCRETE AGITATOR
+Line 1: Year, Make, Model, Drive Type, Concrete Agitator
+Engine: Make, cylinders, fuel type, HP
+Transmission
+Drum capacity: Xm³
+Drum speed
+Water tank capacity: XL
+Chute type
+Sold As Is, Untested & Unregistered.
+
+EWP (ELEVATED WORK PLATFORM)
+Line 1: Year, Make, Model, Drive Type, EWP
+Engine: Make, cylinders, fuel type, HP
+Transmission
+Boom type: Knuckle Boom / Straight Boom
+Max working height: Xm
+Basket capacity: Xkg
+Outriggers
+Certification status
+Sold As Is, Untested & Unregistered.
+
 TRAILER
 Line 1: Year, Make, Model, Type. Axle config. Suspension. Brakes.
 Deck length. Payload if applicable.
@@ -102,7 +186,7 @@ Main bucket
 Attachments Included: others
 Sold As Is, Untested & Unregistered.
 
-DOZER
+BULLDOZER
 Year, Make, Model, Type
 Operating Weight
 Hours
@@ -177,6 +261,50 @@ Loader bucket
 Backhoe bucket
 Stabilisers
 Extras
+Sold As Is, Untested & Unregistered.
+
+COMPACTOR
+Year, Make, Model, Type (Roller / Padfoot / Plate Compactor)
+Operating Weight
+Hours
+Engine: Make, cylinders, fuel type, HP
+Drum width
+Vibration frequency if known
+Enclosed Cab / ROPS Canopy
+Sold As Is, Untested & Unregistered.
+
+DUMP TRUCK
+Year, Make, Model, Dump Truck
+Payload: Xt
+Operating Weight
+Hours
+Engine: Make, cylinders, fuel type, HP
+Transmission
+Drive type (rigid / articulated)
+Enclosed Cab
+Sold As Is, Untested & Unregistered.
+
+TRENCHER
+Year, Make, Model, Trencher
+Operating Weight / Class
+Hours
+Engine: Make, cylinders, fuel type, HP
+Trench depth: Xmm, Trench width: Xmm
+Chain/wheel type
+Track or wheeled
+Enclosed Cab / ROPS Canopy
+Sold As Is, Untested & Unregistered.
+
+CRAWLER TRACTOR
+Year, Make, Model, Crawler Tractor
+Operating Weight
+Hours
+Engine: Make, cylinders, fuel type, HP
+Transmission type
+Track width
+PTO if fitted
+Drawbar: Xt
+Implements included if any
 Sold As Is, Untested & Unregistered.
 
 CARAVAN
