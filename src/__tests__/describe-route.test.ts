@@ -124,7 +124,7 @@ describe('POST /api/describe', () => {
 
   it('persists description text to assets.description with user_id guard', async () => {
     mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
-    mockGenerateText.mockResolvedValue({ text: 'Generated description text here.' })
+    mockGenerateText.mockResolvedValue({ text: 'Generated description.\n\nSold As Is, Untested & Unregistered.' })
 
     const mockUpdate = vi.fn().mockReturnValue({
       eq: () => ({
@@ -163,12 +163,12 @@ describe('POST /api/describe', () => {
 
     expect(mockUpdate).toHaveBeenCalledTimes(1)
     const updateArg = mockUpdate.mock.calls[0][0]
-    expect(updateArg).toHaveProperty('description', 'Generated description text here.')
+    expect(updateArg.description).toContain('Sold As Is, Untested & Unregistered.')
   })
 
   it('returns { success: true, description } on success', async () => {
     mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
-    mockGenerateText.mockResolvedValue({ text: 'Generated description text here.' })
+    mockGenerateText.mockResolvedValue({ text: 'Generated description.\n\nSold As Is, Untested & Unregistered.' })
 
     let callCount = 0
     mockFrom.mockImplementation(() => {
@@ -206,7 +206,8 @@ describe('POST /api/describe', () => {
     const res = await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
     expect(res.status).toBe(200)
     const body = await res.json()
-    expect(body).toEqual({ success: true, description: 'Generated description text here.' })
+    expect(body.success).toBe(true)
+    expect(body.description).toContain('Sold As Is, Untested & Unregistered.')
   })
 
   // --- Verbatim split behaviour tests (Task 1 RED) ---
@@ -586,5 +587,121 @@ describe('DESCRIPTION_SYSTEM_PROMPT — marine templates', () => {
     const marineIdx = systemContent.indexOf('MARINE')
     const jetSkiIdx = systemContent.indexOf('JET SKI')
     expect(jetSkiIdx).toBeGreaterThan(marineIdx)
+  })
+})
+
+describe('normalizeFooter — footer enforcement', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  function makeAssetMock(assetType: string) {
+    let callCount = 0
+    mockFrom.mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({
+                data: { id: 'asset-1', asset_type: assetType, asset_subtype: null, fields: {}, inspection_notes: null },
+                error: null,
+              }),
+            }),
+          }),
+        }
+      }
+      if (callCount === 2) {
+        return {
+          select: () => ({
+            eq: () => ({
+              order: () => Promise.resolve({ data: [], error: null }),
+            }),
+          }),
+        }
+      }
+      return { update: mockUpdate }
+    })
+  }
+
+  let mockUpdate: ReturnType<typeof vi.fn>
+  beforeEach(() => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockUpdate = vi.fn().mockReturnValue({ eq: () => ({ eq: () => Promise.resolve({ error: null }) }) })
+  })
+
+  it('appends Sold As Is, Untested & Unregistered. for truck when AI omits footer', async () => {
+    mockGenerateText.mockResolvedValue({ text: '2020 Hino 500, 6x4, Prime Mover\n\nEngine: Hino, I6, Diesel, 260hp' })
+    makeAssetMock('truck')
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+    const persisted = mockUpdate.mock.calls[0][0].description as string
+    expect(persisted.endsWith('Sold As Is, Untested & Unregistered.')).toBe(true)
+  })
+
+  it('appends Sold As Is, Untested. for general_goods', async () => {
+    mockGenerateText.mockResolvedValue({ text: 'Pallet of tools, misc hand tools' })
+    makeAssetMock('general_goods')
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+    const persisted = mockUpdate.mock.calls[0][0].description as string
+    expect(persisted.endsWith('Sold As Is, Untested.')).toBe(true)
+    expect(persisted).not.toContain('Untested & Unregistered')
+  })
+
+  it('replaces wrong-variant footer for truck (AI wrote Sold As Is, Untested.)', async () => {
+    mockGenerateText.mockResolvedValue({ text: '2019 Kenworth T410, Prime Mover\n\nSold As Is, Untested.' })
+    makeAssetMock('truck')
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+    const persisted = mockUpdate.mock.calls[0][0].description as string
+    expect(persisted.endsWith('Sold As Is, Untested & Unregistered.')).toBe(true)
+    // Must not contain the wrong variant
+    const lines = persisted.split('\n')
+    const footerLines = lines.filter(l => l.toLowerCase().startsWith('sold as is'))
+    expect(footerLines).toHaveLength(1)
+    expect(footerLines[0]).toBe('Sold As Is, Untested & Unregistered.')
+  })
+
+  it('is idempotent — does not double-append footer when AI already wrote correct one', async () => {
+    mockGenerateText.mockResolvedValue({ text: '2020 Cat 336, Excavator\n\nSold As Is, Untested & Unregistered.' })
+    makeAssetMock('earthmoving')
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+    const persisted = mockUpdate.mock.calls[0][0].description as string
+    const occurrences = (persisted.match(/Sold As Is/g) ?? []).length
+    expect(occurrences).toBe(1)
+    expect(persisted.endsWith('Sold As Is, Untested & Unregistered.')).toBe(true)
+  })
+
+  it('handles AI output with trailing blank lines correctly — no blank line after footer', async () => {
+    mockGenerateText.mockResolvedValue({ text: '2020 Volvo FH16\n\n' })
+    makeAssetMock('truck')
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+    const persisted = mockUpdate.mock.calls[0][0].description as string
+    expect(persisted.endsWith('Sold As Is, Untested & Unregistered.')).toBe(true)
+    expect(persisted).not.toMatch(/Sold As Is, Untested & Unregistered\.\n/)
+  })
+})
+
+describe('DESCRIPTION_SYSTEM_PROMPT — TBC rule removed', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('system prompt does not contain TBC as an instruction', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockGenerateText.mockResolvedValue({ text: 'Test.\n\nSold As Is, Untested & Unregistered.' })
+    let callCount = 0
+    mockFrom.mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return { select: () => ({ eq: () => ({ single: () => Promise.resolve({ data: { id: 'asset-1', asset_type: 'truck', asset_subtype: null, fields: {}, inspection_notes: null }, error: null }) }) }) }
+      }
+      if (callCount === 2) {
+        return { select: () => ({ eq: () => ({ order: () => Promise.resolve({ data: [], error: null }) }) }) }
+      }
+      return { update: () => ({ eq: () => ({ eq: () => Promise.resolve({ error: null }) }) }) }
+    })
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+    const systemContent: string = mockGenerateText.mock.calls[0][0].messages[0].content
+    // Must not contain the old TBC instruction
+    expect(systemContent).not.toContain('replace it with TBC')
+    expect(systemContent).not.toMatch(/\bTBC\b/)
+    // Must contain the identifier exception rule
+    expect(systemContent).toContain('VIN, serial number, chassis number')
+    expect(systemContent).toContain('never infer')
   })
 })
