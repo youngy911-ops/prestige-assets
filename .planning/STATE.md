@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
-milestone: v2
-milestone_name: TBD
-status: idle
-stopped_at: v1.3 milestone archived 2026-03-23
+milestone: v1.4
+milestone_name: Salesforce Subtype Alignment
+status: defining_requirements
+stopped_at: —
 last_updated: "2026-03-23T00:00:00.000Z"
-last_activity: 2026-03-23 — v1.3 milestone complete and archived
+last_activity: 2026-03-23 — Milestone v1.4 started
 progress:
   total_phases: 0
   completed_phases: 0
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-23)
 
 **Core value:** Photo a build plate → AI extracts identifiers → app generates copy-paste-ready Salesforce fields and a correctly formatted description — turning an hour of manual research into minutes.
-**Current focus:** v1.3 milestone shipped. Ready for next milestone.
+**Current focus:** v1.4 — Salesforce Subtype Alignment
 
 ## Current Position
 
-v1.3 shipped 2026-03-23. All 4 phases (12–15), 9 plans complete. 12/12 requirements satisfied.
-
-Status: **Idle — ready for next milestone**
-Run `/gsd:new-milestone` to define v2 scope.
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-03-23 — Milestone v1.4 started
 
 Progress: [████████████████████] v1.3 100% SHIPPED
 

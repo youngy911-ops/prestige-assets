@@ -52,14 +52,20 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 
 **Tech at v1.3:** ~8,500+ LOC TypeScript. 285 tests across 27 files. Next.js 15, Supabase, GPT-4o, vitest.
 
-## Next Milestone Goals
+## Current Milestone: v1.4 Salesforce Subtype Alignment
 
-*Run `/gsd:new-milestone` to define v2 scope.*
+**Goal:** Replace all asset type subtype lists with exact Salesforce matches across all 8 asset types, add subtype selectors to Agriculture/Forklift/Caravan for the first time, and ensure description template coverage for all new/changed subtypes.
 
-Candidate features (from v2 requirements backlog):
-- Additional asset types: Agriculture subtypes, Forklift subtypes, Caravan subtypes
-- PPSR lookup result storage
-- Multi-user roles
+**Target features:**
+- Truck subtypes: 21 Salesforce-matching subtypes (replacing current 15)
+- Trailer subtypes: 25 Salesforce-matching subtypes (replacing current 11)
+- Earthmoving subtypes: 19 Salesforce-matching subtypes (Bulldozer/Crawler Tractor merged)
+- Agriculture subtypes: 12 Salesforce-matching subtypes (first time — adds subtype selector)
+- Forklift subtypes: 9 Salesforce-matching subtypes (first time — adds subtype selector)
+- Caravan subtypes: 5 Salesforce-matching subtypes (first time — adds subtype selector)
+- Marine subtypes: 10 Salesforce-matching subtypes (replacing Boat/Yacht/Jet Ski)
+- General Goods subtypes: 16 Salesforce-matching subtypes (replacing current 5)
+- Description template/prompt coverage for all new and changed subtypes
 
 ### Out of Scope
 
@@ -130,4 +136,4 @@ Candidate features (from v2 requirements backlog):
 | Unmount flush as `useEffect` cleanup dependent on `[persistNotes]` (Phase 11) | Synchronous on unmount, no Promise — cancels debounce and persists immediately | ✓ Good — correct pattern for uncontrolled fast-navigation safety |
 
 ---
-*Last updated: 2026-03-22 after v1.3 milestone started*
+*Last updated: 2026-03-23 after v1.4 milestone started*
