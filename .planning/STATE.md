@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
-status: ready_to_plan
-stopped_at: Roadmap created — Phase 16 ready to plan
-last_updated: "2026-03-23T00:00:00.000Z"
-last_activity: 2026-03-23 — v1.4 roadmap created (2 phases)
+status: planning
+stopped_at: Phase 16 context gathered
+last_updated: "2026-03-23T12:35:32.112Z"
+last_activity: 2026-03-23 — Roadmap created, Phase 16 ready for planning
 progress:
   total_phases: 2
   completed_phases: 0
@@ -72,6 +72,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-23T00:00:00.000Z
-Stopped at: v1.4 roadmap created — Phase 16 ready to plan
-Resume file: None
+Last session: 2026-03-23T12:35:32.109Z
+Stopped at: Phase 16 context gathered
+Resume file: .planning/phases/16-subtype-schema-alignment/16-CONTEXT.md
