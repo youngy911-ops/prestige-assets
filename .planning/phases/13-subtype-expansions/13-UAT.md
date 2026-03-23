@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 13-subtype-expansions
 source: [13-01-SUMMARY.md, 13-02-SUMMARY.md]
 started: 2026-03-22T00:00:00Z
@@ -43,17 +43,29 @@ skipped: 0
 
 ## Gaps
 
-- truth: "Truck subtype dropdown includes all 14 v1.3 options"
+- truth: "Truck subtype dropdown includes all v1.3 options plus an 'other' catch-all"
   status: failed
   reason: "User reported: add in 'other' also"
   severity: major
   test: 1
-  artifacts: []
-  missing: []
-- truth: "Earthmoving subtype dropdown includes all v1.3 options"
+  root_cause: "{ key: 'other', label: 'Other' } was never appended to the subtypes array in truck.ts during v1.3 replacement"
+  artifacts:
+    - path: "src/lib/schema-registry/schemas/truck.ts"
+      issue: "subtypes array missing other entry"
+  missing:
+    - "Append { key: 'other', label: 'Other' } as final entry in subtypes array"
+  debug_session: ""
+- truth: "Earthmoving subtype dropdown includes bulldozer, crawler_tractor, and other"
   status: failed
   reason: "User reported: pass, add bulldozer/crawler tractor, other"
   severity: major
   test: 3
-  artifacts: []
-  missing: []
+  root_cause: "bulldozer (rename from dozer), crawler_tractor, and other were never added to earthmoving.ts subtypes array; existing dozer key to be renamed bulldozer per user decision"
+  artifacts:
+    - path: "src/lib/schema-registry/schemas/earthmoving.ts"
+      issue: "subtypes array missing bulldozer (rename dozer), crawler_tractor, other"
+  missing:
+    - "Rename { key: 'dozer', label: 'Dozer' } to { key: 'bulldozer', label: 'Bulldozer' }"
+    - "Add { key: 'crawler_tractor', label: 'Crawler Tractor' }"
+    - "Add { key: 'other', label: 'Other' } as final entry"
+  debug_session: ""

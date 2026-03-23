@@ -38,30 +38,30 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - ✓ AI-generated descriptions preserve specific values from inspection notes verbatim (e.g. `48" sleeper cab`, `Airbag` suspension) — runtime-verified in production — v1.1
 - ✓ Staff can return to an in-progress asset record and find all pre-extraction fields (VIN, odometer, hourmeter, suspension type, unladen weight, length) pre-populated with previously entered values — v1.2
 
-## Current Milestone: v1.3 Asset Expansion
+## Current State: v1.3 Shipped (2026-03-23)
 
-**Goal:** Add Marine asset type, expand truck/trailer/earthmoving/general goods subtypes, and fix description generation quality across all types.
+8 asset types (Truck, Trailer, Earthmoving, Agriculture, Forklift, Caravan/Motor Home, General Goods, **Marine**). All core features live: photo capture → AI extraction → review → Salesforce output. Full description template coverage across all truck and earthmoving subtypes. Pre-fill bugs resolved. App in active use.
 
-**Target features:**
-- Marine asset type (Boat, Yacht, Jet Ski) with full Salesforce schema and description template
-- Truck subtypes expanded and corrected (Prime Mover, Flat Deck, Cab Chassis, Tipper, Pantech, Refrigerated Pantech, Curtainsider, Beavertail, Tilt Tray, Vacuum, Concrete Pump, Concrete Agitator, EWP, Service)
-- Trailer subtypes expanded (Flat Deck, Side Loader, Tipper, Extendable, Drop Deck, Skel, Pig, Plant, Tag, Box, Low Loader)
-- Earthmoving subtypes expanded (Excavator, Skid Steer Loader, Compactor, Dozer, Motor Grader, Wheel Loader, Backhoe Loader, Telehandler, Dump Truck, Trencher)
-- General Goods subtypes (Tools & Equipment, Attachments, Workshop Equipment, Office & IT, Miscellaneous)
-- Description templates per subtype for all new types; always "Sold As Is, Untested & Unregistered."
+**v1.3 shipped:**
+- Marine asset type (Boat, Yacht, Jet Ski) — 25-field schema, AI extraction, description templates
+- Truck subtypes: 15 (9 new body types, Rigid Truck/Crane Truck removed, Other added)
+- Trailer subtypes: 11 | Earthmoving: 12 (Bulldozer, Crawler Tractor, Other) | General Goods: 5 categorical
+- Footer enforcement (`normalizeFooter`) — all asset types, no exceptions
+- 13 new ALL_CAPS description templates for all truck + earthmoving subtypes
+- Multi-line notes fix + sendBeacon unmount flush
 
-### Active
+**Tech at v1.3:** ~8,500+ LOC TypeScript. 285 tests across 27 files. Next.js 15, Supabase, GPT-4o, vitest.
 
-- [ ] Marine asset type with Salesforce schema and AI extraction (MARINE-01)
-- [ ] Marine description template with subtype examples (MARINE-02)
-- [ ] Truck subtypes updated — remove Rigid Truck/Crane Truck, add 9 new body types (TRUCK-01)
-- [ ] Truck description templates per body type (TRUCK-02)
-- [ ] Trailer subtypes expanded to 11 types (TRAIL-01)
-- [ ] Earthmoving subtypes expanded to 10 types (EARTH-01)
-- [ ] General Goods subtypes added (GOODS-01)
-- [ ] Description always closes "Sold As Is, Untested & Unregistered." (DESC-01)
-- [ ] "Other notes" textarea shows only freeform notes when returning to a record (PREFILL-07)
-- [ ] Pre-extraction edits within 500ms of navigating away are not silently lost (PREFILL-08)
+## Next Milestone Goals
+
+*Run `/gsd:new-milestone` to define v2 scope.*
+
+Candidate features (from v2 requirements backlog):
+- Additional asset types: Agriculture subtypes, Forklift subtypes, Caravan subtypes
+- PPSR lookup result storage
+- Multi-user roles
+
+### Out of Scope
 
 ### Out of Scope
 
@@ -81,12 +81,12 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - **Shipped v1.0**: 2026-03-21. ~6,975 LOC TypeScript. 4-day build from blank repo to working tool.
 - **Shipped v1.1**: 2026-03-21. ~7,348 LOC TypeScript. Single-day polish — 3 phases, 5 plans, ~3.5 hours.
 - **Shipped v1.2**: 2026-03-22. ~7,532 LOC TypeScript. Focused fix — 1 phase, 2 plans, ~16 minutes.
+- **Shipped v1.3**: 2026-03-23. ~8,500+ LOC TypeScript. Asset expansion — 4 phases, 9 plans, 2 days. 99 files changed, +8,378 / -4,404 lines.
 - **Tech stack**: Next.js 15 (App Router), Supabase (Postgres + Storage + Auth), GPT-4o (Vercel AI SDK v6), react-hook-form + Zod, dnd-kit, Base UI, Tailwind v4, vitest + testing-library.
 - **Prior project**: `asset_sales_force` — same concept but built as a Next.js + Expo monorepo. Got bogged down in iOS scaffolding before the core workflow was proven.
 - **Current workflow**: App replaces Jack's manual Claude chat workflow with a persistent, team-usable tool.
 - **Platform**: Web app — phone browser for on-site capture (file picker from camera roll), desktop browser for review and copy-paste.
-- **Description formatting**: Strict per-type rules — no dot points, no marketing language, specific field ordering per asset subtype (Excavator vs Dozer vs Truck vs Trailer etc.), "Sold As Is, Untested & Unregistered." footer always.
-- **Known open items**: Exact Earthmoving description subtype field ordering (Excavator vs Dozer vs Grader etc.) requires Jack's confirmation. PREFILL-07 (textarea display bug) and PREFILL-08 (unmount flush) deferred to next milestone.
+- **Description formatting**: Strict per-type rules — no dot points, no marketing language, specific field ordering per asset subtype (Excavator vs Dozer vs Truck vs Trailer etc.), "Sold As Is, Untested & Unregistered." footer always (enforced by `normalizeFooter` post-generation).
 
 ## Salesforce Field Schemas (per asset type)
 
