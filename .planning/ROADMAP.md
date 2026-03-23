@@ -127,5 +127,5 @@ Plans:
 | 11. Pre-fill Value Restoration | v1.2 | 2/2 | Complete | 2026-03-22 |
 | 12. Marine Asset Type | 2/2 | Complete    | 2026-03-22 | - |
 | 13. Subtype Expansions | 3/3 | Complete    | 2026-03-22 | - |
-| 14. Description Quality | 2/2 | Complete   | 2026-03-23 | - |
+| 14. Description Quality | 2/2 | Complete    | 2026-03-23 | - |
 | 15. Pre-fill Bug Fixes | v1.3 | 0/TBD | Not started | - |
