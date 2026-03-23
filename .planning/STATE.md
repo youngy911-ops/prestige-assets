@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Asset Expansion
 status: planning
-stopped_at: Completed 15-01-PLAN.md
-last_updated: "2026-03-23T10:04:22.584Z"
+stopped_at: Completed 15-02-PLAN.md
+last_updated: "2026-03-23T10:10:53.483Z"
 last_activity: 2026-03-22 — v1.3 roadmap created; phases 12–15 defined
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 9
-  completed_plans: 8
+  completed_plans: 9
   percent: 0
 ---
 
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░░░░░░░░░░░] v1.3 0%
 | Phase 14-description-quality P01 | 181s | 2 tasks | 2 files |
 | Phase 14-description-quality P02 | 4min | 2 tasks | 2 files |
 | Phase 15-pre-fill-bug-fixes P01 | 96s | 2 tasks | 3 files |
+| Phase 15-pre-fill-bug-fixes P02 | 273s | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,8 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 14-description-quality]: CRAWLER TRACTOR template emphasises drawbar/PTO/implements — does NOT include blade width or ripper (bulldozer-specific)
 - [Phase 15-pre-fill-bug-fixes]: extractFreeformNotes uses findIndex + slice(notesIdx+1) to collect all continuation lines after Notes: marker; trimEnd() strips trailing newline artefact
 - [Phase 15-pre-fill-bug-fixes]: Notes: serialisation contract: Notes line is always last; structured fields never appear after Notes: — test corrected to reflect this
+- [Phase 15-pre-fill-bug-fixes]: sendBeacon + Blob(JSON, application/json) for unmount flush — guaranteed delivery after iOS page teardown
+- [Phase 15-pre-fill-bug-fixes]: Object.defineProperty used for sendBeacon stub to avoid breaking @base-ui detectBrowser.js navigator spread
 
 ### Pending Todos
 
@@ -94,6 +97,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-23T10:04:22.581Z
-Stopped at: Completed 15-01-PLAN.md
+Last session: 2026-03-23T10:10:53.480Z
+Stopped at: Completed 15-02-PLAN.md
 Resume file: None
