@@ -14,7 +14,7 @@
 ### Truck Subtypes
 
 - [x] **TRUCK-01**: Truck subtypes updated to: Prime Mover, Flat Deck, Cab Chassis, Tipper, Pantech, Refrigerated Pantech, Curtainsider, Beavertail, Tilt Tray, Vacuum, Concrete Pump, Concrete Agitator, EWP, Service (Rigid Truck and Crane Truck removed)
-- [ ] **TRUCK-02**: Description template exists for each truck subtype so GPT-4o generates correctly formatted output
+- [x] **TRUCK-02**: Description template exists for each truck subtype so GPT-4o generates correctly formatted output
 
 ### Trailer Subtypes
 
@@ -31,7 +31,7 @@
 ### Description Quality
 
 - [x] **DESC-01**: All generated descriptions always close with "Sold As Is, Untested & Unregistered." — no exceptions across all asset types and subtypes
-- [ ] **DESC-02**: Description templates exist for all earthmoving subtypes (Dozer, Motor Grader, Wheel Loader, Backhoe Loader, Telehandler, Dump Truck, Trencher) so GPT-4o has concrete format guidance
+- [x] **DESC-02**: Description templates exist for all earthmoving subtypes (Dozer, Motor Grader, Wheel Loader, Backhoe Loader, Telehandler, Dump Truck, Trencher) so GPT-4o has concrete format guidance
 
 ### Pre-fill Bugs (Deferred from v1.2)
 
@@ -65,9 +65,9 @@
 | TRAIL-01 | Phase 13 | Complete |
 | EARTH-01 | Phase 13 | Complete |
 | GOODS-01 | Phase 13 | Complete |
-| TRUCK-02 | Phase 14 | Pending |
+| TRUCK-02 | Phase 14 | Complete |
 | DESC-01 | Phase 14 | Complete |
-| DESC-02 | Phase 14 | Pending |
+| DESC-02 | Phase 14 | Complete |
 | PREFILL-07 | Phase 15 | Pending |
 | PREFILL-08 | Phase 15 | Pending |
 
