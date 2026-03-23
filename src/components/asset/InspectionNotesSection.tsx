@@ -48,32 +48,41 @@ export function InspectionNotesSection({
 
   const priorityFields = getInspectionPriorityFields(assetType)
 
-  const persistNotes = useCallback(() => {
-    // Combine structured field values and freeform notes into a single inspection_notes string
+  const buildCombinedNotes = useCallback((): string => {
     const structuredLines = Object.entries(structuredValuesRef.current)
       .filter(([, v]) => v.trim())
       .map(([k, v]) => `${k}: ${v}`)
-    const combined = [
+    return [
       ...structuredLines,
       notesRef.current.trim() ? `Notes: ${notesRef.current}` : '',
     ]
       .filter(Boolean)
       .join('\n')
-    saveInspectionNotes(assetId, combined)
-  }, [assetId])
+  }, [])
+  // No deps — reads only from stable refs
+
+  const persistNotes = useCallback(() => {
+    saveInspectionNotes(assetId, buildCombinedNotes())
+  }, [assetId, buildCombinedNotes])
 
   const scheduleAutosave = useCallback(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(persistNotes, 500)
   }, [persistNotes])
 
-  // Unmount flush — cancel in-flight debounce timer and persist synchronously on navigation
+  // Unmount flush — sendBeacon guarantees delivery even after page teardown (iOS back-button)
   useEffect(() => {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current)
-      persistNotes()
+      navigator.sendBeacon(
+        '/api/inspection-notes',
+        new Blob(
+          [JSON.stringify({ assetId, notes: buildCombinedNotes() })],
+          { type: 'application/json' }
+        )
+      )
     }
-  }, [persistNotes])
+  }, [assetId, buildCombinedNotes])
 
   const handleStructuredChange = (key: string, value: string) => {
     structuredValuesRef.current = { ...structuredValuesRef.current, [key]: value }

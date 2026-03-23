@@ -72,6 +72,10 @@ describe('ConfidenceBadge', () => {
 // ─── InspectionNotesSection ─────────────────────────────────────────────────
 
 describe('InspectionNotesSection', () => {
+  beforeEach(() => {
+    Object.defineProperty(navigator, 'sendBeacon', { value: vi.fn(), writable: true, configurable: true })
+  })
+
   it('renders 5 structured fields for truck asset type', async () => {
     const { InspectionNotesSection } = await import('@/components/asset/InspectionNotesSection')
     render(

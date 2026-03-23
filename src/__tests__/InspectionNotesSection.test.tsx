@@ -24,6 +24,7 @@ const DEFAULT_PROPS = {
 describe('InspectionNotesSection', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    vi.stubGlobal('navigator', { ...global.navigator, sendBeacon: vi.fn() })
   })
 
   afterEach(() => {
@@ -93,7 +94,7 @@ describe('InspectionNotesSection', () => {
     expect((textarea as HTMLTextAreaElement).defaultValue).toBe('first line\nsecond line\nthird line')
   })
 
-  it('persistNotes is called synchronously on unmount even if debounce has not fired', () => {
+  it('sendBeacon is called on unmount with correct URL and payload; saveInspectionNotes is NOT called', () => {
     vi.useFakeTimers()
     const { unmount } = render(
       <InspectionNotesSection
@@ -106,7 +107,12 @@ describe('InspectionNotesSection', () => {
     // Do NOT advance timers — debounce has not fired yet
     expect(mockSaveInspectionNotes).not.toHaveBeenCalled()
     unmount()
-    // Flush happens synchronously on unmount
-    expect(mockSaveInspectionNotes).toHaveBeenCalledTimes(1)
+    // sendBeacon fires on unmount, NOT saveInspectionNotes
+    expect(vi.mocked(navigator.sendBeacon)).toHaveBeenCalledTimes(1)
+    expect(vi.mocked(navigator.sendBeacon)).toHaveBeenCalledWith(
+      '/api/inspection-notes',
+      expect.any(Blob)
+    )
+    expect(mockSaveInspectionNotes).not.toHaveBeenCalled()
   })
 })

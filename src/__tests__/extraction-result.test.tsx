@@ -142,6 +142,7 @@ describe('ExtractionResultPanel', () => {
 describe('ExtractionPageClient', () => {
   beforeEach(() => {
     mockRouterPush.mockClear()
+    Object.defineProperty(navigator, 'sendBeacon', { value: vi.fn(), writable: true, configurable: true })
   })
 
   it('shows ExtractionTriggerState when initialExtractionResult is null', async () => {
