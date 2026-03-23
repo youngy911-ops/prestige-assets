@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
 status: planning
-stopped_at: Phase 16 context gathered
-last_updated: "2026-03-23T12:35:32.112Z"
+stopped_at: Completed 16-02-PLAN.md
+last_updated: "2026-03-23T12:57:35.165Z"
 last_activity: 2026-03-23 — Roadmap created, Phase 16 ready for planning
 progress:
   total_phases: 2
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 3
+  completed_plans: 1
   percent: 0
 ---
 
@@ -48,6 +48,7 @@ Progress: [░░░░░░░░░░] 0% (v1.4)
 | 17. Description Template Coverage | - | - | - |
 
 *Updated after each plan completion*
+| Phase 16 P02 | 4m | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -61,6 +62,7 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 14]: DOZER heading renamed to BULLDOZER in DESCRIPTION_SYSTEM_PROMPT — matches Phase 13 key change
 - [Phase 14]: CRAWLER TRACTOR template emphasises drawbar/PTO/implements (NOT blade width/ripper — those are bulldozer-specific)
 - [Phase 15]: sendBeacon + Blob(JSON, application/json) for unmount flush — guaranteed delivery after iOS page teardown
+- [Phase 16]: motor_home replaced by motorhome in caravan.ts; coupe added to agriculture and caravan; displayName 'Caravan / Motor Home' preserved
 
 ### Pending Todos
 
@@ -72,6 +74,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-23T12:35:32.109Z
-Stopped at: Phase 16 context gathered
-Resume file: .planning/phases/16-subtype-schema-alignment/16-CONTEXT.md
+Last session: 2026-03-23T12:57:35.162Z
+Stopped at: Completed 16-02-PLAN.md
+Resume file: None

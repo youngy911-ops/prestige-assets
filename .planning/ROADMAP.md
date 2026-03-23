@@ -113,5 +113,5 @@ Plans:
 | 13. Subtype Expansions | v1.3 | 3/3 | Complete | 2026-03-22 |
 | 14. Description Quality | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 15. Pre-fill Bug Fixes | v1.3 | 2/2 | Complete | 2026-03-23 |
-| 16. Subtype Schema Alignment | v1.4 | 0/3 | Not started | - |
+| 16. Subtype Schema Alignment | 1/3 | In Progress|  | - |
 | 17. Description Template Coverage | v1.4 | 0/? | Not started | - |

@@ -10,11 +10,11 @@
 - [ ] **SUBTYPE-01**: Truck subtype list matches Salesforce exactly — 21 subtypes: Beavertail, Cab Chassis, Concrete - Agitator, Concrete - Pump, Coupe, Crane Truck, Curtainsider, Fuel Truck, Garbage, Hook Bin, Other, Pantech, Prime Mover, Refrigerated Pantech, Service Truck, Skip Bin, Stock Truck, Tanker, Tray Truck, Vacuum, Water Truck
 - [ ] **SUBTYPE-02**: Trailer subtype list matches Salesforce exactly — 25 subtypes: Box, Car Carrier, Coupe, Curtainsider, Deck Widener, Dog, Dolly, Flat Deck, Low Loader, Other, Pantech, Pig, Plant, Refrigerated Curtainsider, Refrigerated Pantech, Side Loader, Side Tipper, Skel, Stock, Tag, Tanker, Timber Jinker, Tipper, Walking Floor
 - [ ] **SUBTYPE-03**: Earthmoving subtype list matches Salesforce exactly — 19 subtypes: Attachments, Backhoe, Bulldozer/Crawler Tractor (merged), Compactor, Conveyors / Stackers, Coupe, Crusher, Dump Truck, Excavator, Motor Grader, Motor Scraper, Other, Scraper, Screener, Skid Steer Loader, Tracked Loader, Tracked Skid Steer Loader, Washing, Wheel Loader
-- [ ] **SUBTYPE-04**: Agriculture subtype selector appears with 12 Salesforce-matching subtypes: Air Seeder, Baler, Combine Harvester, Coupe, Disc Seeder, Forestry, Grain Auger, Mower/Conditioner, Other, Plough, Spray Rig, Tractor
-- [ ] **SUBTYPE-05**: Forklift subtype selector appears with 9 Salesforce-matching subtypes: Clearview Mast, Container Mast, Electric Pallet Jack, EWP, Other, Stock Picker, Telehandler, Walk Behind, Walkie Stacker
-- [ ] **SUBTYPE-06**: Caravan subtype selector appears with 5 Salesforce-matching subtypes: Camper Trailer, Caravan, Coupe, Motorhome, Other
+- [x] **SUBTYPE-04**: Agriculture subtype selector appears with 12 Salesforce-matching subtypes: Air Seeder, Baler, Combine Harvester, Coupe, Disc Seeder, Forestry, Grain Auger, Mower/Conditioner, Other, Plough, Spray Rig, Tractor
+- [x] **SUBTYPE-05**: Forklift subtype selector appears with 9 Salesforce-matching subtypes: Clearview Mast, Container Mast, Electric Pallet Jack, EWP, Other, Stock Picker, Telehandler, Walk Behind, Walkie Stacker
+- [x] **SUBTYPE-06**: Caravan subtype selector appears with 5 Salesforce-matching subtypes: Camper Trailer, Caravan, Coupe, Motorhome, Other
 - [ ] **SUBTYPE-07**: Marine subtype list matches Salesforce exactly — 10 subtypes: Barge, Commercial, Coupe, Fishing Vessel, Other, Personal Watercraft, Private, Recreational, Trailer Boat, Tug (replacing Boat, Yacht, Jet Ski)
-- [ ] **SUBTYPE-08**: General Goods subtype list matches Salesforce exactly — 16 subtypes: Agriculture, Gardening & Landscaping, Goodwill, Health & Fitness, Hospitality, IT & Computers, Jewellery/Watches/Collectables, Medical, Miscellaneous, Office, Other, Plant & Equipment, Retail Fit Out, Retail Stock, Signage, Tools & Toolboxes (replacing current 5)
+- [x] **SUBTYPE-08**: General Goods subtype list matches Salesforce exactly — 16 subtypes: Agriculture, Gardening & Landscaping, Goodwill, Health & Fitness, Hospitality, IT & Computers, Jewellery/Watches/Collectables, Medical, Miscellaneous, Office, Other, Plant & Equipment, Retail Fit Out, Retail Stock, Signage, Tools & Toolboxes (replacing current 5)
 
 ### Description Coverage
 
@@ -49,11 +49,11 @@
 | SUBTYPE-01 | Phase 16 | Pending |
 | SUBTYPE-02 | Phase 16 | Pending |
 | SUBTYPE-03 | Phase 16 | Pending |
-| SUBTYPE-04 | Phase 16 | Pending |
-| SUBTYPE-05 | Phase 16 | Pending |
-| SUBTYPE-06 | Phase 16 | Pending |
+| SUBTYPE-04 | Phase 16 | Complete |
+| SUBTYPE-05 | Phase 16 | Complete |
+| SUBTYPE-06 | Phase 16 | Complete |
 | SUBTYPE-07 | Phase 16 | Pending |
-| SUBTYPE-08 | Phase 16 | Pending |
+| SUBTYPE-08 | Phase 16 | Complete |
 | DESCR-01 | Phase 17 | Pending |
 | DESCR-02 | Phase 17 | Pending |
 | DESCR-03 | Phase 17 | Pending |
