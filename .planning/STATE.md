@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
-status: defining_requirements
-stopped_at: —
+status: ready_to_plan
+stopped_at: Roadmap created — Phase 16 ready to plan
 last_updated: "2026-03-23T00:00:00.000Z"
-last_activity: 2026-03-23 — Milestone v1.4 started
+last_activity: 2026-03-23 — v1.4 roadmap created (2 phases)
 progress:
-  total_phases: 0
+  total_phases: 2
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-23)
 
 **Core value:** Photo a build plate → AI extracts identifiers → app generates copy-paste-ready Salesforce fields and a correctly formatted description — turning an hour of manual research into minutes.
-**Current focus:** v1.4 — Salesforce Subtype Alignment
+**Current focus:** v1.4 — Phase 16: Subtype Schema Alignment
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-03-23 — Milestone v1.4 started
+Phase: 16 of 17 (Subtype Schema Alignment)
+Plan: — of — (not yet planned)
+Status: Ready to plan
+Last activity: 2026-03-23 — Roadmap created, Phase 16 ready for planning
 
-Progress: [████████████████████] v1.3 100% SHIPPED
+Progress: [░░░░░░░░░░] 0% (v1.4)
 
 ## Performance Metrics
 
@@ -38,26 +38,16 @@ Progress: [████████████████████] v1.3 10
 - v1.0: 21 plans, 4 days
 - v1.1: 5 plans, ~3.5 hours
 - v1.2: 2 plans, ~16 minutes
+- v1.3: 9 plans, 2 days
 
-**v1.3 By Phase:**
+**v1.4 By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 12. Marine Asset Type | TBD | - | - |
-| 13. Subtype Expansions | TBD | - | - |
-| 14. Description Quality | TBD | - | - |
-| 15. Pre-fill Bug Fixes | TBD | - | - |
+| 16. Subtype Schema Alignment | - | - | - |
+| 17. Description Template Coverage | - | - | - |
 
 *Updated after each plan completion*
-| Phase 12-marine-asset-type P01 | 2 | 1 tasks | 5 files |
-| Phase 12-marine-asset-type P02 | 4 | 2 tasks | 4 files |
-| Phase 13-subtype-expansions P01 | 1 | 2 tasks | 4 files |
-| Phase 13-subtype-expansions P02 | 5 | 1 tasks | 1 files |
-| Phase 13-subtype-expansions P03 | 88s | 2 tasks | 3 files |
-| Phase 14-description-quality P01 | 181s | 2 tasks | 2 files |
-| Phase 14-description-quality P02 | 4min | 2 tasks | 2 files |
-| Phase 15-pre-fill-bug-fixes P01 | 96s | 2 tasks | 3 files |
-| Phase 15-pre-fill-bug-fixes P02 | 273s | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -65,27 +55,12 @@ Progress: [████████████████████] v1.3 10
 
 Recent decisions affecting current work (full log in PROJECT.md):
 
-- Phase 11: `parseStructuredFields` and `extractFreeformNotes` extracted to `src/lib/utils/parseStructuredFields.ts` — shared utility importable by both client and server
-- Phase 11: `defaultValue` (uncontrolled) for Select restoration — no controlled useState fallback needed
-- Phase 11: Unmount flush as `useEffect` cleanup on `[persistNotes]` — synchronous, cancels debounce, persists immediately
-- [Phase 12-marine-asset-type]: Anchor icon (lucide-react) chosen for marine in AssetTypeSelector
-- [Phase 12-marine-asset-type]: loa flagged inspectionPriority: true even though aiExtractable: false — measured on-site, not AI-extracted
-- [Phase 12-marine-asset-type]: hasGlassValuation: false for marine — no glass guide equivalent for boats
-- [Phase 12-marine-asset-type]: Marine aiExtractable count is 15 (plan said 14) — corrected test assertion to match actual schema
-- [Phase 12-marine-asset-type]: Use dynamic import() not require() for @/ aliased modules in vitest ESM environment
-- [Phase 13-subtype-expansions]: skid_steer_loader/motor_grader/backhoe_loader used as compound keys for earthmoving subtypes — more precise than bare skid_steer/grader/backhoe
-- [Phase 13-subtype-expansions]: general_goods 'general' catch-all key removed; replaced with 5 categorical subtypes (tools_equipment, attachments, workshop_equipment, office_it, miscellaneous)
-- [Phase 13-subtype-expansions]: Test assertions for subtypes assert both correct count and explicit negative checks for removed keys (rigid_truck, crane_truck, skid_steer bare, grader bare, backhoe bare, general)
-- [Phase 13-subtype-expansions]: 'other' appended as final entry in both truck and earthmoving subtypes
-- [Phase 13-subtype-expansions]: dozer key renamed to bulldozer in earthmoving — more precise industry terminology per UAT feedback
-- [Phase 14-description-quality]: normalizeFooter strips any 'Sold As Is' variant then reappends correct footer — idempotent and handles wrong-variant replacement in one pass
-- [Phase 14-description-quality]: PROCESS step 4 replacement avoids the word TBC entirely to satisfy test regex /\bTBC\b/ — uses 'placeholder text or unknown values' phrasing instead
-- [Phase 14-description-quality]: DOZER heading renamed to BULLDOZER in DESCRIPTION_SYSTEM_PROMPT — matches schema key change from Phase 13
-- [Phase 14-description-quality]: CRAWLER TRACTOR template emphasises drawbar/PTO/implements — does NOT include blade width or ripper (bulldozer-specific)
-- [Phase 15-pre-fill-bug-fixes]: extractFreeformNotes uses findIndex + slice(notesIdx+1) to collect all continuation lines after Notes: marker; trimEnd() strips trailing newline artefact
-- [Phase 15-pre-fill-bug-fixes]: Notes: serialisation contract: Notes line is always last; structured fields never appear after Notes: — test corrected to reflect this
-- [Phase 15-pre-fill-bug-fixes]: sendBeacon + Blob(JSON, application/json) for unmount flush — guaranteed delivery after iOS page teardown
-- [Phase 15-pre-fill-bug-fixes]: Object.defineProperty used for sendBeacon stub to avoid breaking @base-ui detectBrowser.js navigator spread
+- [Phase 13]: skid_steer_loader/motor_grader/backhoe_loader used as compound keys — more precise than bare names
+- [Phase 13]: general_goods 'general' catch-all removed; replaced with categorical subtypes
+- [Phase 13]: dozer key renamed to bulldozer — matches industry terminology
+- [Phase 14]: DOZER heading renamed to BULLDOZER in DESCRIPTION_SYSTEM_PROMPT — matches Phase 13 key change
+- [Phase 14]: CRAWLER TRACTOR template emphasises drawbar/PTO/implements (NOT blade width/ripper — those are bulldozer-specific)
+- [Phase 15]: sendBeacon + Blob(JSON, application/json) for unmount flush — guaranteed delivery after iOS page teardown
 
 ### Pending Todos
 
@@ -93,10 +68,10 @@ None.
 
 ### Blockers/Concerns
 
-- Earthmoving description subtype field ordering (Excavator vs Dozer vs Grader etc.) requires Jack's confirmation before Phase 14 plans can be finalised
+None.
 
 ## Session Continuity
 
-Last session: 2026-03-23T10:10:53.480Z
-Stopped at: Completed 15-02-PLAN.md
+Last session: 2026-03-23T00:00:00.000Z
+Stopped at: v1.4 roadmap created — Phase 16 ready to plan
 Resume file: None

@@ -6,6 +6,7 @@
 - ✅ **v1.1 Pre-fill & Quality** — Phases 8–10 (shipped 2026-03-21)
 - ✅ **v1.2 Pre-fill Restoration** — Phase 11 (shipped 2026-03-22)
 - ✅ **v1.3 Asset Expansion** — Phases 12–15 (shipped 2026-03-23)
+- 🚧 **v1.4 Salesforce Subtype Alignment** — Phases 16–17 (in progress)
 
 ## Phases
 
@@ -56,9 +57,37 @@ Full archive: `.planning/milestones/v1.3-ROADMAP.md`
 
 </details>
 
-### 🔜 v2 (Next Milestone)
+### 🚧 v1.4 Salesforce Subtype Alignment (In Progress)
 
-*Not yet planned. Run `/gsd:new-milestone` to begin.*
+**Milestone Goal:** Replace all asset type subtype lists with exact Salesforce matches across all 8 asset types, add subtype selectors to Agriculture/Forklift/Caravan for the first time, and ensure description template coverage for all new and changed subtypes.
+
+- [ ] **Phase 16: Subtype Schema Alignment** - Update subtype arrays in all 8 asset schema files to match Salesforce exactly; add subtype selectors to Agriculture, Forklift, and Caravan for the first time
+- [ ] **Phase 17: Description Template Coverage** - Update AI system prompt with templates for all new and changed subtypes across all 8 asset types
+
+## Phase Details
+
+### Phase 16: Subtype Schema Alignment
+**Goal**: All 8 asset types expose Salesforce-matching subtype lists; Agriculture, Forklift, and Caravan have a working subtype selector for the first time
+**Depends on**: Phase 15 (v1.3 complete)
+**Requirements**: SUBTYPE-01, SUBTYPE-02, SUBTYPE-03, SUBTYPE-04, SUBTYPE-05, SUBTYPE-06, SUBTYPE-07, SUBTYPE-08
+**Success Criteria** (what must be TRUE):
+  1. Truck subtype dropdown shows exactly 21 Salesforce-matching options
+  2. Trailer subtype dropdown shows exactly 25 Salesforce-matching options
+  3. Earthmoving subtype dropdown shows exactly 19 options with Bulldozer/Crawler Tractor merged into one entry
+  4. Agriculture, Forklift, and Caravan each show a subtype selector (previously absent) with 12, 9, and 5 options respectively
+  5. Marine subtype dropdown shows exactly 10 options; General Goods shows exactly 16 options
+**Plans**: TBD
+
+### Phase 17: Description Template Coverage
+**Goal**: The AI description system prompt has appropriate templates for every subtype across all 8 asset types, including all new entries introduced in Phase 16
+**Depends on**: Phase 16
+**Requirements**: DESCR-01, DESCR-02, DESCR-03, DESCR-04, DESCR-05, DESCR-06, DESCR-07, DESCR-08
+**Success Criteria** (what must be TRUE):
+  1. Generating a description for any Truck or Trailer subtype produces a correctly structured output (no fallback to generic template)
+  2. Generating a description for any Earthmoving subtype — including the merged Bulldozer/Crawler Tractor entry and all 9 new subtypes — produces subtype-appropriate output
+  3. Agriculture, Forklift, and Caravan descriptions are subtype-aware for the first time (each subtype yields a distinct, appropriate template)
+  4. Marine descriptions cover all 10 subtypes; General Goods descriptions cover all 16 subtypes
+**Plans**: TBD
 
 ## Progress
 
@@ -79,3 +108,5 @@ Full archive: `.planning/milestones/v1.3-ROADMAP.md`
 | 13. Subtype Expansions | v1.3 | 3/3 | Complete | 2026-03-22 |
 | 14. Description Quality | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 15. Pre-fill Bug Fixes | v1.3 | 2/2 | Complete | 2026-03-23 |
+| 16. Subtype Schema Alignment | v1.4 | 0/? | Not started | - |
+| 17. Description Template Coverage | v1.4 | 0/? | Not started | - |
