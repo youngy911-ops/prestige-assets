@@ -35,7 +35,7 @@
 
 ### Pre-fill Bugs (Deferred from v1.2)
 
-- [ ] **PREFILL-07**: "Other notes" textarea shows only freeform notes (not serialised key:value lines) when returning to a record
+- [x] **PREFILL-07**: "Other notes" textarea shows only freeform notes (not serialised key:value lines) when returning to a record
 - [ ] **PREFILL-08**: Pre-extraction edits made within 500ms of navigating away are not silently lost — unmount flush for debounced autosave
 
 ## v2 Requirements
@@ -68,7 +68,7 @@
 | TRUCK-02 | Phase 14 | Complete |
 | DESC-01 | Phase 14 | Complete |
 | DESC-02 | Phase 14 | Complete |
-| PREFILL-07 | Phase 15 | Pending |
+| PREFILL-07 | Phase 15 | Complete |
 | PREFILL-08 | Phase 15 | Pending |
 
 **Coverage:**

@@ -132,4 +132,4 @@ Plans:
 | 12. Marine Asset Type | 2/2 | Complete    | 2026-03-22 | - |
 | 13. Subtype Expansions | 3/3 | Complete    | 2026-03-22 | - |
 | 14. Description Quality | 2/2 | Complete    | 2026-03-23 | - |
-| 15. Pre-fill Bug Fixes | v1.3 | 0/2 | Not started | - |
+| 15. Pre-fill Bug Fixes | 1/2 | In Progress|  | - |
