@@ -4,13 +4,13 @@ milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
 status: planning
 stopped_at: Completed 16-02-PLAN.md
-last_updated: "2026-03-23T12:57:35.165Z"
+last_updated: "2026-03-23T12:58:30.913Z"
 last_activity: 2026-03-23 — Roadmap created, Phase 16 ready for planning
 progress:
   total_phases: 2
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ Plan: — of — (not yet planned)
 Status: Ready to plan
 Last activity: 2026-03-23 — Roadmap created, Phase 16 ready for planning
 
-Progress: [░░░░░░░░░░] 0% (v1.4)
+Progress: [███████░░░] 67% (v1.4)
 
 ## Performance Metrics
 
@@ -48,6 +48,8 @@ Progress: [░░░░░░░░░░] 0% (v1.4)
 | 17. Description Template Coverage | - | - | - |
 
 *Updated after each plan completion*
+
+| Phase 16 P01 | 1m | 2 tasks | 4 files |
 | Phase 16 P02 | 4m | 2 tasks | 4 files |
 
 ## Accumulated Context
@@ -62,7 +64,8 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 14]: DOZER heading renamed to BULLDOZER in DESCRIPTION_SYSTEM_PROMPT — matches Phase 13 key change
 - [Phase 14]: CRAWLER TRACTOR template emphasises drawbar/PTO/implements (NOT blade width/ripper — those are bulldozer-specific)
 - [Phase 15]: sendBeacon + Blob(JSON, application/json) for unmount flush — guaranteed delivery after iOS page teardown
-- [Phase 16]: motor_home replaced by motorhome in caravan.ts; coupe added to agriculture and caravan; displayName 'Caravan / Motor Home' preserved
+- [Phase 16 P01]: coupe included in truck/trailer/earthmoving/marine subtypes per Salesforce requirement; bulldozer+crawler_tractor merged into bulldozer_crawler_tractor; Concrete labels use space-dash-space format
+- [Phase 16 P02]: motor_home replaced by motorhome in caravan.ts; coupe added to agriculture and caravan; displayName 'Caravan / Motor Home' preserved
 
 ### Pending Todos
 

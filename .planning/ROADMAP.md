@@ -79,8 +79,8 @@ Full archive: `.planning/milestones/v1.3-ROADMAP.md`
 **Plans**: 3 plans
 
 Plans:
-- [ ] 16-01-PLAN.md — Replace Truck, Trailer, Earthmoving, Marine subtype arrays (Wave 1)
-- [ ] 16-02-PLAN.md — Replace Agriculture, Forklift, Caravan, General Goods subtype arrays (Wave 1)
+- [x] 16-01-PLAN.md — Replace Truck, Trailer, Earthmoving, Marine subtype arrays (Wave 1)
+- [x] 16-02-PLAN.md — Replace Agriculture, Forklift, Caravan, General Goods subtype arrays (Wave 1)
 - [ ] 16-03-PLAN.md — Update schema-registry.test.ts and run full suite green (Wave 2)
 
 ### Phase 17: Description Template Coverage
@@ -113,5 +113,5 @@ Plans:
 | 13. Subtype Expansions | v1.3 | 3/3 | Complete | 2026-03-22 |
 | 14. Description Quality | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 15. Pre-fill Bug Fixes | v1.3 | 2/2 | Complete | 2026-03-23 |
-| 16. Subtype Schema Alignment | 1/3 | In Progress|  | - |
+| 16. Subtype Schema Alignment | v1.4 | 2/3 | In Progress | - |
 | 17. Description Template Coverage | v1.4 | 0/? | Not started | - |
