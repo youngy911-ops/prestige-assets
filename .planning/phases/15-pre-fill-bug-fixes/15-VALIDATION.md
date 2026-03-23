@@ -1,8 +1,8 @@
 ---
 phase: 15
 slug: pre-fill-bug-fixes
-status: draft
-nyquist_compliant: false
+status: ready
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-03-23
 ---
@@ -17,18 +17,18 @@ created: 2026-03-23
 
 | Property | Value |
 |----------|-------|
-| **Framework** | jest 29.x |
-| **Config file** | jest.config.ts |
-| **Quick run command** | `npx jest --testPathPattern="inspection-notes" --no-coverage` |
-| **Full suite command** | `npx jest --no-coverage` |
+| **Framework** | vitest |
+| **Config file** | vitest.config.ts |
+| **Quick run command** | `npx vitest run --reporter=verbose` |
+| **Full suite command** | `npx vitest run` |
 | **Estimated runtime** | ~15 seconds |
 
 ---
 
 ## Sampling Rate
 
-- **After every task commit:** Run `npx jest --testPathPattern="inspection-notes" --no-coverage`
-- **After every plan wave:** Run `npx jest --no-coverage`
+- **After every task commit:** Run `npx vitest run src/__tests__/parseStructuredFields.test.ts src/__tests__/InspectionNotesSection.test.tsx src/__tests__/inspection-notes-route.test.ts`
+- **After every plan wave:** Run `npx vitest run`
 - **Before `/gsd:verify-work`:** Full suite must be green
 - **Max feedback latency:** 15 seconds
 
@@ -38,10 +38,10 @@ created: 2026-03-23
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 15-01-01 | 01 | 0 | PREFILL-07 | unit | `npx jest --testPathPattern="extractFreeformNotes" --no-coverage` | ❌ W0 | ⬜ pending |
-| 15-01-02 | 01 | 1 | PREFILL-07 | unit | `npx jest --testPathPattern="extractFreeformNotes" --no-coverage` | ✅ | ⬜ pending |
-| 15-02-01 | 02 | 0 | PREFILL-08 | unit | `npx jest --testPathPattern="inspection-notes" --no-coverage` | ❌ W0 | ⬜ pending |
-| 15-02-02 | 02 | 1 | PREFILL-08 | unit | `npx jest --testPathPattern="inspection-notes" --no-coverage` | ✅ | ⬜ pending |
+| 15-01-01 | 01 | 0 | PREFILL-07 | unit | `npx vitest run src/__tests__/parseStructuredFields.test.ts` | ✅ | ⬜ pending |
+| 15-01-02 | 01 | 1 | PREFILL-07 | unit | `npx vitest run src/__tests__/InspectionNotesSection.test.tsx` | ✅ | ⬜ pending |
+| 15-02-01 | 02 | 0 | PREFILL-08 | unit | `npx vitest run src/__tests__/inspection-notes-route.test.ts` | ❌ W0 | ⬜ pending |
+| 15-02-02 | 02 | 1 | PREFILL-08 | unit | `npx vitest run src/__tests__/InspectionNotesSection.test.tsx` | ✅ | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -49,8 +49,8 @@ created: 2026-03-23
 
 ## Wave 0 Requirements
 
-- [ ] `src/__tests__/lib/extractFreeformNotes.test.ts` — unit tests for multi-line notes extraction (PREFILL-07)
-- [ ] `src/__tests__/inspection-notes-route.test.ts` — tests for POST /api/inspection-notes (PREFILL-08)
+- [ ] `src/__tests__/parseStructuredFields.test.ts` — existing file; new multi-line test cases appended by Plan 15-01 Task 1 (PREFILL-07)
+- [ ] `src/__tests__/inspection-notes-route.test.ts` — tests for POST /api/inspection-notes; created by Plan 15-02 Task 1 (PREFILL-08)
 
 ---
 
@@ -64,11 +64,11 @@ created: 2026-03-23
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 15s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 15s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** ready
