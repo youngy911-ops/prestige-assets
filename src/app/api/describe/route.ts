@@ -12,7 +12,7 @@ PROCESS:
 1. Identify the make, model, year and type from photos and inspection notes
 2. Apply your training knowledge of that exact make/model/year to confirm and fill in standard specs (engine, transmission, typical configurations etc.)
 3. Only include a spec if confirmed from photos, inspection notes, or your knowledge of that specific model — never guess
-4. If a spec cannot be confirmed replace it with TBC so the user knows to verify it
+4. If a spec cannot be confirmed from photos, inspection notes, or your knowledge of that specific make/model/year, omit it — never write placeholder text or unknown values
 
 ENGINE HP REFERENCE (use when HP not in inspection notes — round to nearest 5hp):
 Hino N04C: 187hp | Hino J08E: 260hp | Hino E13C: 510hp
@@ -32,6 +32,7 @@ UNIVERSAL RULES:
 - Short related items share a line separated by commas
 - Always closes with "Sold As Is, Untested & Unregistered." or "Sold As Is, Untested." for attachments and general goods
 - Values and measurements from inspection notes must appear verbatim in the description — do not paraphrase, convert units, or interpret. If notes say '48" sleeper cab', write '48" sleeper cab'
+- VIN, serial number, chassis number, and registration must only appear if directly visible in photos or inspection notes — never infer or estimate these identifiers
 
 TEMPLATES BY ASSET TYPE — select the correct template based on asset identified:
 
@@ -222,6 +223,20 @@ Sold As Is, Untested & Unregistered.
 
 Return the completed description as plain text only, exactly matching the correct template format. No extra commentary, no explanations, just the description.`
 
+function normalizeFooter(text: string, assetType: string): string {
+  const footer = assetType === 'general_goods'
+    ? 'Sold As Is, Untested.'
+    : 'Sold As Is, Untested & Unregistered.'
+  const lines = text.trimEnd().split('\n')
+  const lastMeaningfulIdx = lines.findLastIndex((l: string) => l.trim().length > 0)
+  const trimmed = lines.slice(0, lastMeaningfulIdx + 1)
+  const last = trimmed[trimmed.length - 1]?.trim() ?? ''
+  if (last.toLowerCase().startsWith('sold as is')) {
+    trimmed.pop()
+  }
+  return [...trimmed, footer].join('\n')
+}
+
 function buildDescriptionUserPrompt(asset: {
   asset_type: string
   asset_subtype: string | null
@@ -326,12 +341,15 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'Description generation failed. Try again — if it keeps failing, add more details to inspection notes.' }, { status: 422 })
   }
 
-  // 8. Persist to DB — user_id guard in addition to RLS (defense in depth, mirrors saveReview pattern)
+  // 8. Normalise footer — strip any footer variant, append correct footer for asset type
+  const normalizedText = normalizeFooter(text, asset.asset_type)
+
+  // 9. Persist to DB — user_id guard in addition to RLS (defense in depth, mirrors saveReview pattern)
   await supabase
     .from('assets')
-    .update({ description: text })
+    .update({ description: normalizedText })
     .eq('id', assetId)
     .eq('user_id', user.id)
 
-  return Response.json({ success: true, description: text })
+  return Response.json({ success: true, description: normalizedText })
 }
