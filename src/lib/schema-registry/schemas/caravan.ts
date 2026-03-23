@@ -4,9 +4,11 @@ export const caravanSchema: AssetSchema = {
   assetType: 'caravan',
   displayName: 'Caravan / Motor Home',
   subtypes: [
-    { key: 'caravan',        label: 'Caravan' },
-    { key: 'motor_home',     label: 'Motor Home' },
     { key: 'camper_trailer', label: 'Camper Trailer' },
+    { key: 'caravan',        label: 'Caravan' },
+    { key: 'coupe',          label: 'Coupe' },
+    { key: 'motorhome',      label: 'Motorhome' },
+    { key: 'other',          label: 'Other' },
   ],
   hasGlassValuation: true,
   fields: [
