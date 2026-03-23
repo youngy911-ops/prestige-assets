@@ -678,6 +678,103 @@ describe('normalizeFooter — footer enforcement', () => {
   })
 })
 
+describe('DESCRIPTION_SYSTEM_PROMPT — truck and earthmoving templates (Phase 14)', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  async function getSystemContent(assetType: string, assetSubtype: string): Promise<string> {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockGenerateText.mockResolvedValue({ text: 'Description.\n\nSold As Is, Untested & Unregistered.' })
+    let callCount = 0
+    mockFrom.mockImplementation(() => {
+      callCount++
+      if (callCount === 1) {
+        return { select: () => ({ eq: () => ({ single: () => Promise.resolve({ data: { id: 'asset-1', asset_type: assetType, asset_subtype: assetSubtype, fields: {}, inspection_notes: null }, error: null }) }) }) }
+      }
+      if (callCount === 2) {
+        return { select: () => ({ eq: () => ({ order: () => Promise.resolve({ data: [], error: null }) }) }) }
+      }
+      return { update: () => ({ eq: () => ({ eq: () => Promise.resolve({ error: null }) }) }) }
+    })
+    await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+    return mockGenerateText.mock.calls[0][0].messages[0].content as string
+  }
+
+  // Truck templates
+  it('contains FLAT DECK section heading', async () => {
+    const s = await getSystemContent('truck', 'flat_deck')
+    expect(s).toContain('FLAT DECK')
+  })
+
+  it('contains CAB CHASSIS section heading', async () => {
+    const s = await getSystemContent('truck', 'cab_chassis')
+    expect(s).toContain('CAB CHASSIS')
+  })
+
+  it('contains REFRIGERATED PANTECH section heading', async () => {
+    const s = await getSystemContent('truck', 'refrigerated_pantech')
+    expect(s).toContain('REFRIGERATED PANTECH')
+  })
+
+  it('contains BEAVERTAIL section heading', async () => {
+    const s = await getSystemContent('truck', 'beavertail')
+    expect(s).toContain('BEAVERTAIL')
+  })
+
+  it('contains TILT TRAY section heading', async () => {
+    const s = await getSystemContent('truck', 'tilt_tray')
+    expect(s).toContain('TILT TRAY')
+  })
+
+  it('contains VACUUM TRUCK section heading', async () => {
+    const s = await getSystemContent('truck', 'vacuum')
+    expect(s).toContain('VACUUM TRUCK')
+  })
+
+  it('contains CONCRETE PUMP section heading', async () => {
+    const s = await getSystemContent('truck', 'concrete_pump')
+    expect(s).toContain('CONCRETE PUMP')
+  })
+
+  it('contains CONCRETE AGITATOR section heading', async () => {
+    const s = await getSystemContent('truck', 'concrete_agitator')
+    expect(s).toContain('CONCRETE AGITATOR')
+  })
+
+  it('contains EWP section heading with ELEVATED WORK PLATFORM', async () => {
+    const s = await getSystemContent('truck', 'ewp')
+    expect(s).toContain('EWP')
+    expect(s).toContain('ELEVATED WORK PLATFORM')
+  })
+
+  // Earthmoving templates
+  it('contains BULLDOZER heading (not DOZER) after Phase 13 rename', async () => {
+    const s = await getSystemContent('earthmoving', 'bulldozer')
+    expect(s).toContain('BULLDOZER')
+    // DOZER must not appear as a standalone heading
+    expect(s).not.toMatch(/^DOZER$/m)
+  })
+
+  it('contains COMPACTOR section heading', async () => {
+    const s = await getSystemContent('earthmoving', 'compactor')
+    expect(s).toContain('COMPACTOR')
+  })
+
+  it('contains DUMP TRUCK section heading', async () => {
+    const s = await getSystemContent('earthmoving', 'dump_truck')
+    expect(s).toContain('DUMP TRUCK')
+  })
+
+  it('contains TRENCHER section heading', async () => {
+    const s = await getSystemContent('earthmoving', 'trencher')
+    expect(s).toContain('TRENCHER')
+  })
+
+  it('contains CRAWLER TRACTOR section heading', async () => {
+    const s = await getSystemContent('earthmoving', 'crawler_tractor')
+    expect(s).toContain('CRAWLER TRACTOR')
+  })
+})
+
 describe('DESCRIPTION_SYSTEM_PROMPT — TBC rule removed', () => {
   beforeEach(() => { vi.clearAllMocks() })
 
