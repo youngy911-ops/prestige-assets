@@ -71,12 +71,17 @@ Full archive: `.planning/milestones/v1.3-ROADMAP.md`
 **Depends on**: Phase 15 (v1.3 complete)
 **Requirements**: SUBTYPE-01, SUBTYPE-02, SUBTYPE-03, SUBTYPE-04, SUBTYPE-05, SUBTYPE-06, SUBTYPE-07, SUBTYPE-08
 **Success Criteria** (what must be TRUE):
-  1. Truck subtype dropdown shows exactly 21 Salesforce-matching options
-  2. Trailer subtype dropdown shows exactly 25 Salesforce-matching options
+  1. Truck subtype dropdown shows exactly 24 options (21 SF + EWP, Tilt Tray, Flat Deck)
+  2. Trailer subtype dropdown shows exactly 24 options matching SF list
   3. Earthmoving subtype dropdown shows exactly 19 options with Bulldozer/Crawler Tractor merged into one entry
   4. Agriculture, Forklift, and Caravan each show a subtype selector (previously absent) with 12, 9, and 5 options respectively
   5. Marine subtype dropdown shows exactly 10 options; General Goods shows exactly 16 options
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 16-01-PLAN.md — Replace Truck, Trailer, Earthmoving, Marine subtype arrays (Wave 1)
+- [ ] 16-02-PLAN.md — Replace Agriculture, Forklift, Caravan, General Goods subtype arrays (Wave 1)
+- [ ] 16-03-PLAN.md — Update schema-registry.test.ts and run full suite green (Wave 2)
 
 ### Phase 17: Description Template Coverage
 **Goal**: The AI description system prompt has appropriate templates for every subtype across all 8 asset types, including all new entries introduced in Phase 16
@@ -108,5 +113,5 @@ Full archive: `.planning/milestones/v1.3-ROADMAP.md`
 | 13. Subtype Expansions | v1.3 | 3/3 | Complete | 2026-03-22 |
 | 14. Description Quality | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 15. Pre-fill Bug Fixes | v1.3 | 2/2 | Complete | 2026-03-23 |
-| 16. Subtype Schema Alignment | v1.4 | 0/? | Not started | - |
+| 16. Subtype Schema Alignment | v1.4 | 0/3 | Not started | - |
 | 17. Description Template Coverage | v1.4 | 0/? | Not started | - |
