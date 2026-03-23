@@ -108,7 +108,11 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. When returning to an in-progress asset, the "Other notes" textarea shows only the freeform notes the user typed — no serialised key:value lines visible
   2. Typing in a pre-extraction field and navigating away within 500ms does not silently discard the edit; the value is persisted
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 15-01-PLAN.md — Fix extractFreeformNotes for multi-line notes + update tests (PREFILL-07)
+- [ ] 15-02-PLAN.md — Replace unmount Server Action with navigator.sendBeacon + new POST /api/inspection-notes route (PREFILL-08)
 
 ## Progress
 
@@ -128,4 +132,4 @@ Plans:
 | 12. Marine Asset Type | 2/2 | Complete    | 2026-03-22 | - |
 | 13. Subtype Expansions | 3/3 | Complete    | 2026-03-22 | - |
 | 14. Description Quality | 2/2 | Complete    | 2026-03-23 | - |
-| 15. Pre-fill Bug Fixes | v1.3 | 0/TBD | Not started | - |
+| 15. Pre-fill Bug Fixes | v1.3 | 0/2 | Not started | - |
