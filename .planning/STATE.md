@@ -4,7 +4,7 @@ milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
 status: planning
 stopped_at: Completed 16-03-PLAN.md
-last_updated: "2026-03-23T13:12:01.318Z"
+last_updated: "2026-03-23T13:27:15.915Z"
 last_activity: 2026-03-23 — Roadmap created, Phase 16 ready for planning
 progress:
   total_phases: 2
