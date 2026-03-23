@@ -1,0 +1,73 @@
+# Requirements: Prestige Assets — Salesforce Subtype Alignment
+
+**Defined:** 2026-03-23
+**Core Value:** Photo a build plate → AI extracts identifiers → app generates copy-paste-ready Salesforce fields and a correctly formatted description — turning an hour of manual research into minutes.
+
+## v1.4 Requirements
+
+### Subtype Alignment
+
+- [ ] **SUBTYPE-01**: Truck subtype list matches Salesforce exactly — 21 subtypes: Beavertail, Cab Chassis, Concrete - Agitator, Concrete - Pump, Coupe, Crane Truck, Curtainsider, Fuel Truck, Garbage, Hook Bin, Other, Pantech, Prime Mover, Refrigerated Pantech, Service Truck, Skip Bin, Stock Truck, Tanker, Tray Truck, Vacuum, Water Truck
+- [ ] **SUBTYPE-02**: Trailer subtype list matches Salesforce exactly — 25 subtypes: Box, Car Carrier, Coupe, Curtainsider, Deck Widener, Dog, Dolly, Flat Deck, Low Loader, Other, Pantech, Pig, Plant, Refrigerated Curtainsider, Refrigerated Pantech, Side Loader, Side Tipper, Skel, Stock, Tag, Tanker, Timber Jinker, Tipper, Walking Floor
+- [ ] **SUBTYPE-03**: Earthmoving subtype list matches Salesforce exactly — 19 subtypes: Attachments, Backhoe, Bulldozer/Crawler Tractor (merged), Compactor, Conveyors / Stackers, Coupe, Crusher, Dump Truck, Excavator, Motor Grader, Motor Scraper, Other, Scraper, Screener, Skid Steer Loader, Tracked Loader, Tracked Skid Steer Loader, Washing, Wheel Loader
+- [ ] **SUBTYPE-04**: Agriculture subtype selector appears with 12 Salesforce-matching subtypes: Air Seeder, Baler, Combine Harvester, Coupe, Disc Seeder, Forestry, Grain Auger, Mower/Conditioner, Other, Plough, Spray Rig, Tractor
+- [ ] **SUBTYPE-05**: Forklift subtype selector appears with 9 Salesforce-matching subtypes: Clearview Mast, Container Mast, Electric Pallet Jack, EWP, Other, Stock Picker, Telehandler, Walk Behind, Walkie Stacker
+- [ ] **SUBTYPE-06**: Caravan subtype selector appears with 5 Salesforce-matching subtypes: Camper Trailer, Caravan, Coupe, Motorhome, Other
+- [ ] **SUBTYPE-07**: Marine subtype list matches Salesforce exactly — 10 subtypes: Barge, Commercial, Coupe, Fishing Vessel, Other, Personal Watercraft, Private, Recreational, Trailer Boat, Tug (replacing Boat, Yacht, Jet Ski)
+- [ ] **SUBTYPE-08**: General Goods subtype list matches Salesforce exactly — 16 subtypes: Agriculture, Gardening & Landscaping, Goodwill, Health & Fitness, Hospitality, IT & Computers, Jewellery/Watches/Collectables, Medical, Miscellaneous, Office, Other, Plant & Equipment, Retail Fit Out, Retail Stock, Signage, Tools & Toolboxes (replacing current 5)
+
+### Description Coverage
+
+- [ ] **DESCR-01**: AI description system prompt covers all 21 new Truck subtypes with appropriate templates
+- [ ] **DESCR-02**: AI description system prompt covers all 25 new Trailer subtypes with appropriate templates
+- [ ] **DESCR-03**: AI description system prompt covers merged Bulldozer/Crawler Tractor earthmoving subtype
+- [ ] **DESCR-04**: AI description system prompt covers all new Earthmoving subtypes (Attachments, Conveyors/Stackers, Crusher, Motor Scraper, Scraper, Screener, Tracked Loader, Tracked Skid Steer Loader, Washing)
+- [ ] **DESCR-05**: AI description system prompt covers all Agriculture subtypes (first time subtype-aware descriptions for this type)
+- [ ] **DESCR-06**: AI description system prompt covers all Forklift subtypes (first time subtype-aware descriptions for this type)
+- [ ] **DESCR-07**: AI description system prompt covers all Caravan subtypes (first time subtype-aware descriptions for this type)
+- [ ] **DESCR-08**: AI description system prompt covers all 10 new Marine subtypes (replacing Boat/Yacht/Jet Ski templates)
+
+## Future Requirements
+
+### Additional Subtypes
+
+- Additional Salesforce subtype entries as new categories are confirmed by Slattery — extensible by design
+
+## Out of Scope
+
+| Feature | Reason |
+|---------|--------|
+| Salesforce API push | Blocked on IT/Connected App approval — copy-paste only for this milestone |
+| Multi-user roles | Deferred until workflow validated and team adoption confirmed |
+| PPSR lookup storage | Will be handled via Salesforce API integration in future milestone |
+| Migration of existing records | Records with old subtype keys will display gracefully without forced migration |
+
+## Traceability
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| SUBTYPE-01 | Phase 16 | Pending |
+| SUBTYPE-02 | Phase 16 | Pending |
+| SUBTYPE-03 | Phase 16 | Pending |
+| SUBTYPE-04 | Phase 16 | Pending |
+| SUBTYPE-05 | Phase 16 | Pending |
+| SUBTYPE-06 | Phase 16 | Pending |
+| SUBTYPE-07 | Phase 16 | Pending |
+| SUBTYPE-08 | Phase 16 | Pending |
+| DESCR-01 | Phase 17 | Pending |
+| DESCR-02 | Phase 17 | Pending |
+| DESCR-03 | Phase 17 | Pending |
+| DESCR-04 | Phase 17 | Pending |
+| DESCR-05 | Phase 17 | Pending |
+| DESCR-06 | Phase 17 | Pending |
+| DESCR-07 | Phase 17 | Pending |
+| DESCR-08 | Phase 17 | Pending |
+
+**Coverage:**
+- v1.4 requirements: 16 total
+- Mapped to phases: 16
+- Unmapped: 0 ✓
+
+---
+*Requirements defined: 2026-03-23*
+*Last updated: 2026-03-23 after initial definition*
