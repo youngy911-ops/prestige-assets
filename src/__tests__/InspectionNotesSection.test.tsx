@@ -82,6 +82,17 @@ describe('InspectionNotesSection', () => {
     expect((textarea as HTMLTextAreaElement).defaultValue).toBe('')
   })
 
+  it('textarea defaultValue shows all lines of multi-line freeform notes', () => {
+    render(
+      <InspectionNotesSection
+        {...DEFAULT_PROPS}
+        initialNotes={`vin: ABC123\nNotes: first line\nsecond line\nthird line`}
+      />
+    )
+    const textarea = screen.getByRole('textbox', { name: /other notes/i })
+    expect((textarea as HTMLTextAreaElement).defaultValue).toBe('first line\nsecond line\nthird line')
+  })
+
   it('persistNotes is called synchronously on unmount even if debounce has not fired', () => {
     vi.useFakeTimers()
     const { unmount } = render(
