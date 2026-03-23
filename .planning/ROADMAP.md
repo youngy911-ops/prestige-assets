@@ -61,7 +61,7 @@ Full archive: `.planning/milestones/v1.3-ROADMAP.md`
 
 **Milestone Goal:** Replace all asset type subtype lists with exact Salesforce matches across all 8 asset types, add subtype selectors to Agriculture/Forklift/Caravan for the first time, and ensure description template coverage for all new and changed subtypes.
 
-- [ ] **Phase 16: Subtype Schema Alignment** - Update subtype arrays in all 8 asset schema files to match Salesforce exactly; add subtype selectors to Agriculture, Forklift, and Caravan for the first time
+- [x] **Phase 16: Subtype Schema Alignment** - Update subtype arrays in all 8 asset schema files to match Salesforce exactly; add subtype selectors to Agriculture, Forklift, and Caravan for the first time (completed 2026-03-23)
 - [ ] **Phase 17: Description Template Coverage** - Update AI system prompt with templates for all new and changed subtypes across all 8 asset types
 
 ## Phase Details
@@ -113,5 +113,5 @@ Plans:
 | 13. Subtype Expansions | v1.3 | 3/3 | Complete | 2026-03-22 |
 | 14. Description Quality | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 15. Pre-fill Bug Fixes | v1.3 | 2/2 | Complete | 2026-03-23 |
-| 16. Subtype Schema Alignment | v1.4 | 2/3 | In Progress | - |
+| 16. Subtype Schema Alignment | 3/3 | Complete   | 2026-03-23 | - |
 | 17. Description Template Coverage | v1.4 | 0/? | Not started | - |
