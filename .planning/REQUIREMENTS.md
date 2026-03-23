@@ -30,7 +30,7 @@
 
 ### Description Quality
 
-- [ ] **DESC-01**: All generated descriptions always close with "Sold As Is, Untested & Unregistered." — no exceptions across all asset types and subtypes
+- [x] **DESC-01**: All generated descriptions always close with "Sold As Is, Untested & Unregistered." — no exceptions across all asset types and subtypes
 - [ ] **DESC-02**: Description templates exist for all earthmoving subtypes (Dozer, Motor Grader, Wheel Loader, Backhoe Loader, Telehandler, Dump Truck, Trencher) so GPT-4o has concrete format guidance
 
 ### Pre-fill Bugs (Deferred from v1.2)
@@ -66,7 +66,7 @@
 | EARTH-01 | Phase 13 | Complete |
 | GOODS-01 | Phase 13 | Complete |
 | TRUCK-02 | Phase 14 | Pending |
-| DESC-01 | Phase 14 | Pending |
+| DESC-01 | Phase 14 | Complete |
 | DESC-02 | Phase 14 | Pending |
 | PREFILL-07 | Phase 15 | Pending |
 | PREFILL-08 | Phase 15 | Pending |

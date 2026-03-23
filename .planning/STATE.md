@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Asset Expansion
 status: planning
-stopped_at: Phase 14 context gathered
-last_updated: "2026-03-22T10:29:24.493Z"
+stopped_at: Completed 14-01-PLAN.md
+last_updated: "2026-03-23T06:56:47.479Z"
 last_activity: 2026-03-22 — v1.3 roadmap created; phases 12–15 defined
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 7
+  completed_plans: 6
   percent: 0
 ---
 
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░░░░░░░░░░░] v1.3 0%
 | Phase 13-subtype-expansions P01 | 1 | 2 tasks | 4 files |
 | Phase 13-subtype-expansions P02 | 5 | 1 tasks | 1 files |
 | Phase 13-subtype-expansions P03 | 88s | 2 tasks | 3 files |
+| Phase 14-description-quality P01 | 181s | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,8 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 13-subtype-expansions]: Test assertions for subtypes assert both correct count and explicit negative checks for removed keys (rigid_truck, crane_truck, skid_steer bare, grader bare, backhoe bare, general)
 - [Phase 13-subtype-expansions]: 'other' appended as final entry in both truck and earthmoving subtypes
 - [Phase 13-subtype-expansions]: dozer key renamed to bulldozer in earthmoving — more precise industry terminology per UAT feedback
+- [Phase 14-description-quality]: normalizeFooter strips any 'Sold As Is' variant then reappends correct footer — idempotent and handles wrong-variant replacement in one pass
+- [Phase 14-description-quality]: PROCESS step 4 replacement avoids the word TBC entirely to satisfy test regex /\bTBC\b/ — uses 'placeholder text or unknown values' phrasing instead
 
 ### Pending Todos
 
@@ -85,6 +88,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-22T10:29:24.490Z
-Stopped at: Phase 14 context gathered
-Resume file: .planning/phases/14-description-quality/14-CONTEXT.md
+Last session: 2026-03-23T06:56:47.477Z
+Stopped at: Completed 14-01-PLAN.md
+Resume file: None
