@@ -593,6 +593,156 @@ COUPE (EARTHMOVING)
 This subtype is a Salesforce system artifact. Describe whatever earthmoving asset is visible from the photos and inspection notes using the most relevant earthmoving template structure. Do not force a specific field layout.
 Sold As Is, Untested & Unregistered.
 
+TRACTOR
+Year, Make, Model, Tractor
+Engine: Make, model, cylinders, fuel type, HP
+Transmission type (IVT / CVT / Powershift / Manual)
+4WD / 2WD
+Front/rear 3-point linkage lift capacity: Xkg
+PTO: speed (rpm), power (kW/HP)
+Remotes: X
+Front loader: make, capacity if fitted
+Front tyre: XXX/XX RXX, rear tyre: XXX/XX RXX
+Sold As Is, Untested & Unregistered.
+
+COMBINE HARVESTER
+Year, Make, Model, Combine Harvester
+Header width: Xft (or Xm)
+Grain tank: XL (or Xbu)
+Engine: Make, HP
+Unloading auger reach: Xm
+Threshing system: rotary / conventional
+Rotor type if applicable
+Yield mapping if fitted
+GPS auto-steer if fitted
+Sold As Is, Untested & Unregistered.
+
+AIR SEEDER
+Year, Make, Model, Air Seeder
+Working width: Xm
+Row spacing: Xmm
+Tank capacity: XL (or Xkg)
+Seeding rate range
+Fan type
+Air cart capacity if separate
+Coulter type
+Sold As Is, Untested & Unregistered.
+
+DISC SEEDER
+Year, Make, Model, Disc Seeder
+Working width: Xm
+Row spacing: Xmm
+Seed/fertiliser tank: XL
+Disc type (single disc / double disc)
+Press wheel type
+Sold As Is, Untested & Unregistered.
+
+SPRAY RIG / SPRAYER
+Year, Make, Model, [Self-Propelled / Trailed] Sprayer
+Boom width: Xm
+Tank capacity: XL
+Pump type, flow rate: XL/min
+GPS section control if fitted
+Nozzle type
+Sold As Is, Untested & Unregistered.
+
+BALER
+Year, Make, Model, Baler Type (Round / Square / Large Square)
+Bale dimensions: Xm x Xm
+Tie type: twine / net / film
+Pickup width: Xm
+Output: X bales/hr if known
+Sold As Is, Untested & Unregistered.
+
+MOWER / CONDITIONER
+Year, Make, Model, [Disc / Drum / Cutter Bar] Mower-Conditioner
+Cutting width: Xm
+Conditioner type: roller / impeller / flail
+3-point linkage or self-propelled
+Sold As Is, Untested & Unregistered.
+
+PLOUGH
+Make, Model, Plough Type (Moldboard / Disc / Chisel / Subsoiler)
+Working width: Xm or number of furrows/tines: X
+Working depth: Xmm
+3-point linkage or trailed
+Sold As Is, Untested & Unregistered.
+
+GRAIN AUGER
+Make, Model, Grain Auger
+Length: Xft, tube diameter: Xin
+Engine/motor: XHP or XkW
+Portable / swing hopper type
+Rated capacity: Xbu/hr
+Sold As Is, Untested & Unregistered.
+
+FORESTRY EQUIPMENT
+Year, Make, Model, [Harvester Head / Forwarder / Mulcher / other]
+Item-specific specs: bar length/chain (harvester head), load capacity/bunks (forwarder), rotor width/HP (mulcher)
+Sold As Is, Untested & Unregistered.
+
+OTHER AGRICULTURE
+Describe the implement visible using the most relevant agricultural template structure based on the type of implement.
+Sold As Is, Untested & Unregistered.
+
+COUPE (AGRICULTURE)
+This subtype is a Salesforce system artifact. Describe whatever agricultural asset is visible from the photos and inspection notes using the most relevant structure. Do not force a specific field layout.
+Sold As Is, Untested & Unregistered.
+
+FORKLIFT (CLEARVIEW MAST / CONTAINER MAST)
+Year, Make, Model, [Clearview Mast / Container Mast] Forklift
+Max lift capacity: Xkg or Xt
+Max lift height: Xmm
+Mast type: 2-stage / 3-stage / 4-stage
+Fuel: LPG / Diesel / Electric (kW)
+Tyre type: cushion / pneumatic
+Side shift if fitted
+Fork dimensions: L x W mm
+Sold As Is, Untested & Unregistered.
+
+WALKIE STACKER
+Year, Make, Model, Walkie Stacker
+Max lift capacity: Xkg
+Max lift height: Xmm
+Battery: XXV / XAh
+Platform type
+Sold As Is, Untested & Unregistered.
+
+ELECTRIC PALLET JACK
+Year, Make, Model, Electric Pallet Jack
+Max lift capacity: Xkg
+Platform / straddle type
+Battery: XXV
+Charging method
+Sold As Is, Untested & Unregistered.
+
+WALK BEHIND (PALLET JACK)
+Make, Model, Walk Behind Pallet Jack
+Manual or powered
+Max capacity: Xkg
+Fork length: Xmm
+Sold As Is, Untested & Unregistered.
+
+STOCK PICKER / ORDER PICKER
+Year, Make, Model, Stock Picker / Order Picker
+Max working height: Xm
+Platform capacity: Xkg
+Battery: electric
+Mast type
+Sold As Is, Untested & Unregistered.
+
+EWP (FORKLIFT-MOUNTED)
+Year, Make, Model, EWP (Forklift-Mounted)
+Platform max height: Xm
+Capacity: Xkg
+Type: scissor / boom
+Power source
+Sold As Is, Untested & Unregistered.
+
+OTHER FORKLIFT
+Describe the forklift or materials handling equipment visible using the most relevant forklift template structure.
+Sold As Is, Untested & Unregistered.
+
 CARAVAN
 Year, Make, Model, Type
 Bedroom/bed layout
