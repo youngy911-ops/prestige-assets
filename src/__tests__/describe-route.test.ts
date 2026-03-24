@@ -1030,9 +1030,9 @@ describe('Phase 17 — DESCR-04 new earthmoving subtype headings', () => {
     expect(s).toContain('TRACKED SKID STEER LOADER')
   })
 
-  it('contains WASHING PLANT section heading', async () => {
+  it('contains WASHING section heading', async () => {
     const s = await getSystemContentP17('earthmoving', 'washing')
-    expect(s).toContain('WASHING PLANT')
+    expect(s).toContain('WASHING')
   })
 
   it('contains COUPE (EARTHMOVING) section heading', async () => {

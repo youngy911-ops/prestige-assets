@@ -581,7 +581,7 @@ Track width: Xmm
 Auxiliary hydraulics
 Sold As Is, Untested & Unregistered.
 
-WASHING PLANT
+WASHING
 Year, Make, Model, Washing Plant Type (Sand / Aggregate / Logwasher)
 Capacity: Xt/hr
 Water requirement: XL/min
