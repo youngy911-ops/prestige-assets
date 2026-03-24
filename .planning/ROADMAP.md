@@ -63,6 +63,8 @@ Full archive: `.planning/milestones/v1.3-ROADMAP.md`
 
 - [x] **Phase 16: Subtype Schema Alignment** - Update subtype arrays in all 8 asset schema files to match Salesforce exactly; add subtype selectors to Agriculture, Forklift, and Caravan for the first time (completed 2026-03-23)
 - [x] **Phase 17: Description Template Coverage** - Update AI system prompt with templates for all new and changed subtypes across all 8 asset types (completed 2026-03-24)
+- [ ] **Phase 18: Test Key Fidelity** - Fix 5 phantom test keys in describe-route.test.ts so tests exercise real schema keys (Gap Closure)
+- [ ] **Phase 19: Prompt-Schema Alignment** - Add dedicated marine sections for `private`/`recreational` keys, resolve `washing`/`WASHING PLANT` mismatch, finalize Nyquist validation for phases 16–17 (Gap Closure)
 
 ## Phase Details
 
@@ -100,6 +102,40 @@ Plans:
 - [ ] 17-03-PLAN.md — Merge bulldozer/crawler tractor + add 9 new earthmoving sections (Wave 2)
 - [ ] 17-04-PLAN.md — Add agriculture, forklift, caravan, and marine subtype sections (Wave 3)
 
+### Phase 18: Test Key Fidelity
+**Goal**: All describe-route tests exercise real schema keys; no phantom keys produce false CI confidence
+**Depends on**: Phase 17
+**Requirements**: Closes integration gaps DESCR-04, DESCR-06, DESCR-08 (test quality)
+**Gap Closure:** Closes gaps from v1.4 audit
+**Success Criteria** (what must be TRUE):
+  1. `describe-route.test.ts:1034` uses `washing` (not `washing_plant`)
+  2. `describe-route.test.ts:1134` uses `stock_picker` (not `order_picker`)
+  3. `describe-route.test.ts:1139` uses `ewp` (not `ewp_forklift`)
+  4. Marine tests at lines ~1179/1193/1204 use real schema keys (`private`/`commercial`/`tug`) instead of `boat`/`commercial_vessel`/`tug_workboat`
+  5. Full test suite passes with corrected keys
+**Plans**: 1 plan
+
+Plans:
+- [ ] 18-01-PLAN.md — Fix phantom keys in describe-route.test.ts and verify suite green
+
+### Phase 19: Prompt-Schema Alignment
+**Goal**: Eliminate semantic inference gaps — dedicated prompt sections for `private`/`recreational` marine, resolved `washing`/`WASHING PLANT` mismatch, Nyquist compliance for phases 16–17
+**Depends on**: Phase 18
+**Requirements**: Closes integration gaps DESCR-04, DESCR-06, DESCR-08 (prompt coverage)
+**Gap Closure:** Closes gaps from v1.4 audit
+**Success Criteria** (what must be TRUE):
+  1. `DESCRIPTION_SYSTEM_PROMPT` has explicit `PRIVATE` and `RECREATIONAL` marine sections (no inference fallback)
+  2. `washing` schema key and its prompt heading are aligned (either key renamed to `washing_plant` or heading updated to `WASHING`)
+  3. EWP real-key test confirms forklift `ewp` key routes to forklift-mounted section, not truck EWP section
+  4. Phase 16 VALIDATION.md has `nyquist_compliant: true`
+  5. Phase 17 VALIDATION.md has `nyquist_compliant: true`
+  6. `16-02-SUMMARY.md` `requirements_completed` lists SUBTYPE-04, SUBTYPE-05, SUBTYPE-06, SUBTYPE-08
+**Plans**: 2 plans
+
+Plans:
+- [ ] 19-01-PLAN.md — Add marine private/recreational sections, align washing key/heading, add EWP real-key test (Wave 1)
+- [ ] 19-02-PLAN.md — Finalize Nyquist VALIDATION.md for phases 16–17, fix 16-02-SUMMARY frontmatter (Wave 2)
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -120,4 +156,6 @@ Plans:
 | 14. Description Quality | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 15. Pre-fill Bug Fixes | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 16. Subtype Schema Alignment | v1.4 | 3/3 | Complete | 2026-03-23 |
-| 17. Description Template Coverage | 4/4 | Complete    | 2026-03-24 | - |
+| 17. Description Template Coverage | v1.4 | 4/4 | Complete | 2026-03-24 |
+| 18. Test Key Fidelity | v1.4 | 0/1 | Pending | - |
+| 19. Prompt-Schema Alignment | v1.4 | 0/2 | Pending | - |
