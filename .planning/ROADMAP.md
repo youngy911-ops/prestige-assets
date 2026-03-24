@@ -81,7 +81,7 @@ Full archive: `.planning/milestones/v1.3-ROADMAP.md`
 Plans:
 - [x] 16-01-PLAN.md — Replace Truck, Trailer, Earthmoving, Marine subtype arrays (Wave 1)
 - [x] 16-02-PLAN.md — Replace Agriculture, Forklift, Caravan, General Goods subtype arrays (Wave 1)
-- [ ] 16-03-PLAN.md — Update schema-registry.test.ts and run full suite green (Wave 2)
+- [x] 16-03-PLAN.md — Update schema-registry.test.ts and run full suite green (Wave 2)
 
 ### Phase 17: Description Template Coverage
 **Goal**: The AI description system prompt has appropriate templates for every subtype across all 8 asset types, including all new entries introduced in Phase 16
@@ -92,7 +92,13 @@ Plans:
   2. Generating a description for any Earthmoving subtype — including the merged Bulldozer/Crawler Tractor entry and all 9 new subtypes — produces subtype-appropriate output
   3. Agriculture, Forklift, and Caravan descriptions are subtype-aware for the first time (each subtype yields a distinct, appropriate template)
   4. Marine descriptions cover all 10 subtypes; General Goods descriptions cover all 16 subtypes
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 17-01-PLAN.md — Write failing tests for all DESCR-01 through DESCR-08 requirements (Wave 0)
+- [ ] 17-02-PLAN.md — Add missing truck sections + full trailer coverage + orphan cleanup (Wave 1)
+- [ ] 17-03-PLAN.md — Merge bulldozer/crawler tractor + add 9 new earthmoving sections (Wave 2)
+- [ ] 17-04-PLAN.md — Add agriculture, forklift, caravan, and marine subtype sections (Wave 3)
 
 ## Progress
 
@@ -113,5 +119,5 @@ Plans:
 | 13. Subtype Expansions | v1.3 | 3/3 | Complete | 2026-03-22 |
 | 14. Description Quality | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 15. Pre-fill Bug Fixes | v1.3 | 2/2 | Complete | 2026-03-23 |
-| 16. Subtype Schema Alignment | 3/3 | Complete    | 2026-03-23 | - |
-| 17. Description Template Coverage | v1.4 | 0/? | Not started | - |
+| 16. Subtype Schema Alignment | v1.4 | 3/3 | Complete | 2026-03-23 |
+| 17. Description Template Coverage | v1.4 | 0/4 | Not started | - |
