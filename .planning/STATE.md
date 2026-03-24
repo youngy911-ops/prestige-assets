@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
-status: in-progress
-stopped_at: Completed 17-01-PLAN.md
-last_updated: "2026-03-24T10:49:11Z"
-last_activity: 2026-03-24 — Phase 17 plan 01 complete (TDD scaffold, 73 RED tests)
+status: executing
+stopped_at: Completed 17-02-PLAN.md
+last_updated: "2026-03-24T10:57:12.901Z"
+last_activity: 2026-03-24 — Phase 17 plan 01 complete (73 RED tests, TDD scaffold)
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 7
-  completed_plans: 4
+  completed_plans: 5
   percent: 75
 ---
 
@@ -52,6 +52,7 @@ Progress: [████████░░] 75% (v1.4)
 | Phase 16 P01 | 1m | 2 tasks | 4 files |
 | Phase 16 P02 | 4m | 2 tasks | 4 files |
 | Phase 16 P03 | 3m | 2 tasks | 1 files |
+| Phase 17 P02 | 5m | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,9 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 16 P02]: motor_home replaced by motorhome in caravan.ts; coupe added to agriculture and caravan; displayName 'Caravan / Motor Home' preserved
 - [Phase 16]: Test-only change: no production schema files touched, only test assertions updated to match post-Phase-16 schema reality
 - [Phase 17 P01]: getSystemContentP17 helper at module level so all Phase 17 describe blocks share it; REFRIGERATED PANTECH trailer test passes immediately (prompt has truck version — plan 02 adds trailer-specific heading)
+- [Phase 17]: COUPE subtypes (truck/trailer) get artifact-pattern sections instructing GPT-4o to use most relevant structure
+- [Phase 17]: DOG / PIG / TAG share one heading as B-train/A-train configs indistinguishable at template level
+- [Phase 17]: Supplement-not-repeat: removed Suspension from RIGID TRUCK and ATM from CARAVAN (SF field violations)
 
 ### Pending Todos
 
@@ -80,6 +84,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-24T10:49:11Z
-Stopped at: Completed 17-01-PLAN.md
+Last session: 2026-03-24T10:57:12.899Z
+Stopped at: Completed 17-02-PLAN.md
 Resume file: None
