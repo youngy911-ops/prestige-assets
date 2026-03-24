@@ -4,7 +4,7 @@ milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
 status: executing
 stopped_at: Completed 19-prompt-schema-alignment-02-PLAN.md
-last_updated: "2026-03-24T12:19:38.649Z"
+last_updated: "2026-03-24T12:41:10.322Z"
 last_activity: 2026-03-24 — Phase 17 plan 01 complete (73 RED tests, TDD scaffold)
 progress:
   total_phases: 4

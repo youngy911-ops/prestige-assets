@@ -1,5 +1,14 @@
 # Milestones
 
+## v1.4 Salesforce Subtype Alignment (Shipped: 2026-03-24)
+
+**Phases completed:** 4 phases, 10 plans, 0 tasks
+
+**Key accomplishments:**
+- (none recorded)
+
+---
+
 ## v1.2 Pre-fill Restoration (Shipped: 2026-03-22)
 
 **Phases completed:** 1 phase (11), 2 plans, 4 tasks

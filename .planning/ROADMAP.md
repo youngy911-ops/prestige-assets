@@ -6,7 +6,7 @@
 - ✅ **v1.1 Pre-fill & Quality** — Phases 8–10 (shipped 2026-03-21)
 - ✅ **v1.2 Pre-fill Restoration** — Phase 11 (shipped 2026-03-22)
 - ✅ **v1.3 Asset Expansion** — Phases 12–15 (shipped 2026-03-23)
-- 🚧 **v1.4 Salesforce Subtype Alignment** — Phases 16–17 (in progress)
+- ✅ **v1.4 Salesforce Subtype Alignment** — Phases 16–19 (shipped 2026-03-24)
 
 ## Phases
 
@@ -57,84 +57,17 @@ Full archive: `.planning/milestones/v1.3-ROADMAP.md`
 
 </details>
 
-### 🚧 v1.4 Salesforce Subtype Alignment (In Progress)
+<details>
+<summary>✅ v1.4 Salesforce Subtype Alignment (Phases 16–19) — SHIPPED 2026-03-24</summary>
 
-**Milestone Goal:** Replace all asset type subtype lists with exact Salesforce matches across all 8 asset types, add subtype selectors to Agriculture/Forklift/Caravan for the first time, and ensure description template coverage for all new and changed subtypes.
+- [x] Phase 16: Subtype Schema Alignment (3/3 plans) — completed 2026-03-23
+- [x] Phase 17: Description Template Coverage (4/4 plans) — completed 2026-03-24
+- [x] Phase 18: Test Key Fidelity (1/1 plans) — completed 2026-03-24
+- [x] Phase 19: Prompt-Schema Alignment (2/2 plans) — completed 2026-03-24
 
-- [x] **Phase 16: Subtype Schema Alignment** - Update subtype arrays in all 8 asset schema files to match Salesforce exactly; add subtype selectors to Agriculture, Forklift, and Caravan for the first time (completed 2026-03-23)
-- [x] **Phase 17: Description Template Coverage** - Update AI system prompt with templates for all new and changed subtypes across all 8 asset types (completed 2026-03-24)
-- [x] **Phase 18: Test Key Fidelity** - Fix 5 phantom test keys in describe-route.test.ts so tests exercise real schema keys (Gap Closure) (completed 2026-03-24)
-- [x] **Phase 19: Prompt-Schema Alignment** - Add dedicated marine sections for `private`/`recreational` keys, resolve `washing`/`WASHING PLANT` mismatch, finalize Nyquist validation for phases 16–17 (Gap Closure) (completed 2026-03-24)
+Full archive: `.planning/milestones/v1.4-ROADMAP.md`
 
-## Phase Details
-
-### Phase 16: Subtype Schema Alignment
-**Goal**: All 8 asset types expose Salesforce-matching subtype lists; Agriculture, Forklift, and Caravan have a working subtype selector for the first time
-**Depends on**: Phase 15 (v1.3 complete)
-**Requirements**: SUBTYPE-01, SUBTYPE-02, SUBTYPE-03, SUBTYPE-04, SUBTYPE-05, SUBTYPE-06, SUBTYPE-07, SUBTYPE-08
-**Success Criteria** (what must be TRUE):
-  1. Truck subtype dropdown shows exactly 24 options (21 SF + EWP, Tilt Tray, Flat Deck)
-  2. Trailer subtype dropdown shows exactly 24 options matching SF list
-  3. Earthmoving subtype dropdown shows exactly 19 options with Bulldozer/Crawler Tractor merged into one entry
-  4. Agriculture, Forklift, and Caravan each show a subtype selector (previously absent) with 12, 9, and 5 options respectively
-  5. Marine subtype dropdown shows exactly 10 options; General Goods shows exactly 16 options
-**Plans**: 3 plans
-
-Plans:
-- [x] 16-01-PLAN.md — Replace Truck, Trailer, Earthmoving, Marine subtype arrays (Wave 1)
-- [x] 16-02-PLAN.md — Replace Agriculture, Forklift, Caravan, General Goods subtype arrays (Wave 1)
-- [x] 16-03-PLAN.md — Update schema-registry.test.ts and run full suite green (Wave 2)
-
-### Phase 17: Description Template Coverage
-**Goal**: The AI description system prompt has appropriate templates for every subtype across all 8 asset types, including all new entries introduced in Phase 16
-**Depends on**: Phase 16
-**Requirements**: DESCR-01, DESCR-02, DESCR-03, DESCR-04, DESCR-05, DESCR-06, DESCR-07, DESCR-08
-**Success Criteria** (what must be TRUE):
-  1. Generating a description for any Truck or Trailer subtype produces a correctly structured output (no fallback to generic template)
-  2. Generating a description for any Earthmoving subtype — including the merged Bulldozer/Crawler Tractor entry and all 9 new subtypes — produces subtype-appropriate output
-  3. Agriculture, Forklift, and Caravan descriptions are subtype-aware for the first time (each subtype yields a distinct, appropriate template)
-  4. Marine descriptions cover all 10 subtypes; General Goods descriptions cover all 16 subtypes
-**Plans**: 4 plans
-
-Plans:
-- [ ] 17-01-PLAN.md — Write failing tests for all DESCR-01 through DESCR-08 requirements (Wave 0)
-- [ ] 17-02-PLAN.md — Add missing truck sections + full trailer coverage + orphan cleanup (Wave 1)
-- [ ] 17-03-PLAN.md — Merge bulldozer/crawler tractor + add 9 new earthmoving sections (Wave 2)
-- [ ] 17-04-PLAN.md — Add agriculture, forklift, caravan, and marine subtype sections (Wave 3)
-
-### Phase 18: Test Key Fidelity
-**Goal**: All describe-route tests exercise real schema keys; no phantom keys produce false CI confidence
-**Depends on**: Phase 17
-**Requirements**: Closes integration gaps DESCR-04, DESCR-06, DESCR-08 (test quality)
-**Gap Closure:** Closes gaps from v1.4 audit
-**Success Criteria** (what must be TRUE):
-  1. `describe-route.test.ts:1034` uses `washing` (not `washing_plant`)
-  2. `describe-route.test.ts:1134` uses `stock_picker` (not `order_picker`)
-  3. `describe-route.test.ts:1139` uses `ewp` (not `ewp_forklift`)
-  4. Marine tests at lines ~1179/1193/1204 use real schema keys (`private`/`commercial`/`tug`) instead of `boat`/`commercial_vessel`/`tug_workboat`
-  5. Full test suite passes with corrected keys
-**Plans**: 1 plan
-
-Plans:
-- [ ] 18-01-PLAN.md — Fix phantom keys in describe-route.test.ts and verify suite green
-
-### Phase 19: Prompt-Schema Alignment
-**Goal**: Eliminate semantic inference gaps — dedicated prompt sections for `private`/`recreational` marine, resolved `washing`/`WASHING PLANT` mismatch, Nyquist compliance for phases 16–17
-**Depends on**: Phase 18
-**Requirements**: Closes integration gaps DESCR-04, DESCR-06, DESCR-08 (prompt coverage)
-**Gap Closure:** Closes gaps from v1.4 audit
-**Success Criteria** (what must be TRUE):
-  1. `DESCRIPTION_SYSTEM_PROMPT` has explicit `PRIVATE` and `RECREATIONAL` marine sections (no inference fallback)
-  2. `washing` schema key and its prompt heading are aligned (either key renamed to `washing_plant` or heading updated to `WASHING`)
-  3. EWP real-key test confirms forklift `ewp` key routes to forklift-mounted section, not truck EWP section
-  4. Phase 16 VALIDATION.md has `nyquist_compliant: true`
-  5. Phase 17 VALIDATION.md has `nyquist_compliant: true`
-  6. `16-02-SUMMARY.md` `requirements_completed` lists SUBTYPE-04, SUBTYPE-05, SUBTYPE-06, SUBTYPE-08
-**Plans**: 2 plans
-
-Plans:
-- [ ] 19-01-PLAN.md — Add marine private/recreational sections, align washing key/heading, add EWP real-key test (Wave 1)
-- [ ] 19-02-PLAN.md — Finalize Nyquist VALIDATION.md for phases 16–17, fix 16-02-SUMMARY frontmatter (Wave 2)
+</details>
 
 ## Progress
 
@@ -157,5 +90,5 @@ Plans:
 | 15. Pre-fill Bug Fixes | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 16. Subtype Schema Alignment | v1.4 | 3/3 | Complete | 2026-03-23 |
 | 17. Description Template Coverage | v1.4 | 4/4 | Complete | 2026-03-24 |
-| 18. Test Key Fidelity | 1/1 | Complete    | 2026-03-24 | - |
-| 19. Prompt-Schema Alignment | 2/2 | Complete    | 2026-03-24 | - |
+| 18. Test Key Fidelity | v1.4 | 1/1 | Complete | 2026-03-24 |
+| 19. Prompt-Schema Alignment | v1.4 | 2/2 | Complete | 2026-03-24 |

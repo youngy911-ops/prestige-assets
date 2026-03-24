@@ -152,6 +152,54 @@
 
 ---
 
+## Milestone: v1.4 — Salesforce Subtype Alignment
+
+**Shipped:** 2026-03-24
+**Phases:** 4 (16–19, plus 2 gap-closure phases inserted post-audit) | **Plans:** 10 | **Timeline:** 2 days
+
+### What Was Built
+
+- Phase 16: All 8 asset schema files updated to Salesforce-matching subtype arrays (Truck 24, Trailer 24, Earthmoving 19 with merged Bulldozer/Crawler Tractor, Marine 10, Agriculture 12, Forklift 9, Caravan 5, General Goods 16); Agriculture/Forklift/Caravan gained subtype selectors for the first time
+- Phase 17: 31+ new ALL_CAPS template sections in `DESCRIPTION_SYSTEM_PROMPT` covering all new and changed subtypes across all 8 types
+- Phase 18: Fixed 6 phantom subtype keys in `describe-route.test.ts` that were exercising non-existent schema keys (`washing_plant`, `order_picker`, `ewp_forklift`, `boat`, `commercial_vessel`, `tug_workboat`)
+- Phase 19: Added `PRIVATE` and `RECREATIONAL` marine sections, renamed `WASHING PLANT` heading to `WASHING`, signed off Phase 16/17 VALIDATION.md as Nyquist-compliant, backfilled `16-02-SUMMARY.md` requirements frontmatter
+- Post-audit fix (commit 983a30d): Renamed `GRADER` → `MOTOR GRADER` heading, added pig/tag/motor_grader routing tests — all gaps closed before archive
+
+### What Worked
+
+- **Milestone audit before completion**: Running `/gsd:audit-milestone` found two concrete integration gaps (motor_grader heading, pig/tag test coverage) and two phantom key patterns. Closing them before archiving meant the milestone shipped clean rather than accumulating hidden debt.
+- **Exact-match heading convention established**: Phases 18/19 crystallised a clear rule — schema key uppercased = prompt heading. This makes the routing relationship deterministic and testable. The `MOTOR GRADER` fix after audit confirmed the convention was worth enforcing.
+- **Nyquist validation on late-phase sign-offs**: Phase 19's task of retroactively signing off Phases 16 and 17 VALIDATION.md files worked cleanly — the validator just updated frontmatter to `nyquist_compliant: true`. Low effort, high traceability value.
+- **Gap closure phases as first-class phases**: Phases 18 and 19 were inserted after the initial audit with their own plans, SUMMARYs, and VERIFICATIONs. Treating gap closure work as proper phases (not ad-hoc hotfixes) made the execution history readable and the requirements coverage clean.
+- **TDD for template coverage (Wave 0 stubs first in Phase 17)**: Writing 105 failing tests for all DESCR-01 through DESCR-08 requirements before implementing the templates meant the test suite drove the implementation rather than rubber-stamping it. Every section was testable by heading string assertion.
+
+### What Was Inefficient
+
+- **`16-02-SUMMARY.md` requirements_completed not populated at plan completion time**: Phase 16 Plan 02 shipped without `requirements_completed` frontmatter. Phase 19 had to backfill it. This is the same pattern flagged in v1.1 retrospective — requirements traceability must be updated atomically with plan completion.
+- **Motor Grader heading not caught in Phase 19**: Phase 19 was specifically about closing prompt/schema alignment gaps. The `GRADER` heading (not `MOTOR GRADER`) follows the exact same pattern as `WASHING PLANT` → `WASHING`, but it was only caught during the post-Phase-19 milestone audit. Should have been included in Phase 19 scope.
+- **Nyquist compliance for Phases 12–15, 18, 19 still pending**: Only Phases 16 and 17 were retroactively validated. The remaining 5 phases have `status: draft` VALIDATION.md files. For future milestones, prefer signing off all phases in scope during the milestone rather than deferring to gap closure phases.
+
+### Patterns Established
+
+- **Schema key uppercased = prompt heading (exact-match routing rule)**: Every subtype key in a schema file must have a matching ALL_CAPS heading in `DESCRIPTION_SYSTEM_PROMPT`. Multi-word keys like `motor_grader` → `MOTOR GRADER`, compound keys like `bulldozer_crawler_tractor` → `BULLDOZER/CRAWLER TRACTOR`.
+- **`getSystemContentP17(assetType, subtypeKey)` test helper**: The Phase 17 test helper that returns the full DESCRIPTION_SYSTEM_PROMPT given any asset type + subtype key is the canonical way to test prompt routing. Use `toContain('HEADING')` with the exact ALL_CAPS heading string.
+- **Phantom key audit before test suite considered complete**: After adding any new schema subtype keys, grep the test file for the old/placeholder key strings and verify they match actual schema keys. Phase 18 formalized this as a gap-closure phase.
+
+### Key Lessons
+
+1. **Run `/gsd:audit-milestone` before marking complete — always**: Every milestone where audit was skipped (v1.0, v1.1) had silent gaps. v1.2, v1.3, v1.4 all ran the audit and all found actionable items. The audit is now confirmed non-optional.
+2. **Requirements_completed frontmatter is easy to forget**: The `16-02-SUMMARY.md` gap was the third time this happened (v1.1 PREFILL-05, v1.2 subtle drift, v1.4 Phase 16 Plan 02). This is a recurring failure mode — add an explicit reminder to the plan completion checklist or automate it.
+3. **Exact-match routing is testable; inference routing is not**: The shift from "GPT-4o will infer the right template" to "heading must exactly match the uppercased schema key" eliminated an entire class of untestable assumptions. When the test helper confirms the heading is present, the routing is confirmed. No inference to trust.
+4. **Phantom keys in tests are silent failures**: A test that passes with `boat` (non-existent schema key) provides false CI confidence — the actual `private` key path is never exercised. Static phantom key validation should be part of test-writing practice for any key-to-heading routing test.
+
+### Cost Observations
+
+- Model mix: ~100% sonnet-4.6 (balanced profile)
+- Sessions: ~4–6 across 2 days
+- Notable: 10 plans including 2 gap closure phases; audit found and closed all gaps before archiving — zero tech debt carried forward from requirements perspective
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -161,6 +209,8 @@
 | v1.0 MVP | 4 | 7 | 21 | Greenfield — established Schema Registry pattern and TDD wave structure |
 | v1.1 Pre-fill & Quality | <1 | 3 | 5 | Tight polish milestone — schema-first layering, cross-route function reuse, uncontrolled Select deferral pattern |
 | v1.2 Pre-fill Restoration | <1 | 1 | 2 | Focused fix — shared utility extraction, defaultValue uncontrolled validation, unmount flush pattern |
+| v1.3 Asset Expansion | 2 | 4 | 9 | Marine type added; subtype lists expanded; footer enforcement; multi-line notes fix |
+| v1.4 Salesforce Subtype Alignment | 2 | 4+2gc | 10 | Full SF taxonomy alignment across 8 types; 31+ templates; 2 gap-closure phases post-audit |
 
 ### Cumulative Quality
 
@@ -169,6 +219,8 @@
 | v1.0 | 200+ vitest | Wave 0 failing stubs → Wave N implementation; Server Action + Route Handler mocking |
 | v1.1 | 229+ vitest | TDD guard on schema changes; exported helpers for direct unit testing without HTTP |
 | v1.2 | 245 vitest | Shared utility unit tests (11) + component tests (5); template literal gotcha in JSX tests |
+| v1.3 | 285 vitest | normalizeFooter tests; marine template tests; multi-line notes regression tests |
+| v1.4 | 365 vitest | 105 describe-route heading assertions; phantom key detection; exact-match routing tests |
 
 ### Top Lessons (Verified Across Milestones)
 
@@ -179,3 +231,6 @@
 5. Structural prompt constraints (labelled user prompt blocks) more reliable than instructional rules alone for GPT-4o fidelity
 6. Next.js server/client boundary must be enforced at design time — shared utilities go in `src/lib/utils/`, never in route handlers
 7. jsdom limitations are a known constraint — document untestable browser behaviours as human-verification items, not incomplete tests
+8. `/gsd:audit-milestone` before completion is non-optional — every time it ran, it found actionable items that would have become silent tech debt
+9. Exact-match routing (schema key uppercased = prompt heading) is testable and reliable; inference routing is not — enforce the convention
+10. Phantom keys in routing tests provide false CI confidence — verify all test keys against actual schema keys

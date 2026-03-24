@@ -37,37 +37,22 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - ✓ Staff-entered pre-extraction values flow to AI extraction prompt as authoritative overrides; values appear in Salesforce fields output and are not overridden by AI — v1.1
 - ✓ AI-generated descriptions preserve specific values from inspection notes verbatim (e.g. `48" sleeper cab`, `Airbag` suspension) — runtime-verified in production — v1.1
 - ✓ Staff can return to an in-progress asset record and find all pre-extraction fields (VIN, odometer, hourmeter, suspension type, unladen weight, length) pre-populated with previously entered values — v1.2
+- ✓ All 8 asset types expose Salesforce-matching subtype lists (Truck 24, Trailer 24, Earthmoving 19, Marine 10, Agriculture 12, Forklift 9, Caravan 5, General Goods 16); Agriculture/Forklift/Caravan have subtype selectors for the first time — v1.4
+- ✓ AI description prompt has named template sections for every subtype across all 8 asset types; exact-match heading routing replaces inference fallback — v1.4
 
-## Current State: v1.3 Shipped (2026-03-23)
+## Current State: v1.4 Shipped (2026-03-24)
 
-8 asset types (Truck, Trailer, Earthmoving, Agriculture, Forklift, Caravan/Motor Home, General Goods, **Marine**). All core features live: photo capture → AI extraction → review → Salesforce output. Full description template coverage across all truck and earthmoving subtypes. Pre-fill bugs resolved. App in active use.
+8 asset types, all subtypes aligned to Salesforce taxonomy. Full description template coverage for every subtype across all 8 types. 365 tests across 27 files, all green. App in active use.
 
-**v1.3 shipped:**
-- Marine asset type (Boat, Yacht, Jet Ski) — 25-field schema, AI extraction, description templates
-- Truck subtypes: 15 (9 new body types, Rigid Truck/Crane Truck removed, Other added)
-- Trailer subtypes: 11 | Earthmoving: 12 (Bulldozer, Crawler Tractor, Other) | General Goods: 5 categorical
-- Footer enforcement (`normalizeFooter`) — all asset types, no exceptions
-- 13 new ALL_CAPS description templates for all truck + earthmoving subtypes
-- Multi-line notes fix + sendBeacon unmount flush
+**v1.4 shipped:**
+- Truck: 24 subtypes (21 SF + EWP/Tilt Tray/Flat Deck) | Trailer: 24 | Earthmoving: 19 (Bulldozer/Crawler Tractor merged)
+- Marine: 10 (replacing Boat/Yacht/Jet Ski) | General Goods: 16 (replacing old 5)
+- Agriculture/Forklift/Caravan: subtype selectors added for the first time (12/9/5 options)
+- 31+ new ALL_CAPS description template sections covering all new/changed subtypes
+- Phantom test key fixes (6 keys corrected to real schema keys) + MOTOR GRADER/pig/tag routing assertions
+- Exact-match routing alignment: WASHING, PRIVATE, RECREATIONAL, BULLDOZER/CRAWLER TRACTOR headings aligned to schema keys
 
-**Tech at v1.3:** ~8,500+ LOC TypeScript. 285 tests across 27 files. Next.js 15, Supabase, GPT-4o, vitest.
-
-## Current Milestone: v1.4 Salesforce Subtype Alignment
-
-**Goal:** Replace all asset type subtype lists with exact Salesforce matches across all 8 asset types, add subtype selectors to Agriculture/Forklift/Caravan for the first time, and ensure description template coverage for all new/changed subtypes.
-
-**Target features:**
-- Truck subtypes: 21 Salesforce-matching subtypes (replacing current 15)
-- Trailer subtypes: 25 Salesforce-matching subtypes (replacing current 11)
-- Earthmoving subtypes: 19 Salesforce-matching subtypes (Bulldozer/Crawler Tractor merged)
-- Agriculture subtypes: 12 Salesforce-matching subtypes (first time — adds subtype selector)
-- Forklift subtypes: 9 Salesforce-matching subtypes (first time — adds subtype selector)
-- Caravan subtypes: 5 Salesforce-matching subtypes (first time — adds subtype selector)
-- Marine subtypes: 10 Salesforce-matching subtypes (replacing Boat/Yacht/Jet Ski)
-- General Goods subtypes: 16 Salesforce-matching subtypes (replacing current 5)
-- Description template/prompt coverage for all new and changed subtypes
-
-### Out of Scope
+**Tech at v1.4:** ~9,500+ LOC TypeScript. 365 tests across 27 files. Next.js 15, Supabase, GPT-4o, vitest.
 
 ### Out of Scope
 
@@ -109,7 +94,7 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - **Salesforce API**: Not available — output must be copy-paste ready
 - **Platform**: Web app only — phone browser (on-site capture) + desktop browser (review + copy-paste). No native app.
 - **ISO 27001**: Slattery is ISO 27001 certified — data handling must be appropriate (client asset data is sensitive)
-- **Description format**: Strict per-type formatting rules — no dot points, no marketing language, specific template per asset subtype. AI-generated via GPT-4o second call; uses TBC for anything unconfirmed.
+- **Description format**: Strict per-type formatting rules — no dot points, no marketing language, specific ALL_CAPS template per asset subtype. AI-generated via GPT-4o second call; omits unknown fields rather than using TBC. `normalizeFooter` enforces correct footer post-generation.
 - **AI keys**: OpenAI API keys must never be in client-side code — all AI calls from server
 
 ## Key Decisions
@@ -134,6 +119,9 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 | Shared parsing utility in `src/lib/utils/` (Phase 11) | Client components cannot import from route handlers; shared utility is the correct boundary | ✓ Good — clean Next.js boundary, importable by both server and client |
 | `defaultValue` (uncontrolled) for Select restoration (Phase 11) | jsdom tests pass; no controlled `useState` fallback needed — simpler implementation | ✓ Good — no regressions, 245/245 tests passing |
 | Unmount flush as `useEffect` cleanup dependent on `[persistNotes]` (Phase 11) | Synchronous on unmount, no Promise — cancels debounce and persists immediately | ✓ Good — correct pattern for uncontrolled fast-navigation safety |
+| Subtype arrays as source of truth for both wizard selector and description template routing (Phases 16–17) | Schema key uppercased = prompt heading — exact-match routing eliminates GPT-4o inference fallback per subtype | ✓ Good — confirmed via Phases 18/19 audits |
+| Gap closure phases (18, 19) inserted after Phase 17 to fix phantom keys and heading mismatches found by audit | Milestone audit (`/gsd:audit-milestone`) ran before completion and surfaced actionable issues; gap phases closed them before archiving | ✓ Good — audit-first pattern validated again |
+| `normalizeFooter` appended to all description outputs post-generation (Phase 14) | Enforces correct footer regardless of GPT-4o output; `general_goods` gets distinct footer | ✓ Good — zero footer regressions since Phase 14 |
 
 ---
-*Last updated: 2026-03-23 after v1.4 milestone started*
+*Last updated: 2026-03-24 after v1.4 milestone*
