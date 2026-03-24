@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
 status: executing
-stopped_at: Completed 17-04-PLAN.md
-last_updated: "2026-03-24T11:07:45.827Z"
+stopped_at: Completed 18-01-PLAN.md
+last_updated: "2026-03-24T11:33:57.058Z"
 last_activity: 2026-03-24 — Phase 17 plan 01 complete (73 RED tests, TDD scaffold)
 progress:
-  total_phases: 2
-  completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
+  total_phases: 4
+  completed_phases: 3
+  total_plans: 8
+  completed_plans: 8
   percent: 75
 ---
 
@@ -55,6 +55,7 @@ Progress: [████████░░] 75% (v1.4)
 | Phase 17 P02 | 5m | 2 tasks | 1 files |
 | Phase 17 P03 | 2 | 1 tasks | 1 files |
 | Phase 17 P04 | 5m | 2 tasks | 1 files |
+| Phase 18-test-key-fidelity P01 | 3m | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,8 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 17]: MOTORHOME template intentionally omits suspension (SF field); CAMPER TRAILER keeps suspension as selling point for towable units
 - [Phase 17]: JET SKI section replaced by PERSONAL WATERCRAFT using verified canonical example structure
 - [Phase 17]: MARINE renamed to MARINE (RECREATIONAL BOAT); existing toContain('MARINE') test still passes
+- [Phase 18-01]: Phase 18 scope is corrections only — no new describe blocks or it() tests; Phase 19 adds recreational and personal_watercraft
+- [Phase 18-01]: Subtype key string in getSystemContentP17 must match the schema key exactly — never a display-label variant or alias
 
 ### Pending Todos
 
@@ -91,6 +94,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-24T11:04:21.997Z
-Stopped at: Completed 17-04-PLAN.md
+Last session: 2026-03-24T11:33:57.056Z
+Stopped at: Completed 18-01-PLAN.md
 Resume file: None
