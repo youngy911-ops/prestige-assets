@@ -955,6 +955,16 @@ describe('Phase 17 — DESCR-02 trailer subtype headings', () => {
     expect(s).toContain('DOG / PIG / TAG')
   })
 
+  it('contains DOG / PIG / TAG section heading for pig key', async () => {
+    const s = await getSystemContentP17('trailer', 'pig')
+    expect(s).toContain('DOG / PIG / TAG')
+  })
+
+  it('contains DOG / PIG / TAG section heading for tag key', async () => {
+    const s = await getSystemContentP17('trailer', 'tag')
+    expect(s).toContain('DOG / PIG / TAG')
+  })
+
   it('contains DOLLY section heading', async () => {
     const s = await getSystemContentP17('trailer', 'dolly')
     expect(s).toContain('DOLLY')
@@ -1033,6 +1043,11 @@ describe('Phase 17 — DESCR-04 new earthmoving subtype headings', () => {
   it('contains WASHING section heading', async () => {
     const s = await getSystemContentP17('earthmoving', 'washing')
     expect(s).toContain('WASHING')
+  })
+
+  it('contains MOTOR GRADER section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'motor_grader')
+    expect(s).toContain('MOTOR GRADER')
   })
 
   it('contains COUPE (EARTHMOVING) section heading', async () => {

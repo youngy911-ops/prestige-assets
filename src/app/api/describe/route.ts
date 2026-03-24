@@ -424,7 +424,7 @@ For Bulldozer: blade width and type, ripper if fitted, GPS Grade Control if fitt
 For Crawler Tractor: PTO if fitted, drawbar capacity, implements included if any
 Sold As Is, Untested & Unregistered.
 
-GRADER
+MOTOR GRADER
 Year, Make, Model, Motor Grader
 Operating Weight
 Hours
