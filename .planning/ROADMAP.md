@@ -157,5 +157,5 @@ Plans:
 | 15. Pre-fill Bug Fixes | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 16. Subtype Schema Alignment | v1.4 | 3/3 | Complete | 2026-03-23 |
 | 17. Description Template Coverage | v1.4 | 4/4 | Complete | 2026-03-24 |
-| 18. Test Key Fidelity | 1/1 | Complete   | 2026-03-24 | - |
+| 18. Test Key Fidelity | 1/1 | Complete    | 2026-03-24 | - |
 | 19. Prompt-Schema Alignment | v1.4 | 0/2 | Pending | - |
