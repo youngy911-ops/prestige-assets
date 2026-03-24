@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
 status: executing
-stopped_at: Phase 19 context gathered
-last_updated: "2026-03-24T11:41:33.286Z"
+stopped_at: Completed 19-prompt-schema-alignment-01-PLAN.md
+last_updated: "2026-03-24T12:10:21.840Z"
 last_activity: 2026-03-24 — Phase 17 plan 01 complete (73 RED tests, TDD scaffold)
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 8
-  completed_plans: 8
+  total_plans: 10
+  completed_plans: 9
   percent: 75
 ---
 
@@ -56,6 +56,7 @@ Progress: [████████░░] 75% (v1.4)
 | Phase 17 P03 | 2 | 1 tasks | 1 files |
 | Phase 17 P04 | 5m | 2 tasks | 1 files |
 | Phase 18-test-key-fidelity P01 | 3m | 1 tasks | 1 files |
+| Phase 19-prompt-schema-alignment P01 | 10m | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,9 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 17]: MARINE renamed to MARINE (RECREATIONAL BOAT); existing toContain('MARINE') test still passes
 - [Phase 18-01]: Phase 18 scope is corrections only — no new describe blocks or it() tests; Phase 19 adds recreational and personal_watercraft
 - [Phase 18-01]: Subtype key string in getSystemContentP17 must match the schema key exactly — never a display-label variant or alias
+- [Phase 19-prompt-schema-alignment]: WASHING heading renamed from WASHING PLANT to match earthmoving.ts key 'washing'
+- [Phase 19-prompt-schema-alignment]: PRIVATE and RECREATIONAL marine sections added mirroring MARINE (RECREATIONAL BOAT) body for exact schema key routing
+- [Phase 19-prompt-schema-alignment]: Negative EWP not.toContain assertion omitted — full prompt always contains both EWP sections; positive assertion sufficient (user Option A)
 
 ### Pending Todos
 
@@ -94,6 +98,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-24T11:41:33.283Z
-Stopped at: Phase 19 context gathered
-Resume file: .planning/phases/19-prompt-schema-alignment/19-CONTEXT.md
+Last session: 2026-03-24T12:10:21.837Z
+Stopped at: Completed 19-prompt-schema-alignment-01-PLAN.md
+Resume file: None
