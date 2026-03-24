@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
 status: executing
-stopped_at: Completed 19-prompt-schema-alignment-01-PLAN.md
-last_updated: "2026-03-24T12:10:21.840Z"
+stopped_at: Completed 19-prompt-schema-alignment-02-PLAN.md
+last_updated: "2026-03-24T12:16:01.594Z"
 last_activity: 2026-03-24 — Phase 17 plan 01 complete (73 RED tests, TDD scaffold)
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 10
-  completed_plans: 9
+  completed_plans: 10
   percent: 75
 ---
 
@@ -57,6 +57,7 @@ Progress: [████████░░] 75% (v1.4)
 | Phase 17 P04 | 5m | 2 tasks | 1 files |
 | Phase 18-test-key-fidelity P01 | 3m | 1 tasks | 1 files |
 | Phase 19-prompt-schema-alignment P01 | 10m | 3 tasks | 2 files |
+| Phase 19-prompt-schema-alignment P02 | 3m | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,8 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 19-prompt-schema-alignment]: WASHING heading renamed from WASHING PLANT to match earthmoving.ts key 'washing'
 - [Phase 19-prompt-schema-alignment]: PRIVATE and RECREATIONAL marine sections added mirroring MARINE (RECREATIONAL BOAT) body for exact schema key routing
 - [Phase 19-prompt-schema-alignment]: Negative EWP not.toContain assertion omitted — full prompt always contains both EWP sections; positive assertion sufficient (user Option A)
+- [Phase 19-02]: Retroactive sign-off is valid when test suite is confirmed green at sign-off time
+- [Phase 19-02]: Legend row in validation tables is documentation of the status legend, not a task row — correctly left unchanged
 
 ### Pending Todos
 
@@ -98,6 +101,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-24T12:10:21.837Z
-Stopped at: Completed 19-prompt-schema-alignment-01-PLAN.md
+Last session: 2026-03-24T12:16:01.592Z
+Stopped at: Completed 19-prompt-schema-alignment-02-PLAN.md
 Resume file: None

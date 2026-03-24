@@ -64,7 +64,7 @@ Full archive: `.planning/milestones/v1.3-ROADMAP.md`
 - [x] **Phase 16: Subtype Schema Alignment** - Update subtype arrays in all 8 asset schema files to match Salesforce exactly; add subtype selectors to Agriculture, Forklift, and Caravan for the first time (completed 2026-03-23)
 - [x] **Phase 17: Description Template Coverage** - Update AI system prompt with templates for all new and changed subtypes across all 8 asset types (completed 2026-03-24)
 - [x] **Phase 18: Test Key Fidelity** - Fix 5 phantom test keys in describe-route.test.ts so tests exercise real schema keys (Gap Closure) (completed 2026-03-24)
-- [ ] **Phase 19: Prompt-Schema Alignment** - Add dedicated marine sections for `private`/`recreational` keys, resolve `washing`/`WASHING PLANT` mismatch, finalize Nyquist validation for phases 16–17 (Gap Closure)
+- [x] **Phase 19: Prompt-Schema Alignment** - Add dedicated marine sections for `private`/`recreational` keys, resolve `washing`/`WASHING PLANT` mismatch, finalize Nyquist validation for phases 16–17 (Gap Closure) (completed 2026-03-24)
 
 ## Phase Details
 
@@ -158,4 +158,4 @@ Plans:
 | 16. Subtype Schema Alignment | v1.4 | 3/3 | Complete | 2026-03-23 |
 | 17. Description Template Coverage | v1.4 | 4/4 | Complete | 2026-03-24 |
 | 18. Test Key Fidelity | 1/1 | Complete    | 2026-03-24 | - |
-| 19. Prompt-Schema Alignment | 1/2 | In Progress|  | - |
+| 19. Prompt-Schema Alignment | 2/2 | Complete   | 2026-03-24 | - |
