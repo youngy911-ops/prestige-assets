@@ -1,9 +1,9 @@
 ---
 phase: 16
 slug: subtype-schema-alignment
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: approved
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-03-23
 ---
 
@@ -38,14 +38,14 @@ created: 2026-03-23
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 16-01-01 | 01 | 1 | SUBTYPE-01 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ⬜ pending |
-| 16-01-02 | 01 | 1 | SUBTYPE-02 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ⬜ pending |
-| 16-01-03 | 01 | 1 | SUBTYPE-03 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ⬜ pending |
-| 16-01-04 | 01 | 1 | SUBTYPE-04 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ⬜ pending |
-| 16-01-05 | 01 | 1 | SUBTYPE-05 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ⬜ pending |
-| 16-01-06 | 01 | 1 | SUBTYPE-06 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ⬜ pending |
-| 16-01-07 | 01 | 1 | SUBTYPE-07 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ⬜ pending |
-| 16-01-08 | 01 | 1 | SUBTYPE-08 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ⬜ pending |
+| 16-01-01 | 01 | 1 | SUBTYPE-01 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ✅ green |
+| 16-01-02 | 01 | 1 | SUBTYPE-02 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ✅ green |
+| 16-01-03 | 01 | 1 | SUBTYPE-03 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ✅ green |
+| 16-01-04 | 01 | 1 | SUBTYPE-04 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ✅ green |
+| 16-01-05 | 01 | 1 | SUBTYPE-05 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ✅ green |
+| 16-01-06 | 01 | 1 | SUBTYPE-06 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ✅ green |
+| 16-01-07 | 01 | 1 | SUBTYPE-07 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ✅ green |
+| 16-01-08 | 01 | 1 | SUBTYPE-08 | unit | `npm test -- src/__tests__/schema-registry.test.ts` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -71,11 +71,11 @@ Existing infrastructure covers all phase requirements.
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 5s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 5s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved
