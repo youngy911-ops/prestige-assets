@@ -1031,7 +1031,7 @@ describe('Phase 17 — DESCR-04 new earthmoving subtype headings', () => {
   })
 
   it('contains WASHING PLANT section heading', async () => {
-    const s = await getSystemContentP17('earthmoving', 'washing_plant')
+    const s = await getSystemContentP17('earthmoving', 'washing')
     expect(s).toContain('WASHING PLANT')
   })
 
@@ -1131,12 +1131,12 @@ describe('Phase 17 — DESCR-06 forklift subtype headings', () => {
   })
 
   it('contains STOCK PICKER / ORDER PICKER section heading', async () => {
-    const s = await getSystemContentP17('forklift', 'order_picker')
+    const s = await getSystemContentP17('forklift', 'stock_picker')
     expect(s).toContain('STOCK PICKER / ORDER PICKER')
   })
 
   it('contains EWP (FORKLIFT-MOUNTED) section heading', async () => {
-    const s = await getSystemContentP17('forklift', 'ewp_forklift')
+    const s = await getSystemContentP17('forklift', 'ewp')
     expect(s).toContain('EWP (FORKLIFT-MOUNTED)')
   })
 
@@ -1176,7 +1176,7 @@ describe('Phase 17 — DESCR-08 marine subtype headings', () => {
   beforeEach(() => { vi.clearAllMocks() })
 
   it('contains MARINE (RECREATIONAL BOAT) section heading', async () => {
-    const s = await getSystemContentP17('marine', 'boat')
+    const s = await getSystemContentP17('marine', 'private')
     expect(s).toContain('MARINE (RECREATIONAL BOAT)')
   })
 
@@ -1191,7 +1191,7 @@ describe('Phase 17 — DESCR-08 marine subtype headings', () => {
   })
 
   it('contains COMMERCIAL VESSEL section heading', async () => {
-    const s = await getSystemContentP17('marine', 'commercial_vessel')
+    const s = await getSystemContentP17('marine', 'commercial')
     expect(s).toContain('COMMERCIAL VESSEL')
   })
 
@@ -1201,7 +1201,7 @@ describe('Phase 17 — DESCR-08 marine subtype headings', () => {
   })
 
   it('contains TUG / WORKBOAT section heading', async () => {
-    const s = await getSystemContentP17('marine', 'tug_workboat')
+    const s = await getSystemContentP17('marine', 'tug')
     expect(s).toContain('TUG / WORKBOAT')
   })
 
