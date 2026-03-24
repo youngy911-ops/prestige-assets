@@ -411,18 +411,17 @@ Main bucket
 Attachments Included: others
 Sold As Is, Untested & Unregistered.
 
-BULLDOZER
-Year, Make, Model, Type
+BULLDOZER/CRAWLER TRACTOR
+Year, Make, Model, Type (Bulldozer or Crawler Tractor)
 Operating Weight
 Hours
 Engine: Make, cylinders, fuel type, HP
 Enclosed Cab / ROPS Canopy
 Transmission type
-Blade width and type
 Track width
-Ripper if fitted
-GPS Grade Control if fitted
-Extras
+
+For Bulldozer: blade width and type, ripper if fitted, GPS Grade Control if fitted
+For Crawler Tractor: PTO if fitted, drawbar capacity, implements included if any
 Sold As Is, Untested & Unregistered.
 
 GRADER
@@ -509,16 +508,89 @@ Drive type (rigid / articulated)
 Enclosed Cab
 Sold As Is, Untested & Unregistered.
 
-CRAWLER TRACTOR
-Year, Make, Model, Crawler Tractor
+EARTHMOVING ATTACHMENTS
+Item type: bucket / ripper / hammer / tilt bucket / auger / other
+Width: Xmm or capacity: Xm³ if applicable
+Coupling type: OQ / pin-on / other
+Weight: Xkg
+Brand
+Sold As Is, Untested.
+
+CONVEYORS / STACKERS
+Year, Make, Model, Type (Conveyor / Stacker / Radial Stacker)
+Belt length: Xm, belt width: Xmm
+Feed height: Xm, discharge height: Xm
+Motor: XHP or XkW
+Crawler / wheeled / tracked / stationary
+Sold As Is, Untested & Unregistered.
+
+CRUSHER
+Year, Make, Model, Crusher Type (Jaw / Cone / Impact / VSI)
+Feed opening: Xmm x Xmm
+Capacity: Xt/hr
+Motor: XHP or XkW
+Tracked / wheeled / stationary
+Sold As Is, Untested & Unregistered.
+
+MOTOR SCRAPER
+Year, Make, Model, Motor Scraper
 Operating Weight
 Hours
+Bowl capacity: Xm³
+Push-pull or self-loading
+Cutting edge type
 Engine: Make, cylinders, fuel type, HP
-Transmission type
-Track width
-PTO if fitted
-Drawbar: Xt
-Implements included if any
+Sold As Is, Untested & Unregistered.
+
+SCRAPER (PULL-TYPE)
+Make, Model, Pull-Type Scraper
+Bowl capacity: Xm³
+Cutting width: Xmm
+Working depth: Xmm
+Tractor requirements
+Push-block if fitted
+Sold As Is, Untested & Unregistered.
+
+SCREENER
+Year, Make, Model, Screener Type (Vibrating / Trommel / Star)
+Screen area: Xm², number of decks
+Aperture sizes: Xmm
+Capacity: Xt/hr
+Motor: XkW
+Tracked / wheeled / stationary
+Sold As Is, Untested & Unregistered.
+
+TRACKED LOADER
+Year, Make, Model, Tracked Loader
+Operating Weight
+Rated Operating Capacity: Xkg
+Hours
+Engine: Make, cylinders, fuel type, HP
+Bucket capacity: Xm³
+Track width: Xmm
+Enclosed Cab / ROPS
+Sold As Is, Untested & Unregistered.
+
+TRACKED SKID STEER LOADER
+Year, Make, Model, Tracked Skid Steer Loader
+Operating Weight
+Rated Operating Capacity: Xkg
+Hours
+Engine: Make, cylinders, fuel type, HP
+Track width: Xmm
+Auxiliary hydraulics
+Sold As Is, Untested & Unregistered.
+
+WASHING PLANT
+Year, Make, Model, Washing Plant Type (Sand / Aggregate / Logwasher)
+Capacity: Xt/hr
+Water requirement: XL/min
+Motor: XkW
+Tracked / wheeled / stationary
+Sold As Is, Untested & Unregistered.
+
+COUPE (EARTHMOVING)
+This subtype is a Salesforce system artifact. Describe whatever earthmoving asset is visible from the photos and inspection notes using the most relevant earthmoving template structure. Do not force a specific field layout.
 Sold As Is, Untested & Unregistered.
 
 CARAVAN
