@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
 status: executing
-stopped_at: Completed 17-03-PLAN.md
-last_updated: "2026-03-24T11:00:15.262Z"
+stopped_at: Completed 17-04-PLAN.md
+last_updated: "2026-03-24T11:04:21.999Z"
 last_activity: 2026-03-24 — Phase 17 plan 01 complete (73 RED tests, TDD scaffold)
 progress:
   total_phases: 2
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 7
-  completed_plans: 6
+  completed_plans: 7
   percent: 75
 ---
 
@@ -54,6 +54,7 @@ Progress: [████████░░] 75% (v1.4)
 | Phase 16 P03 | 3m | 2 tasks | 1 files |
 | Phase 17 P02 | 5m | 2 tasks | 1 files |
 | Phase 17 P03 | 2 | 1 tasks | 1 files |
+| Phase 17 P04 | 5m | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,9 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 17]: Supplement-not-repeat: removed Suspension from RIGID TRUCK and ATM from CARAVAN (SF field violations)
 - [Phase 17]: BULLDOZER/CRAWLER TRACTOR merged into single section with conditional For Bulldozer/For Crawler Tractor field blocks
 - [Phase 17]: COUPE (EARTHMOVING) follows system artifact pattern: GPT-4o instructed to use most relevant earthmoving structure
+- [Phase 17]: MOTORHOME template intentionally omits suspension (SF field); CAMPER TRAILER keeps suspension as selling point for towable units
+- [Phase 17]: JET SKI section replaced by PERSONAL WATERCRAFT using verified canonical example structure
+- [Phase 17]: MARINE renamed to MARINE (RECREATIONAL BOAT); existing toContain('MARINE') test still passes
 
 ### Pending Todos
 
@@ -87,6 +91,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-24T11:00:15.260Z
-Stopped at: Completed 17-03-PLAN.md
+Last session: 2026-03-24T11:04:21.997Z
+Stopped at: Completed 17-04-PLAN.md
 Resume file: None
