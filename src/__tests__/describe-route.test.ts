@@ -1175,9 +1175,14 @@ describe('Phase 17 — DESCR-07 caravan subtype headings', () => {
 describe('Phase 17 — DESCR-08 marine subtype headings', () => {
   beforeEach(() => { vi.clearAllMocks() })
 
-  it('contains MARINE (RECREATIONAL BOAT) section heading', async () => {
+  it('contains PRIVATE section heading', async () => {
     const s = await getSystemContentP17('marine', 'private')
-    expect(s).toContain('MARINE (RECREATIONAL BOAT)')
+    expect(s).toContain('PRIVATE')
+  })
+
+  it('contains RECREATIONAL section heading', async () => {
+    const s = await getSystemContentP17('marine', 'recreational')
+    expect(s).toContain('RECREATIONAL')
   })
 
   it('contains TRAILER BOAT section heading', async () => {

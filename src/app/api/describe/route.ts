@@ -809,6 +809,30 @@ Galley, heads, water/fuel capacity
 Extras: solar, generator, winch, thruster, trailer
 Sold As Is, Untested & Unregistered.
 
+PRIVATE
+Year, Make, Model, Vessel Type
+LOA: XXft | Beam: XXft | Draft: XXft
+Hull Material
+Engine/s: Make, cylinders, fuel type, HP (or Twin X HP Outboards)
+Engine Hours
+Nav/electronics
+Berths/cabin layout
+Galley, heads, water/fuel capacity
+Extras: solar, generator, winch, thruster, trailer
+Sold As Is, Untested & Unregistered.
+
+RECREATIONAL
+Year, Make, Model, Vessel Type
+LOA: XXft | Beam: XXft | Draft: XXft
+Hull Material
+Engine/s: Make, cylinders, fuel type, HP (or Twin X HP Outboards)
+Engine Hours
+Nav/electronics
+Berths/cabin layout
+Galley, heads, water/fuel capacity
+Extras: solar, generator, winch, thruster, trailer
+Sold As Is, Untested & Unregistered.
+
 PERSONAL WATERCRAFT
 Year, Make, Model, Personal Watercraft
 Engine: make, model, cylinders, stroke, forced induction if applicable, HP
