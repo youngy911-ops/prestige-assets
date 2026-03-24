@@ -22,6 +22,7 @@ decisions:
   - "motor_home (old key, two words) removed and replaced by motorhome (one word) in caravan.ts"
   - "coupe added to both agriculture and caravan as Salesforce-required entry"
   - "displayName 'Caravan / Motor Home' preserved unchanged in caravan.ts"
+requirements_completed: [SUBTYPE-04, SUBTYPE-05, SUBTYPE-06, SUBTYPE-08]
 metrics:
   duration: "~4 minutes"
   completed: "2026-03-23T12:56:41Z"
