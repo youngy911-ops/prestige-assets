@@ -756,6 +756,38 @@ Exterior: awning, storage, satellite, spare wheels, tow setup
 Suspension, brakes
 Sold As Is, Untested & Unregistered.
 
+CAMPER TRAILER
+Year, Make, Model, [Type] Camper Trailer
+Main bed configuration, additional sleeping
+Ensuite or toilet/shower tent if fitted
+Kitchen: internal / external, cooktop, fridge/freezer make if known
+A/C if fitted
+Power: solar panels, batteries
+Water: front/rear tanks, grey water tank
+Awning, gas bottle holder, entry step, pop-top or hard floor
+Independent trailing arm / leaf spring suspension, brakes, hitch type
+Sold As Is, Untested & Unregistered.
+
+MOTORHOME
+Year, Make, Model, [Class A / B / C] Motorhome
+Chassis make, engine make, transmission, drive type
+Slideouts if fitted
+Bed/bunk layout
+Bathroom: shower, toilet, vanity
+Kitchen: cooking, fridge, microwave
+A/C, climate control
+Power: solar, generator, shore power
+Water tanks: XL fresh, grey, black
+Sold As Is, Untested & Unregistered.
+
+OTHER CARAVAN / CAMPER
+Describe the caravan, camper, or camping unit visible using the most relevant structure for the type of unit (caravan, camper trailer, or motorhome).
+Sold As Is, Untested & Unregistered.
+
+COUPE (CARAVAN)
+This subtype is a Salesforce system artifact. Describe whatever asset is visible from the photos and inspection notes using the most relevant caravan/camper structure. Do not force a specific field layout.
+Sold As Is, Untested & Unregistered.
+
 MOTOR VEHICLE (CAR)
 Single line: Year Make Model Trim Series Transmission Drive Fuel Body CCcc XXXkW Xsp Xcyl Xdr Xseat
 Any extras on next line
@@ -765,7 +797,7 @@ ATTACHMENTS / GENERAL GOODS
 Make, Model, key specs
 Sold As Is, Untested.
 
-MARINE
+MARINE (RECREATIONAL BOAT)
 Year, Make, Model, Vessel Type
 LOA: XXft | Beam: XXft | Draft: XXft
 Hull Material
@@ -777,11 +809,67 @@ Galley, heads, water/fuel capacity
 Extras: solar, generator, winch, thruster, trailer
 Sold As Is, Untested & Unregistered.
 
-JET SKI
-Year Make Model, Jet Ski
-Engine: Make, HP, fuel type
-Engine Hours
-Extras (cover, trailer, etc.)
+PERSONAL WATERCRAFT
+Year, Make, Model, Personal Watercraft
+Engine: make, model, cylinders, stroke, forced induction if applicable, HP
+Hours
+Key tech features (iBR, VTS, seating, capacity, sound system, mirrors, accessories — include verbatim from inspection notes)
+Trailer details if supplied: make, ATM
+Sold As Is, Untested & Unregistered.
+
+TRAILER BOAT
+Year, Make, Model, [Hull Type] Trailer Boat
+LOA: Xft (or Xm)
+Hull material
+Engine: make, model, HP (outboard / sterndrive / inboard)
+Engine hours
+Electronics/nav if fitted
+Trailer: make, ATM if supplied
+Extras
+Sold As Is, Untested & Unregistered.
+
+BARGE
+Year, Make, Model, Barge
+LOA: Xm, beam: Xm
+Payload/deck load: Xt
+Hull material (steel)
+Propulsion: self-propelled or towed
+Deck area, accommodation if fitted
+Sold As Is, Untested & Unregistered.
+
+COMMERCIAL VESSEL
+Year, Make, Model, [Purpose] Commercial Vessel
+LOA: Xm, beam: Xm
+Engine/s: make, cylinders, HP
+Survey/certification status
+Passenger capacity
+Nav equipment
+Sold As Is, Untested & Unregistered.
+
+FISHING VESSEL
+Year, Make, Model, Fishing Vessel
+LOA: Xm, beam: Xm
+Hull material
+Engine/s: make, HP
+Engine hours
+Fishing equipment: pot hauler / net hauler / rod holders / live bait tanks / fishfinders
+Accommodation if fitted
+Sold As Is, Untested & Unregistered.
+
+TUG / WORKBOAT
+Year, Make, Model, Tug / Workboat
+LOA: Xm, beam: Xm
+Engine/s: make, HP (bollard pull for tugs if known)
+Propulsion type: azimuth / conventional
+Accommodation if fitted
+Sold As Is, Untested & Unregistered.
+
+OTHER MARINE VESSEL
+Describe the vessel visible using the most relevant marine template structure for the type of vessel.
+Sold As Is, Untested & Unregistered.
+
+COUPE (MARINE)
+This subtype is a Salesforce system artifact. Describe whatever marine asset is visible from the photos and inspection notes using the most relevant marine structure. Do not force a specific field layout.
 Sold As Is, Untested & Unregistered.
 
 Return the completed description as plain text only, exactly matching the correct template format. No extra commentary, no explanations, just the description.`
