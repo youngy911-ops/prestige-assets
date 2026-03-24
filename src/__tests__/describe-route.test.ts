@@ -535,9 +535,9 @@ describe('DESCRIPTION_SYSTEM_PROMPT — marine templates', () => {
     expect(systemContent).toContain('Hull Material')
   })
 
-  it('contains JET SKI section as a distinct named block', async () => {
+  it('contains PERSONAL WATERCRAFT section as a distinct named block', async () => {
     mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
-    mockGenerateText.mockResolvedValue({ text: 'Jet ski description.' })
+    mockGenerateText.mockResolvedValue({ text: 'Personal watercraft description.' })
 
     let callCount = 0
     mockFrom.mockImplementation(() => {
@@ -547,7 +547,7 @@ describe('DESCRIPTION_SYSTEM_PROMPT — marine templates', () => {
           select: () => ({
             eq: () => ({
               single: () => Promise.resolve({
-                data: { id: 'asset-1', asset_type: 'marine', asset_subtype: 'jet_ski', fields: {}, inspection_notes: null },
+                data: { id: 'asset-1', asset_type: 'marine', asset_subtype: 'personal_watercraft', fields: {}, inspection_notes: null },
                 error: null,
               }),
             }),
@@ -580,12 +580,10 @@ describe('DESCRIPTION_SYSTEM_PROMPT — marine templates', () => {
 
     const callArgs = mockGenerateText.mock.calls[0][0]
     const systemContent: string = callArgs.messages[0].content
-    expect(systemContent).toContain('JET SKI')
-    expect(systemContent).toContain('Year Make Model, Jet Ski')
-    expect(systemContent).toContain('Engine: Make, HP, fuel type')
-    // JET SKI section must be distinct — must appear AFTER the MARINE section
+    expect(systemContent).toContain('PERSONAL WATERCRAFT')
+    // PERSONAL WATERCRAFT section must be distinct — must appear AFTER the MARINE section
     const marineIdx = systemContent.indexOf('MARINE')
-    const jetSkiIdx = systemContent.indexOf('JET SKI')
+    const jetSkiIdx = systemContent.indexOf('PERSONAL WATERCRAFT')
     expect(jetSkiIdx).toBeGreaterThan(marineIdx)
   })
 })
@@ -764,14 +762,14 @@ describe('DESCRIPTION_SYSTEM_PROMPT — truck and earthmoving templates (Phase 1
     expect(s).toContain('DUMP TRUCK')
   })
 
-  it('contains TRENCHER section heading', async () => {
+  it('TRENCHER section has been removed from prompt (DESCR-04 — section removed in Phase 17)', async () => {
     const s = await getSystemContent('earthmoving', 'trencher')
-    expect(s).toContain('TRENCHER')
+    expect(s).not.toContain('TRENCHER')
   })
 
-  it('contains CRAWLER TRACTOR section heading', async () => {
+  it('contains BULLDOZER/CRAWLER TRACTOR merged heading (DESCR-03)', async () => {
     const s = await getSystemContent('earthmoving', 'crawler_tractor')
-    expect(s).toContain('CRAWLER TRACTOR')
+    expect(s).toContain('BULLDOZER/CRAWLER TRACTOR')
   })
 })
 
@@ -800,5 +798,420 @@ describe('DESCRIPTION_SYSTEM_PROMPT — TBC rule removed', () => {
     // Must contain the identifier exception rule
     expect(systemContent).toContain('VIN, serial number, chassis number')
     expect(systemContent).toContain('never infer')
+  })
+})
+
+// --- Phase 17: TDD scaffold helpers ---
+// Shared getSystemContent helper for Phase 17 blocks (same pattern as Phase 14 block)
+async function getSystemContentP17(assetType: string, assetSubtype: string): Promise<string> {
+  mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+  mockGenerateText.mockResolvedValue({ text: 'Description.\n\nSold As Is, Untested & Unregistered.' })
+  let callCount = 0
+  mockFrom.mockImplementation(() => {
+    callCount++
+    if (callCount === 1) {
+      return { select: () => ({ eq: () => ({ single: () => Promise.resolve({ data: { id: 'asset-1', asset_type: assetType, asset_subtype: assetSubtype, fields: {}, inspection_notes: null }, error: null }) }) }) }
+    }
+    if (callCount === 2) {
+      return { select: () => ({ eq: () => ({ order: () => Promise.resolve({ data: [], error: null }) }) }) }
+    }
+    return { update: () => ({ eq: () => ({ eq: () => Promise.resolve({ error: null }) }) }) }
+  })
+  await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
+  return mockGenerateText.mock.calls[0][0].messages[0].content as string
+}
+
+// DESCR-01: Missing truck subtypes
+describe('Phase 17 — DESCR-01 missing truck subtype headings', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('contains CRANE TRUCK section heading', async () => {
+    const s = await getSystemContentP17('truck', 'crane_truck')
+    expect(s).toContain('CRANE TRUCK')
+  })
+
+  it('contains FUEL TRUCK section heading', async () => {
+    const s = await getSystemContentP17('truck', 'fuel_truck')
+    expect(s).toContain('FUEL TRUCK')
+  })
+
+  it('contains GARBAGE section heading', async () => {
+    const s = await getSystemContentP17('truck', 'garbage')
+    expect(s).toContain('GARBAGE')
+  })
+
+  it('contains HOOK BIN section heading', async () => {
+    const s = await getSystemContentP17('truck', 'hook_bin')
+    expect(s).toContain('HOOK BIN')
+  })
+
+  it('contains SKIP BIN section heading', async () => {
+    const s = await getSystemContentP17('truck', 'skip_bin')
+    expect(s).toContain('SKIP BIN')
+  })
+
+  it('contains STOCK TRUCK section heading', async () => {
+    const s = await getSystemContentP17('truck', 'stock_truck')
+    expect(s).toContain('STOCK TRUCK')
+  })
+
+  it('contains TANKER (TRUCK) section heading', async () => {
+    const s = await getSystemContentP17('truck', 'tanker')
+    expect(s).toContain('TANKER (TRUCK)')
+  })
+
+  it('contains TRAY TRUCK section heading', async () => {
+    const s = await getSystemContentP17('truck', 'tray_truck')
+    expect(s).toContain('TRAY TRUCK')
+  })
+
+  it('contains WATER TRUCK section heading', async () => {
+    const s = await getSystemContentP17('truck', 'water_truck')
+    expect(s).toContain('WATER TRUCK')
+  })
+
+  it('contains COUPE (TRUCK) section heading', async () => {
+    const s = await getSystemContentP17('truck', 'coupe')
+    expect(s).toContain('COUPE (TRUCK)')
+  })
+})
+
+// DESCR-02: Trailer distinct sections
+describe('Phase 17 — DESCR-02 trailer subtype headings', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('contains FLAT DECK TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'flat_deck')
+    expect(s).toContain('FLAT DECK TRAILER')
+  })
+
+  it('contains CURTAINSIDER TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'curtainsider')
+    expect(s).toContain('CURTAINSIDER TRAILER')
+  })
+
+  it('contains PANTECH TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'pantech')
+    expect(s).toContain('PANTECH TRAILER')
+  })
+
+  it('contains REFRIGERATED CURTAINSIDER (TRAILER) section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'refrigerated_curtainsider')
+    expect(s).toContain('REFRIGERATED CURTAINSIDER')
+  })
+
+  it('contains REFRIGERATED PANTECH (TRAILER) section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'refrigerated_pantech')
+    expect(s).toContain('REFRIGERATED PANTECH')
+  })
+
+  it('contains LOW LOADER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'low_loader')
+    expect(s).toContain('LOW LOADER')
+  })
+
+  it('contains SIDE TIPPER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'side_tipper')
+    expect(s).toContain('SIDE TIPPER')
+  })
+
+  it('contains TIPPER TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'tipper')
+    expect(s).toContain('TIPPER TRAILER')
+  })
+
+  it('contains TANKER TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'tanker')
+    expect(s).toContain('TANKER TRAILER')
+  })
+
+  it('contains TIMBER JINKER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'timber_jinker')
+    expect(s).toContain('TIMBER JINKER')
+  })
+
+  it('contains SKEL TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'skel')
+    expect(s).toContain('SKEL TRAILER')
+  })
+
+  it('contains STOCK TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'stock')
+    expect(s).toContain('STOCK TRAILER')
+  })
+
+  it('contains SIDE LOADER (TRAILER) section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'side_loader')
+    expect(s).toContain('SIDE LOADER')
+  })
+
+  it('contains CAR CARRIER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'car_carrier')
+    expect(s).toContain('CAR CARRIER')
+  })
+
+  it('contains DOG / PIG / TAG section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'dog')
+    expect(s).toContain('DOG / PIG / TAG')
+  })
+
+  it('contains DOLLY section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'dolly')
+    expect(s).toContain('DOLLY')
+  })
+
+  it('contains PLANT TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'plant')
+    expect(s).toContain('PLANT TRAILER')
+  })
+
+  it('contains WALKING FLOOR TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'walking_floor')
+    expect(s).toContain('WALKING FLOOR TRAILER')
+  })
+
+  it('contains BOX TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'box')
+    expect(s).toContain('BOX TRAILER')
+  })
+
+  it('contains DECK WIDENER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'deck_widener')
+    expect(s).toContain('DECK WIDENER')
+  })
+
+  it('contains COUPE TRAILER section heading', async () => {
+    const s = await getSystemContentP17('trailer', 'coupe')
+    expect(s).toContain('COUPE TRAILER')
+  })
+})
+
+// DESCR-04: New earthmoving subtypes
+describe('Phase 17 — DESCR-04 new earthmoving subtype headings', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('contains EARTHMOVING ATTACHMENTS section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'attachments')
+    expect(s).toContain('EARTHMOVING ATTACHMENTS')
+  })
+
+  it('contains CONVEYORS / STACKERS section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'conveyors_stackers')
+    expect(s).toContain('CONVEYORS / STACKERS')
+  })
+
+  it('contains CRUSHER section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'crusher')
+    expect(s).toContain('CRUSHER')
+  })
+
+  it('contains MOTOR SCRAPER section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'motor_scraper')
+    expect(s).toContain('MOTOR SCRAPER')
+  })
+
+  it('contains SCRAPER (PULL-TYPE) section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'scraper')
+    expect(s).toContain('SCRAPER (PULL-TYPE)')
+  })
+
+  it('contains SCREENER section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'screener')
+    expect(s).toContain('SCREENER')
+  })
+
+  it('contains TRACKED LOADER section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'tracked_loader')
+    expect(s).toContain('TRACKED LOADER')
+  })
+
+  it('contains TRACKED SKID STEER LOADER section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'tracked_skid_steer_loader')
+    expect(s).toContain('TRACKED SKID STEER LOADER')
+  })
+
+  it('contains WASHING PLANT section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'washing_plant')
+    expect(s).toContain('WASHING PLANT')
+  })
+
+  it('contains COUPE (EARTHMOVING) section heading', async () => {
+    const s = await getSystemContentP17('earthmoving', 'coupe')
+    expect(s).toContain('COUPE (EARTHMOVING)')
+  })
+})
+
+// DESCR-05: Agriculture (new describe block)
+describe('Phase 17 — DESCR-05 agriculture subtype headings', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('contains TRACTOR section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'tractor')
+    expect(s).toContain('TRACTOR')
+  })
+
+  it('contains COMBINE HARVESTER section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'combine_harvester')
+    expect(s).toContain('COMBINE HARVESTER')
+  })
+
+  it('contains AIR SEEDER section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'air_seeder')
+    expect(s).toContain('AIR SEEDER')
+  })
+
+  it('contains DISC SEEDER section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'disc_seeder')
+    expect(s).toContain('DISC SEEDER')
+  })
+
+  it('contains SPRAY RIG / SPRAYER section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'spray_rig')
+    expect(s).toContain('SPRAY RIG / SPRAYER')
+  })
+
+  it('contains BALER section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'baler')
+    expect(s).toContain('BALER')
+  })
+
+  it('contains MOWER / CONDITIONER section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'mower_conditioner')
+    expect(s).toContain('MOWER / CONDITIONER')
+  })
+
+  it('contains PLOUGH section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'plough')
+    expect(s).toContain('PLOUGH')
+  })
+
+  it('contains GRAIN AUGER section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'grain_auger')
+    expect(s).toContain('GRAIN AUGER')
+  })
+
+  it('contains FORESTRY EQUIPMENT section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'forestry')
+    expect(s).toContain('FORESTRY EQUIPMENT')
+  })
+
+  it('contains OTHER AGRICULTURE section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'other')
+    expect(s).toContain('OTHER AGRICULTURE')
+  })
+
+  it('contains COUPE (AGRICULTURE) section heading', async () => {
+    const s = await getSystemContentP17('agriculture', 'coupe')
+    expect(s).toContain('COUPE (AGRICULTURE)')
+  })
+})
+
+// DESCR-06: Forklift (new describe block)
+describe('Phase 17 — DESCR-06 forklift subtype headings', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('contains FORKLIFT (CLEARVIEW MAST / CONTAINER MAST) section heading', async () => {
+    const s = await getSystemContentP17('forklift', 'clearview_mast')
+    expect(s).toContain('FORKLIFT (CLEARVIEW MAST / CONTAINER MAST)')
+  })
+
+  it('contains WALKIE STACKER section heading', async () => {
+    const s = await getSystemContentP17('forklift', 'walkie_stacker')
+    expect(s).toContain('WALKIE STACKER')
+  })
+
+  it('contains ELECTRIC PALLET JACK section heading', async () => {
+    const s = await getSystemContentP17('forklift', 'electric_pallet_jack')
+    expect(s).toContain('ELECTRIC PALLET JACK')
+  })
+
+  it('contains WALK BEHIND (PALLET JACK) section heading', async () => {
+    const s = await getSystemContentP17('forklift', 'walk_behind')
+    expect(s).toContain('WALK BEHIND (PALLET JACK)')
+  })
+
+  it('contains STOCK PICKER / ORDER PICKER section heading', async () => {
+    const s = await getSystemContentP17('forklift', 'order_picker')
+    expect(s).toContain('STOCK PICKER / ORDER PICKER')
+  })
+
+  it('contains EWP (FORKLIFT-MOUNTED) section heading', async () => {
+    const s = await getSystemContentP17('forklift', 'ewp_forklift')
+    expect(s).toContain('EWP (FORKLIFT-MOUNTED)')
+  })
+
+  it('contains OTHER FORKLIFT section heading', async () => {
+    const s = await getSystemContentP17('forklift', 'other')
+    expect(s).toContain('OTHER FORKLIFT')
+  })
+})
+
+// DESCR-07: Caravan subtypes (new describe block)
+describe('Phase 17 — DESCR-07 caravan subtype headings', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('contains CAMPER TRAILER section heading', async () => {
+    const s = await getSystemContentP17('caravan', 'camper_trailer')
+    expect(s).toContain('CAMPER TRAILER')
+  })
+
+  it('contains MOTORHOME section heading', async () => {
+    const s = await getSystemContentP17('caravan', 'motorhome')
+    expect(s).toContain('MOTORHOME')
+  })
+
+  it('contains OTHER CARAVAN / CAMPER section heading', async () => {
+    const s = await getSystemContentP17('caravan', 'other')
+    expect(s).toContain('OTHER CARAVAN / CAMPER')
+  })
+
+  it('contains COUPE (CARAVAN) section heading', async () => {
+    const s = await getSystemContentP17('caravan', 'coupe')
+    expect(s).toContain('COUPE (CARAVAN)')
+  })
+})
+
+// DESCR-08: Marine subtypes
+describe('Phase 17 — DESCR-08 marine subtype headings', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('contains MARINE (RECREATIONAL BOAT) section heading', async () => {
+    const s = await getSystemContentP17('marine', 'boat')
+    expect(s).toContain('MARINE (RECREATIONAL BOAT)')
+  })
+
+  it('contains TRAILER BOAT section heading', async () => {
+    const s = await getSystemContentP17('marine', 'trailer_boat')
+    expect(s).toContain('TRAILER BOAT')
+  })
+
+  it('contains BARGE section heading', async () => {
+    const s = await getSystemContentP17('marine', 'barge')
+    expect(s).toContain('BARGE')
+  })
+
+  it('contains COMMERCIAL VESSEL section heading', async () => {
+    const s = await getSystemContentP17('marine', 'commercial_vessel')
+    expect(s).toContain('COMMERCIAL VESSEL')
+  })
+
+  it('contains FISHING VESSEL section heading', async () => {
+    const s = await getSystemContentP17('marine', 'fishing_vessel')
+    expect(s).toContain('FISHING VESSEL')
+  })
+
+  it('contains TUG / WORKBOAT section heading', async () => {
+    const s = await getSystemContentP17('marine', 'tug_workboat')
+    expect(s).toContain('TUG / WORKBOAT')
+  })
+
+  it('contains OTHER MARINE VESSEL section heading', async () => {
+    const s = await getSystemContentP17('marine', 'other')
+    expect(s).toContain('OTHER MARINE VESSEL')
+  })
+
+  it('contains COUPE (MARINE) section heading', async () => {
+    const s = await getSystemContentP17('marine', 'coupe')
+    expect(s).toContain('COUPE (MARINE)')
   })
 })
