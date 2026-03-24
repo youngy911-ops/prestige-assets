@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
 status: executing
-stopped_at: Completed 17-02-PLAN.md
-last_updated: "2026-03-24T10:57:12.901Z"
+stopped_at: Completed 17-03-PLAN.md
+last_updated: "2026-03-24T11:00:15.262Z"
 last_activity: 2026-03-24 — Phase 17 plan 01 complete (73 RED tests, TDD scaffold)
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 7
-  completed_plans: 5
+  completed_plans: 6
   percent: 75
 ---
 
@@ -53,6 +53,7 @@ Progress: [████████░░] 75% (v1.4)
 | Phase 16 P02 | 4m | 2 tasks | 4 files |
 | Phase 16 P03 | 3m | 2 tasks | 1 files |
 | Phase 17 P02 | 5m | 2 tasks | 1 files |
+| Phase 17 P03 | 2 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,8 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 17]: COUPE subtypes (truck/trailer) get artifact-pattern sections instructing GPT-4o to use most relevant structure
 - [Phase 17]: DOG / PIG / TAG share one heading as B-train/A-train configs indistinguishable at template level
 - [Phase 17]: Supplement-not-repeat: removed Suspension from RIGID TRUCK and ATM from CARAVAN (SF field violations)
+- [Phase 17]: BULLDOZER/CRAWLER TRACTOR merged into single section with conditional For Bulldozer/For Crawler Tractor field blocks
+- [Phase 17]: COUPE (EARTHMOVING) follows system artifact pattern: GPT-4o instructed to use most relevant earthmoving structure
 
 ### Pending Todos
 
@@ -84,6 +87,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-24T10:57:12.899Z
-Stopped at: Completed 17-02-PLAN.md
+Last session: 2026-03-24T11:00:15.260Z
+Stopped at: Completed 17-03-PLAN.md
 Resume file: None
