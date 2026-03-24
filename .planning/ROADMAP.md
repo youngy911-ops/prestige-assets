@@ -120,4 +120,4 @@ Plans:
 | 14. Description Quality | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 15. Pre-fill Bug Fixes | v1.3 | 2/2 | Complete | 2026-03-23 |
 | 16. Subtype Schema Alignment | v1.4 | 3/3 | Complete | 2026-03-23 |
-| 17. Description Template Coverage | 4/4 | Complete   | 2026-03-24 | - |
+| 17. Description Template Coverage | 4/4 | Complete    | 2026-03-24 | - |

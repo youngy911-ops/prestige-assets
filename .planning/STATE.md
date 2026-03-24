@@ -4,7 +4,7 @@ milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
 status: executing
 stopped_at: Completed 17-04-PLAN.md
-last_updated: "2026-03-24T11:04:21.999Z"
+last_updated: "2026-03-24T11:07:45.827Z"
 last_activity: 2026-03-24 — Phase 17 plan 01 complete (73 RED tests, TDD scaffold)
 progress:
   total_phases: 2
