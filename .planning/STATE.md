@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Salesforce Subtype Alignment
-status: planning
-stopped_at: Completed 16-03-PLAN.md
-last_updated: "2026-03-23T13:27:15.915Z"
-last_activity: 2026-03-23 — Roadmap created, Phase 16 ready for planning
+status: in-progress
+stopped_at: Completed 17-01-PLAN.md
+last_updated: "2026-03-24T10:49:11Z"
+last_activity: 2026-03-24 — Phase 17 plan 01 complete (TDD scaffold, 73 RED tests)
 progress:
   total_phases: 2
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
-  percent: 67
+  total_plans: 7
+  completed_plans: 4
+  percent: 75
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-03-23)
 
 ## Current Position
 
-Phase: 16 of 17 (Subtype Schema Alignment)
-Plan: — of — (not yet planned)
-Status: Ready to plan
-Last activity: 2026-03-23 — Roadmap created, Phase 16 ready for planning
+Phase: 17 of 17 (Description Template Coverage)
+Plan: 1 of 4 (TDD Scaffold — DESCR-01..DESCR-08 failing tests)
+Status: In progress — plan 01 complete
+Last activity: 2026-03-24 — Phase 17 plan 01 complete (73 RED tests, TDD scaffold)
 
-Progress: [███████░░░] 67% (v1.4)
+Progress: [████████░░] 75% (v1.4)
 
 ## Performance Metrics
 
@@ -68,6 +68,7 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 16 P01]: coupe included in truck/trailer/earthmoving/marine subtypes per Salesforce requirement; bulldozer+crawler_tractor merged into bulldozer_crawler_tractor; Concrete labels use space-dash-space format
 - [Phase 16 P02]: motor_home replaced by motorhome in caravan.ts; coupe added to agriculture and caravan; displayName 'Caravan / Motor Home' preserved
 - [Phase 16]: Test-only change: no production schema files touched, only test assertions updated to match post-Phase-16 schema reality
+- [Phase 17 P01]: getSystemContentP17 helper at module level so all Phase 17 describe blocks share it; REFRIGERATED PANTECH trailer test passes immediately (prompt has truck version — plan 02 adds trailer-specific heading)
 
 ### Pending Todos
 
@@ -79,6 +80,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-23T13:12:01.316Z
-Stopped at: Completed 16-03-PLAN.md
+Last session: 2026-03-24T10:49:11Z
+Stopped at: Completed 17-01-PLAN.md
 Resume file: None

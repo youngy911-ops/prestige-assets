@@ -18,14 +18,14 @@
 
 ### Description Coverage
 
-- [ ] **DESCR-01**: AI description system prompt covers all 21 new Truck subtypes with appropriate templates
-- [ ] **DESCR-02**: AI description system prompt covers all 25 new Trailer subtypes with appropriate templates
-- [ ] **DESCR-03**: AI description system prompt covers merged Bulldozer/Crawler Tractor earthmoving subtype
-- [ ] **DESCR-04**: AI description system prompt covers all new Earthmoving subtypes (Attachments, Conveyors/Stackers, Crusher, Motor Scraper, Scraper, Screener, Tracked Loader, Tracked Skid Steer Loader, Washing)
-- [ ] **DESCR-05**: AI description system prompt covers all Agriculture subtypes (first time subtype-aware descriptions for this type)
-- [ ] **DESCR-06**: AI description system prompt covers all Forklift subtypes (first time subtype-aware descriptions for this type)
-- [ ] **DESCR-07**: AI description system prompt covers all Caravan subtypes (first time subtype-aware descriptions for this type)
-- [ ] **DESCR-08**: AI description system prompt covers all 10 new Marine subtypes (replacing Boat/Yacht/Jet Ski templates)
+- [x] **DESCR-01**: AI description system prompt covers all 21 new Truck subtypes with appropriate templates
+- [x] **DESCR-02**: AI description system prompt covers all 25 new Trailer subtypes with appropriate templates
+- [x] **DESCR-03**: AI description system prompt covers merged Bulldozer/Crawler Tractor earthmoving subtype
+- [x] **DESCR-04**: AI description system prompt covers all new Earthmoving subtypes (Attachments, Conveyors/Stackers, Crusher, Motor Scraper, Scraper, Screener, Tracked Loader, Tracked Skid Steer Loader, Washing)
+- [x] **DESCR-05**: AI description system prompt covers all Agriculture subtypes (first time subtype-aware descriptions for this type)
+- [x] **DESCR-06**: AI description system prompt covers all Forklift subtypes (first time subtype-aware descriptions for this type)
+- [x] **DESCR-07**: AI description system prompt covers all Caravan subtypes (first time subtype-aware descriptions for this type)
+- [x] **DESCR-08**: AI description system prompt covers all 10 new Marine subtypes (replacing Boat/Yacht/Jet Ski templates)
 
 ## Future Requirements
 
@@ -54,14 +54,14 @@
 | SUBTYPE-06 | Phase 16 | Complete |
 | SUBTYPE-07 | Phase 16 | Complete |
 | SUBTYPE-08 | Phase 16 | Complete |
-| DESCR-01 | Phase 17 | Pending |
-| DESCR-02 | Phase 17 | Pending |
-| DESCR-03 | Phase 17 | Pending |
-| DESCR-04 | Phase 17 | Pending |
-| DESCR-05 | Phase 17 | Pending |
-| DESCR-06 | Phase 17 | Pending |
-| DESCR-07 | Phase 17 | Pending |
-| DESCR-08 | Phase 17 | Pending |
+| DESCR-01 | Phase 17 | Complete |
+| DESCR-02 | Phase 17 | Complete |
+| DESCR-03 | Phase 17 | Complete |
+| DESCR-04 | Phase 17 | Complete |
+| DESCR-05 | Phase 17 | Complete |
+| DESCR-06 | Phase 17 | Complete |
+| DESCR-07 | Phase 17 | Complete |
+| DESCR-08 | Phase 17 | Complete |
 
 **Coverage:**
 - v1.4 requirements: 16 total
