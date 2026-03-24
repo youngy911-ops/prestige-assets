@@ -66,7 +66,7 @@ Sold As Is, Untested & Unregistered.
 RIGID TRUCK / PANTECH / CURTAINSIDER / TAUTLINER / VAN
 Line 1: Year, Make, Model, Drive Type, Body Type
 Engine: Make, cylinders, fuel type, HP
-Transmission, Brakes, Suspension
+Transmission, Brakes
 Body dimensions (L x W in mm), door type (roller door / swing doors) if known
 Extras if any
 Sold As Is, Untested & Unregistered.
@@ -166,10 +166,235 @@ Outriggers
 Certification status
 Sold As Is, Untested & Unregistered.
 
-TRAILER
-Line 1: Year, Make, Model, Type. Axle config. Suspension. Brakes.
-Deck length. Payload if applicable.
-Extras.
+CRANE TRUCK
+Line 1: Year, Make, Model, Drive Type, Crane Truck
+Engine: Make, cylinders, fuel type, HP
+Transmission
+
+Body builder, tray dimensions: L x W mm
+Crane: make, model, boom type (knuckle/straight), capacity, cert status if known
+Hose reels, toolboxes, compressor if fitted
+Sold As Is, Untested & Unregistered.
+
+FUEL TRUCK
+Line 1: Year, Make, Model, Drive Type, Fuel Truck
+Engine: Make, cylinders, fuel type, HP
+Transmission
+
+Tank capacity: XL, number of compartments
+Product type (diesel/petrol/aviation/multi)
+Pump make/model, flow rate L/min
+Bottom-loading or top-loading, metered or unmetered
+Hose length/diameter if known
+Sold As Is, Untested & Unregistered.
+
+GARBAGE
+Line 1: Year, Make, Model, Drive Type, Garbage Truck
+Engine: Make, cylinders, fuel type, HP
+Transmission
+
+Body make, compaction type (rear loader / side loader / front loader)
+Body capacity: Xm³, hopper capacity if known
+Sold As Is, Untested & Unregistered.
+
+HOOK BIN
+Line 1: Year, Make, Model, Drive Type, Hook Bin Truck
+Engine: Make, cylinders, fuel type, HP
+Transmission
+
+Hoist make/model, lift capacity: Xt, reach
+Compatible bin size range
+Sold As Is, Untested & Unregistered.
+
+SKIP BIN
+Line 1: Year, Make, Model, Drive Type, Skip Bin Truck
+Engine: Make, cylinders, fuel type, HP
+Transmission
+
+Hoist make/model, capacity: Xt
+Bin size compatibility
+Sold As Is, Untested & Unregistered.
+
+STOCK TRUCK
+Line 1: Year, Make, Model, Drive Type, Stock Truck
+Engine: Make, cylinders, fuel type, HP
+Transmission
+
+Body builder, deck dimensions: L x W mm
+Number of decks, loading ramp type
+Ventilation type
+Sold As Is, Untested & Unregistered.
+
+TANKER (TRUCK)
+Line 1: Year, Make, Model, Drive Type, Tanker
+Engine: Make, cylinders, fuel type, HP
+Transmission
+
+Tank capacity: XkL, number of compartments
+Product type (food grade / chemical / fuel / water)
+Pump make/model if fitted
+Sold As Is, Untested & Unregistered.
+
+TRAY TRUCK
+Line 1: Year, Make, Model, Drive Type, Tray Truck
+Engine: Make, cylinders, fuel type, HP
+Transmission
+
+Body builder, tray dimensions: L x W mm
+Headboard, toolboxes, tie rails if fitted
+Crane: make, model, capacity if fitted
+Tow hitch/airlines if fitted
+Sold As Is, Untested & Unregistered.
+
+WATER TRUCK
+Line 1: Year, Make, Model, Drive Type, Water Truck
+Engine: Make, cylinders, fuel type, HP
+Transmission
+
+Tank capacity: XkL
+Pump make/model
+Spray bar, front/rear sprays
+Application: dust suppression / construction / firefighting
+Sold As Is, Untested & Unregistered.
+
+COUPE (TRUCK)
+This subtype is a Salesforce system artifact. Describe whatever asset is visible from the photos and inspection notes using the most relevant truck template structure. Do not force a specific field layout.
+Sold As Is, Untested & Unregistered.
+
+FLAT DECK TRAILER
+Line 1: Year, Make, Model, Flat Deck Trailer. Axle config.
+Deck dimensions: L x W mm
+Payload: Xt, tare if known
+Headboard, tie rails, stoneguard if fitted
+Sold As Is, Untested & Unregistered.
+
+CURTAINSIDER TRAILER
+Line 1: Year, Make, Model, Curtainsider Trailer. Axle config.
+Deck dimensions: L x W mm
+Number of curtain side posts, roof type
+Load restraint system
+Sold As Is, Untested & Unregistered.
+
+PANTECH TRAILER
+Line 1: Year, Make, Model, Pantech Trailer. Axle config.
+Internal dimensions: L x W x H mm
+Door type (roller door / swing doors)
+Floor type
+Sold As Is, Untested & Unregistered.
+
+REFRIGERATED CURTAINSIDER
+Line 1: Year, Make, Model, Refrigerated Curtainsider. Axle config.
+Deck dimensions: L x W mm
+Refrigeration unit: make, model, fuel type
+Temperature range
+Sold As Is, Untested & Unregistered.
+
+REFRIGERATED PANTECH (TRAILER)
+Line 1: Year, Make, Model, Refrigerated Pantech. Axle config.
+Internal dimensions: L x W x H mm
+Refrigeration unit: make, model, fuel type
+Temperature range
+Sold As Is, Untested & Unregistered.
+
+LOW LOADER
+Line 1: Year, Make, Model, Low Loader. Axle config.
+Deck dimensions: L x W mm, deck height mm
+Payload: Xt
+Ramp type, outriggers, extendable if applicable
+Sold As Is, Untested & Unregistered.
+
+SIDE TIPPER
+Line 1: Year, Make, Model, Side Tipper. Axle config.
+Body capacity: Xm³, body material
+Tipping side (left / right / both)
+Payload: Xt
+Sold As Is, Untested & Unregistered.
+
+TIPPER TRAILER
+Line 1: Year, Make, Model, Tipper Trailer. Axle config.
+Body capacity: Xm³, body material
+Tailgate type
+Payload: Xt
+Sold As Is, Untested & Unregistered.
+
+TANKER TRAILER
+Line 1: Year, Make, Model, Tanker Trailer. Axle config.
+Tank capacity: XkL, number of compartments
+Product type (food grade / chemical / fuel / water)
+Discharge type (pump / gravity), ADR compliance if applicable
+Sold As Is, Untested & Unregistered.
+
+TIMBER JINKER
+Line 1: Year, Make, Model, Timber Jinker. Axle config.
+Bolster spacing, bolster type
+Stanchion height, reach configuration
+Payload: Xt
+Sold As Is, Untested & Unregistered.
+
+SKEL TRAILER
+Line 1: Year, Make, Model, Skel Trailer. Axle config.
+Twist lock positions, container configurations (20ft / 40ft / 45ft)
+Neck height
+Sold As Is, Untested & Unregistered.
+
+STOCK TRAILER
+Line 1: Year, Make, Model, Stock Trailer. Axle config.
+Body builder, internal dimensions: L x W mm
+Number of decks, loading ramp type
+Sold As Is, Untested & Unregistered.
+
+SIDE LOADER
+Line 1: Year, Make, Model, Side Loader. Axle config.
+Container handling: lift arm type, reach
+Container configurations (20ft / 40ft)
+Sold As Is, Untested & Unregistered.
+
+CAR CARRIER
+Line 1: Year, Make, Model, Car Carrier. Axle config.
+Vehicle capacity (number of cars)
+Configuration (single level / multi-level), ramp type
+Tie-down system
+Sold As Is, Untested & Unregistered.
+
+DOG / PIG / TAG
+Line 1: Year, Make, Model, [Dog / Pig / Tag] Trailer. Axle config.
+B-train / A-train configuration
+Deck type, payload: Xt
+Sold As Is, Untested & Unregistered.
+
+DOLLY
+Line 1: Year, Make, Model, Dolly. Axle config.
+Fifth wheel or turntable type
+Connection type
+Sold As Is, Untested & Unregistered.
+
+PLANT TRAILER
+Line 1: Year, Make, Model, Plant Trailer. Axle config.
+Deck dimensions: L x W mm
+Ramp type, payload: Xt
+Winch if fitted, tie-down points
+Sold As Is, Untested & Unregistered.
+
+WALKING FLOOR TRAILER
+Line 1: Year, Make, Model, Walking Floor Trailer. Axle config.
+Floor capacity: Xm³
+Floor slat count/material, floor manufacturer if known
+Sold As Is, Untested & Unregistered.
+
+BOX TRAILER
+Line 1: Year, Make, Model, Box Trailer. Axle config.
+Internal dimensions: L x W x H mm
+Door type, floor material
+Sold As Is, Untested & Unregistered.
+
+DECK WIDENER
+Line 1: Year, Make, Model, Deck Widener. Axle config.
+Extended deck width: Xmm, extendable length
+Payload: Xt
+Sold As Is, Untested & Unregistered.
+
+COUPE TRAILER
+This subtype is a Salesforce system artifact. Describe whatever trailer is visible from the photos and inspection notes using the most relevant trailer template structure. Do not force a specific field layout.
 Sold As Is, Untested & Unregistered.
 
 EXCAVATOR
@@ -284,17 +509,6 @@ Drive type (rigid / articulated)
 Enclosed Cab
 Sold As Is, Untested & Unregistered.
 
-TRENCHER
-Year, Make, Model, Trencher
-Operating Weight / Class
-Hours
-Engine: Make, cylinders, fuel type, HP
-Trench depth: Xmm, Trench width: Xmm
-Chain/wheel type
-Track or wheeled
-Enclosed Cab / ROPS Canopy
-Sold As Is, Untested & Unregistered.
-
 CRAWLER TRACTOR
 Year, Make, Model, Crawler Tractor
 Operating Weight
@@ -318,7 +532,6 @@ Power: solar, batteries
 Water: tanks, hot water system
 Exterior: awning, storage, satellite, spare wheels, tow setup
 Suspension, brakes
-ATM if upgraded
 Sold As Is, Untested & Unregistered.
 
 MOTOR VEHICLE (CAR)
