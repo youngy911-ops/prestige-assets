@@ -8,10 +8,13 @@ import type { AssetType } from '@/lib/schema-registry/types'
 
 interface ExtractPageProps {
   params: Promise<{ id: string }>
+  searchParams: Promise<{ autostart?: string }>
 }
 
-export default async function ExtractPage({ params }: ExtractPageProps) {
+export default async function ExtractPage({ params, searchParams }: ExtractPageProps) {
   const { id: assetId } = await params
+  const { autostart } = await searchParams
+  const autoStart = autostart === '1'
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -59,6 +62,7 @@ export default async function ExtractPage({ params }: ExtractPageProps) {
         initialExtractionResult={asset.extraction_result as ExtractionResult | null}
         inspectionNotes={asset.inspection_notes}
         hasPhotos={hasPhotos}
+        autoStart={autoStart}
       />
     </div>
   )

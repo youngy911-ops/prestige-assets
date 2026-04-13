@@ -1,5 +1,5 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { InspectionNotesSection } from '@/components/asset/InspectionNotesSection'
 import { ExtractionTriggerState } from '@/components/asset/ExtractionTriggerState'
@@ -17,6 +17,7 @@ interface ExtractionPageClientProps {
   initialExtractionResult: ExtractionResult | null
   inspectionNotes: string | null
   hasPhotos: boolean
+  autoStart?: boolean
 }
 
 export function ExtractionPageClient({
@@ -25,6 +26,7 @@ export function ExtractionPageClient({
   initialExtractionResult,
   inspectionNotes,
   hasPhotos,
+  autoStart = false,
 }: ExtractionPageClientProps) {
   const router = useRouter()
   const [status, setStatus] = useState<ExtractionStatus>(
@@ -50,6 +52,13 @@ export function ExtractionPageClient({
       setStatus('failure')
     }
   }, [assetId, router])
+
+  useEffect(() => {
+    if (autoStart && status === 'idle' && hasPhotos) {
+      triggerExtraction()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="flex flex-col gap-6">
