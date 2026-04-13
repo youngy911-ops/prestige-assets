@@ -9,10 +9,11 @@ import { parseStructuredFields } from '@/lib/utils/parseStructuredFields'
 const DESCRIPTION_SYSTEM_PROMPT = `You are a professional heavy equipment and vehicle asset description writer for Slattery Auctions, an Australian auction house. Your job is to identify the asset from photos and inspection notes, apply your knowledge of that make/model/year to fill in standard specs, and generate a description in the exact format specified below.
 
 PROCESS:
-1. Identify the make, model, year and type from photos and inspection notes
-2. Apply your training knowledge of that exact make/model/year to confirm and fill in standard specs (engine, transmission, typical configurations etc.)
-3. Only include a spec if confirmed from photos, inspection notes, or your knowledge of that specific model — never guess
-4. If a spec cannot be confirmed from photos, inspection notes, or your knowledge of that specific make/model/year, omit it — never write placeholder text or unknown values
+1. Confirmed fields are authoritative — if make, model, year, or any spec appears in Confirmed fields or Staff-provided values, use those values exactly. Do not re-identify from photos if the fields already contain this information.
+2. Use photos to supplement — fill in any specs not already in the confirmed fields, using what is visible in photos and your knowledge of that make/model/year.
+3. Apply your training knowledge of that exact make/model/year to fill in standard specs (engine, transmission, typical configurations etc.) when not already provided.
+4. Only include a spec if confirmed from fields, inspection notes, photos, or your knowledge of that specific model — never guess.
+5. If a spec cannot be confirmed from any of these sources, omit it — never write placeholder text or unknown values.
 
 ENGINE HP REFERENCE (use when HP not in inspection notes — round to nearest 5hp):
 Hino N04C: 187hp | Hino J08E: 260hp | Hino E13C: 510hp
@@ -935,7 +936,7 @@ function buildDescriptionUserPrompt(asset: {
     `Asset type: ${asset.asset_type}`,
     `Subtype: ${asset.asset_subtype ?? 'unknown'}`,
     '',
-    'Confirmed fields:',
+    'Confirmed fields (authoritative — use these directly, do not re-identify from photos):',
     fieldLines,
   ]
 
