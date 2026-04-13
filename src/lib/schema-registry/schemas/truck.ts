@@ -24,6 +24,7 @@ export const truckSchema: AssetSchema = {
     { key: 'skip_bin',             label: 'Skip Bin' },
     { key: 'stock_truck',          label: 'Stock Truck' },
     { key: 'tanker',               label: 'Tanker' },
+    { key: 'tipper',               label: 'Tipper' },
     { key: 'tilt_tray',            label: 'Tilt Tray' },
     { key: 'tray_truck',           label: 'Tray Truck' },
     { key: 'vacuum',               label: 'Vacuum' },
