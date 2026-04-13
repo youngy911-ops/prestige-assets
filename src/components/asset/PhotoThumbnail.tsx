@@ -12,6 +12,7 @@ export interface PhotoThumbnailProps {
   isUploading?: boolean
   uploadError?: string | null
   onRemove: (id: string) => void
+  isDeleting?: boolean
   // dnd-kit passthrough props (provided by PhotoThumbnailGrid via useSortable)
   dragHandleProps?: Record<string, unknown>
   style?: CSSProperties
@@ -20,7 +21,7 @@ export interface PhotoThumbnailProps {
 
 export const PhotoThumbnail = forwardRef<HTMLDivElement, PhotoThumbnailProps>(
   function PhotoThumbnail(
-    { id, signedUrl, isCover, isUploading, uploadError, onRemove, dragHandleProps, style, isDragging },
+    { id, signedUrl, isCover, isUploading, uploadError, onRemove, isDeleting, dragHandleProps, style, isDragging },
     ref
   ) {
     return (
@@ -51,7 +52,8 @@ export const PhotoThumbnail = forwardRef<HTMLDivElement, PhotoThumbnailProps>(
           type="button"
           aria-label="Remove photo"
           onClick={() => onRemove(id)}
-          className="absolute top-1 right-1 w-8 h-8 flex items-center justify-center rounded text-white/65 hover:text-[#F87171] transition-colors"
+          disabled={isDeleting}
+          className="absolute top-1 right-1 w-8 h-8 flex items-center justify-center rounded text-white/65 hover:text-[#F87171] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <X className="w-4 h-4" />
         </button>

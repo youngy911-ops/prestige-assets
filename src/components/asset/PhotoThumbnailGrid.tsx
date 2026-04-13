@@ -24,9 +24,10 @@ interface SortablePhotoProps {
   photo: PhotoItem
   isCover: boolean
   onRemove: (id: string) => void
+  isDeleting: boolean
 }
 
-function SortablePhoto({ photo, isCover, onRemove }: SortablePhotoProps) {
+function SortablePhoto({ photo, isCover, onRemove, isDeleting }: SortablePhotoProps) {
   const {
     attributes,
     listeners,
@@ -51,6 +52,7 @@ function SortablePhoto({ photo, isCover, onRemove }: SortablePhotoProps) {
       dragHandleProps={{ ...attributes, ...listeners }}
       style={style}
       isDragging={isDragging}
+      isDeleting={isDeleting}
     />
   )
 }
@@ -67,6 +69,7 @@ export function PhotoThumbnailGrid({
   isUploading = false,
 }: PhotoThumbnailGridProps) {
   const [orderError, setOrderError] = useState<string | null>(null)
+  const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set())
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -100,7 +103,10 @@ export function PhotoThumbnailGrid({
   }
 
   async function handleRemove(photoId: string) {
+    if (deletingIds.has(photoId)) return
+    setDeletingIds((prev) => new Set([...prev, photoId]))
     const result = await removePhoto(photoId)
+    setDeletingIds((prev) => { const next = new Set(prev); next.delete(photoId); return next })
     if ('error' in result) {
       setOrderError(result.error)
       return
@@ -127,6 +133,7 @@ export function PhotoThumbnailGrid({
                 photo={photo}
                 isCover={index === 0}
                 onRemove={handleRemove}
+                isDeleting={deletingIds.has(photo.id)}
               />
             ))}
           </div>
