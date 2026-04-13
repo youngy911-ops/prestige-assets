@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader2, ChevronLeft } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { BranchSelector } from '@/components/asset/BranchSelector'
 import { AssetTypeSelector } from '@/components/asset/AssetTypeSelector'
 import { AssetSubtypeSelector } from '@/components/asset/AssetSubtypeSelector'
@@ -32,38 +31,33 @@ export default function NewAssetPage() {
 
   function handleBranchSelect(b: BranchKey) {
     setBranch(b)
+    localStorage.setItem(LAST_BRANCH_KEY, b)
+    setStep(2)
   }
 
   function handleTypeSelect(t: AssetType) {
     setAssetType(t)
-    setAssetSubtype(null) // reset subtype when type changes
+    setAssetSubtype(null)
+    setStep(3)
   }
 
-  function handleNext() {
-    if (step === 1 && branch) {
-      localStorage.setItem(LAST_BRANCH_KEY, branch)
-      setStep(2)
-    } else if (step === 2 && assetType) {
-      setStep(3)
-    }
-  }
-
-  function handleBack() {
-    if (step === 2) setStep(1)
-    if (step === 3) setStep(2)
-  }
-
-  async function handleContinue() {
-    if (!branch || !assetType || !assetSubtype) return
+  async function handleSubtypeSelect(subtype: string) {
+    if (!branch || !assetType) return
+    setAssetSubtype(subtype)
     setSubmitting(true)
     setError(null)
-    const result = await createAsset(branch, assetType, assetSubtype)
+    const result = await createAsset(branch, assetType, subtype)
     if ('error' in result) {
       setError(result.error)
       setSubmitting(false)
       return
     }
     router.push(`/assets/${result.assetId}/photos`)
+  }
+
+  function handleBack() {
+    if (step === 2) setStep(1)
+    if (step === 3) setStep(2)
   }
 
   const stepHeadings = {
@@ -75,7 +69,6 @@ export default function NewAssetPage() {
     },
   }
 
-  const canProceed = step === 1 ? !!branch : step === 2 ? !!assetType : !!assetSubtype
   const { heading, subheading } = stepHeadings[step]
 
   return (
@@ -110,7 +103,8 @@ export default function NewAssetPage() {
           <AssetSubtypeSelector
             assetType={assetType}
             selected={assetSubtype}
-            onSelect={setAssetSubtype}
+            onSelect={handleSubtypeSelect}
+            disabled={submitting}
           />
         )}
       </div>
@@ -120,23 +114,11 @@ export default function NewAssetPage() {
         <p className="text-[#F87171] text-sm mb-4">{error}</p>
       )}
 
-      {/* Action button */}
-      {step < 3 ? (
-        <Button
-          onClick={handleNext}
-          disabled={!canProceed}
-          className="w-full bg-[#1E3A5F] hover:bg-[#1E3A5F]/90 text-white h-11 disabled:opacity-40"
-        >
-          Next
-        </Button>
-      ) : (
-        <Button
-          onClick={handleContinue}
-          disabled={!canProceed || submitting}
-          className="w-full bg-[#1E3A5F] hover:bg-[#1E3A5F]/90 text-white h-11 disabled:opacity-40"
-        >
-          {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Continue'}
-        </Button>
+      {/* Spinner shown while creating asset after subtype selected */}
+      {submitting && (
+        <div className="flex justify-center">
+          <Loader2 className="h-5 w-5 animate-spin text-white/65" />
+        </div>
       )}
     </div>
   )

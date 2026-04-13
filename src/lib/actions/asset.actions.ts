@@ -25,7 +25,6 @@ export async function createAsset(
     .single()
 
   if (error) return { error: error.message }
-  revalidatePath('/')
   return { assetId: data.id }
 }
 
