@@ -71,7 +71,7 @@ describe('insertPhoto', () => {
       return { update: () => ({ eq: () => ({ neq: () => Promise.resolve({ error: null }) }) }) }
     })
     const result = await insertPhoto({ assetId: 'a1', storagePath: 'u/a/f.jpg', sortOrder: 0 })
-    expect(result).toEqual({ id: 'photo-uuid-789' })
+    expect(result).toEqual({ id: 'photo-uuid-789', signedUrl: 'https://example.com/signed' })
   })
 })
 

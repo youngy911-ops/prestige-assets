@@ -2,13 +2,13 @@
 import { createClient } from '@/lib/supabase/server'
 
 // ---------------------------------------------------------------------------
-// insertPhoto
+// insertPhoto — inserts record and returns signed URL in one call
 // ---------------------------------------------------------------------------
 export async function insertPhoto(params: {
   assetId: string
   storagePath: string
   sortOrder: number
-}): Promise<{ id: string } | { error: string }> {
+}): Promise<{ id: string; signedUrl: string } | { error: string }> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'Not authenticated' }
@@ -39,7 +39,14 @@ export async function insertPhoto(params: {
     .eq('id', params.assetId)
     .neq('fields', '{}')
 
-  return { id: data.id }
+  // Return signed URL in same call — saves a round trip
+  const { data: urlData, error: urlError } = await supabase.storage
+    .from('photos')
+    .createSignedUrl(params.storagePath, 3600)
+
+  if (urlError || !urlData?.signedUrl) return { error: urlError?.message ?? 'Failed to generate URL' }
+
+  return { id: data.id, signedUrl: urlData.signedUrl }
 }
 
 // ---------------------------------------------------------------------------

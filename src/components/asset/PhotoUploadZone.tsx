@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import { Camera, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { processImageForUpload } from '@/lib/utils/image'
-import { insertPhoto, getSignedUrl } from '@/lib/actions/photo.actions'
+import { insertPhoto } from '@/lib/actions/photo.actions'
 import { PhotoThumbnailGrid } from './PhotoThumbnailGrid'
 import { createClient } from '@/lib/supabase/client'
 
@@ -73,30 +73,31 @@ export function PhotoUploadZone({
           // 1. EXIF correct + compress to max 2MP
           const processed = await processImageForUpload(file)
 
-          // 2. Upload to Supabase Storage (direct BrowserClient — not via Server Action)
+          // 2. Upload to Supabase Storage with retry (up to 3 attempts for transient failures)
           const storagePath = `${userId}/${assetId}/${Date.now()}-${i}-${processed.name}`
-          const { data, error: uploadError } = await supabase.storage
-            .from('photos')
-            .upload(storagePath, processed, { contentType: 'image/jpeg', upsert: false })
+          let uploadData: { path: string } | null = null
+          let lastUploadError: string | null = null
+          for (let attempt = 0; attempt < 3; attempt++) {
+            const { data, error: uploadError } = await supabase.storage
+              .from('photos')
+              .upload(storagePath, processed, { contentType: 'image/jpeg', upsert: false })
+            if (!uploadError && data) { uploadData = data; break }
+            lastUploadError = uploadError?.message ?? 'Upload failed'
+          }
+          if (!uploadData) throw new Error(lastUploadError ?? 'Upload failed')
 
-          if (uploadError) throw new Error(uploadError.message)
-
-          // 3. Persist to asset_photos table via Server Action
+          // 3. Persist to asset_photos table + get signed URL in one server action call
           const insertResult = await insertPhoto({
             assetId,
-            storagePath: data.path,
+            storagePath: uploadData.path,
             sortOrder: baseOrder + i,
           })
           if ('error' in insertResult) throw new Error(insertResult.error)
 
-          // 4. Get presigned URL for immediate display (1 hour expiry)
-          const urlResult = await getSignedUrl(data.path)
-          if ('error' in urlResult) throw new Error(urlResult.error)
-
           return {
             id: insertResult.id,
-            storagePath: data.path,
-            signedUrl: urlResult.signedUrl,
+            storagePath: uploadData.path,
+            signedUrl: insertResult.signedUrl,
             sortOrder: baseOrder + i,
           } satisfies PhotoItem
         } finally {
