@@ -1,8 +1,6 @@
 'use client'
 import { useState } from 'react'
 import { Copy, Check, RefreshCw, Loader2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 
 interface DescriptionBlockProps {
@@ -38,43 +36,40 @@ export function DescriptionBlock({ descriptionText, onRegenerate, isRegenerating
   }
 
   return (
-    <Card>
-      <CardContent className="pt-4">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-semibold text-white/65">Description</span>
-          <div className="flex gap-2">
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleRegenerate}
-              disabled={isRegenerating}
-              className="gap-1.5"
-            >
-              {isRegenerating
-                ? <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                : <RefreshCw className="h-3.5 w-3.5" />}
-              {isRegenerating ? 'Regenerating\u2026' : 'Regenerate'}
-            </Button>
-            <Button
-              size="sm"
-              onClick={handleCopy}
-              disabled={isRegenerating}
-              className="gap-1.5"
-            >
-              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied!' : 'Copy Description'}
-            </Button>
-          </div>
+    <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+        <span className="text-sm font-semibold text-white">Description</span>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={handleRegenerate}
+            disabled={isRegenerating}
+            className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white/80 transition-colors disabled:opacity-40 px-2 py-1"
+          >
+            {isRegenerating
+              ? <Loader2 className="h-3 w-3 animate-spin" />
+              : <RefreshCw className="h-3 w-3" />}
+            {isRegenerating ? 'Regenerating…' : 'Regenerate'}
+          </button>
+          <button
+            type="button"
+            onClick={handleCopy}
+            disabled={isRegenerating}
+            className="inline-flex items-center gap-1.5 text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40 font-medium"
+          >
+            {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+            {copied ? 'Copied!' : 'Copy'}
+          </button>
         </div>
-        <Textarea
-          value={localText}
-          onChange={handleChange}
-          readOnly={isRegenerating}
-          placeholder="Description will appear here once generated."
-          className="min-h-48 text-sm leading-relaxed font-mono resize-y"
-          rows={10}
-        />
-      </CardContent>
-    </Card>
+      </div>
+      <Textarea
+        value={localText}
+        onChange={handleChange}
+        readOnly={isRegenerating}
+        placeholder="Description will appear here once generated."
+        className="min-h-48 text-sm leading-relaxed font-mono resize-y border-0 rounded-none bg-transparent focus-visible:ring-0 px-4 py-3"
+        rows={10}
+      />
+    </div>
   )
 }

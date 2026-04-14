@@ -159,7 +159,7 @@ export function PhotoUploadZone({
         <Button
           onClick={handleAddPhotosClick}
           disabled={isUploading || atCap}
-          className="w-full max-w-xs bg-[oklch(0.29_0.07_248)] hover:bg-[oklch(0.29_0.07_248)]/90 text-white h-11 disabled:opacity-40"
+          className="w-full max-w-xs bg-emerald-600 hover:bg-emerald-600/90 text-white h-11 disabled:opacity-40"
         >
           <Camera className="w-4 h-4 mr-2" />
           Add Photos
@@ -195,7 +195,7 @@ export function PhotoUploadZone({
           onClick={handleAddPhotosClick}
           disabled={isUploading || atCap}
           size="sm"
-          className="bg-[oklch(0.29_0.07_248)] hover:bg-[oklch(0.29_0.07_248)]/90 text-white h-9 disabled:opacity-40"
+          className="bg-emerald-600 hover:bg-emerald-600/90 text-white h-9 disabled:opacity-40"
         >
           <Camera className="w-4 h-4 mr-1.5" />
           Add Photos

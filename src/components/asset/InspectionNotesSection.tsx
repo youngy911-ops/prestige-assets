@@ -115,7 +115,7 @@ export function InspectionNotesSection({
               >
                 <SelectTrigger
                   id={`field-${field.key}`}
-                  className="h-9 text-sm bg-white/5 border-white/15 text-white focus:ring-[oklch(0.29_0.07_248)]"
+                  className="h-9 text-sm bg-white/5 border-white/15 text-white focus:ring-emerald-500/50"
                 >
                   <SelectValue placeholder={FIELD_PLACEHOLDERS[field.key] ?? `Select ${field.label}`} className="placeholder:text-white/30" />
                 </SelectTrigger>
@@ -131,7 +131,7 @@ export function InspectionNotesSection({
               <Input
                 id={`field-${field.key}`}
                 defaultValue={structuredValuesRef.current[field.key] ?? ''}
-                className="h-9 text-sm bg-white/5 border-white/15 text-white placeholder:text-white/30 focus:ring-[oklch(0.29_0.07_248)]"
+                className="h-9 text-sm bg-white/5 border-white/15 text-white placeholder:text-white/30 focus:ring-emerald-500/50"
                 placeholder={FIELD_PLACEHOLDERS[field.key] ?? ''}
                 onChange={(e) => handleStructuredChange(field.key, e.target.value)}
               />
@@ -145,7 +145,7 @@ export function InspectionNotesSection({
           </Label>
           <textarea
             id="other-notes"
-            className="w-full min-h-[80px] rounded-md border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[oklch(0.29_0.07_248)] resize-y"
+            className="w-full min-h-[80px] rounded-md border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 resize-y"
             placeholder="VIN, rego, dimensions, body builder, service history, number of keys, condition notes…"
             defaultValue={notesRef.current}
             onChange={(e) => handleNotesChange(e.target.value)}

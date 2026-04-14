@@ -22,7 +22,7 @@ const HIGHLIGHT_CLASSES: Partial<Record<ConfidenceLevel, string>> = {
   not_found: 'border-l-2 border-l-red-500/40 pl-3',
 }
 
-const INPUT_BASE = 'h-9 text-sm bg-white/5 border-white/15 text-white placeholder:text-white/30 focus:ring-[oklch(0.29_0.07_248)]'
+const INPUT_BASE = 'h-9 text-sm bg-white/5 border-white/15 text-white placeholder:text-white/30 focus:ring-emerald-500/50'
 
 export function FieldRow({ field, confidence, control, error }: FieldRowProps) {
   const highlightClass = HIGHLIGHT_CLASSES[confidence] ?? ''

@@ -60,7 +60,7 @@ export function ExtractionResultPanel({
       <div className="sticky bottom-0 bg-[var(--background)] pt-3">
         <button
           onClick={() => router.push(`/assets/${assetId}/review`)}
-          className="flex items-center justify-center w-full h-11 rounded-md bg-[oklch(0.29_0.07_248)] hover:bg-[oklch(0.29_0.07_248)]/90 text-white font-medium text-sm transition-colors gap-1"
+          className="flex items-center justify-center w-full h-11 rounded-md bg-emerald-600 hover:bg-emerald-600/90 text-white font-medium text-sm transition-colors gap-1"
         >
           Proceed to Review
           <ChevronRight className="w-4 h-4" aria-hidden="true" />

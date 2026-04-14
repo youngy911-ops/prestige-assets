@@ -77,7 +77,7 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
 
       {/* extraction_stale banner — shown only when asset already has extraction results and photos changed */}
       {isExtractionStale && (
-        <div className="flex items-start gap-2 bg-[oklch(0.29_0.07_248)]/20 border border-[oklch(0.29_0.07_248)] rounded-md p-3 mb-4">
+        <div className="flex items-start gap-2 bg-emerald-500/10 border border-emerald-500/40 rounded-md p-3 mb-4">
           <AlertCircle className="w-4 h-4 text-white/65 flex-shrink-0 mt-0.5" />
           <div className="flex-1 min-w-0">
             <p className="text-sm text-white/85">
@@ -126,7 +126,7 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
           <>
             <Link
               href={`/assets/${assetId}/review`}
-              className="flex items-center justify-center w-full h-11 rounded-md bg-[oklch(0.29_0.07_248)] hover:bg-[oklch(0.29_0.07_248)]/90 text-white font-medium text-sm transition-colors"
+              className="flex items-center justify-center w-full h-11 rounded-md bg-emerald-600 hover:bg-emerald-600/90 text-white font-medium text-sm transition-colors"
             >
               Skip to Manual Entry
             </Link>
