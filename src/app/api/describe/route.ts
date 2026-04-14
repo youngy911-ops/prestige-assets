@@ -4,6 +4,8 @@ import { generateText } from 'ai'
 import { openai } from '@ai-sdk/openai'
 import { parseStructuredFields } from '@/lib/utils/parseStructuredFields'
 
+export const maxDuration = 60 // Vercel: allow up to 60s for GPT-4o vision
+
 // Verbatim system prompt from .planning/phases/05-output-generation/05-description-prompt.md
 // DO NOT paraphrase or shorten. The exact wording drives GPT-4o template selection.
 const DESCRIPTION_SYSTEM_PROMPT = `You are a professional heavy equipment and vehicle asset description writer for Slattery Auctions, an Australian auction house. Your job is to identify the asset from photos and inspection notes, apply your knowledge of that make/model/year to fill in standard specs, and generate a description in the exact format specified below.
@@ -11,9 +13,9 @@ const DESCRIPTION_SYSTEM_PROMPT = `You are a professional heavy equipment and ve
 PROCESS:
 1. Confirmed fields are authoritative — if make, model, year, or any spec appears in Confirmed fields or Staff-provided values, use those values exactly. Do not re-identify from photos if the fields already contain this information.
 2. Use photos to supplement — fill in any specs not already in the confirmed fields, using what is visible in photos and your knowledge of that make/model/year.
-3. Apply your training knowledge of that exact make/model/year to fill in standard specs (engine, transmission, typical configurations etc.) when not already provided.
-4. Only include a spec if confirmed from fields, inspection notes, photos, or your knowledge of that specific model — never guess.
-5. If a spec cannot be confirmed from any of these sources, omit it — never write placeholder text or unknown values.
+3. Apply your training knowledge of that exact make/model/year to fill in standard specs (engine, transmission, typical configurations etc.) when not already provided. Be confident — a complete description using your knowledge is always better than an incomplete one.
+4. Only include a spec if it can be confirmed from fields, inspection notes, photos, or your knowledge of that specific model. Do not invent serial numbers, VINs, registration, or exact hours — but standard model specs (engine, HP, transmission type) can come from your training knowledge.
+5. If a spec cannot be confirmed from any source, omit it — never write placeholder text or unknown values. Work with what you have and produce the best description possible.
 
 ENGINE HP REFERENCE (use when HP not in inspection notes — round to nearest 5hp):
 Hino N04C: 187hp | Hino J08E: 260hp | Hino E13C: 510hp
@@ -996,8 +998,10 @@ export async function POST(req: NextRequest) {
   ).filter((url): url is string => url !== null)
 
   // 6. Call GPT-4o — plain text output (NOT Output.object — that is for structured extraction only)
+  const abort = AbortSignal.timeout(50_000) // 50s hard cap — surfaces an error before Vercel kills it
   const { text } = await generateText({
     model: openai('gpt-4o'),
+    abortSignal: abort,
     messages: [
       { role: 'system', content: DESCRIPTION_SYSTEM_PROMPT },
       {
