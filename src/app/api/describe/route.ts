@@ -1065,6 +1065,22 @@ function buildDescriptionUserPrompt(asset: {
   return parts.join('\n')
 }
 
+const QUICK_DESCRIPTION_PROMPT = `You are a professional auction cataloguer. Write a short, punchy 2–4 sentence description for auction use.
+
+RULES:
+- No dot points — plain paragraph prose only
+- State what the item is, any key features or specs visible/known, and general condition if noted
+- No marketing language ("great", "excellent opportunity", etc.)
+- Apply your training knowledge of the make/model if identifiable — include key specs (engine, capacity, size)
+- Always close with "Sold As Is, Untested & Unregistered." (or "Sold As Is, Untested." for attachments/general goods)
+- Do not include serial numbers, VINs, odometer, or hours
+- If only a photo with minimal details is available, describe what you can see and close with the standard footer
+
+Example output:
+2019 Isuzu NQR 450 Medium Rigid Truck, Isuzu 4HK1 4-cylinder diesel engine, Allison automatic transmission, tray body. Sold As Is, Untested & Unregistered.
+
+Pallet of mixed steel pipe fittings, various sizes, no qty specified. Sold As Is, Untested.`
+
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
 
@@ -1074,10 +1090,12 @@ export async function POST(req: NextRequest) {
 
   // 2. Parse request body
   let assetId: string
+  let tone: 'standard' | 'quick' = 'standard'
   try {
     const body = await req.json()
     assetId = body.assetId
     if (!assetId) return Response.json({ error: 'assetId required' }, { status: 400 })
+    if (body.tone === 'quick') tone = 'quick'
   } catch {
     return Response.json({ error: 'Invalid request body' }, { status: 400 })
   }
@@ -1110,12 +1128,13 @@ export async function POST(req: NextRequest) {
   ).filter((url): url is string => url !== null)
 
   // 6. Call GPT-4o — plain text output (NOT Output.object — that is for structured extraction only)
+  const systemPrompt = tone === 'quick' ? QUICK_DESCRIPTION_PROMPT : DESCRIPTION_SYSTEM_PROMPT
   const abort = AbortSignal.timeout(50_000) // 50s hard cap — surfaces an error before Vercel kills it
   const { text } = await generateText({
     model: openai('gpt-4o'),
     abortSignal: abort,
     messages: [
-      { role: 'system', content: DESCRIPTION_SYSTEM_PROMPT },
+      { role: 'system', content: systemPrompt },
       {
         role: 'user',
         content: [
