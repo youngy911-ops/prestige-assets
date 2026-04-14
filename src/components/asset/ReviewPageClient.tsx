@@ -231,30 +231,35 @@ export function ReviewPageClient({
         )}
       />
 
-      {/* Sticky CTA */}
-      <div className="sticky bottom-0 bg-[var(--background)] pt-3 pb-2 flex flex-col gap-2">
-        {saveError && (
-          <p className="text-sm text-red-400 text-center">{saveError}</p>
-        )}
-        {!isSaveAllowed && (
-          <p className="text-xs text-white/50 text-center">Resolve required fields before saving.</p>
-        )}
-        <Button
-          type="submit"
-          className="w-full h-11"
-          disabled={!isSaveAllowed}
-        >
-          Save & Continue
-        </Button>
-        <button
-          type="button"
-          className="text-sm text-white/50 hover:text-white text-center w-full py-1 transition-colors"
-          onClick={triggerReExtraction}
-          disabled={isExtracting}
-        >
-          {isExtracting ? 'Extracting…' : 'Re-run Extraction'}
-        </button>
+      {/* Sticky CTA — fixed bar so it's always visible regardless of scroll position */}
+      <div className="fixed bottom-0 left-0 right-0 z-20 bg-black/60 backdrop-blur-xl border-t border-white/[0.08]"
+        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 72px)' }}>
+        <div className="max-w-2xl mx-auto px-4 pt-3 pb-2 flex flex-col gap-2">
+          {saveError && (
+            <p className="text-sm text-red-400 text-center">{saveError}</p>
+          )}
+          {!isSaveAllowed && (
+            <p className="text-xs text-amber-400/80 text-center">Complete required fields to continue</p>
+          )}
+          <Button
+            type="submit"
+            className="w-full h-12 text-base font-semibold bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40"
+            disabled={!isSaveAllowed}
+          >
+            Save &amp; Continue →
+          </Button>
+          <button
+            type="button"
+            className="text-xs text-white/40 hover:text-white/70 text-center w-full py-1 transition-colors"
+            onClick={triggerReExtraction}
+            disabled={isExtracting}
+          >
+            {isExtracting ? 'Extracting…' : 'Re-run Extraction'}
+          </button>
+        </div>
       </div>
+      {/* Spacer so form content isn't hidden behind the fixed bar */}
+      <div className="h-32" />
     </form>
   )
 }

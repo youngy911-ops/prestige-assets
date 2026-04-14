@@ -753,48 +753,50 @@ Describe the forklift or materials handling equipment visible using the most rel
 Sold As Is, Untested & Unregistered.
 
 CARAVAN
-Year, Make, Model, Type
-Bedroom/bed layout
-Bathroom: shower, toilet, vanity
-A/C, heating
-Kitchen: cooking, fridge, sink
-Laundry if fitted
-Power: solar, batteries
-Water: tanks, hot water system
-Exterior: awning, storage, satellite, spare wheels, tow setup
-Suspension, brakes
+Line 1: Year, Make, Model — apply your knowledge of this make/model to fill standard specs if not in inspection notes
+Body type / layout (e.g. Pop-Top, Full-Height, Slide-Out, Bunk Van, Family), length in feet
+Bed configuration: island queen / rear bunks / front U-dinette (describe what is visible or known for this model)
+Bathroom: separate shower, toilet, vanity — note ensuite layout if relevant
+Kitchen: 3-burner/4-burner cooktop (gas/electric), 3-way fridge or compressor fridge (size if known), microwave, sink, splashback
+Air conditioning: roof-mounted reverse cycle unit (make if badge visible e.g. Houghton, Ibis, Dometic)
+Power: solar panels (Xw if visible), deep-cycle batteries, 240v hookup, inverter if fitted
+Water: Xlt fresh water tank, Xlt grey water tank, instant gas hot water system or electric HWS
+Exterior: roll-out/slide-out awning, external shower, TV aerial/satellite dish, spare wheel(s), rear bumper bar, storage hatches, roof rack
+Chassis/running gear: Al-Ko/Cruisemaster independent coil suspension or leaf spring, electric brakes (make if visible), alloy/steel wheels, tyre size
 Sold As Is, Untested & Unregistered.
 
 CAMPER TRAILER
-Year, Make, Model, [Type] Camper Trailer
-Main bed configuration, additional sleeping
-Ensuite or toilet/shower tent if fitted
-Kitchen: internal / external, cooktop, fridge/freezer make if known
-A/C if fitted
-Power: solar panels, batteries
-Water: front/rear tanks, grey water tank
-Awning, gas bottle holder, entry step, pop-top or hard floor
-Independent trailing arm / leaf spring suspension, brakes, hitch type
+Line 1: Year, Make, Model — apply your knowledge of this make/model for standard specs
+Body type: hard floor / soft floor / hybrid / pop-top
+Main bed: queen island bed or front queen fold-out, additional bunk/inner tent sleeping
+Ensuite or toilet/shower tent if fitted; vanity
+Kitchen: internal kitchen or external swing-out kitchen, X-burner cooktop (gas), Xlt fridge/freezer (compressor or 3-way, make if known)
+Air conditioning if fitted
+Power: Xw solar panels, Xlt lithium/AGM battery bank, 240v outlet
+Water: Xlt front tank, Xlt rear tank, grey water tank, 12v pump
+Awning(s): roll-out main awning, annex if fitted
+Chassis: independent trailing arm suspension, electric/override disc brakes, DO35 or equivalent hitch
 Sold As Is, Untested & Unregistered.
 
 MOTORHOME
-Year, Make, Model, [Class A / B / C] Motorhome
-Chassis make, engine make, transmission, drive type
-Slideouts if fitted
-Bed/bunk layout
-Bathroom: shower, toilet, vanity
-Kitchen: cooking, fridge, microwave
-A/C, climate control
-Power: solar, generator, shore power
-Water tanks: XL fresh, grey, black
+Line 1: Year, Make, Model Motorhome — apply your knowledge for standard specs
+Chassis: make/model, engine make, capacity, HP, transmission, drive type (e.g. Iveco Daily 3.0L Turbo Diesel, 6-speed auto, FWD)
+Slideouts if fitted (note how many)
+Bed: rear queen island / front drop-down queen / over-cab bed / bunk configuration
+Bathroom: separate shower/toilet (cassette or black tank), vanity
+Kitchen: X-burner gas/electric cooktop, compressor fridge (Xlt), microwave, oven, sink
+Air conditioning: roof reverse-cycle unit; cab A/C
+Power: Xw solar, Xah battery bank, 240v shore power inlet, generator if fitted
+Water: Xlt fresh, Xlt grey, Xlt black tank; instant gas or electric HWS
+Garage or storage bay if fitted; bike rack, tow bar
 Sold As Is, Untested & Unregistered.
 
 OTHER CARAVAN / CAMPER
-Describe the caravan, camper, or camping unit visible using the most relevant structure for the type of unit (caravan, camper trailer, or motorhome).
+Describe the caravan, camper, or camping unit visible using the most relevant structure for the type of unit (caravan, camper trailer, or motorhome). Apply your training knowledge of the identified make/model.
 Sold As Is, Untested & Unregistered.
 
 COUPE (CARAVAN)
-This subtype is a Salesforce system artifact. Describe whatever asset is visible from the photos and inspection notes using the most relevant caravan/camper structure. Do not force a specific field layout.
+This subtype is a Salesforce system artifact. Describe whatever asset is visible from the photos and inspection notes using the caravan template above. Apply your training knowledge of the identified make/model.
 Sold As Is, Untested & Unregistered.
 
 MOTOR VEHICLE (CAR)
