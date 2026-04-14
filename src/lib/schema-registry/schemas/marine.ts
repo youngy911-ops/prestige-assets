@@ -20,31 +20,31 @@ export const marineSchema: AssetSchema = {
     {
       key: 'hin', label: 'HIN', sfOrder: 1, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Hull Identification Number — 12-character alphanumeric stamped on transom (rear of hull). Never infer — only extract if directly visible.',
+      aiHint: 'Hull Identification Number: 12-char alphanumeric stamped/moulded on transom upper-right (starboard). Format: MFR-XXXXX-MYY or ABYC format. Never infer — only extract if directly visible.',
       inspectionPriority: true, required: false,
     },
     {
       key: 'make', label: 'Make', sfOrder: 2, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Brand name on hull or motor (e.g. Quintrex, Stacer, Haines Hunter, Riviera, Maritimo, Yamaha, Sea-Doo).',
+      aiHint: 'Hull transom badge, bow decal, or console badge. Australian brands: Quintrex, Stacer, Haines Hunter, Savage, Horizon, Mustang. Cruisers: Riviera, Maritimo, Azzurra. PWC: Sea-Doo, Yamaha WaveRunner.',
       required: true,
     },
     {
       key: 'model', label: 'Model', sfOrder: 3, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Model name/number from hull badge or build plate. Read exactly as printed.',
+      aiHint: 'Hull transom or console badge: model name/number (e.g. 530 Territory, 4.35 Explorer, 680 Trident, 540 Classic). Read exactly as printed including any suffix.',
       required: true,
     },
     {
       key: 'year', label: 'Year', sfOrder: 4, inputType: 'number',
       aiExtractable: true,
-      aiHint: 'Build year from HIN (last 2 digits), compliance plate, or engine plate. 4-digit year only.',
+      aiHint: 'Compliance plate on hull or transom: year of manufacture. Can also decode from HIN last 2 digits (model year). 4-digit year only.',
       required: true,
     },
     {
       key: 'builder', label: 'Builder', sfOrder: 5, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Manufacturer of the hull — often same as Make but may differ for custom or OEM builds.',
+      aiHint: 'Compliance plate or transom: builder/manufacturer name. Often same as Make. Only differ if hull is custom-built or OEM (e.g. built by fibreglass yard for a brand).',
       required: false,
     },
     {
@@ -55,32 +55,32 @@ export const marineSchema: AssetSchema = {
     {
       key: 'hull_material', label: 'Hull Material', sfOrder: 7, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Visual from photos — most common: Fibreglass, Aluminium, Timber, Steel. Infer from appearance if not labelled.',
+      aiHint: 'Visual from photos: Aluminium (riveted or welded panels, metallic sheen), Fibreglass (smooth gelcoat, moulded curves), Timber (wood planking), Steel (heavy plating, typically commercial/tug). Infer confidently.',
       required: false,
     },
     {
       key: 'motor_type', label: 'Motor Type', sfOrder: 8, inputType: 'select',
       options: ['Inboard', 'Outboard', 'Stern Drive', 'Jet Drive', 'Electric'],
       aiExtractable: true,
-      aiHint: 'Visual from photos. Outboard = motor mounted on transom. Inboard = motor inside hull. Stern Drive = inboard engine with external drive leg. Jet Drive = water jet propulsion (common on jet skis). Must be exactly one of: Inboard, Outboard, Stern Drive, Jet Drive, Electric.',
+      aiHint: 'Visual from photos: Outboard=motor on transom with visible leg/prop; Inboard=motor inside hull, shaft drive; Stern Drive=inboard engine + external drive leg (e.g. Volvo/Mercruiser); Jet Drive=no prop, water jet; Electric=electric outboard.',
       required: false,
     },
     {
       key: 'number_of_engines', label: 'Number of Engines', sfOrder: 9, inputType: 'number',
       aiExtractable: true,
-      aiHint: 'Count visible motors/engines from exterior photos.',
+      aiHint: 'Count outboard motors on transom or engine pods visible in exterior photos. Single=1, Twin=2, Triple=3. Small tinnies typically 1, larger offshore boats often 2.',
       required: false,
     },
     {
       key: 'main_engine_details', label: 'Main Engine Details', sfOrder: 10, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Engine badge, cowling label, or build plate. Include make, model, and HP if visible (e.g. Yamaha F150, Mercury 90hp, Volvo Penta D4).',
+      aiHint: 'Engine cowling badge or plate: make + model + HP (e.g. Yamaha F150, Mercury 90hp, Suzuki DF200, Evinrude E-TEC 115, Volvo Penta D4-300, Honda BF115). Read cowling badge exactly.',
       required: false,
     },
     {
       key: 'engine_hours', label: 'Engine Hours', sfOrder: 11, inputType: 'number',
       aiExtractable: true,
-      aiHint: 'Engine hour meter display. Digits only. Only extract if clearly readable — do NOT guess.',
+      aiHint: 'Helm hour meter or multifunction display showing engine hours. Digits only. Only extract if clearly readable in photo — do NOT guess or estimate.',
       inspectionPriority: true, required: false,
     },
     {
@@ -96,12 +96,13 @@ export const marineSchema: AssetSchema = {
     {
       key: 'steering_type', label: 'Steering Type', sfOrder: 14, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Infer from visible helm equipment — Hydraulic (most powered boats), Mechanical (tiller or cable), Electric (electric outboards).',
+      aiHint: 'Helm area photos: Hydraulic steering=wheel connected to hydraulic ram (most powered boats >50hp); Mechanical=cable steering; Tiller=handle directly on outboard; Electronic (EPS)=no cable/hose.',
       required: false,
     },
     {
       key: 'beam', label: 'Beam', sfOrder: 15, inputType: 'text',
-      aiExtractable: false,
+      aiExtractable: true,
+      aiHint: 'Compliance plate or infer from hull profile photo. Beam = maximum width. Format: number + unit (e.g. 2.1m, 2100mm). Estimate from profile if make/model known (lookup typical beam).',
       required: false,
     },
     {
@@ -111,13 +112,14 @@ export const marineSchema: AssetSchema = {
     },
     {
       key: 'loa', label: 'LOA', sfOrder: 17, inputType: 'text',
-      aiExtractable: false,
+      aiExtractable: true,
+      aiHint: 'Length Overall: compliance plate or estimate from full-profile photo (bow to transom). Format: number + unit (e.g. 5.3m, 18ft). If make/model known, use known LOA spec as estimate.',
       inspectionPriority: true, required: false,
     },
     {
       key: 'trailer_length', label: 'Trailer Length', sfOrder: 18, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Visible on trailer compliance plate or infer from trailer photos if present.',
+      aiHint: 'Trailer compliance plate (silver plate on A-frame or chassis rail): overall length. Format: number + unit (e.g. 6.2m). If not on plate, estimate from trailer visible in photo.',
       required: false,
     },
     {
@@ -133,19 +135,19 @@ export const marineSchema: AssetSchema = {
     {
       key: 'winch', label: 'Winch', sfOrder: 21, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Visible on trailer bow roller — present if a winch strap and handle visible.',
+      aiHint: 'Trailer bow roller area: winch visible as drum/strap/handle on A-frame. If present note make/type if badge visible (e.g. Superwinch, hand winch, electric winch). Null if no trailer.',
       required: false,
     },
     {
       key: 'thrusters', label: 'Thrusters', sfOrder: 22, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Bow or stern thruster visible on hull — typically a tunnel thruster on larger vessels.',
+      aiHint: 'Hull bow or stern: tunnel thruster visible as circular opening with propeller in hull sides. Common on larger vessels >8m. Note position (bow/stern) and brand if visible (e.g. Vetus, Side-Power).',
       required: false,
     },
     {
       key: 'damage', label: 'Damage', sfOrder: 23, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Visible hull damage, gelcoat crazing, stress cracks, collision marks, or corrosion from exterior photos.',
+      aiHint: 'Hull exterior photos: gelcoat crazing, stress cracks, spider cracks, collision damage, osmotic blistering, corrosion, dents (aluminium), antifoul condition. Note location and severity.',
       required: false,
     },
     {
