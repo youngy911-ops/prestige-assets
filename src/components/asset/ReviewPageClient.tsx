@@ -193,6 +193,14 @@ export function ReviewPageClient({
         </p>
       )}
 
+      {/* Checklist — shown first so user sees what needs attention before scrolling through fields */}
+      <MissingInfoChecklist
+        checklist={checklist}
+        onUpdate={handleChecklistUpdate}
+      />
+
+      {checklist.length > 0 && <Separator className="my-6 bg-white/10" />}
+
       <DynamicFieldForm
         fields={fields}
         extractionResult={extractionResult}
@@ -200,14 +208,6 @@ export function ReviewPageClient({
         errors={Object.fromEntries(
           Object.entries(errors).map(([k, v]) => [k, { message: v?.message }])
         )}
-      />
-
-      <Separator className="my-6 bg-white/10" />
-
-      {/* Checklist */}
-      <MissingInfoChecklist
-        checklist={checklist}
-        onUpdate={handleChecklistUpdate}
       />
 
       {/* Sticky CTA */}
