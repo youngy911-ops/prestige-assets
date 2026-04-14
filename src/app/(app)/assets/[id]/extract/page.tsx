@@ -32,10 +32,20 @@ export default async function ExtractPage({ params, searchParams }: ExtractPageP
 
   const { data: photos } = await supabase
     .from('asset_photos')
-    .select('id')
+    .select('id, storage_path')
     .eq('asset_id', assetId)
+    .order('sort_order', { ascending: true })
 
   const hasPhotos = (photos?.length ?? 0) > 0
+
+  const photoUrls: string[] = (
+    await Promise.all(
+      (photos ?? []).slice(0, 5).map(async (p) => {
+        const { data } = await supabase.storage.from('photos').createSignedUrl(p.storage_path, 3600)
+        return data?.signedUrl ?? null
+      })
+    )
+  ).filter((u): u is string => u !== null)
 
   return (
     <div className="max-w-[480px] mx-auto px-4 pt-8 pb-[calc(env(safe-area-inset-bottom)+80px)]">
@@ -63,6 +73,7 @@ export default async function ExtractPage({ params, searchParams }: ExtractPageP
         initialExtractionResult={asset.extraction_result as ExtractionResult | null}
         inspectionNotes={asset.inspection_notes}
         hasPhotos={hasPhotos}
+        photoUrls={photoUrls}
         autoStart={autoStart}
       />
     </div>

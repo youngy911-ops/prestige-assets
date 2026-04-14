@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
-import { getAssets, type AssetSummary } from '@/lib/actions/asset.actions'
+import { getAssets, getTodayBookingCount, type AssetSummary } from '@/lib/actions/asset.actions'
 import { AssetCard } from './AssetCard'
 
 const LAST_BRANCH_KEY = 'lastUsedBranch'
@@ -16,6 +16,11 @@ export function AssetList({ branch, onBranchChange }: AssetListProps) {
   const [assets, setAssets] = useState<AssetSummary[] | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [changingBranch, setChangingBranch] = useState(false)
+  const [todayCount, setTodayCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    getTodayBookingCount().then(setTodayCount)
+  }, [])
 
   useEffect(() => {
     setAssets(null)
@@ -36,6 +41,14 @@ export function AssetList({ branch, onBranchChange }: AssetListProps) {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-xl font-semibold text-white">Assets</h1>
+        {todayCount !== null && todayCount > 0 && (
+          <div className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span className="text-xs font-medium text-emerald-400">
+              {todayCount} booked today
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Branch header chip */}

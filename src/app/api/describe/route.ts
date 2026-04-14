@@ -28,6 +28,7 @@ PACCAR MX-13: 380–510hp | CAT C15: 435–580hp
 
 UNIVERSAL RULES:
 - No dot points
+- Use METRIC throughout — EXCEPT these Australian industry conventions where feet/inches are standard: moldboard width (graders), combine header width, grain auger length/diameter, boat LOA (feet first then metres in brackets e.g. "22ft (6.7m)")
 - No serial numbers in description
 - No hours, odometer, or GVM in description body
 - No marketing language
@@ -315,8 +316,13 @@ Sold As Is, Untested & Unregistered.
 
 TIPPER TRAILER
 Line 1: Year, Make, Model, Tipper Trailer. Axle config.
-Body capacity: Xm³, body material
-Tailgate type
+Body capacity: Xm³, body material (marine grade alloy / Hardox steel / Bisalloy), floor type (V-floor / flat)
+Axle brand, suspension type (airbag is premium — always note)
+Brake system (Knorr-Bremse TEBS / Haldex)
+Tarp system: brand and type (Razor Delta II / CoverMe — always name brand if known)
+Onboard scales if fitted (RightWeigh / Haltech)
+Tyre inflation system if fitted (Tiremaax / Haldex)
+Electronic tailgate type if fitted
 Payload: Xt
 Sold As Is, Untested & Unregistered.
 
@@ -610,14 +616,14 @@ Sold As Is, Untested & Unregistered.
 
 COMBINE HARVESTER
 Year, Make, Model, Combine Harvester
-Header width: Xft (or Xm)
-Grain tank: XL (or Xbu)
+Header: Xft Make/Model front (header width in FEET — Australian industry standard)
+Grain tank: XL
 Engine: Make, HP
-Unloading auger reach: Xm
-Threshing system: rotary / conventional
-Rotor type if applicable
-Yield mapping if fitted
-GPS auto-steer if fitted
+Unloading auger reach: Xm, unload rate XL/s
+Threshing system: rotary / conventional, rotor type if applicable
+Both engine hours AND rotor/separator hours if available (they diverge — buyers need both)
+Yield mapping/monitor if fitted (brand named: AFS Pro, Harvest Monitor, Ag Leader)
+GPS auto-steer if fitted (StarFire, Trimble, Topcon — named verbatim)
 Sold As Is, Untested & Unregistered.
 
 AIR SEEDER
@@ -642,11 +648,11 @@ Sold As Is, Untested & Unregistered.
 
 SPRAY RIG / SPRAYER
 Year, Make, Model, [Self-Propelled / Trailed] Sprayer
-Boom width: Xm
-Tank capacity: XL
-Pump type, flow rate: XL/min
-GPS section control if fitted
-Nozzle type
+Boom width: Xm (metric — Australian standard), boom material (steel / carbon fibre)
+Tank capacity: XL, tank material (poly / stainless / fibreglass)
+Engine: Make, HP (self-propelled only)
+GPS section control if fitted — name brand verbatim (Raven, TeeJet, Trimble, Norac, John Deere)
+Nozzle type/spacing (Xcm)
 Sold As Is, Untested & Unregistered.
 
 BALER

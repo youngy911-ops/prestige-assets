@@ -52,3 +52,20 @@ export async function getAssets(branch: string): Promise<AssetSummary[] | { erro
   if (error) return { error: error.message }
   return (data ?? []) as AssetSummary[]
 }
+
+export async function getTodayBookingCount(): Promise<number> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return 0
+
+  const todayStart = new Date()
+  todayStart.setHours(0, 0, 0, 0)
+
+  const { count } = await supabase
+    .from('assets')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', user.id)
+    .gte('created_at', todayStart.toISOString())
+
+  return count ?? 0
+}

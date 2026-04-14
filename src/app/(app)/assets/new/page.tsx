@@ -7,6 +7,7 @@ import { AssetTypeSelector } from '@/components/asset/AssetTypeSelector'
 import { AssetSubtypeSelector } from '@/components/asset/AssetSubtypeSelector'
 import { createAsset } from '@/lib/actions/asset.actions'
 import { SCHEMA_REGISTRY } from '@/lib/schema-registry/index'
+import { AutoDetectButton } from '@/components/asset/AutoDetectButton'
 import type { AssetType } from '@/lib/schema-registry/types'
 import type { BranchKey } from '@/lib/constants/branches'
 
@@ -97,7 +98,25 @@ export default function NewAssetPage() {
           <BranchSelector selected={branch} onSelect={handleBranchSelect} />
         )}
         {step === 2 && (
-          <AssetTypeSelector selected={assetType} onSelect={handleTypeSelect} />
+          <div className="flex flex-col gap-4">
+            <AutoDetectButton
+              onDetected={(type, subtype) => {
+                setAssetType(type)
+                if (subtype) {
+                  // Jump straight to subtype confirmed — same as tapping subtype
+                  handleSubtypeSelect(subtype)
+                } else {
+                  setStep(3)
+                }
+              }}
+            />
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-white/[0.07]" />
+              <span className="text-xs text-white/30">or select manually</span>
+              <div className="flex-1 h-px bg-white/[0.07]" />
+            </div>
+            <AssetTypeSelector selected={assetType} onSelect={handleTypeSelect} />
+          </div>
         )}
         {step === 3 && assetType && (
           <AssetSubtypeSelector

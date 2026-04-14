@@ -54,8 +54,27 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
         initialDescription={(asset.description as string | null) ?? null}
       />
 
-      {/* New Asset button */}
-      <div className="mt-8">
+      {/* QR Code + actions */}
+      <div className="mt-8 flex flex-col gap-3">
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-4">
+          <img
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=80x80&bgcolor=1a2e1a&color=ffffff&data=${encodeURIComponent(`https://assetbookintool.com/assets/${assetId}/output`)}`}
+            alt="QR code for this asset"
+            width={80}
+            height={80}
+            className="rounded-lg flex-shrink-0"
+          />
+          <div>
+            <p className="text-sm font-medium text-white">Asset QR Code</p>
+            <p className="text-xs text-white/45 mt-0.5">Scan to reopen this record on any device</p>
+            <Link
+              href={`/assets/${assetId}/report`}
+              className="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 mt-2 transition-colors"
+            >
+              View condition report →
+            </Link>
+          </div>
+        </div>
         <Link
           href="/assets/new"
           className="flex items-center justify-center w-full rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white h-11 px-4 text-sm font-semibold transition-colors"
