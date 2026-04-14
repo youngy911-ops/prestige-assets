@@ -899,6 +899,112 @@ COUPE (MARINE)
 This subtype is a Salesforce system artifact. Describe whatever marine asset is visible from the photos and inspection notes using the most relevant marine structure. Do not force a specific field layout.
 Sold As Is, Untested & Unregistered.
 
+QUALITY REFERENCE EXAMPLES — match this level of detail and confidence:
+
+WHEEL LOADER EXAMPLE:
+2019 Volvo L90H Wheel Loader
+Operating weight 17,300kg
+Deutz D6J 4-cylinder turbodiesel, 184hp, Stage V
+Powershift transmission, planetary final drive, articulated steering, top speed 46 km/h
+Enclosed cab, rear view camera, auto lube, e-stop, fire extinguisher, isolator, digital display, Loadrite weigh scales, Pressure Pro module, UHF, radio
+AHE bucket, 2650mm
+Last serviced at 9,535hrs
+Sold As Is, Untested & Unregistered.
+
+EXCAVATOR WITH ATTACHMENTS EXAMPLE:
+Komatsu PC228US-8 Short Tail Swing Excavator
+Operating weight 26,400kg
+Komatsu SAA6D107E-1 6-cylinder turbodiesel, 156hp, Tier 3
+600mm tracks, 2200mm track gauge
+Enclosed cab
+Boom 5.7m | Arm 2.9m
+Okada Aiyon ASC-210R hydraulic rock breaker, 1530kg, 28MPa cylinder pressure
+JB Sales hydraulic quick hitch, 5000kg rated
+Sold As Is, Untested & Unregistered.
+
+PRIME MOVER EXAMPLE:
+2023 Kenworth T659 6x4 Prime Mover
+Cummins X15 6-cylinder turbodiesel
+Eaton 18-speed manual, diff locks, hydraulics, Alemlube auto greaser, RightWeigh onboard scales
+48" single sleeper, Custom Air sleeper A/C (2,869hrs)
+Touchscreen display with sat nav, dual UHFs
+Dometic slide-out fridge, slide-out electric hot plate, second fridge, microwave, TV
+Redarc 3000W inverter
+GCM: 135,000kg
+Sold As Is, Untested & Unregistered.
+
+FLAT DECK TRUCK EXAMPLE:
+2002 Scania P114 4x4 Flat Deck
+Scania DC11 6-cylinder turbodiesel, 340hp, 11.0L
+13-speed manual, diff locks, spring suspension
+Flat deck 5,400mm x 2,400mm
+2x 900mm undermount toolboxes, spare tyre, beacon, tow hitch and rear airlines, isolator
+Sold As Is, Untested & Unregistered.
+
+EWP EXAMPLE:
+2003 Isuzu FVZ 6x4 Elevated Work Platform
+Remanufactured/rebuilt January 2019
+Isuzu 6HK1-TC 6-cylinder turbodiesel, 9-speed manual
+GMJ LL22.350 insulated elevated work platform, max working height 23.5m, max reach 13m, SWL 325kg
+Insulation rating 132/33/LV (dry), max operating incline 5°, max wind speed 12.5 m/s
+Hydraulic basket tilt, pilot joystick controls, radio remote, automatic stabiliser deploy/level/stow, battery emergency hydraulic power pack, emergency descent rope
+Conforms with AS/NZS 1418.10
+Sold As Is, Untested & Unregistered.
+
+COMPACT TRACK LOADER EXAMPLE:
+2013 Bobcat T590 Compact Track Loader
+Operating weight 3,580kg
+3,603 hours
+Kubota 4-cylinder turbodiesel, 61hp
+Rated Operating Capacity: 910kg
+Enclosed cab, ROPS/FOPS, air conditioning, radio, auxiliary hydraulics
+320mm rubber tracks
+1,800mm 4-in-1 bucket
+Sold As Is, Untested & Unregistered.
+
+TIPPER TRAILER EXAMPLE:
+2024 Robuk Tri Axle 36ft End Tipper Semi-Trailer
+As new — never loaded, collected from manufacturer and delivered direct, approximately 500km from new
+700 grade steel chassis, marine grade aluminium V-floor body, alloy wheels, custom paint, custom lighting
+Hendrickson axles and airbag suspension, Knorr-Bremse TEBS G2.2 air brakes
+Razor Delta II electronic roll-over tarp
+RightWeigh digital onboard scales
+Hendrickson Tiremaax Pro tyre inflation system
+Knorr-Bremse Trailer Information Module
+Jost JSK 37CW 5th wheel
+Hydraulic automatic opening rear tailgate
+Sold As Is, Untested & Unregistered.
+
+FORKLIFT EXAMPLE:
+2014 Bobcat T590 Compact Track Loader
+3,580kg Operating Weight
+3,392 Hours
+Kubota 4-cylinder turbodiesel, 61hp
+Rated Operating Capacity: 910kg
+Enclosed cab, ROPS/FOPS, auxiliary hydraulics
+320mm rubber tracks
+1,800mm 4-in-1 bucket
+Sold As Is, Untested & Unregistered.
+
+PERSONAL WATERCRAFT EXAMPLE:
+2024 Sea-Doo GTR 230 Personal Watercraft
+Rotax 1630 ACE, 3-cylinder, 4-stroke, supercharged and intercooled petrol, 230hp
+35 hours
+iBR Intelligent Brake and Reverse, Variable Trim System (VTS), Ergolock two-piece touring seat, 3-rider capacity, footwell speakers, wide-angle mirrors, tow hook, DESS lanyard key, LinQ attachment system, watertight phone compartment
+Supplied on 2023 Telwater PWC trailer, VIN: 6HWB0ATRLPC916109, Compliance: 01/23, ATM 650kg
+Sold As Is, Untested & Unregistered.
+
+CARAVAN EXAMPLE:
+2024 Viscount V2 Family Caravan
+Queen east/west bed, double bunk, L-shape dinette
+Full ensuite with shower, toilet and vanity
+Gree rooftop air conditioning, gas/electric hot water system
+Thetford gas oven, cooktop and grill, Thetford 175L fridge/freezer, microwave, 2.5kg washing machine
+2 x water tanks
+Aussie Traveller rollout awning, external speakers, gas bottle holders at front
+Leaf spring suspension, electric brakes, breakaway system
+Sold As Is, Untested & Unregistered.
+
 Return the completed description as plain text only, exactly matching the correct template format. No extra commentary, no explanations, just the description.`
 
 function normalizeFooter(text: string, assetType: string): string {
