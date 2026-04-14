@@ -24,12 +24,14 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
     setStatus('uploading')
     setResult(null)
     try {
-      // Convert to base64 data URL for classification
+      // Compress to max 400KB before sending — phone photos can be 5-10MB as base64
+      const imageCompression = (await import('browser-image-compression')).default
+      const compressed = await imageCompression(file, { maxSizeMB: 0.4, maxWidthOrHeight: 1024, useWebWorker: true })
       const dataUrl = await new Promise<string>((resolve, reject) => {
         const reader = new FileReader()
         reader.onload = () => resolve(reader.result as string)
         reader.onerror = reject
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(compressed)
       })
       setStatus('detecting')
       const res = await fetch('/api/classify', {
