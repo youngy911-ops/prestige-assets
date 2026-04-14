@@ -92,6 +92,8 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    /* Remove the grey tap-highlight flash on iOS — it makes interactions feel laggy */
+    -webkit-tap-highlight-color: transparent;
   }
   body {
     background-color: oklch(0.16 0.04 148);
@@ -102,5 +104,28 @@
   }
   html {
     @apply font-sans;
+  }
+  /* Eliminate the 300ms tap delay on mobile Safari/Chrome.
+     touch-action: manipulation tells the browser this element
+     never needs double-tap-to-zoom, so it fires click immediately. */
+  button,
+  a,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  input[type="checkbox"],
+  input[type="radio"],
+  select,
+  label[for] {
+    touch-action: manipulation;
+  }
+
+  /* Instant press feedback on all buttons and links that don't already
+     have Tailwind active: classes. Scale + opacity gives a tactile feel. */
+  button:active:not([disabled]),
+  a:active {
+    opacity: 0.82;
+    transform: scale(0.97);
+    transition: transform 80ms, opacity 80ms;
   }
 }
