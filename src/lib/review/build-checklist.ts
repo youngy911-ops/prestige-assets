@@ -18,6 +18,12 @@ export function buildChecklist(
 ): ChecklistEntry[] {
   return fields
     .filter(field => {
+      // Only surface fields worth drawing attention to — required fields or
+      // ones the inspector specifically needs to check (inspectionPriority).
+      // Non-required, non-priority fields can be filled in the form below
+      // but shouldn't clutter the checklist.
+      if (!field.required && !field.inspectionPriority) return false
+
       const extracted = extractionResult?.[field.key]
       const hasConfidentValue =
         extracted?.value != null &&

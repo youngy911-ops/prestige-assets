@@ -18,7 +18,7 @@ export function MissingInfoChecklist({ checklist, onUpdate }: MissingInfoCheckli
       </CardHeader>
       <CardContent className="flex flex-col">
         <p className="text-sm text-white/65 mb-4">
-          The following fields could not be confidently extracted. Resolve or dismiss each item before saving.
+          Key fields the AI couldn't confirm. Fill in, or mark N/A to proceed.
         </p>
         <div className="flex flex-col divide-y divide-white/10">
           {checklist.map(entry => (
