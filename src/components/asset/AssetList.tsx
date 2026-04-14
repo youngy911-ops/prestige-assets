@@ -1,6 +1,7 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { ChevronDown, Search, X } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { ChevronDown, Search, X, Plus, Zap } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
 import { getAssets, getTodayBookingCount, type AssetSummary } from '@/lib/actions/asset.actions'
 import { AssetCard } from './AssetCard'
@@ -10,6 +11,7 @@ const LAST_BRANCH_KEY = 'lastUsedBranch'
 interface AssetListProps {
   branch: BranchKey
   onBranchChange: (branch: BranchKey) => void
+  initialAssets?: AssetSummary[] | null
 }
 
 function matchesSearch(asset: AssetSummary, query: string): boolean {
@@ -23,18 +25,26 @@ function matchesSearch(asset: AssetSummary, query: string): boolean {
   return haystack.includes(q)
 }
 
-export function AssetList({ branch, onBranchChange }: AssetListProps) {
-  const [assets, setAssets] = useState<AssetSummary[] | null>(null)
+export function AssetList({ branch, onBranchChange, initialAssets }: AssetListProps) {
+  const router = useRouter()
+  const [assets, setAssets] = useState<AssetSummary[] | null>(initialAssets ?? null)
+  const [showBookInMenu, setShowBookInMenu] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [changingBranch, setChangingBranch] = useState(false)
   const [todayCount, setTodayCount] = useState<number | null>(null)
   const [search, setSearch] = useState('')
+  const isFirstRender = useRef(true)
 
   useEffect(() => {
     getTodayBookingCount().then(setTodayCount)
   }, [])
 
   useEffect(() => {
+    // First render: skip fetch if server pre-loaded assets — they're already in state
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      if (initialAssets != null) return
+    }
     setAssets(null)
     setError(null)
     getAssets(branch).then(result => {
@@ -44,7 +54,7 @@ export function AssetList({ branch, onBranchChange }: AssetListProps) {
         setAssets(result)
       }
     })
-  }, [branch])
+  }, [branch]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const branchLabel = BRANCHES.find(b => b.key === branch)?.label ?? branch
 
@@ -52,15 +62,61 @@ export function AssetList({ branch, onBranchChange }: AssetListProps) {
     <div className="max-w-[640px] mx-auto px-4 pt-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-semibold text-white">Assets</h1>
-        {todayCount !== null && todayCount > 0 && (
-          <div className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            <span className="text-xs font-medium text-emerald-400">
-              {todayCount} booked today
-            </span>
-          </div>
-        )}
+        <div className="flex items-center gap-3">
+          <h1 className="text-xl font-semibold text-white">Assets</h1>
+          {todayCount !== null && todayCount > 0 && (
+            <div className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="text-xs font-medium text-emerald-400">{todayCount} today</span>
+            </div>
+          )}
+        </div>
+
+        {/* Book In button + dropdown */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setShowBookInMenu(v => !v)}
+            className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-3 py-2 rounded-xl transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            Book In
+          </button>
+          {showBookInMenu && (
+            <>
+              {/* Backdrop to close */}
+              <div className="fixed inset-0 z-10" onClick={() => setShowBookInMenu(false)} />
+              <div className="absolute right-0 top-10 z-20 w-52 rounded-xl border border-white/[0.10] bg-[#111f11] shadow-xl overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => { setShowBookInMenu(false); router.push('/assets/new') }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-white/[0.06] transition-colors border-b border-white/[0.06]"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center flex-shrink-0">
+                    <Plus className="w-4 h-4 text-white" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-semibold">New Asset</p>
+                    <p className="text-xs text-white/45">Full photos + AI extract</p>
+                  </div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setShowBookInMenu(false); router.push('/assets/quick') }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-white/[0.06] transition-colors"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.08] flex items-center justify-center flex-shrink-0">
+                    <Zap className="w-4 h-4 text-emerald-400" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-semibold">Quick Book</p>
+                    <p className="text-xs text-white/45">Snap a photo, fill later</p>
+                  </div>
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Branch header chip */}

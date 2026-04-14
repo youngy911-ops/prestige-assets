@@ -1,41 +1,24 @@
-'use client'
-import { useEffect, useState } from 'react'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+import { getAssets, type AssetSummary } from '@/lib/actions/asset.actions'
+import { HomePageClient } from '@/components/asset/HomePageClient'
 import type { BranchKey } from '@/lib/constants/branches'
-import { BranchPickerScreen } from '@/components/asset/BranchPickerScreen'
-import { AssetList } from '@/components/asset/AssetList'
 
-const LAST_BRANCH_KEY = 'lastUsedBranch'
+export default async function AssetsPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
 
-export default function AssetsPage() {
-  // undefined = loading (no flash); null = no branch; BranchKey = branch known
-  const [branch, setBranch] = useState<BranchKey | null | undefined>(undefined)
+  const cookieStore = await cookies()
+  const branch = (cookieStore.get('lastUsedBranch')?.value ?? null) as BranchKey | null
 
-  useEffect(() => {
-    const saved = localStorage.getItem(LAST_BRANCH_KEY) as BranchKey | null
-    setBranch(saved)
-  }, [])
-
-  // Hydration guard — render nothing until localStorage is read
-  if (branch === undefined) return null
-
-  if (!branch) {
-    return (
-      <BranchPickerScreen
-        onSelect={(b) => {
-          localStorage.setItem(LAST_BRANCH_KEY, b)
-          setBranch(b)
-        }}
-      />
-    )
+  // Pre-fetch assets server-side if branch is known — eliminates client-side loading delay
+  let initialAssets: AssetSummary[] | null = null
+  if (branch) {
+    const result = await getAssets(branch)
+    if (!('error' in result)) initialAssets = result
   }
 
-  return (
-    <AssetList
-      branch={branch}
-      onBranchChange={(b) => {
-        localStorage.setItem(LAST_BRANCH_KEY, b)
-        setBranch(b)
-      }}
-    />
-  )
+  return <HomePageClient initialBranch={branch} initialAssets={initialAssets} />
 }
