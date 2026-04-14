@@ -67,6 +67,7 @@ export function ReviewPageClient({
   )
 
   const isSaveAllowed = canSave(checklist)
+  const [isSaving, setIsSaving] = useState(false)
 
   // Update a checklist item's status
   const handleChecklistUpdate = useCallback((fieldKey: string, status: ChecklistStatus) => {
@@ -128,27 +129,53 @@ export function ReviewPageClient({
     setConflictFields([])
   }
 
-  // Save
+  // Build checklist state snapshot for saving
+  function buildFinalChecklistState() {
+    const state: Record<string, string> = {}
+    for (const entry of checklist) {
+      state[entry.field.key] = entry.status
+    }
+    return state
+  }
+
+  // Full validated save (called by react-hook-form handleSubmit)
   const onSubmit = async (values: ReviewFormValues) => {
     setSaveError(null)
-    // Build final checklist state: merge current computed checklist with saved state
-    const finalChecklistState: Record<string, string> = {}
-    for (const entry of checklist) {
-      finalChecklistState[entry.field.key] = entry.status
-    }
-
-    const result = await saveReview(assetId, values, finalChecklistState)
+    setIsSaving(true)
+    const result = await saveReview(assetId, values, buildFinalChecklistState())
     if (result && 'error' in result) {
       const msg = result.error === 'Not authenticated'
         ? 'Session expired. Refresh the page and try again.'
         : `Save failed: ${result.error}. Check your connection and try again.`
       setSaveError(msg)
+      setIsSaving(false)
     }
     // On success, saveReview calls redirect() internally — no further action needed
   }
 
+  // Partial save — bypasses field validation, saves whatever is filled in
+  const handleProceed = async () => {
+    if (isSaveAllowed) {
+      // All required fields present — use validated submit path
+      handleSubmit(onSubmit)()
+      return
+    }
+    // Partial proceed — save whatever's filled in, staff can complete later
+    setSaveError(null)
+    setIsSaving(true)
+    const values = getValues() as Record<string, string>
+    const result = await saveReview(assetId, values, buildFinalChecklistState())
+    if (result && 'error' in result) {
+      const msg = result.error === 'Not authenticated'
+        ? 'Session expired. Refresh the page and try again.'
+        : `Save failed: ${result.error}. Check your connection and try again.`
+      setSaveError(msg)
+      setIsSaving(false)
+    }
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-0">
+    <form onSubmit={(e) => { e.preventDefault(); handleProceed() }} className="flex flex-col gap-0">
       {/* Duplicate detection banner */}
       {duplicateWarning && (
         <div className="mb-4 rounded-xl border border-red-500/40 bg-red-900/20 px-4 py-3 flex items-start gap-3">
@@ -239,14 +266,15 @@ export function ReviewPageClient({
             <p className="text-sm text-red-400 text-center">{saveError}</p>
           )}
           {!isSaveAllowed && (
-            <p className="text-xs text-amber-400/80 text-center">Complete required fields to continue</p>
+            <p className="text-xs text-amber-400/80 text-center">Some fields incomplete — you can still proceed and fill them in later</p>
           )}
           <Button
-            type="submit"
+            type="button"
+            onClick={handleProceed}
+            disabled={isSaving}
             className="w-full h-12 text-base font-semibold bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40"
-            disabled={!isSaveAllowed}
           >
-            Save &amp; Continue →
+            {isSaving ? 'Saving…' : 'Save & Continue →'}
           </Button>
           <button
             type="button"
