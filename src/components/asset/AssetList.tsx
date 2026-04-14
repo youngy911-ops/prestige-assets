@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Search, X } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
 import { getAssets, getTodayBookingCount, type AssetSummary } from '@/lib/actions/asset.actions'
 import { AssetCard } from './AssetCard'
@@ -12,11 +12,23 @@ interface AssetListProps {
   onBranchChange: (branch: BranchKey) => void
 }
 
+function matchesSearch(asset: AssetSummary, query: string): boolean {
+  if (!query.trim()) return true
+  const q = query.toLowerCase()
+  const haystack = [
+    asset.asset_type,
+    asset.asset_subtype ?? '',
+    ...Object.values(asset.fields ?? {}),
+  ].join(' ').toLowerCase()
+  return haystack.includes(q)
+}
+
 export function AssetList({ branch, onBranchChange }: AssetListProps) {
   const [assets, setAssets] = useState<AssetSummary[] | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [changingBranch, setChangingBranch] = useState(false)
   const [todayCount, setTodayCount] = useState<number | null>(null)
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     getTodayBookingCount().then(setTodayCount)
@@ -94,6 +106,29 @@ export function AssetList({ branch, onBranchChange }: AssetListProps) {
         )}
       </div>
 
+      {/* Search */}
+      {assets !== null && assets.length > 0 && (
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+          <input
+            type="search"
+            placeholder="Search make, model, type…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-white/[0.10] bg-white/[0.03] text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/40 transition-colors"
+          />
+          {search && (
+            <button
+              type="button"
+              onClick={() => setSearch('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      )}
+
       {/* List states */}
       {error && (
         <div className="text-center py-16">
@@ -115,21 +150,29 @@ export function AssetList({ branch, onBranchChange }: AssetListProps) {
         </div>
       )}
 
-      {!error && assets !== null && assets.length > 0 && (
-        <div className="flex flex-col gap-4">
-          {assets.map(asset => (
-            <AssetCard
-              key={asset.id}
-              id={asset.id}
-              asset_type={asset.asset_type}
-              asset_subtype={asset.asset_subtype}
-              fields={(asset.fields ?? {}) as Record<string, string>}
-              status={asset.status}
-              updated_at={asset.updated_at}
-            />
-          ))}
-        </div>
-      )}
+      {!error && assets !== null && assets.length > 0 && (() => {
+        const filtered = assets.filter(a => matchesSearch(a, search))
+        return filtered.length === 0 ? (
+          <div className="text-center py-10">
+            <p className="text-white/65 text-sm">No assets match &ldquo;{search}&rdquo;</p>
+            <button type="button" onClick={() => setSearch('')} className="text-xs text-emerald-400 hover:text-emerald-300 mt-2 transition-colors">Clear search</button>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-4">
+            {filtered.map(asset => (
+              <AssetCard
+                key={asset.id}
+                id={asset.id}
+                asset_type={asset.asset_type}
+                asset_subtype={asset.asset_subtype}
+                fields={(asset.fields ?? {}) as Record<string, string>}
+                status={asset.status}
+                updated_at={asset.updated_at}
+              />
+            ))}
+          </div>
+        )
+      })()}
     </div>
   )
 }
