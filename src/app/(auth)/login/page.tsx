@@ -5,8 +5,8 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-[380px] flex flex-col gap-6">
         <div className="text-center mb-2">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/25 mb-5">
-            <span className="text-2xl">🏷️</span>
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-emerald-600 mb-5 shadow-[0_0_24px_rgba(16,185,129,0.3)]">
+            <span className="text-2xl font-black text-white tracking-tight">S</span>
           </div>
           <h1 className="text-[26px] font-bold text-white leading-tight tracking-tight">
             Slattery Auctions
