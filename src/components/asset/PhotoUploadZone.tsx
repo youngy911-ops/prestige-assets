@@ -1,9 +1,9 @@
 'use client'
 import { useRef, useState } from 'react'
-import { Camera, AlertCircle } from 'lucide-react'
+import { Camera, AlertCircle, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { processImageForUpload } from '@/lib/utils/image'
-import { insertPhoto } from '@/lib/actions/photo.actions'
+import { insertPhoto, pickHeroShot, updatePhotoOrder } from '@/lib/actions/photo.actions'
 import { PhotoThumbnailGrid } from './PhotoThumbnailGrid'
 import { createClient } from '@/lib/supabase/client'
 
@@ -37,6 +37,8 @@ export function PhotoUploadZone({
   const [uploadingIds, setUploadingIds] = useState<Set<string>>(new Set())
   const [uploadErrors, setUploadErrors] = useState<UploadError[]>([])
   const [uploadProgress, setUploadProgress] = useState<{ done: number; total: number } | null>(null)
+  const [isPickingHero, setIsPickingHero] = useState(false)
+  const [heroPickResult, setHeroPickResult] = useState<'updated' | 'already-best' | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const supabase = createClient()
 
@@ -144,6 +146,33 @@ export function PhotoUploadZone({
     setUploadProgress(null)
   }
 
+  async function handlePickHero() {
+    if (photos.length < 2 || isPickingHero) return
+    setIsPickingHero(true)
+    setHeroPickResult(null)
+    const result = await pickHeroShot(assetId)
+    if ('error' in result) { setIsPickingHero(false); return }
+
+    const { heroIndex } = result
+    if (heroIndex === 0) {
+      setHeroPickResult('already-best')
+    } else {
+      // Move picked photo to front, shift others down
+      const reordered = [
+        photos[heroIndex],
+        ...photos.slice(0, heroIndex),
+        ...photos.slice(heroIndex + 1),
+      ]
+      setPhotos(reordered)
+      onPhotosChange?.(reordered)
+      await updatePhotoOrder(reordered.map((p, i) => ({ id: p.id, sortOrder: i })))
+      setHeroPickResult('updated')
+    }
+    setIsPickingHero(false)
+    // Clear result hint after 3 seconds
+    setTimeout(() => setHeroPickResult(null), 3000)
+  }
+
   // Empty state
   if (photos.length === 0 && uploadingIds.size === 0) {
     return (
@@ -201,19 +230,37 @@ export function PhotoUploadZone({
           <p className="text-sm text-white/65">
             {uploadProgress
               ? `Uploading ${uploadProgress.done}/${uploadProgress.total}…`
+              : heroPickResult === 'updated'
+              ? 'Cover photo updated'
+              : heroPickResult === 'already-best'
+              ? 'Already best cover photo'
               : `${photos.length} photo${photos.length !== 1 ? 's' : ''} — drag to reorder`
             }
           </p>
         </div>
-        <Button
-          onClick={handleAddPhotosClick}
-          disabled={isUploading || atCap}
-          size="sm"
-          className="bg-emerald-600 hover:bg-emerald-600/90 text-white h-9 disabled:opacity-40"
-        >
-          <Camera className="w-4 h-4 mr-1.5" />
-          {isUploading ? `${uploadProgress?.done ?? 0}/${uploadProgress?.total ?? '…'}` : 'Add Photos'}
-        </Button>
+        <div className="flex items-center gap-2">
+          {photos.length >= 2 && !isUploading && (
+            <button
+              type="button"
+              onClick={handlePickHero}
+              disabled={isPickingHero}
+              title="AI picks best cover photo"
+              className="flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 transition-colors disabled:opacity-40"
+            >
+              <Sparkles className={`w-3.5 h-3.5 ${isPickingHero ? 'animate-pulse' : ''}`} />
+              {isPickingHero ? 'Picking…' : 'AI Cover'}
+            </button>
+          )}
+          <Button
+            onClick={handleAddPhotosClick}
+            disabled={isUploading || atCap}
+            size="sm"
+            className="bg-emerald-600 hover:bg-emerald-600/90 text-white h-9 disabled:opacity-40"
+          >
+            <Camera className="w-4 h-4 mr-1.5" />
+            {isUploading ? `${uploadProgress?.done ?? 0}/${uploadProgress?.total ?? '…'}` : 'Add Photos'}
+          </Button>
+        </div>
       </div>
 
       {/* Hidden file input */}
