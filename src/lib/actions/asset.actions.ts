@@ -35,6 +35,7 @@ export type AssetSummary = {
   fields: Record<string, string>
   status: 'draft' | 'confirmed'
   updated_at: string
+  thumb_url: string | null
 }
 
 export async function getAssets(branch: string): Promise<AssetSummary[] | { error: string }> {
@@ -50,7 +51,35 @@ export async function getAssets(branch: string): Promise<AssetSummary[] | { erro
     .order('updated_at', { ascending: false })
 
   if (error) return { error: error.message }
-  return (data ?? []) as AssetSummary[]
+  const assets = (data ?? []) as Omit<AssetSummary, 'thumb_url'>[]
+
+  if (assets.length === 0) return []
+
+  // Fetch first photo path for each asset in one query
+  const assetIds = assets.map(a => a.id)
+  const { data: photos } = await supabase
+    .from('asset_photos')
+    .select('asset_id, storage_path')
+    .in('asset_id', assetIds)
+    .order('sort_order', { ascending: true })
+
+  // Build map: asset_id → first storage_path
+  const firstPhotoMap = new Map<string, string>()
+  for (const p of photos ?? []) {
+    if (!firstPhotoMap.has(p.asset_id)) firstPhotoMap.set(p.asset_id, p.storage_path)
+  }
+
+  // Generate signed URLs in parallel (short 10-min expiry — list view only)
+  const withThumbs = await Promise.all(
+    assets.map(async asset => {
+      const storagePath = firstPhotoMap.get(asset.id)
+      if (!storagePath) return { ...asset, thumb_url: null }
+      const { data } = await supabase.storage.from('photos').createSignedUrl(storagePath, 600)
+      return { ...asset, thumb_url: data?.signedUrl ?? null }
+    })
+  )
+
+  return withThumbs
 }
 
 export async function getTodayBookingCount(): Promise<number> {

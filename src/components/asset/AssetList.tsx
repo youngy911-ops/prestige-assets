@@ -224,6 +224,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
                 fields={(asset.fields ?? {}) as Record<string, string>}
                 status={asset.status}
                 updated_at={asset.updated_at}
+                thumb_url={asset.thumb_url}
               />
             ))}
           </div>
