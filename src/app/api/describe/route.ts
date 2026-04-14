@@ -1015,6 +1015,51 @@ Sold As Is, Untested & Unregistered.
 
 Return the completed description as plain text only, exactly matching the correct template format. No extra commentary, no explanations, just the description.`
 
+// Words that stay lowercase in Title Case (unless they start a line)
+const TITLE_CASE_LOWER = new Set([
+  'a', 'an', 'the',
+  'and', 'but', 'or', 'nor', 'for', 'so', 'yet',
+  'at', 'by', 'in', 'of', 'on', 'to', 'up', 'as',
+  'from', 'into', 'onto', 'via', 'per', 'vs',
+])
+
+function toTitleCase(text: string): string {
+  return text
+    .split('\n')
+    .map(line => {
+      if (!line.trim()) return line
+      // Tokenise: words + whitespace/punctuation runs
+      const tokens = line.split(/(\s+)/)
+      let firstWordSeen = false
+      return tokens.map(token => {
+        if (/^\s+$/.test(token) || token === '') return token
+
+        const isFirst = !firstWordSeen
+        firstWordSeen = true
+
+        // Keep existing ALL-CAPS tokens (acronyms: GVM, VIN, HP, A/C, EGR, ABS, etc.)
+        if (token === token.toUpperCase() && /[A-Z]/.test(token)) return token
+
+        // Handle slash-separated terms: each part title-cased independently (e.g. shower/toilet)
+        if (token.includes('/')) {
+          return token.split('/').map((part, i) => {
+            if (!part) return part
+            const lower = part.toLowerCase()
+            if (i === 0 && isFirst) return lower.charAt(0).toUpperCase() + lower.slice(1)
+            if (TITLE_CASE_LOWER.has(lower) && i > 0) return lower
+            return lower.charAt(0).toUpperCase() + lower.slice(1)
+          }).join('/')
+        }
+
+        const lower = token.toLowerCase()
+        // Small words stay lowercase unless they start the line
+        if (!isFirst && TITLE_CASE_LOWER.has(lower)) return lower
+        return lower.charAt(0).toUpperCase() + lower.slice(1)
+      }).join('')
+    })
+    .join('\n')
+}
+
 function normalizeFooter(text: string, assetType: string): string {
   const footer = assetType === 'general_goods'
     ? 'Sold As Is, Untested.'
@@ -1154,8 +1199,9 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'Description generation failed. Try again — if it keeps failing, add more details to inspection notes.' }, { status: 422 })
   }
 
-  // 8. Normalise footer — strip any footer variant, append correct footer for asset type
-  const normalizedText = normalizeFooter(text, asset.asset_type)
+  // 8. Apply Title Case, then normalise footer
+  const titledText = toTitleCase(text)
+  const normalizedText = normalizeFooter(titledText, asset.asset_type)
 
   // 9. Persist to DB — user_id guard in addition to RLS (defense in depth, mirrors saveReview pattern)
   await supabase
