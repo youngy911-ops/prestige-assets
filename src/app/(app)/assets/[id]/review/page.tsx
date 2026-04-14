@@ -27,6 +27,30 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
 
   if (!asset) redirect('/assets/new')
 
+  // Duplicate detection — check VIN or serial_number against other assets
+  const fields = (asset.fields ?? {}) as Record<string, string>
+  const vin = fields.vin?.trim()
+  const serial = fields.serial_number?.trim()
+  let duplicateWarning: { id: string; asset_type: string; asset_subtype: string | null } | null = null
+
+  const identifierKey = vin ? 'vin' : serial ? 'serial_number' : null
+  const identifierValue = vin || serial || null
+
+  if (identifierKey && identifierValue) {
+    // Supabase JSONB filter: fields->>'vin' = '...'
+    const { data: dupes } = await supabase
+      .from('assets')
+      .select('id, asset_type, asset_subtype')
+      .neq('id', assetId)
+      .eq('user_id', user.id)
+      .filter(`fields->>${identifierKey}`, 'eq', identifierValue)
+      .limit(1)
+
+    if (dupes && dupes.length > 0) {
+      duplicateWarning = dupes[0] as { id: string; asset_type: string; asset_subtype: string | null }
+    }
+  }
+
   return (
     <div className="max-w-2xl mx-auto px-4 pt-8 pb-[calc(env(safe-area-inset-bottom)+80px)]">
       {/* Header */}
@@ -54,6 +78,7 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
         savedFields={(asset.fields as Record<string, string>) ?? {}}
         savedChecklistState={(asset.checklist_state as Record<string, string>) ?? {}}
         inspectionNotes={asset.inspection_notes}
+        duplicateWarning={duplicateWarning}
       />
     </div>
   )

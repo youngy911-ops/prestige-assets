@@ -21,6 +21,7 @@ interface ReviewPageClientProps {
   savedFields: Record<string, string>
   savedChecklistState: Record<string, string>
   inspectionNotes: string | null
+  duplicateWarning?: { id: string; asset_type: string; asset_subtype: string | null } | null
 }
 
 export function ReviewPageClient({
@@ -30,6 +31,7 @@ export function ReviewPageClient({
   savedFields,
   savedChecklistState,
   inspectionNotes,
+  duplicateWarning,
 }: ReviewPageClientProps) {
   const fields = getFieldsSortedBySfOrder(assetType)
   const schema = buildFormSchema(fields)
@@ -147,6 +149,25 @@ export function ReviewPageClient({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-0">
+      {/* Duplicate detection banner */}
+      {duplicateWarning && (
+        <div className="mb-4 rounded-xl border border-red-500/40 bg-red-900/20 px-4 py-3 flex items-start gap-3">
+          <span className="text-red-400 text-lg leading-none mt-0.5">⚠</span>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-red-300">Possible duplicate detected</p>
+            <p className="text-xs text-red-300/70 mt-0.5">
+              Another asset with this VIN / serial number already exists.{' '}
+              <a
+                href={`/assets/${duplicateWarning.id}/review`}
+                className="underline hover:text-red-300 transition-colors"
+              >
+                View existing record →
+              </a>
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Re-extraction notes section */}
       <div className="mb-6">
         <InspectionNotesSection
