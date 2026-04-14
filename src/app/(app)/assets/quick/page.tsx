@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { Camera, Check, Loader2, ChevronLeft, Zap, FolderOpen, Images } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
@@ -20,6 +20,12 @@ export default function QuickBookPage() {
   const router = useRouter()
   const cameraRef = useRef<HTMLInputElement>(null)
   const filesRef = useRef<HTMLInputElement>(null)
+  const blobUrlsRef = useRef<string[]>([])
+
+  // Revoke all blob URLs on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => { blobUrlsRef.current.forEach(u => URL.revokeObjectURL(u)) }
+  }, [])
   const [branch, setBranch] = useState<BranchKey | null>(null)
   const [status, setStatus] = useState<QuickBookStatus>('idle')
   const [uploadProgress, setUploadProgress] = useState<string | null>(null)
@@ -46,17 +52,23 @@ export default function QuickBookPage() {
 
       const assetId = result.assetId
       const thumbUrl = URL.createObjectURL(files[0])
+      blobUrlsRef.current.push(thumbUrl)
 
-      // Upload all photos sequentially
-      for (let i = 0; i < files.length; i++) {
-        setStatus('uploading')
-        setUploadProgress(files.length > 1 ? `Uploading photo ${i + 1} of ${files.length}…` : 'Uploading…')
-        const formData = new FormData()
-        formData.append('file', files[i])
-        formData.append('assetId', assetId)
-        const uploadRes = await fetch('/api/upload-photo', { method: 'POST', body: formData })
-        if (!uploadRes.ok) throw new Error(`Photo ${i + 1} upload failed`)
-      }
+      // Upload all photos in parallel
+      setStatus('uploading')
+      setUploadProgress(files.length > 1 ? `Uploading ${files.length} photos…` : 'Uploading…')
+      const uploadResults = await Promise.allSettled(
+        files.map((file, i) => {
+          const formData = new FormData()
+          formData.append('file', file)
+          formData.append('assetId', assetId)
+          formData.append('sortOrder', String(i))
+          return fetch('/api/upload-photo', { method: 'POST', body: formData })
+        })
+      )
+      const failed = uploadResults.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && !r.value.ok))
+      if (failed.length === files.length) throw new Error('All photos failed to upload')
+      // Partial success is still a success — asset created with some photos
 
       setBooked(prev => [...prev, {
         id: assetId,

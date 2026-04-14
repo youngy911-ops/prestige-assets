@@ -38,17 +38,17 @@ export async function POST(req: NextRequest) {
     .eq('asset_id', assetId)
     .order('sort_order', { ascending: true })
 
-  // 5. Generate signed URLs (1-hour expiry — generate immediately before AI call)
-  const signedUrls = (
-    await Promise.all(
-      (photos ?? []).map(async (p) => {
-        const { data } = await supabase.storage
-          .from('photos')
-          .createSignedUrl(p.storage_path, 3600)
-        return data?.signedUrl ?? null
-      })
-    )
-  ).filter((url): url is string => url !== null)
+  // 5. Generate signed URLs in a single batch call (one API call regardless of photo count)
+  const photoList = photos ?? []
+  const { data: signedUrlData } = photoList.length > 0
+    ? await supabase.storage.from('photos').createSignedUrls(
+        photoList.map(p => p.storage_path),
+        3600
+      )
+    : { data: [] }
+  const signedUrls = (signedUrlData ?? [])
+    .map(r => r.signedUrl)
+    .filter((url): url is string => !!url)
 
   // 6. Build extraction schema + prompts
   const assetType = asset.asset_type as AssetType

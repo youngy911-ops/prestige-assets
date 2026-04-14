@@ -12,30 +12,33 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: asset } = await supabase
-    .from('assets')
-    .select('id, asset_type, asset_subtype, fields, description, inspection_notes')
-    .eq('id', assetId)
-    .single()
+  const [{ data: asset }, { data: photos }] = await Promise.all([
+    supabase
+      .from('assets')
+      .select('id, asset_type, asset_subtype, fields, description, inspection_notes')
+      .eq('id', assetId)
+      .single(),
+    supabase
+      .from('asset_photos')
+      .select('storage_path, sort_order')
+      .eq('asset_id', assetId)
+      .order('sort_order', { ascending: true }),
+  ])
 
   if (!asset) redirect('/')
 
-  const { data: photos } = await supabase
-    .from('asset_photos')
-    .select('storage_path, sort_order')
-    .eq('asset_id', assetId)
-    .order('sort_order', { ascending: true })
+  // Batch signed URL generation — one API call regardless of photo count
+  const photoList = photos ?? []
+  const { data: signedUrlData } = photoList.length > 0
+    ? await supabase.storage.from('photos').createSignedUrls(
+        photoList.map(p => p.storage_path),
+        3600
+      )
+    : { data: [] }
 
-  const signedUrls: string[] = (
-    await Promise.all(
-      (photos ?? []).map(async (p) => {
-        const { data } = await supabase.storage
-          .from('photos')
-          .createSignedUrl(p.storage_path, 3600)
-        return data?.signedUrl ?? null
-      })
-    )
-  ).filter((url): url is string => url !== null)
+  const signedUrls: string[] = (signedUrlData ?? [])
+    .map(r => r.signedUrl)
+    .filter((u): u is string => !!u)
 
   const fieldsText = generateFieldsBlock(
     asset.asset_type as AssetType,

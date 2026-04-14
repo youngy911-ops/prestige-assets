@@ -33,11 +33,16 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
   const serial = fields.serial_number?.trim()
   let duplicateWarning: { id: string; asset_type: string; asset_subtype: string | null } | null = null
 
-  const identifierKey = vin ? 'vin' : serial ? 'serial_number' : null
+  // Whitelist identifierKey — must be one of these exact strings before use in filter
+  const SAFE_IDENTIFIER_KEYS = ['vin', 'serial_number'] as const
+  type SafeKey = typeof SAFE_IDENTIFIER_KEYS[number]
+  const rawKey = vin ? 'vin' : serial ? 'serial_number' : null
+  const identifierKey: SafeKey | null = rawKey && (SAFE_IDENTIFIER_KEYS as readonly string[]).includes(rawKey)
+    ? rawKey as SafeKey : null
   const identifierValue = vin || serial || null
 
   if (identifierKey && identifierValue) {
-    // Supabase JSONB filter: fields->>'vin' = '...'
+    // Supabase JSONB filter: fields->>'vin' = '...' (identifierKey is whitelisted above)
     const { data: dupes } = await supabase
       .from('assets')
       .select('id, asset_type, asset_subtype')

@@ -9,11 +9,12 @@ export async function POST(req: NextRequest) {
   const formData = await req.formData()
   const file = formData.get('file') as File | null
   const assetId = formData.get('assetId') as string | null
+  const sortOrder = Number(formData.get('sortOrder') ?? 0)
 
   if (!file || !assetId) return Response.json({ error: 'file and assetId required' }, { status: 400 })
 
-  const ext = file.name.split('.').pop() ?? 'jpg'
-  const storagePath = `${user.id}/${assetId}/${Date.now()}.${ext}`
+  const ext = file.name.split('.').pop()?.replace(/[^a-zA-Z0-9]/g, '') ?? 'jpg'
+  const storagePath = `${user.id}/${assetId}/${Date.now()}-${sortOrder}.${ext}`
 
   const arrayBuffer = await file.arrayBuffer()
   const { error: uploadError } = await supabase.storage
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
 
   const { error: insertError } = await supabase
     .from('asset_photos')
-    .insert({ asset_id: assetId, storage_path: storagePath, sort_order: 0 })
+    .insert({ asset_id: assetId, storage_path: storagePath, sort_order: sortOrder })
 
   if (insertError) return Response.json({ error: insertError.message }, { status: 500 })
 

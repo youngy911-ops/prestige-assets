@@ -22,18 +22,19 @@ export default async function ExtractPage({ params, searchParams }: ExtractPageP
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: asset } = await supabase
-    .from('assets')
-    .select('id, asset_type, asset_subtype, extraction_result, inspection_notes')
-    .eq('id', assetId)
-    .single()
+  const [{ data: asset }, { count: photoCount }] = await Promise.all([
+    supabase
+      .from('assets')
+      .select('id, asset_type, asset_subtype, extraction_result, inspection_notes')
+      .eq('id', assetId)
+      .single(),
+    supabase
+      .from('asset_photos')
+      .select('*', { count: 'exact', head: true })
+      .eq('asset_id', assetId),
+  ])
 
   if (!asset) redirect('/assets/new')
-
-  const { count: photoCount } = await supabase
-    .from('asset_photos')
-    .select('*', { count: 'exact', head: true })
-    .eq('asset_id', assetId)
 
   const hasPhotos = (photoCount ?? 0) > 0
 

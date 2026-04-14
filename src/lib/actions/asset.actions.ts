@@ -69,17 +69,17 @@ export async function getAssets(branch: string): Promise<AssetSummary[] | { erro
     if (!firstPhotoMap.has(p.asset_id)) firstPhotoMap.set(p.asset_id, p.storage_path)
   }
 
-  // Generate signed URLs in parallel (short 10-min expiry — list view only)
-  const withThumbs = await Promise.all(
-    assets.map(async asset => {
-      const storagePath = firstPhotoMap.get(asset.id)
-      if (!storagePath) return { ...asset, thumb_url: null }
-      const { data } = await supabase.storage.from('photos').createSignedUrl(storagePath, 600)
-      return { ...asset, thumb_url: data?.signedUrl ?? null }
-    })
-  )
+  // Batch signed URL generation — one API call for all thumbnails
+  const storagePaths = [...firstPhotoMap.values()]
+  const { data: signedUrlData } = storagePaths.length > 0
+    ? await supabase.storage.from('photos').createSignedUrls(storagePaths, 600)
+    : { data: [] }
+  const urlByPath = new Map((signedUrlData ?? []).map(r => [r.path, r.signedUrl]))
 
-  return withThumbs
+  return assets.map(asset => ({
+    ...asset,
+    thumb_url: urlByPath.get(firstPhotoMap.get(asset.id) ?? '') ?? null,
+  }))
 }
 
 export async function getTodayBookingCount(): Promise<number> {

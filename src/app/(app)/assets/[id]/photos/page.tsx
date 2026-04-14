@@ -22,36 +22,39 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  // Load asset (RLS ensures user owns it)
-  const { data: asset } = await supabase
-    .from('assets')
-    .select('id, asset_type, asset_subtype, extraction_stale, fields, inspection_notes')
-    .eq('id', assetId)
-    .single()
+  // Load asset + photos in parallel
+  const [{ data: asset }, { data: photos }] = await Promise.all([
+    supabase
+      .from('assets')
+      .select('id, asset_type, asset_subtype, extraction_stale, fields, inspection_notes')
+      .eq('id', assetId)
+      .single(),
+    supabase
+      .from('asset_photos')
+      .select('id, storage_path, sort_order')
+      .eq('asset_id', assetId)
+      .order('sort_order', { ascending: true }),
+  ])
 
   if (!asset) redirect('/assets/new')
 
-  // Load photos sorted by sort_order
-  const { data: photos } = await supabase
-    .from('asset_photos')
-    .select('id, storage_path, sort_order')
-    .eq('asset_id', assetId)
-    .order('sort_order', { ascending: true })
+  // Generate presigned URLs in a single batch API call (much faster than N individual calls)
+  const photoList = photos ?? []
+  const { data: signedUrlData } = photoList.length > 0
+    ? await supabase.storage.from('photos').createSignedUrls(
+        photoList.map(p => p.storage_path),
+        3600
+      )
+    : { data: [] }
 
-  // Generate presigned URLs for all photos (1 hour expiry — sufficient for on-site session)
-  const photosWithUrls: PhotoItem[] = await Promise.all(
-    (photos ?? []).map(async (photo) => {
-      const { data } = await supabase.storage
-        .from('photos')
-        .createSignedUrl(photo.storage_path, 3600)
-      return {
-        id: photo.id,
-        storagePath: photo.storage_path,
-        signedUrl: data?.signedUrl ?? '',
-        sortOrder: photo.sort_order,
-      }
-    })
-  )
+  const urlMap = new Map((signedUrlData ?? []).map(r => [r.path, r.signedUrl]))
+
+  const photosWithUrls: PhotoItem[] = photoList.map(photo => ({
+    id: photo.id,
+    storagePath: photo.storage_path,
+    signedUrl: urlMap.get(photo.storage_path) ?? '',
+    sortOrder: photo.sort_order,
+  }))
 
   const hasPhotos = photosWithUrls.length > 0
   const isExtractionStale = asset.extraction_stale && hasPhotos

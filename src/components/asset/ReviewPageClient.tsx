@@ -155,8 +155,10 @@ export function ReviewPageClient({
 
   // Partial save — bypasses field validation, saves whatever is filled in
   const handleProceed = async () => {
+    if (isSaving) return  // Guard against double-tap
     if (isSaveAllowed) {
       // All required fields present — use validated submit path
+      setIsSaving(true)
       handleSubmit(onSubmit)()
       return
     }

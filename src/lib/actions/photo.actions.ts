@@ -133,14 +133,11 @@ export async function pickHeroShot(
 
   if (!photos || photos.length < 2) return { heroIndex: 0 }
 
-  // Generate short-lived signed URLs
-  const signedUrls = await Promise.all(
-    photos.map(async (p) => {
-      const { data } = await supabase.storage.from('photos').createSignedUrl(p.storage_path, 300)
-      return data?.signedUrl ?? null
-    })
-  )
-  const validUrls = signedUrls.filter(Boolean) as string[]
+  // Batch signed URL generation — one API call for up to 8 photos
+  const { data: signedUrlData } = await supabase.storage
+    .from('photos')
+    .createSignedUrls(photos.map(p => p.storage_path), 300)
+  const validUrls = (signedUrlData ?? []).map(r => r.signedUrl).filter(Boolean) as string[]
   if (validUrls.length < 2) return { heroIndex: 0 }
 
   const n = validUrls.length
@@ -160,7 +157,11 @@ export async function pickHeroShot(
   })
 
   try {
-    const parsed = JSON.parse(text.trim())
+    // Strip markdown code fences if present (GPT-4o sometimes wraps JSON in ```json...```)
+    const cleaned = text.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')
+    // Also try extracting just the JSON object if there's surrounding text
+    const jsonMatch = cleaned.match(/\{[^}]+\}/)
+    const parsed = JSON.parse(jsonMatch ? jsonMatch[0] : cleaned)
     const idx = Number(parsed.best_index)
     if (!isNaN(idx) && idx >= 0 && idx < n) return { heroIndex: idx }
   } catch { /* fall through */ }
