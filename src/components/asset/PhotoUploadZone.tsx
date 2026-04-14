@@ -76,8 +76,9 @@ export function PhotoUploadZone({
           // 1. EXIF correct + compress
           const processed = await processImageForUpload(file)
 
-          // 2. Upload to Supabase Storage with retry (up to 3 attempts for transient failures)
-          const storagePath = `${userId}/${assetId}/${Date.now()}-${i}-${processed.name}`
+          // 2. Upload to Supabase Storage — sanitise filename, retry only on network errors
+          const safeName = processed.name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 80)
+          const storagePath = `${userId}/${assetId}/${Date.now()}-${i}-${safeName}`
           let uploadData: { path: string } | null = null
           let lastUploadError: string | null = null
           for (let attempt = 0; attempt < 3; attempt++) {
@@ -86,6 +87,10 @@ export function PhotoUploadZone({
               .upload(storagePath, processed, { contentType: 'image/jpeg', upsert: false })
             if (!uploadError && data) { uploadData = data; break }
             lastUploadError = uploadError?.message ?? 'Upload failed'
+            // Don't retry on auth/permission errors — they won't resolve on retry
+            if (uploadError?.message?.toLowerCase().includes('policy') ||
+                uploadError?.message?.toLowerCase().includes('auth') ||
+                uploadError?.message?.toLowerCase().includes('permission')) break
           }
           if (!uploadData) throw new Error(lastUploadError ?? 'Upload failed')
 
@@ -175,9 +180,9 @@ export function PhotoUploadZone({
         {uploadErrors.length > 0 && (
           <div className="w-full max-w-xs space-y-1">
             {uploadErrors.map((err, i) => (
-              <p key={i} className="text-sm text-[#F87171] flex items-center gap-1">
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                Upload failed. Check your connection and try again.
+              <p key={i} className="text-sm text-[#F87171] flex items-start gap-1">
+                <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                <span><span className="font-medium">{err.filename}:</span> {err.message}</span>
               </p>
             ))}
           </div>
@@ -253,9 +258,9 @@ export function PhotoUploadZone({
       {uploadErrors.length > 0 && (
         <div className="space-y-1">
           {uploadErrors.map((err, i) => (
-            <p key={i} className="text-sm text-[#F87171] flex items-center gap-1">
-              <AlertCircle className="w-4 h-4 flex-shrink-0" />
-              Upload failed. Check your connection and try again.
+            <p key={i} className="text-sm text-[#F87171] flex items-start gap-1">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+              <span><span className="font-medium">{err.filename}:</span> {err.message}</span>
             </p>
           ))}
         </div>
