@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Camera, Check, Loader2, ChevronLeft, Zap } from 'lucide-react'
+import { Camera, Check, Loader2, ChevronLeft, Zap, FolderOpen, Images } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
 import { createAsset } from '@/lib/actions/asset.actions'
 
@@ -13,13 +13,16 @@ interface BookedItem {
   id: string
   label: string
   thumbUrl: string
+  photoCount: number
 }
 
 export default function QuickBookPage() {
   const router = useRouter()
-  const fileRef = useRef<HTMLInputElement>(null)
+  const cameraRef = useRef<HTMLInputElement>(null)
+  const filesRef = useRef<HTMLInputElement>(null)
   const [branch, setBranch] = useState<BranchKey | null>(null)
   const [status, setStatus] = useState<QuickBookStatus>('idle')
+  const [uploadProgress, setUploadProgress] = useState<string | null>(null)
   const [booked, setBooked] = useState<BookedItem[]>([])
   const [error, setError] = useState<string | null>(null)
   const [showBranchPicker, setShowBranchPicker] = useState(false)
@@ -30,33 +33,48 @@ export default function QuickBookPage() {
     else setShowBranchPicker(true)
   }, [])
 
-  async function handlePhoto(file: File) {
+  async function bookInFiles(files: File[]) {
     if (!branch) { setShowBranchPicker(true); return }
-    setStatus('uploading')
+    if (files.length === 0) return
+    setStatus('creating')
+    setUploadProgress(null)
     setError(null)
 
     try {
-      // Create the asset record first
-      setStatus('creating')
       const result = await createAsset(branch, 'general_goods', 'general_goods')
       if ('error' in result) throw new Error(result.error)
 
       const assetId = result.assetId
-      const thumbUrl = URL.createObjectURL(file)
+      const thumbUrl = URL.createObjectURL(files[0])
 
-      // Upload the photo
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('assetId', assetId)
-      const uploadRes = await fetch('/api/upload-photo', { method: 'POST', body: formData })
-      if (!uploadRes.ok) throw new Error('Photo upload failed')
+      // Upload all photos sequentially
+      for (let i = 0; i < files.length; i++) {
+        setStatus('uploading')
+        setUploadProgress(files.length > 1 ? `Uploading photo ${i + 1} of ${files.length}…` : 'Uploading…')
+        const formData = new FormData()
+        formData.append('file', files[i])
+        formData.append('assetId', assetId)
+        const uploadRes = await fetch('/api/upload-photo', { method: 'POST', body: formData })
+        if (!uploadRes.ok) throw new Error(`Photo ${i + 1} upload failed`)
+      }
 
-      setBooked(prev => [...prev, { id: assetId, label: `Item ${prev.length + 1}`, thumbUrl }])
+      setBooked(prev => [...prev, {
+        id: assetId,
+        label: `Item ${prev.length + 1}`,
+        thumbUrl,
+        photoCount: files.length,
+      }])
       setStatus('idle')
+      setUploadProgress(null)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong')
       setStatus('error')
+      setUploadProgress(null)
     }
+  }
+
+  async function handlePhoto(file: File) {
+    await bookInFiles([file])
   }
 
   const branchLabel = BRANCHES.find(b => b.key === branch)?.label ?? 'No branch'
@@ -108,37 +126,63 @@ export default function QuickBookPage() {
             <span className="text-white/30 text-xs ml-1">change</span>
           </button>
 
-          {/* Snap button */}
+          {/* Hidden inputs */}
           <input
-            ref={fileRef}
+            ref={cameraRef}
             type="file"
             accept="image/*"
             capture="environment"
             className="hidden"
             onChange={e => { const f = e.target.files?.[0]; if (f) handlePhoto(f) }}
           />
+          <input
+            ref={filesRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={e => {
+              const files = Array.from(e.target.files ?? [])
+              if (files.length) bookInFiles(files)
+              // Reset so same files can be re-selected
+              e.target.value = ''
+            }}
+          />
 
+          {/* Snap button */}
           <button
             type="button"
-            onClick={() => fileRef.current?.click()}
+            onClick={() => cameraRef.current?.click()}
             disabled={status === 'uploading' || status === 'creating'}
-            className="w-full flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 hover:border-emerald-500/50 text-white min-h-[160px] transition-all disabled:opacity-50"
+            className="w-full flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 hover:border-emerald-500/50 text-white min-h-[140px] transition-all disabled:opacity-50"
           >
             {status === 'uploading' || status === 'creating' ? (
               <>
                 <Loader2 className="w-8 h-8 text-emerald-400 animate-spin" />
-                <span className="text-sm text-white/65">{status === 'creating' ? 'Creating record…' : 'Uploading…'}</span>
+                <span className="text-sm text-white/65">{uploadProgress ?? (status === 'creating' ? 'Creating record…' : 'Uploading…')}</span>
               </>
             ) : (
               <>
                 <Camera className="w-8 h-8 text-emerald-400" />
                 <span className="text-sm font-medium text-white">Snap a photo to book in</span>
-                <span className="text-xs text-white/40">Each photo creates a new general goods record</span>
+                <span className="text-xs text-white/40">One photo → one new record</span>
               </>
             )}
           </button>
 
-          {error && <p className="text-xs text-red-400 text-center mt-3">{error}</p>}
+          {/* Upload from files */}
+          <button
+            type="button"
+            onClick={() => filesRef.current?.click()}
+            disabled={status === 'uploading' || status === 'creating'}
+            className="w-full flex items-center justify-center gap-2.5 rounded-xl border border-white/[0.10] bg-white/[0.03] hover:bg-white/[0.06] text-white/70 hover:text-white py-3.5 transition-all disabled:opacity-50"
+          >
+            <Images className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+            <span className="text-sm font-medium">Upload from files</span>
+            <span className="text-xs text-white/35 ml-1">— plate, hours, body = 1 record</span>
+          </button>
+
+          {error && <p className="text-xs text-red-400 text-center mt-1">{error}</p>}
 
           {/* Booked items */}
           {booked.length > 0 && (
@@ -164,7 +208,9 @@ export default function QuickBookPage() {
                     <img src={item.thumbUrl} alt="" className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/40">Tap to add details</p>
+                      <p className="text-xs text-white/40">
+                        {item.photoCount > 1 ? `${item.photoCount} photos · ` : ''}Tap to add details
+                      </p>
                     </div>
                     <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                   </button>
