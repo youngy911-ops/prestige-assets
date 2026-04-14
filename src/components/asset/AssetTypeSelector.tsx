@@ -34,15 +34,15 @@ export function AssetTypeSelector({ selected, onSelect }: AssetTypeSelectorProps
             type="button"
             onClick={() => onSelect(type)}
             className={cn(
-              'flex flex-col items-center justify-center gap-2 rounded-lg p-4 min-h-[80px]',
-              'border-2 transition-all',
+              'flex flex-col items-center justify-center gap-2.5 rounded-xl p-4 min-h-[90px]',
+              'border transition-all',
               isSelected
-                ? 'border-white bg-white/10'
-                : 'border-[#1E3A5F] bg-[#14532D] hover:bg-white/5'
+                ? 'border-emerald-500/60 bg-emerald-500/10 shadow-[0_0_20px_rgba(34,197,94,0.1)]'
+                : 'border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12]'
             )}
           >
-            <Icon className="w-8 h-8 text-white" />
-            <span className="text-sm text-white text-center leading-tight">
+            <Icon className={cn('w-7 h-7', isSelected ? 'text-emerald-400' : 'text-white/60')} />
+            <span className={cn('text-[13px] font-medium text-center leading-tight', isSelected ? 'text-white' : 'text-white/70')}>
               {schema.displayName}
             </span>
           </button>

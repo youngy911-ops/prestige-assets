@@ -19,36 +19,37 @@ export function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 h-14 bg-[#14532D] border-t border-[#1E3A5F]"
+      className="fixed bottom-0 left-0 right-0 bg-black/40 backdrop-blur-xl border-t border-white/[0.08]"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <div className="max-w-[640px] mx-auto h-full flex items-center justify-around">
+      <div className="max-w-[640px] mx-auto h-14 flex items-center justify-around">
         <Link
           href="/"
           className={cn(
-            'flex flex-col items-center gap-1 min-h-[44px] justify-center px-6',
-            assetsActive ? 'text-white font-semibold' : 'text-white/65'
+            'flex flex-col items-center gap-1 min-h-[44px] justify-center px-6 transition-colors',
+            assetsActive ? 'text-white' : 'text-white/40 hover:text-white/70'
           )}
         >
-          <List className="w-5 h-5" />
-          <span className="text-xs">Assets</span>
+          <List className={cn('w-5 h-5', assetsActive && 'text-emerald-400')} />
+          <span className={cn('text-xs font-medium', assetsActive ? 'text-white' : 'text-white/40')}>Assets</span>
         </Link>
         <Link
           href="/assets/new"
           className={cn(
-            'flex flex-col items-center gap-1 min-h-[44px] justify-center px-6',
-            newActive ? 'text-white font-semibold' : 'text-white/65'
+            'flex flex-col items-center gap-1 min-h-[44px] justify-center px-6 transition-colors',
+            newActive ? 'text-white' : 'text-white/40 hover:text-white/70'
           )}
         >
-          <Plus className="w-5 h-5" />
-          <span className="text-xs">New Asset</span>
+          <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center transition-colors', newActive ? 'bg-emerald-500' : 'bg-white/10')}>
+            <Plus className="w-5 h-5 text-white" />
+          </div>
         </Link>
         <button
           onClick={handleLogout}
-          className="flex flex-col items-center gap-1 min-h-[44px] justify-center px-6 text-white/65"
+          className="flex flex-col items-center gap-1 min-h-[44px] justify-center px-6 text-white/40 hover:text-white/70 transition-colors"
         >
           <LogOut className="w-5 h-5" />
-          <span className="text-xs">Logout</span>
+          <span className="text-xs font-medium">Logout</span>
         </button>
       </div>
     </nav>

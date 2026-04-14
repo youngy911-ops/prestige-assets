@@ -47,41 +47,41 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Slattery Auctions brand — dark green, no light mode for Phase 1 */
+/* Slattery Auctions brand — deep dark green */
 :root {
-  /* Primary background: #166534 */
-  --background: oklch(0.38 0.1 148);
+  /* Primary background: deep dark green */
+  --background: oklch(0.16 0.04 148);
   /* Text primary: #FFFFFF */
   --foreground: oklch(1 0 0);
-  /* Elevated card: #14532D */
-  --card: oklch(0.34 0.1 148);
+  /* Card: slightly elevated */
+  --card: oklch(0.20 0.05 148);
   --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.34 0.1 148);
+  --popover: oklch(0.20 0.05 148);
   --popover-foreground: oklch(1 0 0);
-  /* Navy accent: #1E3A5F */
-  --primary: oklch(0.29 0.07 248);
+  /* Primary CTA: bright green */
+  --primary: oklch(0.52 0.17 148);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.34 0.1 148);
+  --secondary: oklch(0.20 0.05 148);
   --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.34 0.1 148);
-  /* Text muted: rgba(255,255,255,0.65) */
-  --muted-foreground: oklch(1 0 0 / 65%);
-  --accent: oklch(0.29 0.07 248);
+  --muted: oklch(0.20 0.05 148);
+  /* Text muted */
+  --muted-foreground: oklch(1 0 0 / 55%);
+  --accent: oklch(0.52 0.17 148);
   --accent-foreground: oklch(1 0 0);
   /* Destructive: #F87171 */
   --destructive: oklch(0.74 0.15 20);
-  --border: oklch(0.29 0.07 248);
-  --input: oklch(0.34 0.1 148);
-  --ring: oklch(0.29 0.07 248);
-  --radius: 0.5rem;
-  --sidebar: oklch(0.34 0.1 148);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(0.20 0.05 148);
+  --ring: oklch(0.52 0.17 148);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.20 0.05 148);
   --sidebar-foreground: oklch(1 0 0);
-  --sidebar-primary: oklch(0.29 0.07 248);
+  --sidebar-primary: oklch(0.52 0.17 148);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.38 0.1 148);
+  --sidebar-accent: oklch(0.16 0.04 148);
   --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(0.29 0.07 248);
-  --sidebar-ring: oklch(0.29 0.07 248);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.52 0.17 148);
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
@@ -94,7 +94,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    background-color: #166534;
+    background-color: oklch(0.16 0.04 148);
     color: #ffffff;
     font-family: var(--font-sans), system-ui, sans-serif;
     min-height: 100vh;

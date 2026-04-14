@@ -20,11 +20,11 @@ export function AssetSubtypeSelector({ assetType, selected, onSelect, disabled }
           onClick={() => onSelect(subtype.key)}
           disabled={disabled}
           className={cn(
-            'w-full text-left px-4 py-3 rounded-lg text-base text-white transition-all min-h-[48px]',
-            'border-2',
+            'w-full text-left px-4 py-3.5 rounded-xl text-[15px] font-medium text-white transition-all min-h-[52px]',
+            'border',
             selected === subtype.key
-              ? 'border-white bg-white/10'
-              : 'border-[#1E3A5F] bg-[#14532D] hover:bg-white/5',
+              ? 'border-emerald-500/60 bg-emerald-500/10'
+              : 'border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06]',
             disabled && 'opacity-50 cursor-not-allowed'
           )}
         >
