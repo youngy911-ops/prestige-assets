@@ -52,10 +52,10 @@ export function AssetList({ branch, onBranchChange }: AssetListProps) {
                   onBranchChange(b.key as BranchKey)
                   setChangingBranch(false)
                 }}
-                className={`w-full text-left px-4 py-3 rounded-lg text-base text-white transition-all min-h-[48px] border-2 ${
+                className={`w-full text-left px-4 py-3 rounded-lg text-base text-white transition-all min-h-[48px] border ${
                   b.key === branch
-                    ? 'border-white bg-white/10'
-                    : 'border-[#1E3A5F] bg-[#14532D] hover:bg-white/5'
+                    ? 'border-emerald-500/60 bg-emerald-500/10'
+                    : 'border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06]'
                 }`}
               >
                 {b.label}
@@ -73,7 +73,7 @@ export function AssetList({ branch, onBranchChange }: AssetListProps) {
           <button
             type="button"
             onClick={() => setChangingBranch(true)}
-            className="inline-flex items-center gap-1 text-sm text-white/65 hover:text-white transition-colors border border-[#1E3A5F] rounded-lg px-3 py-1.5"
+            className="inline-flex items-center gap-1 text-sm text-white/65 hover:text-white transition-colors border border-white/[0.12] rounded-lg px-3 py-1.5"
           >
             {branchLabel}
             <ChevronDown className="w-3.5 h-3.5" />

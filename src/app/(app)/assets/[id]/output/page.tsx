@@ -55,7 +55,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
       <div className="mt-8">
         <Link
           href="/assets/new"
-          className="flex items-center justify-center w-full rounded-lg bg-[#1E3A5F] hover:bg-[#1E3A5F]/90 text-white h-11 px-4 text-sm font-medium transition-colors"
+          className="flex items-center justify-center w-full rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white h-11 px-4 text-sm font-semibold transition-colors"
         >
           Book In New Asset
         </Link>

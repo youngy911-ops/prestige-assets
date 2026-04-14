@@ -41,7 +41,7 @@ export function LoginForm() {
           type="email"
           required
           autoComplete="email"
-          className="bg-[#14532D] border-[#1E3A5F] text-white placeholder:text-white/65 h-11"
+          className="bg-white/[0.05] border-white/[0.10] text-white placeholder:text-white/40 h-11 focus-visible:ring-emerald-500/50"
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -52,7 +52,7 @@ export function LoginForm() {
           type="password"
           required
           autoComplete="current-password"
-          className="bg-[#14532D] border-[#1E3A5F] text-white placeholder:text-white/65 h-11"
+          className="bg-white/[0.05] border-white/[0.10] text-white placeholder:text-white/40 h-11 focus-visible:ring-emerald-500/50"
         />
       </div>
       {error && (
@@ -61,7 +61,7 @@ export function LoginForm() {
       <Button
         type="submit"
         disabled={loading}
-        className="bg-[#1E3A5F] hover:bg-[#1E3A5F]/90 text-white h-11 w-full"
+        className="bg-emerald-600 hover:bg-emerald-500 text-white h-11 w-full font-semibold"
       >
         {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Sign In'}
       </Button>

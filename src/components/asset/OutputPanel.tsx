@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Loader2 } from 'lucide-react'
 import { FieldsBlock } from '@/components/asset/FieldsBlock'
 import { DescriptionBlock } from '@/components/asset/DescriptionBlock'
 
@@ -75,9 +74,11 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
 
       {/* Description block — loading/ready/error states */}
       {descState === 'loading' && (
-        <div className="flex items-center gap-2 text-sm text-white/65 py-8 justify-center">
-          <Loader2 className="h-4 w-4 animate-spin" />
-          Generating description&hellip;
+        <div className="flex flex-col items-center gap-3 py-8">
+          <div className="relative w-8 h-8">
+            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-emerald-400 animate-spin" />
+          </div>
+          <p className="text-sm text-white/50">Writing description…</p>
         </div>
       )}
 
