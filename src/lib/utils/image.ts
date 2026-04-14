@@ -40,12 +40,12 @@ export async function processImageForUpload(file: File): Promise<File> {
     sourceFile = new File([blob], file.name, { type: 'image/jpeg' })
   }
 
-  // Step 3: Compress to max 2MP (~1920px longest side)
+  // Step 3: Compress to max 1200px — sufficient for GPT-4o vision, 2x faster than 1920px
   return imageCompression(sourceFile, {
-    maxWidthOrHeight: 1920,
+    maxWidthOrHeight: 1200,
     useWebWorker: true,
     fileType: 'image/jpeg',
-    initialQuality: 0.85,
+    initialQuality: 0.82,
     // Do NOT set preserveExif: true — we've already baked orientation into pixels
   })
 }

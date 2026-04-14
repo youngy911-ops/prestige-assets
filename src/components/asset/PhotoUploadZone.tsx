@@ -36,6 +36,7 @@ export function PhotoUploadZone({
   const [isUploading, setIsUploading] = useState(false)
   const [uploadingIds, setUploadingIds] = useState<Set<string>>(new Set())
   const [uploadErrors, setUploadErrors] = useState<UploadError[]>([])
+  const [uploadProgress, setUploadProgress] = useState<{ done: number; total: number } | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const supabase = createClient()
 
@@ -60,17 +61,19 @@ export function PhotoUploadZone({
 
     setIsUploading(true)
     setUploadErrors([])
+    setUploadProgress({ done: 0, total: fileArray.length })
 
     // Add all placeholders upfront so the user sees all photos queued immediately
     const tempIds = fileArray.map((_, i) => `uploading-${Date.now()}-${i}`)
     setUploadingIds((prev) => new Set([...prev, ...tempIds]))
 
     const baseOrder = photos.length
+    let doneCount = 0
 
     const results = await Promise.allSettled(
       fileArray.map(async (file, i) => {
         try {
-          // 1. EXIF correct + compress to max 2MP
+          // 1. EXIF correct + compress
           const processed = await processImageForUpload(file)
 
           // 2. Upload to Supabase Storage with retry (up to 3 attempts for transient failures)
@@ -106,6 +109,8 @@ export function PhotoUploadZone({
             next.delete(tempIds[i])
             return next
           })
+          doneCount++
+          setUploadProgress({ done: doneCount, total: fileArray.length })
         }
       })
     )
@@ -131,6 +136,7 @@ export function PhotoUploadZone({
     if (errors.length > 0) setUploadErrors(errors)
 
     setIsUploading(false)
+    setUploadProgress(null)
   }
 
   // Empty state
@@ -188,7 +194,10 @@ export function PhotoUploadZone({
         <div>
           <h2 className="text-xl font-semibold text-white">Photos</h2>
           <p className="text-sm text-white/65">
-            {photos.length} photo{photos.length !== 1 ? 's' : ''} — drag to reorder
+            {uploadProgress
+              ? `Uploading ${uploadProgress.done}/${uploadProgress.total}…`
+              : `${photos.length} photo${photos.length !== 1 ? 's' : ''} — drag to reorder`
+            }
           </p>
         </div>
         <Button
@@ -198,7 +207,7 @@ export function PhotoUploadZone({
           className="bg-emerald-600 hover:bg-emerald-600/90 text-white h-9 disabled:opacity-40"
         >
           <Camera className="w-4 h-4 mr-1.5" />
-          Add Photos
+          {isUploading ? `${uploadProgress?.done ?? 0}/${uploadProgress?.total ?? '…'}` : 'Add Photos'}
         </Button>
       </div>
 
