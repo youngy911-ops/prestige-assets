@@ -1,0 +1,32 @@
+import { NextRequest } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+
+export async function POST(req: NextRequest) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const formData = await req.formData()
+  const file = formData.get('file') as File | null
+  const assetId = formData.get('assetId') as string | null
+
+  if (!file || !assetId) return Response.json({ error: 'file and assetId required' }, { status: 400 })
+
+  const ext = file.name.split('.').pop() ?? 'jpg'
+  const storagePath = `${user.id}/${assetId}/${Date.now()}.${ext}`
+
+  const arrayBuffer = await file.arrayBuffer()
+  const { error: uploadError } = await supabase.storage
+    .from('photos')
+    .upload(storagePath, arrayBuffer, { contentType: file.type, upsert: false })
+
+  if (uploadError) return Response.json({ error: uploadError.message }, { status: 500 })
+
+  const { error: insertError } = await supabase
+    .from('asset_photos')
+    .insert({ asset_id: assetId, storage_path: storagePath, sort_order: 0 })
+
+  if (insertError) return Response.json({ error: insertError.message }, { status: 500 })
+
+  return Response.json({ success: true, storagePath })
+}

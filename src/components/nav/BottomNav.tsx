@@ -1,7 +1,7 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { List, Plus, LogOut } from 'lucide-react'
+import { List, Plus, Zap, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { createClient } from '@/lib/supabase/client'
 
@@ -10,6 +10,7 @@ export function BottomNav() {
   const router = useRouter()
   const assetsActive = pathname === '/'
   const newActive = pathname.startsWith('/assets/new')
+  const quickActive = pathname.startsWith('/assets/quick')
 
   async function handleLogout() {
     const supabase = createClient()
@@ -44,9 +45,19 @@ export function BottomNav() {
             <Plus className="w-5 h-5 text-white" />
           </div>
         </Link>
+        <Link
+          href="/assets/quick"
+          className={cn(
+            'flex flex-col items-center gap-1 min-h-[44px] justify-center px-6 transition-colors',
+            quickActive ? 'text-white' : 'text-white/40 hover:text-white/70'
+          )}
+        >
+          <Zap className={cn('w-5 h-5', quickActive && 'text-emerald-400')} />
+          <span className={cn('text-xs font-medium', quickActive ? 'text-white' : 'text-white/40')}>Quick</span>
+        </Link>
         <button
           onClick={handleLogout}
-          className="flex flex-col items-center gap-1 min-h-[44px] justify-center px-6 text-white/40 hover:text-white/70 transition-colors"
+          className="flex flex-col items-center gap-1 min-h-[44px] justify-center px-4 text-white/40 hover:text-white/70 transition-colors"
         >
           <LogOut className="w-5 h-5" />
           <span className="text-xs font-medium">Logout</span>
