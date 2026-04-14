@@ -49,3 +49,11 @@ export function getInspectionPriorityFields(assetType: AssetType): FieldDefiniti
     .filter(f => f.inspectionPriority === true)
     .sort((a, b) => a.sfOrder - b.sfOrder)
 }
+
+export function getAssetDisplayTitle(assetType: string, assetSubtype: string | null): string {
+  const schema = SCHEMA_REGISTRY[assetType as AssetType]
+  const typeName = schema?.displayName ?? assetType
+  if (!assetSubtype) return typeName
+  const subtypeLabel = schema?.subtypes?.find(s => s.key === assetSubtype)?.label
+  return subtypeLabel ? `${typeName} — ${subtypeLabel}` : typeName
+}

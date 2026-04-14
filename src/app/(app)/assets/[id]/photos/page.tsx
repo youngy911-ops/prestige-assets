@@ -6,6 +6,8 @@ import { PhotoUploadZone } from '@/components/asset/PhotoUploadZone'
 import type { PhotoItem } from '@/components/asset/PhotoUploadZone'
 import { InspectionNotesSection } from '@/components/asset/InspectionNotesSection'
 import { PhotosPageCTA } from '@/components/asset/PhotosPageCTA'
+import { StepIndicator } from '@/components/asset/StepIndicator'
+import { getAssetDisplayTitle } from '@/lib/schema-registry'
 import type { AssetType } from '@/lib/schema-registry/types'
 
 interface PhotosPageProps {
@@ -57,7 +59,7 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
   return (
     <div className="max-w-[480px] mx-auto px-4 pt-8 pb-[calc(env(safe-area-inset-bottom)+24px)]">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-4">
         <Link
           href="/"
           className="text-white/65 hover:text-white transition-colors p-1 -ml-1"
@@ -67,13 +69,12 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
         </Link>
         <div>
           <h1 className="text-xl font-semibold text-white">Photos</h1>
-          <p className="text-sm text-white/65 capitalize">
-            {asset.asset_subtype
-              ? `${asset.asset_type} — ${asset.asset_subtype}`
-              : asset.asset_type}
+          <p className="text-sm text-white/65">
+            {getAssetDisplayTitle(asset.asset_type, asset.asset_subtype)}
           </p>
         </div>
       </div>
+      <StepIndicator current="photos" />
 
       {/* extraction_stale banner — shown only when asset already has extraction results and photos changed */}
       {isExtractionStale && (

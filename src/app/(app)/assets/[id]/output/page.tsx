@@ -4,6 +4,8 @@ import { ChevronLeft } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { generateFieldsBlock } from '@/lib/output/generateFieldsBlock'
 import { OutputPanel } from '@/components/asset/OutputPanel'
+import { StepIndicator } from '@/components/asset/StepIndicator'
+import { getAssetDisplayTitle } from '@/lib/schema-registry'
 import type { AssetType } from '@/lib/schema-registry/types'
 
 export default async function OutputPage({ params }: { params: Promise<{ id: string }> }) {
@@ -30,7 +32,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
   return (
     <div className="max-w-2xl mx-auto px-4 pt-8 pb-[calc(env(safe-area-inset-bottom)+80px)]">
       {/* Header */}
-      <div className="mb-6">
+      <div className="mb-4">
         <Link
           href={`/assets/${assetId}/review`}
           className="inline-flex items-center gap-1 text-sm text-white/65 hover:text-white mb-4"
@@ -39,10 +41,11 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
           Review
         </Link>
         <h1 className="text-xl font-semibold text-white">Output</h1>
-        <p className="text-sm text-white/65 capitalize mt-0.5">
-          {asset.asset_type?.replace('_', ' ')}{asset.asset_subtype ? ` \u2014 ${asset.asset_subtype.replace(/_/g, ' ')}` : ''}
+        <p className="text-sm text-white/65 mt-0.5">
+          {getAssetDisplayTitle(asset.asset_type, asset.asset_subtype)}
         </p>
       </div>
+      <StepIndicator current="output" />
 
       {/* Output blocks */}
       <OutputPanel
