@@ -25,9 +25,9 @@ export const generalGoodsSchema: AssetSchema = {
   fields: [
     { key: 'make',          label: 'Make',                 sfOrder: 1, inputType: 'text',     aiExtractable: true,  required: true,  aiHint: 'Exterior badge or data plate label: manufacturer/brand name (e.g. Honda, DeWalt, Kaeser, Atlas Copco, Grundfos, Ingersoll Rand, Caterpillar, Makita). Read exactly as shown.' },
     { key: 'model',         label: 'Model',                sfOrder: 2, inputType: 'text',     aiExtractable: true,  required: true,  aiHint: 'Data plate or body label: model designation. Read exactly as printed (e.g. EU3000iS, DCP60, SM15, GX390). Null if not visible on any label or badge.' },
-    { key: 'serial_number', label: 'Serial Number',        sfOrder: 3, inputType: 'text',     aiExtractable: true,  required: false, inspectionPriority: true, aiHint: 'Data plate or sticker on machine body: Serial Number or S/N field. Alphanumeric format varies by brand. Never infer — only extract if directly visible.' },
-    { key: 'dom',           label: 'Date of Manufacture',  sfOrder: 4, inputType: 'text',     aiExtractable: true,  required: false, aiHint: 'Data plate or compliance label: Date of Manufacture, DOM, or MFG DATE field. Format MM/YYYY or 4-digit year. Null if not present on any visible plate.' },
-    { key: 'extras',        label: 'Extras',               sfOrder: 5, inputType: 'textarea', aiExtractable: false, required: false },
+    { key: 'year',          label: 'Year',                 sfOrder: 3, inputType: 'number',   aiExtractable: true,  required: false, aiHint: 'Data plate: Year of Manufacture or DOM. 4-digit year. If not on plate, estimate from model era using your training knowledge.' },
+    { key: 'serial_number', label: 'Serial Number',        sfOrder: 4, inputType: 'text',     aiExtractable: true,  required: false, inspectionPriority: true, aiHint: 'Data plate or sticker on machine body: Serial Number or S/N field. Alphanumeric format varies by brand. Never infer — only extract if directly visible.' },
+    { key: 'extras',        label: 'Extras / Notes',       sfOrder: 5, inputType: 'textarea', aiExtractable: true,  required: false, aiHint: 'Visible accessories, attachments, or condition notes from photos. List items separated by commas. Include any damage, missing parts, or notable condition details visible in photos.' },
   ],
   descriptionTemplate: (_fields, _subtype) => '',
 }

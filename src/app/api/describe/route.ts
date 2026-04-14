@@ -700,13 +700,16 @@ Sold As Is, Untested & Unregistered.
 
 FORKLIFT (CLEARVIEW MAST / CONTAINER MAST)
 Year, Make, Model, [Clearview Mast / Container Mast] Forklift
-Max lift capacity: Xkg or Xt
-Max lift height: Xmm
-Mast type: 2-stage / 3-stage / 4-stage
-Fuel: LPG / Diesel / Electric (kW)
-Tyre type: cushion / pneumatic
-Side shift if fitted
-Fork dimensions: L x W mm
+Hours (Showing): X,XXX
+Fuel Type: LPG / Diesel / Electric
+Capacity: X,XXXkg
+Mast Type: 2 Stage / 3 Stage / 4 Stage Mast
+Lift Height: X,XXXmm
+Resting Mast Height: X,XXXmm
+Tyne Length: X,XXXmm
+Features: list visible features (Side Shift, ROPS, Seat Belt, Flashing Beacon, Full Free Lift, Battery Charger if electric)
+Tyres: Pneumatic / Solid / Cushion
+Damage: factual description of visible damage (e.g. "Marks, Scratches, Dents and Surface Rust") or "Nil Obvious" if none visible
 Sold As Is, Untested & Unregistered.
 
 WALKIE STACKER
@@ -805,7 +808,10 @@ Any extras on next line
 Sold As Is, Untested & Unregistered.
 
 ATTACHMENTS / GENERAL GOODS
-Make, Model, key specs
+Year (if known), Make, Model — apply your training knowledge of this make/model to include standard specs
+Serial Number if visible on data plate
+Key specs relevant to the item type (e.g. capacity, power, dimensions, voltage, fuel type, output rating)
+Condition notes if visible (damage, missing parts, wear)
 Sold As Is, Untested.
 
 MARINE (RECREATIONAL BOAT)

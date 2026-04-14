@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Asset Book-In — Manager Presentation</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #f8fafc; }
+  .nav { position: fixed; top: 0; left: 0; right: 0; background: #1e293b; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid #334155; }
+  .nav-title { font-size: 14px; color: #94a3b8; }
+  .nav-controls { display: flex; gap: 8px; }
+  button { background: #334155; color: #f8fafc; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+  button:hover { background: #475569; }
+  button.active { background: #3b82f6; }
+  .slides { padding-top: 60px; }
+  .slide { display: none; min-height: 100vh; padding: 60px 80px; max-width: 1000px; margin: 0 auto; }
+  .slide.active { display: flex; flex-direction: column; justify-content: center; }
+  .slide-num { font-size: 12px; color: #475569; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+  h1 { font-size: 52px; font-weight: 700; line-height: 1.1; margin-bottom: 16px; }
+  h2 { font-size: 36px; font-weight: 700; margin-bottom: 24px; color: #f1f5f9; }
+  .subtitle { font-size: 22px; color: #94a3b8; margin-bottom: 40px; }
+  ul { list-style: none; margin: 20px 0; }
+  ul li { padding: 10px 0; padding-left: 24px; position: relative; font-size: 18px; color: #cbd5e1; border-bottom: 1px solid #1e293b; }
+  ul li::before { content: "→"; position: absolute; left: 0; color: #3b82f6; }
+  ul li strong { color: #f8fafc; }
+  .flow { background: #1e293b; border-radius: 12px; padding: 32px 40px; margin: 24px 0; font-size: 20px; line-height: 2.2; color: #94a3b8; }
+  .flow .step { color: #f8fafc; }
+  .flow .arrow { color: #3b82f6; display: block; text-align: center; font-size: 24px; }
+  .caption { text-align: center; color: #64748b; font-size: 16px; margin-top: 16px; }
+  table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 16px; }
+  th { background: #1e293b; color: #94a3b8; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 12px 16px; border-bottom: 1px solid #1e293b; color: #cbd5e1; }
+  td:first-child { color: #f8fafc; font-weight: 500; }
+  tr:hover td { background: #1e293b; }
+  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0; }
+  .col { background: #1e293b; border-radius: 12px; padding: 24px; }
+  .col h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .col.before h3 { color: #ef4444; }
+  .col.after h3 { color: #22c55e; }
+  .col p { font-size: 15px; color: #94a3b8; padding: 8px 0; border-bottom: 1px solid #0f172a; }
+  .col p:last-child { border-bottom: none; }
+  .demo-steps { counter-reset: steps; }
+  .demo-step { counter-increment: steps; display: flex; align-items: flex-start; gap: 16px; padding: 14px 0; border-bottom: 1px solid #1e293b; }
+  .demo-step::before { content: counter(steps); background: #3b82f6; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .demo-step p { font-size: 17px; color: #cbd5e1; padding-top: 3px; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+  .stat { background: #1e293b; border-radius: 12px; padding: 20px 24px; }
+  .stat .label { font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .stat .value { font-size: 28px; font-weight: 700; color: #3b82f6; }
+  .stat .sub { font-size: 13px; color: #64748b; margin-top: 4px; }
+  .highlight { background: #1e3a5f; border-left: 3px solid #3b82f6; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: 17px; color: #bfdbfe; }
+  .ask { background: #14532d; border: 1px solid #16a34a; border-radius: 12px; padding: 24px 28px; margin: 24px 0; }
+  .ask h3 { color: #4ade80; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .ask p { color: #bbf7d0; font-size: 18px; }
+  .script-box { background: #1e293b; border-radius: 12px; padding: 28px 32px; margin: 16px 0; font-size: 16px; line-height: 1.8; color: #94a3b8; font-style: italic; border-left: 3px solid #475569; }
+  .script-label { font-size: 12px; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-style: normal; }
+  .view-toggle { display: flex; gap: 4px; }
+  .script-section { display: none; }
+  .script-section.show { display: block; }
+  .roadmap-item { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid #1e293b; }
+  .roadmap-icon { font-size: 28px; width: 44px; text-align: center; }
+  .roadmap-text h4 { font-size: 17px; color: #f8fafc; margin-bottom: 4px; }
+  .roadmap-text p { font-size: 14px; color: #64748b; }
+  .tag { display: inline-block; background: #1e3a5f; color: #93c5fd; font-size: 12px; padding: 3px 10px; border-radius: 99px; margin-left: 8px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <span class="nav-title">AI Asset Book-In — <span id="slide-label">Slide 1 of 10</span></span>
+  <div style="display:flex;gap:12px;align-items:center;">
+    <div class="view-toggle">
+      <button id="btn-slides" class="active" onclick="setView('slides')">Slides</button>
+      <button id="btn-script" onclick="setView('script')">Script</button>
+    </div>
+    <div class="nav-controls">
+      <button onclick="prev()">← Prev</button>
+      <button onclick="next()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<div class="slides" id="slides-view">
+
+  <!-- SLIDE 1 -->
+  <div class="slide active" id="slide-1">
+    <div class="slide-num">Slide 1 — Title</div>
+    <h1>AI-Powered Asset Book-In</h1>
+    <p class="subtitle">Turning 5–15 minutes of manual work per asset into under 2</p>
+    <p style="color:#475569;font-size:15px;margin-top:40px;">Slattery Auctions · 2026</p>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide" id="slide-2">
+    <div class="slide-num">Slide 2 — The Problem</div>
+    <h2>Book-ins take too long</h2>
+    <ul>
+      <li>Staff photograph build plates on-site</li>
+      <li>Manually look up specs in RitchieSpecs, PowerTorque, manufacturer sites</li>
+      <li>Manually type all Salesforce fields — correct order, correct labels</li>
+      <li>Write the description from scratch following our format rules</li>
+      <li><strong>One asset = 5–15 minutes of research and typing, every single asset</strong></li>
+    </ul>
+    <div class="highlight">Multiply across a 100-lot sale — that's up to 25 hours of manual data entry.</div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide" id="slide-3">
+    <div class="slide-num">Slide 3 — The Solution</div>
+    <h2>Photo → AI → Salesforce. Done.</h2>
+    <div class="flow">
+      <span class="step">📷 &nbsp;Photo on-site</span>
+      <span class="arrow">↓</span>
+      <span class="step">🤖 &nbsp;GPT-4o reads the plate, extracts all fields</span>
+      <span class="arrow">↓</span>
+      <span class="step">✅ &nbsp;Staff reviews and confirms <span style="color:#64748b">(30 seconds)</span></span>
+      <span class="arrow">↓</span>
+      <span class="step">📋 &nbsp;Copy-paste-ready Salesforce fields + formatted description</span>
+    </div>
+    <p class="caption">No manual research. No formatting. Just confirm and copy.</p>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide" id="slide-4">
+    <div class="slide-num">Slide 4 — Coverage</div>
+    <h2>All 8 asset types. Every Salesforce subtype.</h2>
+    <table>
+      <tr><th>Asset Type</th><th>Subtypes</th></tr>
+      <tr><td>Truck</td><td>24 — Prime Mover, Tipper, Vacuum Truck, Concrete Pump, EWP...</td></tr>
+      <tr><td>Trailer</td><td>24 — Flat Deck, Low Loader, Skel, Timber Jinker...</td></tr>
+      <tr><td>Earthmoving</td><td>19 — Excavator, Motor Grader, Bulldozer/Crawler Tractor...</td></tr>
+      <tr><td>Agriculture</td><td>12 — subtype-aware descriptions</td></tr>
+      <tr><td>Forklift</td><td>9 — Telehandler, EWP, Walkie Stacker...</td></tr>
+      <tr><td>Caravan / Motorhome</td><td>5</td></tr>
+      <tr><td>Marine</td><td>10</td></tr>
+      <tr><td>General Goods</td><td>16</td></tr>
+    </table>
+    <p class="caption">Every subtype has its own description template — not generic output.</p>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide" id="slide-5">
+    <div class="slide-num">Slide 5 — Who Can Use It</div>
+    <h2>Anyone can book in an asset. First time, every time.</h2>
+    <table>
+      <tr><th>Role</th><th>What it means for them</th></tr>
+      <tr><td>Valuations team</td><td>Book-ins done before they leave the yard — no backlog at the desk</td></tr>
+      <tr><td>BDMs</td><td>Book in assets themselves on-site — no handoff needed</td></tr>
+      <tr><td>Admin staff</td><td>No more chasing specs across RitchieSpecs, PowerTorque, manufacturer sites</td></tr>
+      <tr><td>New staff</td><td>Format and rules built in — correct first time, no training required</td></tr>
+      <tr><td>On-site auctions</td><td>Walk the yard, photograph each asset, book-ins complete before you leave</td></tr>
+      <tr><td>Bulk general goods</td><td>Photo, select category, confirm, next — no per-item research</td></tr>
+    </table>
+    <div class="highlight">The knowledge is in the app, not in one person's head.</div>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <div class="slide" id="slide-6">
+    <div class="slide-num">Slide 6 — Description Quality</div>
+    <h2>Descriptions that follow our rules. Every time.</h2>
+    <div class="before-after">
+      <div class="col before">
+        <h3>Before</h3>
+        <p>❌ Inconsistent format between staff</p>
+        <p>❌ Wrong footer variant on attachments</p>
+        <p>❌ Marketing language slipping in</p>
+        <p>❌ TBC for unknown specs</p>
+        <p>❌ Hours/serial in description body</p>
+      </div>
+      <div class="col after">
+        <h3>After</h3>
+        <p>✅ Correct footer enforced — always</p>
+        <p>✅ No dot points, no marketing language</p>
+        <p>✅ Omits unknown fields — never guesses</p>
+        <p>✅ Subtype-specific format every time</p>
+        <p>✅ Editable before copy-paste</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 -->
+  <div class="slide" id="slide-7">
+    <div class="slide-num">Slide 7 — Live Demo</div>
+    <h2>Let me show you</h2>
+    <div class="demo-steps">
+      <div class="demo-step"><p>Open app on phone — 8 asset type tiles</p></div>
+      <div class="demo-step"><p>Select Truck → Tipper</p></div>
+      <div class="demo-step"><p>Upload build plate photo from camera roll</p></div>
+      <div class="demo-step"><p>AI extracts all fields — ~15 seconds</p></div>
+      <div class="demo-step"><p>Review screen — confidence indicators, fix anything flagged</p></div>
+      <div class="demo-step"><p>Salesforce fields output — one tap to copy</p></div>
+      <div class="demo-step"><p>Generate description — Tipper format, correct footer</p></div>
+      <div class="demo-step"><p>Paste into Salesforce record</p></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide" id="slide-8">
+    <div class="slide-num">Slide 8 — Not a Prototype</div>
+    <h2>Production software. Built to last.</h2>
+    <div class="stat-grid">
+      <div class="stat"><div class="label">Automated tests</div><div class="value">365</div><div class="sub">Every rule, subtype, and field covered</div></div>
+      <div class="stat"><div class="label">Versions shipped</div><div class="value">5</div><div class="sub">v1.0 → v1.4 in 7 days</div></div>
+      <div class="stat"><div class="label">Asset types</div><div class="value">8</div><div class="sub">Every Salesforce subtype aligned</div></div>
+      <div class="stat"><div class="label">Status</div><div class="value" style="font-size:20px;padding-top:4px;">Live</div><div class="sub">In use on real Slattery assets now</div></div>
+    </div>
+    <ul style="margin-top:8px;">
+      <li>ISO 27001 compatible — all AI calls server-side</li>
+      <li>Adding a new asset type = hours, not weeks</li>
+    </ul>
+  </div>
+
+  <!-- SLIDE 9 -->
+  <div class="slide" id="slide-9">
+    <div class="slide-num">Slide 9 — What's Next</div>
+    <h2>The next step eliminates copy-paste entirely</h2>
+    <div class="flow">
+      <span class="step">📷 Photo &nbsp;→&nbsp; 🤖 AI extracts &nbsp;→&nbsp; ✅ Confirm &nbsp;→&nbsp; 🚀 Pushed to Salesforce</span>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-icon">🔗</div>
+      <div class="roadmap-text"><h4>Salesforce API <span class="tag">Priority</span></h4><p>IT to approve Connected App — standard config, no custom SF development. App already has all the data in the right format.</p></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-icon">👥</div>
+      <div class="roadmap-text"><h4>Multi-user access</h4><p>Roll out to the full team — individual logins for valuations, BDMs, admin</p></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-icon">🔍</div>
+      <div class="roadmap-text"><h4>PPSR capture</h4><p>Store PPSR check results against the asset record in the app</p></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 -->
+  <div class="slide" id="slide-10">
+    <div class="slide-num">Slide 10 — Summary</div>
+    <h2>Where things stand</h2>
+    <table>
+      <tr><th></th><th>Today</th><th>With Salesforce API</th></tr>
+      <tr><td>Time per asset</td><td>~2 min (down from 5–15)</td><td>~1 min</td></tr>
+      <tr><td>Salesforce entry</td><td>Copy-paste</td><td>Automatic</td></tr>
+      <tr><td>Description format</td><td>Enforced by the app</td><td>Enforced by the app</td></tr>
+      <tr><td>Who can use it</td><td>Anyone — no training needed</td><td>Anyone — no training needed</td></tr>
+      <tr><td>100-lot sale</td><td>~3 hrs data entry</td><td>~1.5 hrs, zero errors</td></tr>
+    </table>
+    <div class="ask">
+      <h3>The ask</h3>
+      <p>I've built everything on my end. I just need the Salesforce Connected App approved by IT. Can you help move that along?</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- SCRIPT VIEW -->
+<div id="script-view" style="display:none; padding: 80px 80px 60px; max-width: 800px; margin: 0 auto;">
+  <h2 style="margin-bottom:32px; color:#94a3b8; font-size:20px; text-transform:uppercase; letter-spacing:1px;">Presenter Script</h2>
+
+  <div style="margin-bottom:40px;"><h3 style="color:#3b82f6;margin-bottom:12px;">Slide 1 — Title</h3><div class="script-box">"Thanks for the time. I want to show you something I've built that I think changes how we do asset book-ins. It's live, it's working, and I've been using it on real jobs. I'll keep this short — five minutes of slides, then I'd rather show you the actual tool."</div></div>
+
+  <div style="margin-bottom:40px;"><h3 style="color:#3b82f6;margin-bottom:12px;">Slide 2 — The Problem</h3><div class="script-box">"Here's what currently happens when we book in an excavator or a prime mover. We take photos on-site, which is fine. But then we're manually cross-referencing websites to get the right specs, finding the exact Salesforce field order, and writing a description that has to follow our formatting rules exactly — no dot points, right footer, correct subtype layout. That's 5–15 minutes per asset. Multiply that across a full sale — 50, 100 lots — and it adds up fast. And the consistency isn't always there either, especially across different staff or asset types they don't book in often."</div></div>
+
+  <div style="margin-bottom:40px;"><h3 style="color:#3b82f6;margin-bottom:12px;">Slide 3 — The Solution</h3><div class="script-box">"The app flips that process. Staff upload the build plate photos directly from their phone. GPT-4o reads the plate and extracts every relevant Salesforce field — VIN, make, model, year, engine details, weight ratings, hours — and it uses its own knowledge to fill in spec fields it can infer from the model. The staff member reviews the AI's work, fixes anything wrong, and hits confirm. They get a ready-to-paste Salesforce fields block and a correctly formatted description. The whole thing takes about two minutes."</div></div>
+
+  <div style="margin-bottom:40px;"><h3 style="color:#3b82f6;margin-bottom:12px;">Slide 4 — What It Covers</h3><div class="script-box">"It's not just trucks and excavators. We cover all eight asset types with every Salesforce subtype aligned exactly to the SF taxonomy — the same choices you'd pick in the dropdown. Agriculture, Forklift, Caravan all have subtype selectors now. And critically, every subtype has its own description template. An EWP description looks different to a Tipper, a Telehandler looks different to a Walkie Stacker. The AI knows the difference and formats accordingly."</div></div>
+
+  <div style="margin-bottom:40px;"><h3 style="color:#3b82f6;margin-bottom:12px;">Slide 5 — Who Can Use It</h3><div class="script-box">"One thing I want to flag — this isn't just for me. Anyone can use it. You don't need to know the Salesforce field order for a prime mover or what a crawler tractor description is supposed to look like. The app handles all of that. A BDM can book in an asset on-site without handing it off. A new staff member gets it right without anyone showing them the ropes. Valuations team are done before they leave the yard.<br><br>And think about on-site auctions. Right now there's always a lag — photos get taken and then the data entry happens later. With this, you walk the yard and you're done. By the time you're back at the office the book-ins are already in Salesforce. Same for large general goods lots — instead of sitting there writing individual descriptions for 40 items, you're moving through them on your phone. It changes the pace of how we turn a job around."</div></div>
+
+  <div style="margin-bottom:40px;"><h3 style="color:#3b82f6;margin-bottom:12px;">Slide 6 — Description Quality</h3><div class="script-box">"The descriptions have to follow our format rules exactly, every time — not just when I'm the one writing them. The footer is enforced by the app. It cannot output the wrong variant. It never writes TBC for a spec it doesn't know — it just omits it. Every subtype has its own template, so a concrete agitator has drum capacity and mix details, an EWP has boom length and platform height. The output is editable before you copy it, but the starting point is already correct."</div></div>
+
+  <div style="margin-bottom:40px;"><h3 style="color:#3b82f6;margin-bottom:12px;">Slide 7 — Live Demo</h3><div class="script-box">"Let me just show you. [Open app] This is what staff see. They pick the asset type — I'll pick Truck, Tipper. Upload photos from the camera roll. [Upload] The AI runs for about 15 seconds. [Wait] And here are the extracted fields — make, model, VIN from the plate, year, engine details. The yellow ones are fields it's less confident about — we review those. [Fix one if needed] Here's the Salesforce fields output, ready to paste. And then [tap Generate Description] here's the description. Tipper format, correct footer. [Show copy button] That's it."</div></div>
+
+  <div style="margin-bottom:40px;"><h3 style="color:#3b82f6;margin-bottom:12px;">Slide 8 — Not a Prototype</h3><div class="script-box">"This isn't a demo script I threw together — it's production software with 365 automated tests. Every description rule, every field extraction path, every Salesforce subtype is tested. The AI calls are all server-side so no asset data is exposed client-side. And adding a new asset type when Slattery adds a new category is hours, not weeks."</div></div>
+
+  <div style="margin-bottom:40px;"><h3 style="color:#3b82f6;margin-bottom:12px;">Slide 9 — What's Next</h3><div class="script-box">"The one thing that would make this a lot more powerful is Salesforce API access. Right now the app gives you the output ready to paste — that's already saving real time. But if IT can set up a Connected App, the copy-paste step goes away entirely. You confirm the AI's work and the app writes straight into Salesforce. I can build that side of it, I just need IT to approve it. Would you be able to help move that along?"</div></div>
+
+  <div style="margin-bottom:40px;"><h3 style="color:#3b82f6;margin-bottom:12px;">Slide 10 — Summary</h3><div class="script-box">"That's where things stand. It's already saving real time and the quality is consistent regardless of who does the booking. A new staff member can do their first book-in correctly without anyone showing them the Salesforce field order or the description rules. That knowledge is just built in. The Salesforce API is the next step that makes it seamless for everyone. I've done everything I can on my end. I just need the Connected App sorted with IT. That's the ask."</div></div>
+</div>
+
+<script>
+  let current = 1;
+  const total = 10;
+  let view = 'slides';
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById('slide-' + n);
+    if (el) el.classList.add('active');
+    document.getElementById('slide-label').textContent = 'Slide ' + n + ' of ' + total;
+  }
+
+  function next() {
+    if (current < total) { current++; showSlide(current); }
+  }
+
+  function prev() {
+    if (current > 1) { current--; showSlide(current); }
+  }
+
+  function setView(v) {
+    view = v;
+    document.getElementById('slides-view').style.display = v === 'slides' ? 'block' : 'none';
+    document.getElementById('script-view').style.display = v === 'script' ? 'block' : 'none';
+    document.getElementById('btn-slides').className = v === 'slides' ? 'active' : '';
+    document.getElementById('btn-script').className = v === 'script' ? 'active' : '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prev();
+  });
+</script>
+</body>
+</html>

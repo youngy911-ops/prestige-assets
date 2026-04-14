@@ -44,6 +44,33 @@ Step 1 — Identify plates and read them in this priority order:
 - VIN PLATE (stamped on chassis rail): 17-character VIN number
 - FORKLIFT DATA PLATE: contains Max Lift Capacity, Max Lift Height, rated load
 
+READING BUILD PLATES / COMPLIANCE PLATES:
+- Build plates are metal or adhesive labels riveted or stuck to the chassis, door jamb, engine bay firewall, or cab interior
+- They contain: Make, Model, VIN/PIN (17-char), Serial Number, GVM, Tare, ATM, Year of Manufacture
+- Read each field verbatim — do not infer or reformat values found on the plate
+- VIN/serial on a plate may be labelled "VIN", "PIN", "W.M.I.", "Serial No", "Chassis No", "Product ID" or similar — read whichever is present
+- If a build plate is partially obscured, extract whatever is legible — do not skip the whole plate just because some fields are unreadable
+
+READING ODOMETERS:
+- Odometers appear on the instrument cluster or dashboard display
+- Read the full number exactly as displayed — include all digits shown, including leading digits even if partially bright
+- Units: typically "km" for Australian vehicles; note if display shows "mi" and convert if confident, otherwise extract as-is
+- Do not round or estimate — only extract what is clearly legible
+- If the display is blurry or at an angle and digits are uncertain, still return your best reading but set confidence to "low"
+- For numeric fields return digits only — no units, commas, or spaces
+
+READING HOURMETERS:
+- Hourmeters appear on the instrument cluster, a separate panel gauge, or an adhesive label on the frame
+- Common formats: XXXX.X or XXXXX — extract the exact number shown, digits only (no "hrs", "h", or "hours" suffix)
+- Common locations by machine type:
+  - Excavators: left-side monitor panel inside cab (often a dedicated LCD gauge cluster)
+  - Forklifts: overhead guard panel or dashboard display (labelled "HRS" or clock icon)
+  - Tractors/agricultural: cab instrument cluster (may be combined with engine hours)
+  - Generators/compressors: front panel label or digital meter (often an adhesive or surface-mount gauge)
+  - Trucks with cranes or EWPs: secondary instrument panel or console
+- If hourmeter shows "Hrs", "H", or "Hours" beside the number — extract just the numeric value
+- If the display shows decimal hours (e.g. 1234.5), include the decimal
+
 Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year are identified):
 - TRUCKS: infer engine_manufacturer, engine_series, engine_size, fuel_type, gearbox_make, transmission, drive_type, suspension, axle_configuration, brakes, GVM, GCM
 - EARTHMOVING: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission, emissions_tier (Tier 4 Final = post-2014 models)
