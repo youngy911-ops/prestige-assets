@@ -130,6 +130,16 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
           <p className="text-sm text-red-400">
             Description generation failed. You can type your description manually, or try again.
           </p>
+          <button
+            type="button"
+            onClick={() => {
+              setDescState('loading')
+              generateDescription(false, tone)
+            }}
+            className="self-start px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition-colors"
+          >
+            Try Again
+          </button>
           <DescriptionBlock
             key={descKey}
             assetId={assetId}

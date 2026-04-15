@@ -9,7 +9,7 @@ export function ExtractionFailureState({ assetId, onRetry }: ExtractionFailureSt
       <div className="rounded-md border border-[var(--destructive)]/40 bg-[var(--destructive)]/10 p-4">
         <p className="text-sm font-semibold text-white">Extraction failed</p>
         <p className="text-sm text-white/65 mt-1">
-          Could not connect to AI service. Check your connection and try again.
+          AI extraction failed. This could be a temporary issue — check your connection and try again.
         </p>
       </div>
       <div className="flex flex-col gap-2">

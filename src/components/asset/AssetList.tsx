@@ -234,7 +234,24 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       {error && (
         <div className="text-center py-16">
           <p className="text-white text-base font-medium">Could not load assets.</p>
-          <p className="text-white/65 text-sm mt-2">Check your connection and refresh.</p>
+          <p className="text-white/65 text-sm mt-2">Check your connection and try again.</p>
+          <button
+            type="button"
+            onClick={() => {
+              setError(null)
+              setAssets(null)
+              getAssets(branch).then(result => {
+                if ('error' in result) {
+                  setError(result.error)
+                } else {
+                  setAssets(result)
+                }
+              })
+            }}
+            className="mt-4 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition-colors"
+          >
+            Retry
+          </button>
         </div>
       )}
 

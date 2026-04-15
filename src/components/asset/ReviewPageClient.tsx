@@ -264,7 +264,7 @@ export function ReviewPageClient({
         style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 72px)' }}>
         <div className="max-w-2xl mx-auto px-4 pt-3 pb-2 flex flex-col gap-2">
           {saveError && (
-            <p className="text-sm text-red-400 text-center">{saveError}</p>
+            <p role="alert" className="text-sm text-red-400 text-center">{saveError}</p>
           )}
           {!isSaveAllowed && (
             <p className="text-xs text-amber-400/80 text-center">Some fields incomplete — you can still proceed and fill them in later</p>

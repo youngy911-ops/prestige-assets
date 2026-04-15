@@ -11,9 +11,11 @@ interface AssetCardProps {
   status: 'draft' | 'confirmed'
   updated_at: string
   thumb_url?: string | null
+  /** Animation delay for staggered entrance */
+  animationDelay?: string
 }
 
-export function AssetCard({ id, asset_type, asset_subtype, fields, status, updated_at, thumb_url }: AssetCardProps) {
+export function AssetCard({ id, asset_type, asset_subtype, fields, status, updated_at, thumb_url, animationDelay }: AssetCardProps) {
   const href = status === 'draft'
     ? `/assets/${id}/review`
     : `/assets/${id}/output`
@@ -25,8 +27,12 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
   const subtitle = [make, model, year].filter(Boolean).join(' ') || null
 
   return (
-    <Link href={href} className="block group">
-      <div className="bg-white/[0.04] rounded-xl border border-white/[0.08] transition-all group-hover:bg-white/[0.07] group-hover:border-white/[0.14] flex items-stretch overflow-hidden">
+    <Link
+      href={href}
+      className="block group animate-in fade-in slide-in-from-bottom-2 duration-200 fill-mode-both"
+      style={animationDelay ? { animationDelay } : undefined}
+    >
+      <div className="bg-white/[0.04] rounded-xl border border-white/[0.08] transition-all duration-150 group-hover:bg-white/[0.07] group-hover:border-white/[0.14] active:scale-[0.98] flex items-stretch overflow-hidden">
         {/* Thumbnail */}
         <div className="w-20 flex-shrink-0 self-stretch relative overflow-hidden bg-white/[0.03]">
           {thumb_url ? (
