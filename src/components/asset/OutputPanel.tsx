@@ -305,6 +305,13 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
           if (v === 'damaged' || v === 'severe' || v === 'bald') return 'text-red-400'
           return 'text-white/60'
         }
+        const dotColor = (val: string) => {
+          const v = val.toLowerCase()
+          if (v === 'excellent' || v === 'new' || v === 'none' || v === 'good') return 'bg-emerald-400'
+          if (v === 'average' || v === 'fair' || v === 'minor') return 'bg-amber-400'
+          if (v === 'poor' || v === 'moderate' || v === 'damaged' || v === 'severe' || v === 'bald') return 'bg-red-400'
+          return 'bg-white/30'
+        }
 
         return (
           <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
@@ -324,7 +331,19 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
                     </p>
                   )}
                   {damageNotes && (
-                    <pre className="text-xs text-white/60 whitespace-pre-wrap mt-2 leading-relaxed">{damageNotes}</pre>
+                    <div className="mt-2 rounded-lg border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.06]">
+                      {damageNotes.split('\n').filter(l => l.trim()).map((line, i) => {
+                        const parts = line.split(' - ')
+                        const panel = parts[0]?.trim()
+                        const desc = parts.slice(1).join(' - ').trim()
+                        return (
+                          <div key={i} className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-3 py-2 gap-0.5 sm:gap-4">
+                            <span className="text-xs font-medium text-white">{panel}</span>
+                            {desc && <span className="text-xs text-white/60 sm:text-right">{desc}</span>}
+                          </div>
+                        )
+                      })}
+                    </div>
                   )}
                 </div>
               )}
@@ -337,7 +356,10 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
                     {conditionFields.filter(f => fields[f.key]).map(f => (
                       <div key={f.key} className="flex items-center justify-between">
                         <span className="text-xs text-white/50">{f.label}</span>
-                        <span className={`text-xs font-medium ${conditionColor(fields[f.key])}`}>{fields[f.key]}</span>
+                        <span className={`text-xs font-medium flex items-center gap-1.5 ${conditionColor(fields[f.key])}`}>
+                          <span className={`inline-block w-1.5 h-1.5 rounded-full ${dotColor(fields[f.key])}`} />
+                          {fields[f.key]}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -352,7 +374,10 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
                     {tyreFields.filter(f => fields[f.key]).map(f => (
                       <div key={f.key} className="flex items-center justify-between">
                         <span className="text-xs text-white/50">{f.label}</span>
-                        <span className={`text-xs font-medium ${conditionColor(fields[f.key])}`}>{fields[f.key]}</span>
+                        <span className={`text-xs font-medium flex items-center gap-1.5 ${conditionColor(fields[f.key])}`}>
+                          <span className={`inline-block w-1.5 h-1.5 rounded-full ${dotColor(fields[f.key])}`} />
+                          {fields[f.key]}
+                        </span>
                       </div>
                     ))}
                   </div>

@@ -2,12 +2,12 @@
 import { useEffect, useState, useRef } from 'react'
 
 const STEPS = [
-  { text: 'Reading build plates…', icon: '🔍' },
-  { text: 'Analysing photos…', icon: '📷' },
+  { text: 'Reading plates and labels…', icon: '🔍' },
+  { text: 'Scanning for damage…', icon: '📷' },
   { text: 'Identifying make and model…', icon: '🏭' },
-  { text: 'Extracting field data…', icon: '📋' },
-  { text: 'Checking confidence levels…', icon: '✅' },
-  { text: 'Finalising results…', icon: '🎯' },
+  { text: 'Assessing condition…', icon: '📋' },
+  { text: 'Extracting details…', icon: '✅' },
+  { text: 'Finalising…', icon: '🎯' },
 ]
 
 const STEP_INTERVAL = 3500 // 3.5s per step
