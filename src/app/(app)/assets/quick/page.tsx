@@ -79,9 +79,13 @@ export default function QuickBookPage() {
         label: `Item ${prev.length + 1}`,
         thumbUrl,
         photoCount: files.length,
+        detectStatus: 'detecting' as const,
       }])
       setStatus('idle')
       setUploadProgress(null)
+
+      // Auto-detect type in background — don't block the UI
+      detectType(assetId, thumbUrl)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong')
       setStatus('error')
@@ -93,11 +97,11 @@ export default function QuickBookPage() {
     await bookInFiles([file])
   }
 
-  async function detectType(itemId: string) {
+  async function detectType(itemId: string, thumbUrlOverride?: string) {
     setBooked(prev => prev.map(i => i.id === itemId ? { ...i, detectStatus: 'detecting' as const } : i))
     try {
-      const item = booked.find(i => i.id === itemId)
-      if (!item) return
+      const imgSrc = thumbUrlOverride ?? booked.find(i => i.id === itemId)?.thumbUrl
+      if (!imgSrc) return
 
       // Convert blob URL to base64 via canvas
       const img = new Image()
@@ -106,7 +110,7 @@ export default function QuickBookPage() {
         img.onload = () => resolve()
         img.onerror = () => reject(new Error('Failed to load image'))
       })
-      img.src = item.thumbUrl
+      img.src = imgSrc
       await loaded
 
       const canvas = document.createElement('canvas')
