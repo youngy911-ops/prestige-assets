@@ -76,8 +76,8 @@ export const vehicleSchema: AssetSchema = {
     { key: 'tyre_spare',          label: 'Tyres - Spare',         sfOrder: 44, inputType: 'select',   aiExtractable: false, required: false, options: ['Full Size', 'Space Saver', 'None', 'Unknown'] },
 
     // ── Section: Damage ──
-    { key: 'damage',              label: 'Damage',                sfOrder: 45, inputType: 'textarea', aiExtractable: true,  required: false, aiHint: 'Describe visible damage from photos: scratches, dents, cracked windscreen, broken lights, missing mirrors, panel damage, bumper damage. List each item. If no damage visible, return null.' },
-    { key: 'damage_notes',        label: 'Damage Notes',          sfOrder: 46, inputType: 'textarea', aiExtractable: true,  required: false, aiHint: 'Detailed damage notes: location, severity, and extent. E.g. "Large dent on driver rear quarter panel approx 200mm, scratches along passenger side, cracked tail light lens RHS."' },
+    { key: 'damage',              label: 'Damage',                sfOrder: 45, inputType: 'textarea', aiExtractable: true,  required: false, aiHint: 'Concise Salesforce summary of ALL visible damage. Format exactly like: "Scratches and dents visible around vehicle" or "Dent on driver rear door, scratches along passenger side, cracked tail light RHS". Use location terms: driver/passenger, front/rear, LHS/RHS. If no damage visible in any photo, return null.' },
+    { key: 'damage_notes',        label: 'Damage Notes',          sfOrder: 46, inputType: 'textarea', aiExtractable: true,  required: false, aiHint: 'Detailed breakdown of each damage item with location, severity, and approximate size. E.g. "1. Large dent on driver rear quarter panel approx 200mm diameter. 2. Deep scratches along passenger side from front guard to rear door. 3. Cracked tail light lens RHS — appears impact damage. 4. Stone chips across bonnet leading edge. 5. Minor rust bubbling on both rear wheel arches."' },
   ],
   descriptionTemplate: (_fields, _subtype) => '',
 }

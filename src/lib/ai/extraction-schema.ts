@@ -78,6 +78,43 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
 - AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission
 - MARINE: infer hull_material from visual (fibreglass/aluminium most common), motor_type from photo (outboard vs inboard), number_of_engines from visible motors, steering_type from helm setup
 - VEHICLES: infer engine_type, fuel_type, transmission, drive_type from make/model/year knowledge. Read VIN from door jamb plate or windscreen base. Read registration from plates. Read odometer from instrument cluster. Identify body type, colour, and extras from photos.
+
+Step 3 — DAMAGE & CONDITION ASSESSMENT (especially for VEHICLES):
+Carefully examine ALL photos for visible damage and condition issues. This is critical for auction cataloguing.
+
+EXTERIOR DAMAGE INSPECTION — scan every photo for:
+- Dents: look for uneven reflections, shadow lines, or panel distortion. Note location and approximate size.
+- Scratches: look for linear marks on paint surface. "Light scratches" = surface only. "Deep scratches" = through paint to primer/metal.
+- Stone chips: clusters of small paint chips, common on bonnet/bumper.
+- Cracked/chipped windscreen: look for star cracks, bullseyes, or chips.
+- Broken/cracked lights: tail lights, headlights, indicators, fog lights.
+- Missing parts: mirrors, trim pieces, badges, mud flaps, wheel covers.
+- Bumper damage: cracks, scrapes, misalignment, hanging sections.
+- Panel gaps: uneven gaps between panels suggest prior collision repair.
+- Rust: bubbling paint, orange/brown discolouration, holes in panels. Check wheel arches, door bottoms, sills, tailgate.
+- Tow bar damage: bent, scraped, or misaligned.
+- Canopy/tray damage: dents, scratches, cracked windows on canopies.
+
+INTERIOR CONDITION — from cabin photos:
+- Seats: tears, rips, worn bolsters, stains, burn marks, sagging.
+- Dashboard: cracks, fading, sticky/peeling surfaces.
+- Steering wheel: worn leather, peeling, cracks.
+- Door trims: scratches, scuffs, broken handles, damaged speakers.
+- Carpet: stains, wear, tears, water damage.
+- Headlining: sagging, stains, tears.
+- Console/controls: worn buttons, broken knobs, missing parts.
+
+TYRE ASSESSMENT — from tyre photos:
+- Tread depth: estimate percentage remaining. "New" = full tread (~8mm). "Good" = 70%+ (~5-6mm). "Average" = 40-70% (~3-5mm). "Fair" = 20-40% (~2-3mm). "Poor" = minimal tread. "Bald" = no tread or wire visible.
+- Uneven wear: inside/outside edge wear suggests alignment issues.
+- Sidewall damage: bulges, cuts, cracks.
+- Mismatched tyres: different brands/sizes across axles.
+
+DAMAGE FIELD FORMAT — write the "damage" field as a concise summary suitable for Salesforce paste:
+- Format: "Scratches and dents visible around vehicle" or "Dent on driver rear door, scratches along passenger side, cracked tail light RHS"
+- Be specific about location (driver/passenger, front/rear, LHS/RHS)
+- If NO damage is visible in any photo, return null (do not write "no damage" — null means not found)
+- Use "damage_notes" for the detailed breakdown with sizes and severity
 - GENERAL GOODS: read make/model/serial from build plate or data label. DOM from compliance plate if present. Many items (attachments, hand tools) have no build plate — return null for missing fields rather than inferring.
 
 Rules:
