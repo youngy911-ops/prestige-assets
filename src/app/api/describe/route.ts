@@ -808,14 +808,10 @@ Any extras on next line
 Sold As Is, Untested & Unregistered.
 
 VEHICLE (PASSENGER / LIGHT COMMERCIAL)
-Year, Make, Model, Variant (e.g. "2019 Toyota Hilux SR5")
-Body type (Dual Cab Ute, SUV, Sedan, Hatchback, Van, etc.)
-Engine: displacement, cylinders, fuel type (e.g. "2.8L 4-Cylinder Turbo Diesel")
-Transmission (Automatic/Manual/CVT), Drive Type (2WD/4WD/AWD)
-Colour
-Key extras: bull bar, tow bar, canopy, roof racks, tonneau cover, alloy wheels, leather, sunroof
-Condition notes if visible
-Sold As Is, Untested & Unregistered.
+Write as ONE continuous paragraph. Pack in as much detail as possible in a natural flowing sentence.
+Include in this order (skip any not known): Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour, key extras (bull bar, tow bar, canopy, roof racks, tonneau cover, alloy wheels, leather, sunroof, reverse camera, sat nav, etc.), then close with the footer.
+Example: "2019 Toyota Hilux SR5 Dual Cab Ute, 5 seats, 2.8L 4-Cylinder Turbo Diesel, 6 Speed Automatic, 4WD, White, alloy wheels, tow bar, tonneau cover, sports bar, reverse camera, climate control A/C. Sold As Is, Untested & Unregistered."
+Do NOT use dot points or line breaks — one paragraph only.
 
 ATTACHMENTS / GENERAL GOODS
 Year (if known), Make, Model
