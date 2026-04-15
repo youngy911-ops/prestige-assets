@@ -83,7 +83,7 @@ export async function getAssetThumbs(
 
   const { data: signedUrlData } = await supabase.storage
     .from('photos')
-    .createSignedUrls(storagePaths, 600)
+    .createSignedUrls(storagePaths, 3600)
 
   const urlByPath = new Map((signedUrlData ?? []).map(r => [r.path, r.signedUrl]))
 

@@ -56,13 +56,18 @@ export function ReviewPageClient({
     defaultValues: buildDefaultValues(fields, initialExtractionResult, savedFields),
   })
 
-  const watchedValues = watch()
+  // Only watch fields the checklist cares about — avoids re-rendering on every keystroke
+  const checklistFieldKeys = fields
+    .filter(f => f.required || f.inspectionPriority)
+    .map(f => f.key)
+  const watchedValues = watch(checklistFieldKeys)
+  const watchedRecord = Object.fromEntries(checklistFieldKeys.map((k, i) => [k, watchedValues[i] ?? '']))
 
   // Recompute checklist from current form values
   const checklist: ChecklistEntry[] = buildChecklist(
     fields,
     extractionResult,
-    watchedValues,
+    watchedRecord,
     checklistState
   )
 
@@ -159,7 +164,7 @@ export function ReviewPageClient({
     if (isSaveAllowed) {
       // All required fields present — use validated submit path
       setIsSaving(true)
-      handleSubmit(onSubmit)()
+      handleSubmit(onSubmit)().catch(() => setIsSaving(false))
       return
     }
     // Partial proceed — save whatever's filled in, staff can complete later

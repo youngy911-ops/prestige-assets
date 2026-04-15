@@ -1,5 +1,7 @@
 import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+
+export const maxDuration = 60
 import { generateText, Output } from 'ai'
 import { openai } from '@ai-sdk/openai'
 import { buildExtractionSchema, buildSystemPrompt, buildUserPrompt } from '@/lib/ai/extraction-schema'

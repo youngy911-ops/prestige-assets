@@ -1,12 +1,11 @@
 // Client-only — do NOT import from server components
-import imageCompression from 'browser-image-compression'
-import * as exifr from 'exifr'
+// Libraries are dynamically imported to avoid bloating the client bundle (~80KB gzipped)
 
 /**
  * Processes a File before upload:
  * 1. Reads EXIF orientation with exifr.rotation()
  * 2. If rotation needed, redraws onto canvas to bake pixels correctly (strips EXIF)
- * 3. Compresses to max 1200px longest side at 0.82 quality (JPEG output)
+ * 3. Compresses to max 1600px longest side at 0.88 quality (JPEG output)
  *
  * Falls back gracefully at every step — if EXIF read or canvas rotation fails,
  * skips that step and proceeds with compression only. Never throws.
@@ -16,6 +15,7 @@ export async function processImageForUpload(file: File): Promise<File> {
 
   // Step 1 & 2: EXIF rotation — wrapped in try/catch; failure is non-fatal
   try {
+    const exifr = await import('exifr')
     const rotation = await exifr.rotation(file).catch(() => null)
 
     if (rotation && rotation.deg !== 0) {
@@ -50,6 +50,7 @@ export async function processImageForUpload(file: File): Promise<File> {
 
   // Step 3: Compress — also wrapped; if compression fails return source as-is
   try {
+    const imageCompression = (await import('browser-image-compression')).default
     return await imageCompression(sourceFile, {
       maxWidthOrHeight: 1600,
       useWebWorker: true,

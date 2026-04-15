@@ -5,7 +5,8 @@ export default function Loading() {
         <div className="h-7 w-20 rounded-lg bg-white/10" />
         <div className="h-9 w-24 rounded-xl bg-white/10" />
       </div>
-      <div className="h-9 w-36 rounded-lg bg-white/[0.06] mb-6" />
+      <div className="h-10 w-full rounded-xl bg-white/[0.03] border border-white/[0.06] mb-4" />
+      <div className="h-8 w-28 rounded-lg bg-white/[0.06] mb-4" />
       <div className="flex flex-col gap-4">
         {[...Array(5)].map((_, i) => (
           <div key={i} className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] p-4">

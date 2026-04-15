@@ -147,7 +147,7 @@ export default function QuickBookPage() {
             accept="image/*"
             capture="environment"
             className="hidden"
-            onChange={e => { const f = e.target.files?.[0]; if (f) handlePhoto(f) }}
+            onChange={e => { const f = e.target.files?.[0]; if (f) handlePhoto(f); e.target.value = '' }}
           />
           <input
             ref={filesRef}

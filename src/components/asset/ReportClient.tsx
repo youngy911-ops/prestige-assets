@@ -76,6 +76,7 @@ export function ReportClient({ assetId, title, fieldsText, description, photoUrl
                   key={i}
                   src={url}
                   alt={`Photo ${i + 1}`}
+                  loading="lazy"
                   className="w-full aspect-square object-cover rounded-lg print:rounded"
                 />
               ))}

@@ -41,10 +41,13 @@ export function getAIExtractableFieldDefs(assetType: AssetType): FieldDefinition
 }
 
 export function getFieldsSortedBySfOrder(assetType: AssetType) {
-  return [...SCHEMA_REGISTRY[assetType].fields].sort((a, b) => a.sfOrder - b.sfOrder)
+  const schema = SCHEMA_REGISTRY[assetType]
+  if (!schema) return []
+  return [...schema.fields].sort((a, b) => a.sfOrder - b.sfOrder)
 }
 
 export function getInspectionPriorityFields(assetType: AssetType): FieldDefinition[] {
+  if (!SCHEMA_REGISTRY[assetType]) return []
   return SCHEMA_REGISTRY[assetType].fields
     .filter(f => f.inspectionPriority === true)
     .sort((a, b) => a.sfOrder - b.sfOrder)

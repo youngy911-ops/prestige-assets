@@ -1,5 +1,7 @@
 export function relativeTime(isoString: string): string {
+  if (!isoString) return ''
   const diff = Date.now() - new Date(isoString).getTime()
+  if (isNaN(diff)) return ''
   const minutes = Math.floor(diff / 60_000)
   const hours = Math.floor(diff / 3_600_000)
   const days = Math.floor(diff / 86_400_000)

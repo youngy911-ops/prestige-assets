@@ -154,6 +154,7 @@ export function PhotoUploadZone({
     if ('error' in result) { setIsPickingHero(false); return }
 
     const { heroIndex } = result
+    if (heroIndex >= photos.length) { setIsPickingHero(false); return }
     if (heroIndex === 0) {
       setHeroPickResult('already-best')
     } else {
