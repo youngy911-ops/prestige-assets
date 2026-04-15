@@ -72,55 +72,64 @@ export function PhotoUploadZone({
     const baseOrder = photos.length
     let doneCount = 0
 
-    const results = await Promise.allSettled(
-      fileArray.map(async (file, i) => {
-        try {
-          // 1. EXIF correct + compress
-          const processed = await processImageForUpload(file)
+    // Process in batches of 3 — prevents browser from choking on 12 simultaneous
+    // 48MP HEIC decodes. Each batch compresses + uploads in parallel, then next batch.
+    const BATCH_SIZE = 3
+    const results: PromiseSettledResult<PhotoItem>[] = []
 
-          // 2. Upload to Supabase Storage — sanitise filename, retry only on network errors
-          const safeName = processed.name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 80)
-          const storagePath = `${userId}/${assetId}/${Date.now()}-${i}-${safeName}`
-          let uploadData: { path: string } | null = null
-          let lastUploadError: string | null = null
-          for (let attempt = 0; attempt < 3; attempt++) {
-            const { data, error: uploadError } = await supabase.storage
-              .from('photos')
-              .upload(storagePath, processed, { contentType: 'image/jpeg', upsert: false })
-            if (!uploadError && data) { uploadData = data; break }
-            lastUploadError = uploadError?.message ?? 'Upload failed'
-            // Don't retry on auth/permission errors — they won't resolve on retry
-            if (uploadError?.message?.toLowerCase().includes('policy') ||
-                uploadError?.message?.toLowerCase().includes('auth') ||
-                uploadError?.message?.toLowerCase().includes('permission')) break
+    for (let batchStart = 0; batchStart < fileArray.length; batchStart += BATCH_SIZE) {
+      const batch = fileArray.slice(batchStart, batchStart + BATCH_SIZE)
+      const batchResults = await Promise.allSettled(
+        batch.map(async (file, batchIdx) => {
+          const i = batchStart + batchIdx
+          try {
+            // 1. EXIF correct + compress
+            const processed = await processImageForUpload(file)
+
+            // 2. Upload to Supabase Storage — sanitise filename, retry only on network errors
+            const safeName = processed.name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 80)
+            const storagePath = `${userId}/${assetId}/${Date.now()}-${i}-${safeName}`
+            let uploadData: { path: string } | null = null
+            let lastUploadError: string | null = null
+            for (let attempt = 0; attempt < 3; attempt++) {
+              const { data, error: uploadError } = await supabase.storage
+                .from('photos')
+                .upload(storagePath, processed, { contentType: 'image/jpeg', upsert: false })
+              if (!uploadError && data) { uploadData = data; break }
+              lastUploadError = uploadError?.message ?? 'Upload failed'
+              if (uploadError?.message?.toLowerCase().includes('policy') ||
+                  uploadError?.message?.toLowerCase().includes('auth') ||
+                  uploadError?.message?.toLowerCase().includes('permission')) break
+            }
+            if (!uploadData) throw new Error(lastUploadError ?? 'Upload failed')
+
+            // 3. Persist to asset_photos table + get signed URL in one server action call
+            const insertResult = await insertPhoto({
+              assetId,
+              storagePath: uploadData.path,
+              sortOrder: baseOrder + i,
+            })
+            if ('error' in insertResult) throw new Error(insertResult.error)
+
+            return {
+              id: insertResult.id,
+              storagePath: uploadData.path,
+              signedUrl: insertResult.signedUrl,
+              sortOrder: baseOrder + i,
+            } satisfies PhotoItem
+          } finally {
+            setUploadingIds((prev) => {
+              const next = new Set(prev)
+              next.delete(tempIds[i])
+              return next
+            })
+            doneCount++
+            setUploadProgress({ done: doneCount, total: fileArray.length })
           }
-          if (!uploadData) throw new Error(lastUploadError ?? 'Upload failed')
-
-          // 3. Persist to asset_photos table + get signed URL in one server action call
-          const insertResult = await insertPhoto({
-            assetId,
-            storagePath: uploadData.path,
-            sortOrder: baseOrder + i,
-          })
-          if ('error' in insertResult) throw new Error(insertResult.error)
-
-          return {
-            id: insertResult.id,
-            storagePath: uploadData.path,
-            signedUrl: insertResult.signedUrl,
-            sortOrder: baseOrder + i,
-          } satisfies PhotoItem
-        } finally {
-          setUploadingIds((prev) => {
-            const next = new Set(prev)
-            next.delete(tempIds[i])
-            return next
-          })
-          doneCount++
-          setUploadProgress({ done: doneCount, total: fileArray.length })
-        }
-      })
-    )
+        })
+      )
+      results.push(...batchResults)
+    }
 
     const newPhotos: PhotoItem[] = []
     const errors: { filename: string; message: string }[] = []
