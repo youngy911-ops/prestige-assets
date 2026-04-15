@@ -14,6 +14,7 @@ export function ExtractionFailureState({ assetId, onRetry }: ExtractionFailureSt
       </div>
       <div className="flex flex-col gap-2">
         <button
+          type="button"
           onClick={onRetry}
           className="flex items-center justify-center w-full h-11 rounded-md bg-emerald-600 hover:bg-emerald-600/90 text-white font-medium text-sm transition-colors"
         >

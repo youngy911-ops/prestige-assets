@@ -97,7 +97,7 @@ export default function QuickBookPage() {
     <div className="max-w-[480px] mx-auto px-4 pt-8 pb-[calc(env(safe-area-inset-bottom)+80px)]">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
-        <button onClick={() => router.push('/')} className="text-white/65 hover:text-white p-1 -ml-1">
+        <button type="button" onClick={() => router.push('/')} className="text-white/65 hover:text-white p-1 -ml-1">
           <ChevronLeft className="w-5 h-5" />
         </button>
         <div>

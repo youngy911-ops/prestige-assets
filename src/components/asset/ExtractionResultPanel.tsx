@@ -87,6 +87,7 @@ export function ExtractionResultPanel({
       {/* Sticky CTA */}
       <div className="sticky bottom-0 bg-[var(--background)] pt-3 pb-1">
         <button
+          type="button"
           onClick={() => router.push(`/assets/${assetId}/review`)}
           className="flex items-center justify-center w-full h-11 rounded-md bg-emerald-600 hover:bg-emerald-600/90 text-white font-medium text-sm transition-colors gap-1"
         >
@@ -94,6 +95,7 @@ export function ExtractionResultPanel({
           <ChevronRight className="w-4 h-4" aria-hidden="true" />
         </button>
         <button
+          type="button"
           onClick={onRerun}
           className="w-full text-sm text-white/65 hover:text-white text-center mt-2 py-1"
         >

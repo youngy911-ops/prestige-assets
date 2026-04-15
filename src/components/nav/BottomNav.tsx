@@ -56,6 +56,7 @@ export function BottomNav() {
           <span className={cn('text-xs font-medium', quickActive ? 'text-white' : 'text-white/40')}>Quick</span>
         </Link>
         <button
+          type="button"
           onClick={handleLogout}
           className="flex flex-col items-center gap-1 min-h-[44px] justify-center px-4 text-white/40 hover:text-white/70 transition-colors"
         >

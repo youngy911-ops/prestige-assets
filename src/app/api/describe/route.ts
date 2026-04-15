@@ -1170,14 +1170,14 @@ export async function POST(req: NextRequest) {
 
   // 5. Generate signed URLs in one batch call (1-hour expiry)
   const storagePaths = (photos ?? []).map(p => p.storage_path)
-  const signedUrls: string[] = []
+  let signedUrls: string[] = []
   if (storagePaths.length > 0) {
     const { data: signedUrlData } = await supabase.storage
       .from('photos')
       .createSignedUrls(storagePaths, 3600)
-    for (const r of signedUrlData ?? []) {
-      if (r.signedUrl) signedUrls.push(r.signedUrl)
-    }
+    signedUrls = (signedUrlData ?? [])
+      .map(r => r.signedUrl)
+      .filter((url): url is string => !!url)
   }
 
   // 6. Call GPT-4o — plain text output (NOT Output.object — that is for structured extraction only)

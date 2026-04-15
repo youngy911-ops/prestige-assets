@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import { SCHEMA_REGISTRY } from '@/lib/schema-registry'
-import type { AssetType } from '@/lib/schema-registry/types'
+import { getAssetDisplayTitle } from '@/lib/schema-registry'
 import { AssetStatusBadge } from './AssetStatusBadge'
 import { relativeTime } from '@/lib/utils/relativeTime'
 
@@ -14,12 +13,12 @@ interface AssetCardProps {
   thumb_url?: string | null
 }
 
-export function AssetCard({ id, asset_type, asset_subtype: _subtype, fields, status, updated_at, thumb_url }: AssetCardProps) {
+export function AssetCard({ id, asset_type, asset_subtype, fields, status, updated_at, thumb_url }: AssetCardProps) {
   const href = status === 'draft'
     ? `/assets/${id}/review`
     : `/assets/${id}/output`
 
-  const displayName = SCHEMA_REGISTRY[asset_type as AssetType]?.displayName ?? asset_type
+  const displayName = getAssetDisplayTitle(asset_type, asset_subtype)
   const make = fields?.make ?? ''
   const model = fields?.model ?? ''
   const year = fields?.year ?? ''

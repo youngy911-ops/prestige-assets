@@ -14,6 +14,7 @@ interface ReportClientProps {
 export function ReportClient({ assetId, title, fieldsText, description, photoUrls }: ReportClientProps) {
   const [desc, setDesc] = useState(description)
   const [loadingDesc, setLoadingDesc] = useState(!description)
+  const [descError, setDescError] = useState(false)
 
   useEffect(() => {
     if (description) return
@@ -22,9 +23,9 @@ export function ReportClient({ assetId, title, fieldsText, description, photoUrl
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ assetId }),
     })
-      .then(r => r.json())
-      .then(d => { if (d.description) setDesc(d.description) })
-      .catch(() => {})
+      .then(r => { if (!r.ok) throw new Error('API error'); return r.json() })
+      .then(d => { if (d.description) setDesc(d.description); else setDescError(true) })
+      .catch(() => setDescError(true))
       .finally(() => setLoadingDesc(false))
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -37,6 +38,7 @@ export function ReportClient({ assetId, title, fieldsText, description, photoUrl
           Output
         </Link>
         <button
+          type="button"
           onClick={() => window.print()}
           className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
         >
@@ -98,6 +100,8 @@ export function ReportClient({ assetId, title, fieldsText, description, photoUrl
             <pre className="text-sm font-sans whitespace-pre-wrap text-white/80 print:text-black leading-relaxed">
               {desc}
             </pre>
+          ) : descError ? (
+            <p className="text-sm text-red-400/80 italic">Description generation failed. Go back to Output to retry.</p>
           ) : (
             <p className="text-sm text-white/40 italic">No description generated yet.</p>
           )}
