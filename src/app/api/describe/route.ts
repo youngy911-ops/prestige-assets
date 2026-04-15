@@ -807,6 +807,16 @@ Single line: Year Make Model Trim Series Transmission Drive Fuel Body CCcc XXXkW
 Any extras on next line
 Sold As Is, Untested & Unregistered.
 
+VEHICLE (PASSENGER / LIGHT COMMERCIAL)
+Year, Make, Model, Variant (e.g. "2019 Toyota Hilux SR5")
+Body type (Dual Cab Ute, SUV, Sedan, Hatchback, Van, etc.)
+Engine: displacement, cylinders, fuel type (e.g. "2.8L 4-Cylinder Turbo Diesel")
+Transmission (Automatic/Manual/CVT), Drive Type (2WD/4WD/AWD)
+Colour
+Key extras: bull bar, tow bar, canopy, roof racks, tonneau cover, alloy wheels, leather, sunroof
+Condition notes if visible
+Sold As Is, Untested & Unregistered.
+
 ATTACHMENTS / GENERAL GOODS
 Year (if known), Make, Model
 Key specs relevant to the item type — only include specs you can confirm from fields, notes, photos, or universal model knowledge:

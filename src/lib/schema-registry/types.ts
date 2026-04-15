@@ -7,6 +7,7 @@ export const ASSET_TYPES = [
   'caravan',
   'general_goods',
   'marine',
+  'vehicle',
 ] as const
 
 export type AssetType = (typeof ASSET_TYPES)[number]

@@ -1,7 +1,7 @@
 'use client'
 import { ASSET_TYPES, type AssetType } from '@/lib/schema-registry/types'
 import { SCHEMA_REGISTRY } from '@/lib/schema-registry/index'
-import { Truck, Forklift, Shovel, Tractor, Boxes, Caravan, Sailboat, type LucideIcon } from 'lucide-react'
+import { Truck, Forklift, Shovel, Tractor, Boxes, Caravan, Sailboat, Car, type LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 // Custom trailer SVG — lucide has no trailer icon
@@ -42,6 +42,7 @@ const ASSET_TYPE_ICONS: Record<AssetType, IconEntry> = {
   caravan:       { kind: 'lucide',  icon: Caravan },
   general_goods: { kind: 'lucide',  icon: Boxes },
   marine:        { kind: 'lucide',  icon: Sailboat },
+  vehicle:       { kind: 'lucide',  icon: Car },
 }
 
 interface AssetTypeSelectorProps {

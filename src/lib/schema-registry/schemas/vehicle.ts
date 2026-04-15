@@ -1,0 +1,38 @@
+import type { AssetSchema } from '../types'
+
+export const vehicleSchema: AssetSchema = {
+  assetType: 'vehicle',
+  displayName: 'Vehicle',
+  subtypes: [
+    { key: 'sedan',       label: 'Sedan' },
+    { key: 'suv',         label: 'SUV' },
+    { key: 'ute',         label: 'Ute' },
+    { key: 'van',         label: 'Van' },
+    { key: 'wagon',       label: 'Wagon' },
+    { key: 'hatchback',   label: 'Hatchback' },
+    { key: 'coupe',       label: 'Coupe' },
+    { key: 'convertible', label: 'Convertible' },
+    { key: '4wd',         label: '4WD / Off-Road' },
+    { key: 'bus',         label: 'Bus / Minibus' },
+    { key: 'motorcycle',  label: 'Motorcycle' },
+    { key: 'other',       label: 'Other' },
+  ],
+  hasGlassValuation: false,
+  fields: [
+    { key: 'make',                label: 'Make',                 sfOrder: 1,  inputType: 'text',     aiExtractable: true,  required: true,  aiHint: 'Badge on tailgate, grille, or steering wheel — manufacturer name (Toyota, Ford, Holden, Mazda, Hyundai, Kia, etc.). Read exactly as shown.' },
+    { key: 'model',               label: 'Model',                sfOrder: 2,  inputType: 'text',     aiExtractable: true,  required: true,  aiHint: 'Badge on tailgate or boot lid — model designation (Hilux, Ranger, Corolla, CX-5, i30, Sportage, etc.). Include variant if badged (e.g. "SR5", "XLT", "Ascent Sport").' },
+    { key: 'year',                label: 'Year',                 sfOrder: 3,  inputType: 'number',   aiExtractable: true,  required: false, aiHint: 'Build plate or compliance plate: Year of Manufacture / DOM. 4-digit year. If not on plate, estimate from model generation using your training knowledge.' },
+    { key: 'vin',                 label: 'VIN',                  sfOrder: 4,  inputType: 'text',     aiExtractable: true,  required: false, inspectionPriority: true, aiHint: 'Build plate (door jamb, engine bay, or windscreen base): 17-character Vehicle Identification Number. May be labelled "VIN", "Chassis No", or stamped on chassis rail. Never infer — only extract if directly visible.' },
+    { key: 'registration_number', label: 'Registration',         sfOrder: 5,  inputType: 'text',     aiExtractable: true,  required: false, inspectionPriority: true, aiHint: 'Registration plate on front or rear of vehicle. Australian formats vary by state (e.g. NSW: XX-XX-XX, QLD: 123-ABC, VIC: XXX-000). Read exactly as shown.' },
+    { key: 'registration_expiry', label: 'Registration Expiry',  sfOrder: 6,  inputType: 'text',     aiExtractable: true,  required: false, aiHint: 'Rego sticker on windscreen or plate, or compliance plate. Format: MM/YYYY or DD/MM/YYYY.' },
+    { key: 'odometer',            label: 'Odometer (km)',        sfOrder: 7,  inputType: 'number',   aiExtractable: true,  required: false, inspectionPriority: true, aiHint: 'Instrument cluster: odometer reading in km. Read the full number exactly as displayed — digits only, no units or commas. If blurry or uncertain, return null.' },
+    { key: 'colour',              label: 'Colour',               sfOrder: 8,  inputType: 'text',     aiExtractable: true,  required: false, aiHint: 'Exterior body colour visible in photos. Use common names (White, Silver, Black, Red, Blue, Grey, etc.). If two-tone, list both separated by slash.' },
+    { key: 'engine_type',         label: 'Engine',               sfOrder: 9,  inputType: 'text',     aiExtractable: true,  required: false, aiHint: 'Build plate or engine bay: engine displacement and cylinder count (e.g. "2.5L 4-Cylinder", "5.0L V8", "3.0L Turbo Diesel"). Infer from make/model/year knowledge if not visible.' },
+    { key: 'fuel_type',           label: 'Fuel Type',            sfOrder: 10, inputType: 'select',   aiExtractable: true,  required: false, options: ['Petrol', 'Diesel', 'Hybrid', 'Electric', 'LPG'], aiHint: 'Build plate, fuel filler cap, or infer from make/model. Most passenger vehicles are Petrol. Utes and 4WDs often Diesel. Check for "TDI", "D4D", "CDI" badges indicating Diesel.' },
+    { key: 'transmission',        label: 'Transmission',         sfOrder: 11, inputType: 'select',   aiExtractable: true,  required: false, options: ['Automatic', 'Manual', 'CVT'], aiHint: 'Build plate or interior photo: look for gear selector type. "A/T" or "Auto" = Automatic. "M/T" or visible clutch pedal = Manual. "CVT" for continuously variable. Infer from model if not visible.' },
+    { key: 'drive_type',          label: 'Drive Type',           sfOrder: 12, inputType: 'select',   aiExtractable: true,  required: false, options: ['2WD', '4WD', 'AWD'], aiHint: 'Build plate or badges: "4x4", "4WD", "AWD", "4MATIC", "xDrive", "Quattro" = 4WD/AWD. Most sedans/hatches = 2WD. Infer from model variant.' },
+    { key: 'body_type',           label: 'Body Type',            sfOrder: 13, inputType: 'text',     aiExtractable: true,  required: false, aiHint: 'Visual identification from photos: Sedan, Hatchback, SUV, Ute (single cab / dual cab / extra cab), Van, Wagon, Coupe, Convertible, Bus.' },
+    { key: 'extras',              label: 'Extras / Notes',       sfOrder: 14, inputType: 'textarea', aiExtractable: true,  required: false, aiHint: 'Visible accessories and features from photos: bull bar, roof racks, tow bar, canopy, tonneau cover, alloy wheels, sunroof, leather interior, aftermarket stereo, tray, toolbox, ladder rack. Note any visible damage, rust, missing panels, or condition issues.' },
+  ],
+  descriptionTemplate: (_fields, _subtype) => '',
+}

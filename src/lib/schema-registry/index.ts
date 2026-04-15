@@ -7,6 +7,7 @@ import { forkliftSchema } from './schemas/forklift'
 import { caravanSchema } from './schemas/caravan'
 import { generalGoodsSchema } from './schemas/general-goods'
 import { marineSchema } from './schemas/marine'
+import { vehicleSchema } from './schemas/vehicle'
 
 export type { AssetType, AssetSchema, AssetSubtype, FieldDefinition } from './types'
 export { ASSET_TYPES } from './types'
@@ -20,6 +21,7 @@ export const SCHEMA_REGISTRY: Record<AssetType, AssetSchema> = {
   caravan:       caravanSchema,
   general_goods: generalGoodsSchema,
   marine:        marineSchema,
+  vehicle:       vehicleSchema,
 }
 
 export function getSchema(assetType: AssetType): AssetSchema {

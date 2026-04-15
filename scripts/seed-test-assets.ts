@@ -222,6 +222,28 @@ const TEST_ASSETS: TestAsset[] = [
     asset_type: 'general_goods', asset_subtype: 'retail_stock',
     fields: { make: 'Various', model: 'Mixed Pallet', extras: 'Pallet lot of assorted cleaning products, approx 200 units, mixed brands' },
   },
+
+  // --- VEHICLES ---
+  {
+    asset_type: 'vehicle', asset_subtype: 'ute',
+    fields: { make: 'Toyota', model: 'Hilux SR5', year: '2021', vin: 'MROFR22G900123456', registration_number: '123ABC', odometer: '68400', colour: 'White', engine_type: '2.8L 4-Cylinder Turbo Diesel', fuel_type: 'Diesel', transmission: 'Automatic', drive_type: '4WD', body_type: 'Dual Cab Ute', extras: 'Bull bar, tow bar, tonneau cover, sports bar, alloy wheels, reverse camera' },
+  },
+  {
+    asset_type: 'vehicle', asset_subtype: 'suv',
+    fields: { make: 'Mazda', model: 'CX-5 Akera', year: '2022', vin: 'JM3KFBDM3N0654321', registration_number: 'XYZ789', odometer: '34200', colour: 'Soul Red Crystal', engine_type: '2.5L 4-Cylinder Turbo Petrol', fuel_type: 'Petrol', transmission: 'Automatic', drive_type: 'AWD', body_type: 'SUV', extras: 'Leather interior, sunroof, heads-up display, Bose audio, 360 camera' },
+  },
+  {
+    asset_type: 'vehicle', asset_subtype: 'van',
+    fields: { make: 'Toyota', model: 'HiAce SLWB', year: '2020', vin: 'JTFSX23P800098765', odometer: '124500', colour: 'White', engine_type: '2.8L 4-Cylinder Turbo Diesel', fuel_type: 'Diesel', transmission: 'Automatic', drive_type: '2WD', body_type: 'Van' },
+  },
+  {
+    asset_type: 'vehicle', asset_subtype: 'sedan',
+    fields: { make: 'Hyundai', model: 'i30 Active', year: '2023', vin: 'KMHGC41E9PU112233', registration_number: 'DEF456', odometer: '15800', colour: 'Silver', engine_type: '2.0L 4-Cylinder', fuel_type: 'Petrol', transmission: 'CVT', drive_type: '2WD', body_type: 'Hatchback' },
+  },
+  {
+    asset_type: 'vehicle', asset_subtype: '4wd',
+    fields: { make: 'Nissan', model: 'Patrol Y62 Ti-L', year: '2019', vin: 'JN1TBNY62Z0543210', odometer: '87600', colour: 'Black', engine_type: '5.6L V8 Petrol', fuel_type: 'Petrol', transmission: 'Automatic', drive_type: '4WD', body_type: 'SUV / 4WD', extras: 'Leather, third row seats, tow bar, diff lock, roof rails, premium audio' },
+  },
 ]
 
 // ---------------------------------------------------------------------------
