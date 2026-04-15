@@ -98,20 +98,9 @@ EXTERIOR DAMAGE INSPECTION — scan every photo for:
 - Tow bar damage: bent, scraped, or misaligned.
 - Canopy/tray damage: dents, scratches, cracked windows on canopies.
 
-INTERIOR CONDITION — from cabin photos:
-- Seats: tears, rips, worn bolsters, stains, burn marks, sagging.
-- Dashboard: cracks, fading, sticky/peeling surfaces.
-- Steering wheel: worn leather, peeling, cracks.
-- Door trims: scratches, scuffs, broken handles, damaged speakers.
-- Carpet: stains, wear, tears, water damage.
-- Headlining: sagging, stains, tears.
-- Console/controls: worn buttons, broken knobs, missing parts.
-
-TYRE ASSESSMENT — from tyre photos:
-- Tread depth: estimate percentage remaining. "New" = full tread (~8mm). "Good" = 70%+ (~5-6mm). "Average" = 40-70% (~3-5mm). "Fair" = 20-40% (~2-3mm). "Poor" = minimal tread. "Bald" = no tread or wire visible.
-- Uneven wear: inside/outside edge wear suggests alignment issues.
-- Sidewall damage: bulges, cuts, cracks.
-- Mismatched tyres: different brands/sizes across axles.
+INTERIOR DAMAGE — from cabin photos (only note actual damage, not general wear):
+- Torn/ripped seats, cracked dashboard, broken controls, water damage, missing parts.
+- Include in damage_notes if visible.
 
 DAMAGE FIELD FORMAT:
 - "damage" field: concise one-line Salesforce summary. E.g. "Scratches and dents visible around vehicle" or "Dent to driver rear door, scratches to passenger side, cracked tail light RHS"
