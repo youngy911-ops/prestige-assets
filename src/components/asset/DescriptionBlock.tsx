@@ -9,9 +9,10 @@ interface DescriptionBlockProps {
   descriptionText: string
   onRegenerate: (currentText: string, hasEdited: boolean) => void
   isRegenerating: boolean
+  onTextChange?: (text: string) => void
 }
 
-export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isRegenerating }: DescriptionBlockProps) {
+export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isRegenerating, onTextChange }: DescriptionBlockProps) {
   const [copied, setCopied] = useState(false)
   const [localText, setLocalText] = useState(descriptionText)
   const [hasEdited, setHasEdited] = useState(false)
@@ -22,6 +23,7 @@ export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isReg
   // Only update if not currently edited — avoids overwriting user's in-progress edits
   if (!hasEdited && localText !== descriptionText) {
     setLocalText(descriptionText)
+    onTextChange?.(descriptionText)
   }
 
   async function handleCopy() {
@@ -34,6 +36,7 @@ export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isReg
     const value = e.target.value
     setLocalText(value)
     setHasEdited(true)
+    onTextChange?.(value)
     // Debounced auto-save — 1.5s after last keystroke
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current)
     saveTimerRef.current = setTimeout(async () => {

@@ -56,6 +56,7 @@ export function OutputPanel({ assetId, fieldsText, initialDescription, photoUrls
       if (!res.ok) throw new Error('API error')
       const data = await res.json()
       setDescText(data.description)
+      currentDescRef.current = data.description
       setDescState('ready')
     } catch {
       if (!isRetry) {
@@ -85,6 +86,7 @@ export function OutputPanel({ assetId, fieldsText, initialDescription, photoUrls
       if (!res.ok) throw new Error('API error')
       const data = await res.json()
       setDescText(data.description)
+      currentDescRef.current = data.description
       setDescKey(k => k + 1)  // Force DescriptionBlock remount — resets hasEdited
     } catch {
       // Regeneration failed — keep existing text, don't show error
@@ -158,6 +160,18 @@ export function OutputPanel({ assetId, fieldsText, initialDescription, photoUrls
         </div>
       )}
 
+      {/* Copy All — one-click copy of fields + description for Salesforce */}
+      {descState === 'ready' && (
+        <button
+          type="button"
+          onClick={handleCopyAll}
+          className="w-full h-11 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm flex items-center justify-center gap-2"
+        >
+          {allCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+          {allCopied ? 'Copied!' : 'Copy All to Clipboard'}
+        </button>
+      )}
+
       {/* Fields block — always visible immediately */}
       <FieldsBlock fieldsText={fieldsText} />
 
@@ -217,6 +231,7 @@ export function OutputPanel({ assetId, fieldsText, initialDescription, photoUrls
             descriptionText={descText}
             onRegenerate={handleRegenerate}
             isRegenerating={isRegenerating}
+            onTextChange={handleDescTextChange}
           />
         </div>
       )}
@@ -248,6 +263,7 @@ export function OutputPanel({ assetId, fieldsText, initialDescription, photoUrls
             descriptionText={descText}
             onRegenerate={handleRegenerate}
             isRegenerating={isRegenerating}
+            onTextChange={handleDescTextChange}
           />
         </>
       )}
