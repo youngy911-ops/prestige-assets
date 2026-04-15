@@ -26,13 +26,13 @@ export const marineSchema: AssetSchema = {
     {
       key: 'make', label: 'Make', sfOrder: 2, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Hull transom badge, bow decal, or console badge. Australian brands: Quintrex, Stacer, Haines Hunter, Savage, Horizon, Mustang. Cruisers: Riviera, Maritimo, Azzurra. PWC: Sea-Doo, Yamaha WaveRunner.',
+      aiHint: 'Hull transom badge, bow decal, or console badge. Australian aluminium brands: Quintrex, Stacer, Haines Hunter, Bar Crusher, Yellowfin, Savage, Horizon, Surtees, Stessl, Formosa, Ally Craft, Sea Jay, Tabs, Plate Alloy. Australian fibreglass brands: Whittley, Caribbean, Mustang, Haines Signature, Cruise Craft, Revival. Cruisers/luxury: Riviera, Maritimo, Azzurra, Sunseeker, Princess, Beneteau. US brands: Robalo, Sea Fox, Grady-White, Boston Whaler, Bayliner, Sea Ray, Chaparral. Wakeboard/ski: Mastercraft, Malibu, Nautique, Tige, Axis, Centurion. PWC: Sea-Doo, Yamaha WaveRunner, Kawasaki Jet Ski. Hull types: aluminium (most Aussie tinnies/plate boats), fibreglass (cabin boats, cruisers, ski boats), plate aluminium (heavier offshore).',
       required: true,
     },
     {
       key: 'model', label: 'Model', sfOrder: 3, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Hull transom or console badge: model name/number (e.g. 530 Territory, 4.35 Explorer, 680 Trident, 540 Classic). Read exactly as printed including any suffix.',
+      aiHint: 'Hull transom or console badge: model name/number. Read exactly as printed including any suffix. Brand-specific model ranges — Quintrex: Renegade, Yellowfin, Hornet, Fishabout, Top Ender, Blade, Trident, Territory, Explorer, Dory; Stacer: Nomad, Crossfire, Seahorse, Assault, Baymaster, Wild Rider; Haines Hunter: Prowler, SF, SR, SL, SC series; Bar Crusher: 535C, 615C, 670HT, 780HT (C=cuddy, HT=hardtop); Yellowfin: 5800, 6500, 7000, 7600 (plate aluminium); Whittley: Voyager, Sea Legend, CR series; Caribbean: Utopia, Reef Runner; Riviera: 39/43/50/54/58 Sports Motor Yacht, 4800/5400 series; Maritimo: M48/M54/M64/X50/X60; Mastercraft: X22, X24, XT20, XT22, NXT; Malibu: Wakesetter, Response, Axis A-series; Nautique: G23, G25, S23, Super Air. Common sizes: 4.0–7.0m for tinnies/runabouts; 6–12m for cabin/offshore boats; 12m+ for cruisers.',
       required: true,
     },
     {
@@ -74,7 +74,7 @@ export const marineSchema: AssetSchema = {
     {
       key: 'main_engine_details', label: 'Main Engine Details', sfOrder: 10, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Engine cowling badge or plate: make + model + HP. Outboard cowling colours help identify: Yamaha=white/grey/black, Mercury=black, Suzuki=white/blue, Honda=silver/red, Evinrude=white/blue, Tohatsu=black/red. Read cowling badge exactly (e.g. Yamaha F150, Mercury 90hp FourStroke, Suzuki DF200AP, Honda BF115, Evinrude E-TEC 115). For inboard/sterndrive: Volvo Penta D4-300, Mercruiser 4.5L MPI, Yanmar 6LY-STP. Prefix F/DF/BF usually = 4-stroke; E-TEC = 2-stroke DFI.',
+      aiHint: 'Engine cowling badge or plate: make + model + HP. Engine brands: Mercury, Yamaha, Suzuki, Honda, Evinrude, Tohatsu (outboard); Volvo Penta, MerCruiser, Yanmar, Cummins (inboard/sterndrive). Outboard cowling colours help identify: Yamaha=white/grey/black, Mercury=black, Suzuki=white/blue, Honda=silver/red, Evinrude=white/blue, Tohatsu=black/red. Read cowling badge exactly (e.g. Yamaha F150, Mercury 90hp FourStroke, Suzuki DF200AP, Honda BF115, Evinrude E-TEC 115). For inboard/sterndrive: Volvo Penta D4-300, MerCruiser 4.5L MPI, Yanmar 6LY-STP, PCM (ski boats). Prefix F/DF/BF usually = 4-stroke; E-TEC = 2-stroke DFI. Common HP ranges: tinnies 25–75hp, runabouts 90–150hp, offshore 150–350hp, ski/wake boats inboard 350–450hp.',
       required: false,
     },
     {
