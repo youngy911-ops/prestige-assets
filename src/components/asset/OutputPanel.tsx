@@ -1,6 +1,6 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Camera, Copy, Check } from 'lucide-react'
+import { Camera, Copy, Check, AlertTriangle } from 'lucide-react'
 import { FieldsBlock } from '@/components/asset/FieldsBlock'
 import { DescriptionBlock } from '@/components/asset/DescriptionBlock'
 
@@ -8,6 +8,8 @@ type Tone = 'standard' | 'quick'
 
 interface OutputPanelProps {
   assetId: string
+  assetType: string
+  fields: Record<string, string>
   fieldsText: string           // Pre-computed by server page — always available immediately
   initialDescription: string | null  // null = generate; non-null = cached from DB
   photoUrls: string[]
@@ -15,7 +17,7 @@ interface OutputPanelProps {
 
 type DescriptionState = 'loading' | 'ready' | 'error'
 
-export function OutputPanel({ assetId, fieldsText, initialDescription, photoUrls }: OutputPanelProps) {
+export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDescription, photoUrls }: OutputPanelProps) {
   const [heroIndex, setHeroIndex] = useState(0)
   const [descState, setDescState] = useState<DescriptionState>(
     initialDescription ? 'ready' : 'loading'
@@ -267,6 +269,118 @@ export function OutputPanel({ assetId, fieldsText, initialDescription, photoUrls
           />
         </>
       )}
+
+      {/* Condition Report — vehicles only, shown when condition/damage data exists */}
+      {assetType === 'vehicle' && (() => {
+        const conditionFields = [
+          { key: 'body_condition', label: 'Body' },
+          { key: 'interior_condition', label: 'Interior' },
+          { key: 'paint_condition', label: 'Paint' },
+          { key: 'rust_condition', label: 'Rust' },
+          { key: 'seat_condition', label: 'Seats' },
+          { key: 'carpet_condition', label: 'Carpet' },
+          { key: 'brake_condition', label: 'Brakes' },
+        ]
+        const tyreFields = [
+          { key: 'tyre_driver_front', label: 'Driver Front' },
+          { key: 'tyre_driver_rear', label: 'Driver Rear' },
+          { key: 'tyre_passenger_front', label: 'Pass. Front' },
+          { key: 'tyre_passenger_rear', label: 'Pass. Rear' },
+          { key: 'tyre_spare', label: 'Spare' },
+        ]
+        const damage = fields.damage ?? ''
+        const damageNotes = fields.damage_notes ?? ''
+        const hasCondition = conditionFields.some(f => fields[f.key])
+        const hasTyres = tyreFields.some(f => fields[f.key])
+        const hasDamage = damage || damageNotes
+        if (!hasCondition && !hasTyres && !hasDamage) return null
+
+        const conditionColor = (val: string) => {
+          const v = val.toLowerCase()
+          if (v === 'excellent' || v === 'new' || v === 'none') return 'text-emerald-400'
+          if (v === 'good') return 'text-emerald-400/70'
+          if (v === 'average') return 'text-amber-400'
+          if (v === 'fair' || v === 'minor') return 'text-amber-400'
+          if (v === 'poor' || v === 'moderate') return 'text-red-400'
+          if (v === 'damaged' || v === 'severe' || v === 'bald') return 'text-red-400'
+          return 'text-white/60'
+        }
+
+        return (
+          <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
+              <AlertTriangle className="w-4 h-4 text-amber-400" />
+              <span className="text-sm font-semibold text-white">Condition Report</span>
+            </div>
+
+            <div className="px-4 py-3 flex flex-col gap-4">
+              {/* Damage summary */}
+              {hasDamage && (
+                <div>
+                  <p className="text-xs text-white/40 uppercase tracking-widest font-semibold mb-2">Damage</p>
+                  {damage && (
+                    <p className="text-sm text-red-300 bg-red-900/15 border border-red-500/20 rounded-lg px-3 py-2">
+                      {damage}
+                    </p>
+                  )}
+                  {damageNotes && (
+                    <pre className="text-xs text-white/60 whitespace-pre-wrap mt-2 leading-relaxed">{damageNotes}</pre>
+                  )}
+                </div>
+              )}
+
+              {/* Condition grid */}
+              {hasCondition && (
+                <div>
+                  <p className="text-xs text-white/40 uppercase tracking-widest font-semibold mb-2">Condition</p>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                    {conditionFields.filter(f => fields[f.key]).map(f => (
+                      <div key={f.key} className="flex items-center justify-between">
+                        <span className="text-xs text-white/50">{f.label}</span>
+                        <span className={`text-xs font-medium ${conditionColor(fields[f.key])}`}>{fields[f.key]}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Tyres */}
+              {hasTyres && (
+                <div>
+                  <p className="text-xs text-white/40 uppercase tracking-widest font-semibold mb-2">Tyres</p>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                    {tyreFields.filter(f => fields[f.key]).map(f => (
+                      <div key={f.key} className="flex items-center justify-between">
+                        <span className="text-xs text-white/50">{f.label}</span>
+                        <span className={`text-xs font-medium ${conditionColor(fields[f.key])}`}>{fields[f.key]}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Damage photos — show last few photos (likely exterior/damage shots) */}
+              {hasDamage && photoUrls.length > 3 && (
+                <div>
+                  <p className="text-xs text-white/40 uppercase tracking-widest font-semibold mb-2">Damage Photos</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {photoUrls.slice(Math.max(0, photoUrls.length - 6)).map((url, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setHeroIndex(Math.max(0, photoUrls.length - 6) + i)}
+                        className="aspect-square rounded-lg overflow-hidden border border-white/[0.08] hover:border-emerald-500/40 transition-colors"
+                      >
+                        <img src={url} alt={`Damage photo ${i + 1}`} loading="lazy" className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }

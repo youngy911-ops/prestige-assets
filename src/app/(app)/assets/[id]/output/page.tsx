@@ -70,6 +70,8 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
       {/* Output blocks */}
       <OutputPanel
         assetId={assetId}
+        assetType={asset.asset_type}
+        fields={(asset.fields ?? {}) as Record<string, string>}
         fieldsText={fieldsText}
         initialDescription={(asset.description as string | null) ?? null}
         photoUrls={photoUrls}
