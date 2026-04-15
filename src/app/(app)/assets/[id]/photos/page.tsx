@@ -131,15 +131,7 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
       {/* Next action */}
       <div className="mt-6">
         {hasPhotos ? (
-          <>
-            <PhotosPageCTA assetId={assetId} />
-            <Link
-              href={`/assets/${assetId}/review`}
-              className="block mt-3 text-sm text-white/65 hover:text-white text-center"
-            >
-              Skip to Manual Entry &rarr;
-            </Link>
-          </>
+          <PhotosPageCTA assetId={assetId} />
         ) : (
           <>
             <Link

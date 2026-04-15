@@ -1,5 +1,6 @@
 'use client'
 import { useState, useCallback, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { InspectionNotesSection } from '@/components/asset/InspectionNotesSection'
 import { ExtractionTriggerState } from '@/components/asset/ExtractionTriggerState'
 import { ExtractionLoadingState } from '@/components/asset/ExtractionLoadingState'
@@ -27,6 +28,7 @@ export function ExtractionPageClient({
   hasPhotos,
   autoStart = false,
 }: ExtractionPageClientProps) {
+  const router = useRouter()
   const [status, setStatus] = useState<ExtractionStatus>(
     initialExtractionResult ? 'success' : 'idle'
   )
@@ -46,10 +48,15 @@ export function ExtractionPageClient({
       const data = await res.json()
       setExtractionResult(data.extraction_result)
       setStatus('success')
+
+      // Auto-navigate to review when extraction was auto-started (from photos page CTA)
+      if (autoStart) {
+        router.push(`/assets/${assetId}/review`)
+      }
     } catch {
       setStatus('failure')
     }
-  }, [assetId])
+  }, [assetId, autoStart, router])
 
   useEffect(() => {
     if (autoStart && status === 'idle' && hasPhotos) {
