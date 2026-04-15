@@ -8,11 +8,9 @@ export type ReviewFormValues = Record<string, string>
 /** Smart defaults for vehicle fields — used when no extraction or saved value exists */
 const VEHICLE_SMART_DEFAULTS: Record<string, string> = {
   driveable: 'Yes',
-  airconditioned: 'Yes',
   master_key: 'Yes',
   spare_key: 'No',
   owners_manual: 'No',
-  tyre_spare: 'Unknown',
 }
 
 export function buildFormSchema(fields: FieldDefinition[]) {

@@ -10,8 +10,7 @@ const VEHICLE_SECTIONS: { maxOrder: number; label: string }[] = [
   { maxOrder: 19, label: 'Vehicle Specifications' },
   { maxOrder: 27, label: 'Technical & Identification' },
   { maxOrder: 30, label: 'Operational & Logistics' },
-  { maxOrder: 44, label: 'Condition Assessment' },
-  { maxOrder: 46, label: 'Damage' },
+  { maxOrder: 33, label: 'Damage' },
 ]
 
 function getVehicleSection(sfOrder: number): string | undefined {

@@ -271,135 +271,38 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
       )}
 
       {/* Condition Report — vehicles only, shown when condition/damage data exists */}
+      {/* Damage report — vehicles only, shown when damage data exists */}
       {assetType === 'vehicle' && (() => {
-        const conditionFields = [
-          { key: 'body_condition', label: 'Body' },
-          { key: 'interior_condition', label: 'Interior' },
-          { key: 'paint_condition', label: 'Paint' },
-          { key: 'rust_condition', label: 'Rust' },
-          { key: 'seat_condition', label: 'Seats' },
-          { key: 'carpet_condition', label: 'Carpet' },
-          { key: 'brake_condition', label: 'Brakes' },
-        ]
-        const tyreFields = [
-          { key: 'tyre_driver_front', label: 'Driver Front' },
-          { key: 'tyre_driver_rear', label: 'Driver Rear' },
-          { key: 'tyre_passenger_front', label: 'Pass. Front' },
-          { key: 'tyre_passenger_rear', label: 'Pass. Rear' },
-          { key: 'tyre_spare', label: 'Spare' },
-        ]
         const damage = fields.damage ?? ''
         const damageNotes = fields.damage_notes ?? ''
-        const hasCondition = conditionFields.some(f => fields[f.key])
-        const hasTyres = tyreFields.some(f => fields[f.key])
-        const hasDamage = damage || damageNotes
-        if (!hasCondition && !hasTyres && !hasDamage) return null
-
-        const conditionColor = (val: string) => {
-          const v = val.toLowerCase()
-          if (v === 'excellent' || v === 'new' || v === 'none') return 'text-emerald-400'
-          if (v === 'good') return 'text-emerald-400/70'
-          if (v === 'average') return 'text-amber-400'
-          if (v === 'fair' || v === 'minor') return 'text-amber-400'
-          if (v === 'poor' || v === 'moderate') return 'text-red-400'
-          if (v === 'damaged' || v === 'severe' || v === 'bald') return 'text-red-400'
-          return 'text-white/60'
-        }
-        const dotColor = (val: string) => {
-          const v = val.toLowerCase()
-          if (v === 'excellent' || v === 'new' || v === 'none' || v === 'good') return 'bg-emerald-400'
-          if (v === 'average' || v === 'fair' || v === 'minor') return 'bg-amber-400'
-          if (v === 'poor' || v === 'moderate' || v === 'damaged' || v === 'severe' || v === 'bald') return 'bg-red-400'
-          return 'bg-white/30'
-        }
+        if (!damage && !damageNotes) return null
 
         return (
           <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
               <AlertTriangle className="w-4 h-4 text-amber-400" />
-              <span className="text-sm font-semibold text-white">Condition Report</span>
+              <span className="text-sm font-semibold text-white">Damage</span>
             </div>
 
-            <div className="px-4 py-3 flex flex-col gap-4">
-              {/* Damage summary */}
-              {hasDamage && (
-                <div>
-                  <p className="text-xs text-white/40 uppercase tracking-widest font-semibold mb-2">Damage</p>
-                  {damage && (
-                    <p className="text-sm text-red-300 bg-red-900/15 border border-red-500/20 rounded-lg px-3 py-2">
-                      {damage}
-                    </p>
-                  )}
-                  {damageNotes && (
-                    <div className="mt-2 rounded-lg border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.06]">
-                      {damageNotes.split('\n').filter(l => l.trim()).map((line, i) => {
-                        const parts = line.split(' - ')
-                        const panel = parts[0]?.trim()
-                        const desc = parts.slice(1).join(' - ').trim()
-                        return (
-                          <div key={i} className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-3 py-2 gap-0.5 sm:gap-4">
-                            <span className="text-xs font-medium text-white">{panel}</span>
-                            {desc && <span className="text-xs text-white/60 sm:text-right">{desc}</span>}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )}
-                </div>
+            <div className="px-4 py-3 flex flex-col gap-3">
+              {damage && (
+                <p className="text-sm text-red-300 bg-red-900/15 border border-red-500/20 rounded-lg px-3 py-2">
+                  {damage}
+                </p>
               )}
-
-              {/* Condition grid */}
-              {hasCondition && (
-                <div>
-                  <p className="text-xs text-white/40 uppercase tracking-widest font-semibold mb-2">Condition</p>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-                    {conditionFields.filter(f => fields[f.key]).map(f => (
-                      <div key={f.key} className="flex items-center justify-between">
-                        <span className="text-xs text-white/50">{f.label}</span>
-                        <span className={`text-xs font-medium flex items-center gap-1.5 ${conditionColor(fields[f.key])}`}>
-                          <span className={`inline-block w-1.5 h-1.5 rounded-full ${dotColor(fields[f.key])}`} />
-                          {fields[f.key]}
-                        </span>
+              {damageNotes && (
+                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.06]">
+                  {damageNotes.split('\n').filter((l: string) => l.trim()).map((line: string, i: number) => {
+                    const parts = line.split(' - ')
+                    const panel = parts[0]?.trim()
+                    const desc = parts.slice(1).join(' - ').trim()
+                    return (
+                      <div key={i} className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-3 py-2 gap-0.5 sm:gap-4">
+                        <span className="text-xs font-medium text-white">{panel}</span>
+                        {desc && <span className="text-xs text-white/60 sm:text-right">{desc}</span>}
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Tyres */}
-              {hasTyres && (
-                <div>
-                  <p className="text-xs text-white/40 uppercase tracking-widest font-semibold mb-2">Tyres</p>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-                    {tyreFields.filter(f => fields[f.key]).map(f => (
-                      <div key={f.key} className="flex items-center justify-between">
-                        <span className="text-xs text-white/50">{f.label}</span>
-                        <span className={`text-xs font-medium flex items-center gap-1.5 ${conditionColor(fields[f.key])}`}>
-                          <span className={`inline-block w-1.5 h-1.5 rounded-full ${dotColor(fields[f.key])}`} />
-                          {fields[f.key]}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Damage photos — show last few photos (likely exterior/damage shots) */}
-              {hasDamage && photoUrls.length > 3 && (
-                <div>
-                  <p className="text-xs text-white/40 uppercase tracking-widest font-semibold mb-2">Damage Photos</p>
-                  <div className="grid grid-cols-3 gap-2">
-                    {photoUrls.slice(Math.max(0, photoUrls.length - 6)).map((url, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => setHeroIndex(Math.max(0, photoUrls.length - 6) + i)}
-                        className="aspect-square rounded-lg overflow-hidden border border-white/[0.08] hover:border-emerald-500/40 transition-colors"
-                      >
-                        <img src={url} alt={`Damage photo ${i + 1}`} loading="lazy" className="w-full h-full object-cover" />
-                      </button>
-                    ))}
-                  </div>
+                    )
+                  })}
                 </div>
               )}
             </div>
