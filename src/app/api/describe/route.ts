@@ -811,9 +811,16 @@ VEHICLE (PASSENGER / LIGHT COMMERCIAL)
 Write as ONE continuous paragraph. Keep it concise — the photos do the talking.
 Include in this order (skip any not known): Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer.
 Only mention extras/mods if they are significant and add real value — bull bar, canopy, tow bar, snorkel, winch, aftermarket tray on a work ute. Do NOT list standard features like A/C, power windows, central locking, reverse camera — buyers expect these on modern vehicles.
-Example: "2019 Toyota Hilux SR5 Dual Cab Ute, 5 Seats, 2.8L 4-Cylinder Turbo Diesel, 6 Speed Automatic, 4WD, White. Sold As Is, Untested & Unregistered."
-Example with noteworthy extras: "2017 Nissan Navara ST-X Dual Cab Ute, 5 Seats, 2.3L Twin Turbo Diesel, 7 Speed Automatic, 4WD, Black, steel tray, bull bar, snorkel. Sold As Is, Untested & Unregistered."
-Do NOT use dot points or line breaks — one paragraph only.
+The footer "Sold As Is, Untested & Unregistered." MUST be on its own line — put a blank line between the description paragraph and the footer.
+Example:
+"2019 Toyota Hilux SR5 Dual Cab Ute, 5 Seats, 2.8L 4-Cylinder Turbo Diesel, 6 Speed Automatic, 4WD, White.
+
+Sold As Is, Untested & Unregistered."
+Example with noteworthy extras:
+"2017 Nissan Navara ST-X Dual Cab Ute, 5 Seats, 2.3L Twin Turbo Diesel, 7 Speed Automatic, 4WD, Black, steel tray, bull bar, snorkel.
+
+Sold As Is, Untested & Unregistered."
+Do NOT use dot points — description is one paragraph, then blank line, then footer.
 
 ATTACHMENTS / GENERAL GOODS
 Year (if known), Make, Model
@@ -1090,7 +1097,7 @@ function normalizeFooter(text: string, assetType: string): string {
   if (last.toLowerCase().startsWith('sold as is')) {
     trimmed.pop()
   }
-  return [...trimmed, footer].join('\n')
+  return [...trimmed, '', footer].join('\n')
 }
 
 function buildDescriptionUserPrompt(asset: {
