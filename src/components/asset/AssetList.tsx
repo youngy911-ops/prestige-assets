@@ -1,9 +1,12 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowDown, ArrowUp, ChevronDown, Search, X, Plus, Zap } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowDown, ArrowUp, ChevronDown, Search, X, Plus, Zap, Package } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
 import { getAssets, getAssetThumbs, getTodayBookingCount, type AssetSummary } from '@/lib/actions/asset.actions'
+import { SCHEMA_REGISTRY } from '@/lib/schema-registry'
+import type { AssetType } from '@/lib/schema-registry'
 import { AssetCard } from './AssetCard'
 
 const LAST_BRANCH_KEY = 'lastUsedBranch'
@@ -156,6 +159,23 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
         </div>
       )}
 
+      {/* Asset type breakdown */}
+      {!changingBranch && assets && assets.length > 0 && (() => {
+        const counts: Record<string, number> = {}
+        for (const a of assets) {
+          counts[a.asset_type] = (counts[a.asset_type] ?? 0) + 1
+        }
+        const parts = Object.entries(counts)
+          .sort((a, b) => b[1] - a[1])
+          .map(([type, count]) => {
+            const label = SCHEMA_REGISTRY[type as AssetType]?.displayName ?? type
+            return `${count} ${label.toLowerCase()}${count !== 1 ? 's' : ''}`
+          })
+        return parts.length > 0 ? (
+          <p className="text-xs text-white/30 mb-3">{parts.join(' \u00b7 ')}</p>
+        ) : null
+      })()}
+
       {/* Branch chip + sort */}
       {!changingBranch && (
         <div className="flex items-center gap-2 mb-3">
@@ -262,9 +282,28 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       )}
 
       {!error && assets !== null && assets.length === 0 && (
-        <div className="text-center py-16">
-          <p className="text-white text-base font-medium">No assets yet</p>
-          <p className="text-white/65 text-sm mt-2">Tap New Asset to start booking in an asset.</p>
+        <div className="text-center py-16 flex flex-col items-center">
+          <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5">
+            <Package className="w-8 h-8 text-emerald-400" />
+          </div>
+          <h2 className="text-white text-lg font-semibold">Ready to book in</h2>
+          <p className="text-white/50 text-sm mt-2 max-w-[280px]">Snap photos, AI extracts the details, paste to Salesforce.</p>
+          <div className="flex items-center gap-3 mt-6">
+            <Link
+              href="/assets/new"
+              className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              New Asset
+            </Link>
+            <Link
+              href="/assets/quick"
+              className="inline-flex items-center gap-2 border border-white/[0.15] hover:border-white/[0.25] text-white/70 hover:text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
+            >
+              <Zap className="w-4 h-4" />
+              Quick Book
+            </Link>
+          </div>
         </div>
       )}
 
