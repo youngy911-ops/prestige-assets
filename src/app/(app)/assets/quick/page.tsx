@@ -1,9 +1,9 @@
 'use client'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { Camera, Check, Loader2, ChevronLeft, Zap, FolderOpen, Images } from 'lucide-react'
+import { Camera, Check, Loader2, ChevronLeft, Zap, FolderOpen, Images, Sparkles } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
-import { createAsset } from '@/lib/actions/asset.actions'
+import { createAsset, updateAssetType } from '@/lib/actions/asset.actions'
 import { processImageForUpload } from '@/lib/utils/image'
 
 const LAST_BRANCH_KEY = 'lastUsedBranch'
@@ -15,6 +15,8 @@ interface BookedItem {
   label: string
   thumbUrl: string
   photoCount: number
+  detectStatus?: 'idle' | 'detecting' | 'done' | 'error'
+  detectedLabel?: string
 }
 
 export default function QuickBookPage() {
@@ -89,6 +91,62 @@ export default function QuickBookPage() {
 
   async function handlePhoto(file: File) {
     await bookInFiles([file])
+  }
+
+  async function detectType(itemId: string) {
+    setBooked(prev => prev.map(i => i.id === itemId ? { ...i, detectStatus: 'detecting' as const } : i))
+    try {
+      const item = booked.find(i => i.id === itemId)
+      if (!item) return
+
+      // Convert blob URL to base64 via canvas
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+      const loaded = new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve()
+        img.onerror = () => reject(new Error('Failed to load image'))
+      })
+      img.src = item.thumbUrl
+      await loaded
+
+      const canvas = document.createElement('canvas')
+      // Downscale for classification — 512px max dimension is plenty
+      const scale = Math.min(512 / img.width, 512 / img.height, 1)
+      canvas.width = Math.round(img.width * scale)
+      canvas.height = Math.round(img.height * scale)
+      const ctx = canvas.getContext('2d')!
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+      const base64 = canvas.toDataURL('image/jpeg', 0.8)
+
+      const res = await fetch('/api/classify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageUrl: base64 }),
+      })
+      if (!res.ok) throw new Error('Classification failed')
+      const data = await res.json()
+
+      if (data.confidence === 'low') {
+        setBooked(prev => prev.map(i => i.id === itemId ? { ...i, detectStatus: 'error' as const } : i))
+        return
+      }
+
+      // Update the asset in the database
+      const result = await updateAssetType(itemId, data.asset_type, data.asset_subtype ?? data.asset_type)
+      if ('error' in result) throw new Error(result.error)
+
+      const label = data.subtype_label
+        ? `${data.type_label} — ${data.subtype_label}`
+        : data.type_label
+
+      setBooked(prev => prev.map(i => i.id === itemId ? {
+        ...i,
+        detectStatus: 'done' as const,
+        detectedLabel: label,
+      } : i))
+    } catch {
+      setBooked(prev => prev.map(i => i.id === itemId ? { ...i, detectStatus: 'error' as const } : i))
+    }
   }
 
   const branchLabel = BRANCHES.find(b => b.key === branch)?.label ?? 'No branch'
@@ -213,21 +271,37 @@ export default function QuickBookPage() {
               </div>
               <div className="flex flex-col gap-2">
                 {[...booked].reverse().map(item => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => router.push(`/assets/${item.id}/review`)}
-                    className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.03] p-3 text-left hover:bg-white/[0.06] transition-all"
-                  >
-                    <img src={item.thumbUrl} alt="" className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/40">
-                        {item.photoCount === 1 ? '1 photo · ' : `${item.photoCount} photos · `}Tap to fill in details
-                      </p>
-                    </div>
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                  </button>
+                  <div key={item.id} className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-white/[0.03] p-3">
+                    <button
+                      type="button"
+                      onClick={() => router.push(`/assets/${item.id}/review`)}
+                      className="flex items-center gap-3 flex-1 min-w-0 text-left hover:opacity-80 transition-opacity"
+                    >
+                      <img src={item.thumbUrl} alt="" className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-white">{item.detectedLabel ?? item.label}</p>
+                        <p className="text-xs text-white/40">
+                          {item.photoCount === 1 ? '1 photo · ' : `${item.photoCount} photos · `}Tap to fill in details
+                        </p>
+                      </div>
+                    </button>
+                    {item.detectStatus === 'done' ? (
+                      <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    ) : item.detectStatus === 'detecting' ? (
+                      <Loader2 className="w-4 h-4 text-amber-400 animate-spin flex-shrink-0" />
+                    ) : item.detectStatus === 'error' ? (
+                      <Check className="w-4 h-4 text-white/20 flex-shrink-0" />
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => detectType(item.id)}
+                        className="flex items-center gap-1 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2 py-1 text-xs text-amber-400 hover:bg-amber-500/20 transition-colors flex-shrink-0"
+                      >
+                        <Sparkles className="w-3 h-3" />
+                        <span>Detect</span>
+                      </button>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>

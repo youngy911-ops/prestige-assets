@@ -95,6 +95,25 @@ export async function getAssetThumbs(
   return result
 }
 
+export async function updateAssetType(
+  assetId: string,
+  assetType: string,
+  assetSubtype: string
+): Promise<{ success: true } | { error: string }> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Not authenticated' }
+
+  const { error } = await supabase
+    .from('assets')
+    .update({ asset_type: assetType, asset_subtype: assetSubtype })
+    .eq('id', assetId)
+    .eq('user_id', user.id)
+
+  if (error) return { error: error.message }
+  return { success: true }
+}
+
 export async function getTodayBookingCount(): Promise<number> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
