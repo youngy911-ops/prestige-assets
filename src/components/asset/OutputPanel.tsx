@@ -1,5 +1,6 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Camera, Copy, Check } from 'lucide-react'
 import { FieldsBlock } from '@/components/asset/FieldsBlock'
 import { DescriptionBlock } from '@/components/asset/DescriptionBlock'
 
@@ -9,11 +10,13 @@ interface OutputPanelProps {
   assetId: string
   fieldsText: string           // Pre-computed by server page — always available immediately
   initialDescription: string | null  // null = generate; non-null = cached from DB
+  photoUrls: string[]
 }
 
 type DescriptionState = 'loading' | 'ready' | 'error'
 
-export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputPanelProps) {
+export function OutputPanel({ assetId, fieldsText, initialDescription, photoUrls }: OutputPanelProps) {
+  const [heroIndex, setHeroIndex] = useState(0)
   const [descState, setDescState] = useState<DescriptionState>(
     initialDescription ? 'ready' : 'loading'
   )
@@ -22,6 +25,20 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
   const [tone, setTone] = useState<Tone>('standard')
   // Increment to force DescriptionBlock remount after regeneration — resets edit state
   const [descKey, setDescKey] = useState(0)
+  // Track the latest description text (including user edits) for Copy All
+  const currentDescRef = useRef<string>(initialDescription ?? '')
+  const [allCopied, setAllCopied] = useState(false)
+
+  const handleDescTextChange = useCallback((text: string) => {
+    currentDescRef.current = text
+  }, [])
+
+  async function handleCopyAll() {
+    const combined = `${fieldsText}\n\n${currentDescRef.current}`
+    await navigator.clipboard.writeText(combined)
+    setAllCopied(true)
+    setTimeout(() => setAllCopied(false), 2000)
+  }
 
   // Auto-generate on mount if no cached description
   useEffect(() => {
@@ -87,6 +104,60 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
 
   return (
     <div className="flex flex-col gap-6">
+      {/* Photo gallery */}
+      {photoUrls.length > 0 && (
+        <div className="flex flex-col gap-3">
+          {/* Hero photo */}
+          <div className="relative rounded-xl overflow-hidden border border-white/[0.08]">
+            <div className="aspect-[4/3]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photoUrls[heroIndex]}
+                alt={`Asset photo ${heroIndex + 1}`}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Photo count badge */}
+            {photoUrls.length > 1 && (
+              <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full">
+                <Camera className="h-3 w-3" />
+                {heroIndex + 1} of {photoUrls.length}
+              </div>
+            )}
+          </div>
+
+          {/* Thumbnail strip */}
+          {photoUrls.length > 1 && (
+            <div className="flex items-center gap-2 px-1">
+              {photoUrls.slice(0, 5).map((url, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setHeroIndex(i)}
+                  className={`relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 transition-all ${
+                    i === heroIndex
+                      ? 'ring-2 ring-emerald-500 ring-offset-1 ring-offset-[#0a1a0a]'
+                      : 'opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={url}
+                    alt={`Thumbnail ${i + 1}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+              {photoUrls.length > 5 && (
+                <span className="text-xs text-white/40 ml-1">+{photoUrls.length - 5} more</span>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Fields block — always visible immediately */}
       <FieldsBlock fieldsText={fieldsText} />
 

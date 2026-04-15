@@ -15,13 +15,33 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: asset } = await supabase
-    .from('assets')
-    .select('id, asset_type, asset_subtype, fields, description, status')
-    .eq('id', assetId)
-    .single()
+  const [{ data: asset }, { data: photos }] = await Promise.all([
+    supabase
+      .from('assets')
+      .select('id, asset_type, asset_subtype, fields, description, status')
+      .eq('id', assetId)
+      .single(),
+    supabase
+      .from('asset_photos')
+      .select('storage_path, sort_order')
+      .eq('asset_id', assetId)
+      .order('sort_order', { ascending: true }),
+  ])
 
   if (!asset) redirect('/assets/new')
+
+  // Batch signed URL generation — one API call regardless of photo count
+  const photoList = photos ?? []
+  const { data: signedUrlData } = photoList.length > 0
+    ? await supabase.storage.from('photos').createSignedUrls(
+        photoList.map(p => p.storage_path),
+        3600
+      )
+    : { data: [] }
+
+  const photoUrls: string[] = (signedUrlData ?? [])
+    .map(r => r.signedUrl)
+    .filter((u): u is string => !!u)
 
   // Compute fields block server-side — synchronous, always ready on page load
   const fieldsText = generateFieldsBlock(
@@ -52,6 +72,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
         assetId={assetId}
         fieldsText={fieldsText}
         initialDescription={(asset.description as string | null) ?? null}
+        photoUrls={photoUrls}
       />
 
       {/* QR Code + actions */}
