@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ChevronDown, Search, X, Plus, Zap } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
-import { getAssets, getTodayBookingCount, type AssetSummary } from '@/lib/actions/asset.actions'
+import { getAssets, getAssetThumbs, getTodayBookingCount, type AssetSummary } from '@/lib/actions/asset.actions'
 import { AssetCard } from './AssetCard'
 
 const LAST_BRANCH_KEY = 'lastUsedBranch'
@@ -55,6 +55,18 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       }
     })
   }, [branch]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Deferred thumbnail loading — fires after list renders so it never blocks first paint
+  useEffect(() => {
+    if (!assets || assets.length === 0) return
+    const ids = assets.map(a => a.id)
+    getAssetThumbs(ids).then(thumbs => {
+      if (Object.keys(thumbs).length === 0) return
+      setAssets(prev =>
+        prev?.map(a => ({ ...a, thumb_url: thumbs[a.id] ?? a.thumb_url })) ?? prev
+      )
+    })
+  }, [assets?.map(a => a.id).join(',')]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const branchLabel = BRANCHES.find(b => b.key === branch)?.label ?? branch
 
@@ -119,8 +131,31 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
         </div>
       </div>
 
+      {/* Search — always visible */}
+      {!changingBranch && (
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+          <input
+            type="search"
+            placeholder="Search assets…"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-white/[0.10] bg-white/[0.03] text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/40 transition-colors"
+          />
+          {search && (
+            <button
+              type="button"
+              onClick={() => setSearch('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Branch header chip */}
-      <div className="mb-6">
+      <div className="mb-4">
         {changingBranch ? (
           <div className="flex flex-col gap-2">
             <p className="text-sm text-white/65 mb-2">Select branch:</p>
@@ -161,29 +196,6 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
           </button>
         )}
       </div>
-
-      {/* Search */}
-      {assets !== null && assets.length > 0 && (
-        <div className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
-          <input
-            type="search"
-            placeholder="Search make, model, type…"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-white/[0.10] bg-white/[0.03] text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/40 transition-colors"
-          />
-          {search && (
-            <button
-              type="button"
-              onClick={() => setSearch('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
-        </div>
-      )}
 
       {/* List states */}
       {error && (

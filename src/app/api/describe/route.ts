@@ -1153,32 +1153,32 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  // 3. Load asset (RLS enforces ownership)
-  const { data: asset } = await supabase
-    .from('assets')
-    .select('id, asset_type, asset_subtype, fields, inspection_notes')
-    .eq('id', assetId)
-    .single()
+  // 3 + 4. Load asset and photos in parallel (independent queries)
+  const [{ data: asset }, { data: photos }] = await Promise.all([
+    supabase
+      .from('assets')
+      .select('id, asset_type, asset_subtype, fields, inspection_notes')
+      .eq('id', assetId)
+      .single(),
+    supabase
+      .from('asset_photos')
+      .select('storage_path')
+      .eq('asset_id', assetId)
+      .order('sort_order', { ascending: true }),
+  ])
   if (!asset) return Response.json({ error: 'Asset not found' }, { status: 404 })
 
-  // 4. Load photos sorted by sort_order
-  const { data: photos } = await supabase
-    .from('asset_photos')
-    .select('storage_path')
-    .eq('asset_id', assetId)
-    .order('sort_order', { ascending: true })
-
-  // 5. Generate signed URLs (1-hour expiry)
-  const signedUrls = (
-    await Promise.all(
-      (photos ?? []).map(async (p) => {
-        const { data } = await supabase.storage
-          .from('photos')
-          .createSignedUrl(p.storage_path, 3600)
-        return data?.signedUrl ?? null
-      })
-    )
-  ).filter((url): url is string => url !== null)
+  // 5. Generate signed URLs in one batch call (1-hour expiry)
+  const storagePaths = (photos ?? []).map(p => p.storage_path)
+  const signedUrls: string[] = []
+  if (storagePaths.length > 0) {
+    const { data: signedUrlData } = await supabase.storage
+      .from('photos')
+      .createSignedUrls(storagePaths, 3600)
+    for (const r of signedUrlData ?? []) {
+      if (r.signedUrl) signedUrls.push(r.signedUrl)
+    }
+  }
 
   // 6. Call GPT-4o — plain text output (NOT Output.object — that is for structured extraction only)
   const systemPrompt = tone === 'quick' ? QUICK_DESCRIPTION_PROMPT : DESCRIPTION_SYSTEM_PROMPT

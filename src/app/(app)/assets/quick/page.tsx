@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { Camera, Check, Loader2, ChevronLeft, Zap, FolderOpen, Images } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
 import { createAsset } from '@/lib/actions/asset.actions'
+import { processImageForUpload } from '@/lib/utils/image'
 
 const LAST_BRANCH_KEY = 'lastUsedBranch'
 
@@ -54,11 +55,12 @@ export default function QuickBookPage() {
       const thumbUrl = URL.createObjectURL(files[0])
       blobUrlsRef.current.push(thumbUrl)
 
-      // Upload all photos in parallel
+      // Compress + EXIF-correct all photos in parallel before uploading
       setStatus('uploading')
       setUploadProgress(files.length > 1 ? `Uploading ${files.length} photos…` : 'Uploading…')
+      const processedFiles = await Promise.all(files.map(f => processImageForUpload(f)))
       const uploadResults = await Promise.allSettled(
-        files.map((file, i) => {
+        processedFiles.map((file, i) => {
           const formData = new FormData()
           formData.append('file', file)
           formData.append('assetId', assetId)
@@ -221,7 +223,7 @@ export default function QuickBookPage() {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">{item.label}</p>
                       <p className="text-xs text-white/40">
-                        {item.photoCount > 1 ? `${item.photoCount} photos · ` : ''}Tap to add details
+                        {item.photoCount === 1 ? '1 photo · ' : `${item.photoCount} photos · `}Tap to fill in details
                       </p>
                     </div>
                     <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />

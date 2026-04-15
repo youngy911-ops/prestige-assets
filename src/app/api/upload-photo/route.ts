@@ -13,6 +13,12 @@ export async function POST(req: NextRequest) {
 
   if (!file || !assetId) return Response.json({ error: 'file and assetId required' }, { status: 400 })
 
+  const { count } = await supabase
+    .from('asset_photos')
+    .select('id', { count: 'exact', head: true })
+    .eq('asset_id', assetId)
+  if ((count ?? 0) >= 80) return Response.json({ error: 'Photo limit reached (80 max)' }, { status: 400 })
+
   const ext = file.name.split('.').pop()?.replace(/[^a-zA-Z0-9]/g, '') ?? 'jpg'
   const storagePath = `${user.id}/${assetId}/${Date.now()}-${sortOrder}.${ext}`
 

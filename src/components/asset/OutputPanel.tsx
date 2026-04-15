@@ -20,6 +20,8 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
   const [descText, setDescText] = useState<string>(initialDescription ?? '')
   const [isRegenerating, setIsRegenerating] = useState(false)
   const [tone, setTone] = useState<Tone>('standard')
+  // Increment to force DescriptionBlock remount after regeneration — resets edit state
+  const [descKey, setDescKey] = useState(0)
 
   // Auto-generate on mount if no cached description
   useEffect(() => {
@@ -63,6 +65,7 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
       if (!res.ok) throw new Error('API error')
       const data = await res.json()
       setDescText(data.description)
+      setDescKey(k => k + 1)  // Force DescriptionBlock remount — resets hasEdited
     } catch {
       // Regeneration failed — keep existing text, don't show error
     } finally {
@@ -75,6 +78,7 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
     setTone(newTone)
     setDescState('loading')
     setDescText('')
+    setDescKey(k => k + 1)
     await generateDescription(false, newTone)
   }
 
@@ -124,6 +128,8 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
             Description generation failed. You can type your description manually, or try again.
           </p>
           <DescriptionBlock
+            key={descKey}
+            assetId={assetId}
             descriptionText={descText}
             onRegenerate={handleRegenerate}
             isRegenerating={isRegenerating}
@@ -133,6 +139,8 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
 
       {descState === 'ready' && (
         <DescriptionBlock
+          key={descKey}
+          assetId={assetId}
           descriptionText={descText}
           onRegenerate={handleRegenerate}
           isRegenerating={isRegenerating}

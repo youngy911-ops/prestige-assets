@@ -1,6 +1,5 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
-import { revalidatePath } from 'next/cache'
 
 export async function createAsset(
   branch: string,
@@ -51,35 +50,49 @@ export async function getAssets(branch: string): Promise<AssetSummary[] | { erro
     .order('updated_at', { ascending: false })
 
   if (error) return { error: error.message }
-  const assets = (data ?? []) as Omit<AssetSummary, 'thumb_url'>[]
 
-  if (assets.length === 0) return []
+  // Return immediately — no thumbnail fetching here.
+  // Thumbnails are loaded separately via getAssetThumbs() so the list
+  // renders in ~1 round-trip instead of 4.
+  return (data ?? []).map(a => ({ ...a, thumb_url: null })) as AssetSummary[]
+}
 
-  // Fetch first photo path for each asset in one query
-  const assetIds = assets.map(a => a.id)
+// Separate fast action: given a list of asset IDs, returns { [assetId]: signedUrl }
+// Called client-side after the list renders so thumbnails never block first paint.
+export async function getAssetThumbs(
+  assetIds: string[]
+): Promise<Record<string, string>> {
+  if (assetIds.length === 0) return {}
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return {}
+
   const { data: photos } = await supabase
     .from('asset_photos')
     .select('asset_id, storage_path')
     .in('asset_id', assetIds)
     .order('sort_order', { ascending: true })
 
-  // Build map: asset_id → first storage_path
   const firstPhotoMap = new Map<string, string>()
   for (const p of photos ?? []) {
     if (!firstPhotoMap.has(p.asset_id)) firstPhotoMap.set(p.asset_id, p.storage_path)
   }
 
-  // Batch signed URL generation — one API call for all thumbnails
   const storagePaths = [...firstPhotoMap.values()]
-  const { data: signedUrlData } = storagePaths.length > 0
-    ? await supabase.storage.from('photos').createSignedUrls(storagePaths, 600)
-    : { data: [] }
+  if (storagePaths.length === 0) return {}
+
+  const { data: signedUrlData } = await supabase.storage
+    .from('photos')
+    .createSignedUrls(storagePaths, 600)
+
   const urlByPath = new Map((signedUrlData ?? []).map(r => [r.path, r.signedUrl]))
 
-  return assets.map(asset => ({
-    ...asset,
-    thumb_url: urlByPath.get(firstPhotoMap.get(asset.id) ?? '') ?? null,
-  }))
+  const result: Record<string, string> = {}
+  for (const [assetId, path] of firstPhotoMap) {
+    const url = urlByPath.get(path)
+    if (url) result[assetId] = url
+  }
+  return result
 }
 
 export async function getTodayBookingCount(): Promise<number> {

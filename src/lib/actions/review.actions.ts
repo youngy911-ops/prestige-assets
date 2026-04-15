@@ -3,6 +3,21 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
+export async function saveDescription(
+  assetId: string,
+  description: string
+): Promise<void> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return
+
+  await supabase
+    .from('assets')
+    .update({ description })
+    .eq('id', assetId)
+    .eq('user_id', user.id)
+}
+
 export async function saveReview(
   assetId: string,
   fields: Record<string, string>,

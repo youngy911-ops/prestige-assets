@@ -236,21 +236,7 @@ export function ReviewPageClient({
         </div>
       )}
 
-      {/* Field form */}
-      {!initialExtractionResult && !extractionResult && (
-        <p className="text-sm text-white/50 mb-4">
-          No extraction data available. You can still fill in fields manually.
-        </p>
-      )}
-
-      {/* Checklist — shown first so user sees what needs attention before scrolling through fields */}
-      <MissingInfoChecklist
-        checklist={checklist}
-        onUpdate={handleChecklistUpdate}
-      />
-
-      {checklist.length > 0 && <Separator className="my-6 bg-white/10" />}
-
+      {/* Field form — shown first so inputs are immediately visible */}
       <DynamicFieldForm
         fields={fields}
         extractionResult={extractionResult}
@@ -258,6 +244,14 @@ export function ReviewPageClient({
         errors={Object.fromEntries(
           Object.entries(errors).map(([k, v]) => [k, { message: v?.message }])
         )}
+      />
+
+      {/* Checklist — below the form as a guide for what still needs attention */}
+      {checklist.length > 0 && <Separator className="my-6 bg-white/10" />}
+
+      <MissingInfoChecklist
+        checklist={checklist}
+        onUpdate={handleChecklistUpdate}
       />
 
       {/* Sticky CTA — fixed bar so it's always visible regardless of scroll position */}

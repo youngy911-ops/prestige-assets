@@ -24,10 +24,13 @@ export default function NewAssetPage() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Pre-select last-used branch from localStorage
+  // Pre-select last-used branch and skip straight to type selection
   useEffect(() => {
     const last = localStorage.getItem(LAST_BRANCH_KEY) as BranchKey | null
-    if (last) setBranch(last)
+    if (last) {
+      setBranch(last)
+      setStep(2)  // Skip branch step — user already has one saved
+    }
   }, [])
 
   function handleBranchSelect(b: BranchKey) {
@@ -57,7 +60,7 @@ export default function NewAssetPage() {
   }
 
   function handleBack() {
-    if (step === 2) setStep(1)
+    if (step === 2) router.push('/')  // From type selection, go home (branch already saved)
     if (step === 3) setStep(2)
   }
 

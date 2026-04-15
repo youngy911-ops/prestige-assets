@@ -23,20 +23,20 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  // 3. Load asset (RLS enforces ownership)
-  const { data: asset } = await supabase
-    .from('assets')
-    .select('id, asset_type, asset_subtype, inspection_notes')
-    .eq('id', assetId)
-    .single()
+  // 3 + 4. Load asset and photos in parallel (independent queries)
+  const [{ data: asset }, { data: photos }] = await Promise.all([
+    supabase
+      .from('assets')
+      .select('id, asset_type, asset_subtype, inspection_notes')
+      .eq('id', assetId)
+      .single(),
+    supabase
+      .from('asset_photos')
+      .select('storage_path')
+      .eq('asset_id', assetId)
+      .order('sort_order', { ascending: true }),
+  ])
   if (!asset) return Response.json({ error: 'Asset not found' }, { status: 404 })
-
-  // 4. Load photos sorted by sort_order
-  const { data: photos } = await supabase
-    .from('asset_photos')
-    .select('storage_path')
-    .eq('asset_id', assetId)
-    .order('sort_order', { ascending: true })
 
   // 5. Generate signed URLs in a single batch call (one API call regardless of photo count)
   const photoList = photos ?? []

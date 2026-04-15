@@ -153,7 +153,7 @@ export async function pickHeroShot(
         ...validUrls.map((url) => ({ type: 'image' as const, image: url })),
       ],
     }],
-    maxTokens: 30,
+    maxOutputTokens: 30,
   })
 
   try {

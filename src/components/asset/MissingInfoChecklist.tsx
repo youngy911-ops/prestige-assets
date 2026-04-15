@@ -14,11 +14,11 @@ export function MissingInfoChecklist({ checklist, onUpdate }: MissingInfoCheckli
   return (
     <Card className="bg-[var(--card)] border-white/10">
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-semibold text-white">Missing Information</CardTitle>
+        <CardTitle className="text-base font-semibold text-white">Fields Still Needed</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col">
         <p className="text-sm text-white/65 mb-4">
-          Key fields the AI couldn't confirm. Fill in, or mark N/A to proceed.
+          Fill in above, or mark N/A to proceed.
         </p>
         <div className="flex flex-col divide-y divide-white/10">
           {checklist.map(entry => (

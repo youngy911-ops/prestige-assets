@@ -51,10 +51,10 @@ export async function processImageForUpload(file: File): Promise<File> {
   // Step 3: Compress — also wrapped; if compression fails return source as-is
   try {
     return await imageCompression(sourceFile, {
-      maxWidthOrHeight: 1200,
+      maxWidthOrHeight: 1600,
       useWebWorker: true,
       fileType: 'image/jpeg',
-      initialQuality: 0.82,
+      initialQuality: 0.88,
     })
   } catch {
     // Compression failed — return uncompressed (better to upload large than not upload)

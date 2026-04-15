@@ -29,26 +29,20 @@ export function AssetCard({ id, asset_type, asset_subtype: _subtype, fields, sta
     <Link href={href} className="block group">
       <div className="bg-white/[0.04] rounded-xl border border-white/[0.08] transition-all group-hover:bg-white/[0.07] group-hover:border-white/[0.14] flex items-stretch overflow-hidden">
         {/* Thumbnail */}
-        {thumb_url ? (
-          <img
-            src={thumb_url}
-            alt=""
-            className="w-20 h-20 object-cover flex-shrink-0 self-stretch"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-20 flex-shrink-0 bg-white/[0.03] flex items-center justify-center self-stretch">
-            <span className="text-2xl opacity-30 select-none">
-              {asset_type === 'truck' ? '🚛' :
-               asset_type === 'trailer' ? '🚚' :
-               asset_type === 'earthmoving' ? '🚜' :
-               asset_type === 'agriculture' ? '🌾' :
-               asset_type === 'forklift' ? '⬆' :
-               asset_type === 'caravan' ? '🏕' :
-               asset_type === 'marine' ? '⛵' : '📦'}
-            </span>
-          </div>
-        )}
+        <div className="w-20 flex-shrink-0 self-stretch relative overflow-hidden bg-white/[0.03]">
+          {thumb_url ? (
+            <img
+              src={thumb_url}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover animate-in fade-in duration-300"
+              loading="lazy"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-md bg-white/[0.06]" />
+            </div>
+          )}
+        </div>
 
         {/* Content */}
         <div className="flex-1 min-w-0 px-4 py-3 flex flex-col justify-center">
