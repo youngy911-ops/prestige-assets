@@ -7,6 +7,7 @@ import type { PhotoItem } from '@/components/asset/PhotoUploadZone'
 import { InspectionNotesSection } from '@/components/asset/InspectionNotesSection'
 import { PhotosPageCTA } from '@/components/asset/PhotosPageCTA'
 import { StepIndicator } from '@/components/asset/StepIndicator'
+import { VehiclePhotoGuide } from '@/components/asset/VehiclePhotoGuide'
 import { getAssetDisplayTitle } from '@/lib/schema-registry'
 import type { AssetType } from '@/lib/schema-registry/types'
 
@@ -104,6 +105,11 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Photo guide for vehicles with fewer than 6 photos */}
+      {asset.asset_type === 'vehicle' && photosWithUrls.length < 6 && (
+        <VehiclePhotoGuide />
       )}
 
       {/* Photo upload zone — client component handles all upload interactions */}
