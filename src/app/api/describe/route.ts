@@ -13,7 +13,7 @@ const DESCRIPTION_SYSTEM_PROMPT = `You are a professional heavy equipment and ve
 PROCESS:
 1. Confirmed fields are authoritative — if make, model, year, or any spec appears in Confirmed fields or Staff-provided values, use those values exactly. Do not re-identify from photos if the fields already contain this information.
 2. Use photos to supplement — fill in any specs not already in the confirmed fields, using what is visible in photos and your knowledge of that make/model/year.
-3. Apply your training knowledge of that exact make/model/year to fill in standard specs (engine, transmission, typical configurations etc.) when not already provided. Be confident — a complete description using your knowledge is always better than an incomplete one.
+3. Apply your training knowledge of that exact make/model/year to fill in standard specs (engine, transmission, typical configurations etc.) when not already provided — but only for specs that are universally true for that specific model (e.g. all Bobcat S570 have a 61hp Kubota engine). If a spec varies between configurations of the same model, omit it rather than guess.
 4. Only include a spec if it can be confirmed from fields, inspection notes, photos, or your knowledge of that specific model. Do not invent serial numbers, VINs, registration, or exact hours — but standard model specs (engine, HP, transmission type) can come from your training knowledge.
 5. If a spec cannot be confirmed from any source, omit it — never write placeholder text or unknown values. Work with what you have and produce the best description possible.
 
@@ -808,10 +808,15 @@ Any extras on next line
 Sold As Is, Untested & Unregistered.
 
 ATTACHMENTS / GENERAL GOODS
-Year (if known), Make, Model — apply your training knowledge of this make/model to include standard specs
-Serial Number if visible on data plate
-Key specs relevant to the item type (e.g. capacity, power, dimensions, voltage, fuel type, output rating)
+Year (if known), Make, Model
+Key specs relevant to the item type — only include specs you can confirm from fields, notes, photos, or universal model knowledge:
+  - Power equipment: engine type, output rating (kW/kVA/CFM/HP), fuel type
+  - IT equipment: processor, RAM, storage, quantity if pallet lot
+  - Hospitality/medical: capacity, voltage, dimensions
+  - Tools: set contents, size/capacity
+  - Pallet lots: approximate quantity, general description of contents
 Condition notes if visible (damage, missing parts, wear)
+For items with no identifiable make/model, describe what is visible in the photos
 Sold As Is, Untested.
 
 MARINE (RECREATIONAL BOAT)

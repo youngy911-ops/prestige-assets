@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChevronDown, Search, X, Plus, Zap } from 'lucide-react'
+import { ArrowDown, ArrowUp, ChevronDown, Search, X, Plus, Zap } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
 import { getAssets, getAssetThumbs, getTodayBookingCount, type AssetSummary } from '@/lib/actions/asset.actions'
 import { AssetCard } from './AssetCard'
@@ -33,6 +33,8 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
   const [changingBranch, setChangingBranch] = useState(false)
   const [todayCount, setTodayCount] = useState<number | null>(null)
   const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'confirmed'>('all')
+  const [sortNewest, setSortNewest] = useState(true)
   const isFirstRender = useRef(true)
 
   useEffect(() => {
@@ -98,7 +100,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             <>
               {/* Backdrop to close */}
               <div className="fixed inset-0 z-10" onClick={() => setShowBookInMenu(false)} />
-              <div className="absolute right-0 top-10 z-20 w-52 rounded-xl border border-white/[0.10] bg-[#111f11] shadow-xl overflow-hidden">
+              <div className="absolute right-0 top-10 z-20 w-52 rounded-xl border border-white/[0.10] bg-[#111f11] shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
                 <button
                   type="button"
                   onClick={() => { setShowBookInMenu(false); router.push('/assets/new') }}
@@ -140,7 +142,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             placeholder="Search assets…"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-white/[0.10] bg-white/[0.03] text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/40 transition-colors"
+            className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-white/[0.10] bg-white/[0.03] text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/40 focus:ring-1 focus:ring-emerald-500/20 transition-all duration-200"
           />
           {search && (
             <button
@@ -154,38 +156,9 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
         </div>
       )}
 
-      {/* Branch header chip */}
-      <div className="mb-4">
-        {changingBranch ? (
-          <div className="flex flex-col gap-2">
-            <p className="text-sm text-white/65 mb-2">Select branch:</p>
-            {BRANCHES.map(b => (
-              <button
-                key={b.key}
-                type="button"
-                onClick={() => {
-                  localStorage.setItem(LAST_BRANCH_KEY, b.key)
-                  onBranchChange(b.key as BranchKey)
-                  setChangingBranch(false)
-                }}
-                className={`w-full text-left px-4 py-3 rounded-lg text-base text-white transition-all min-h-[48px] border ${
-                  b.key === branch
-                    ? 'border-emerald-500/60 bg-emerald-500/10'
-                    : 'border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06]'
-                }`}
-              >
-                {b.label}
-              </button>
-            ))}
-            <button
-              type="button"
-              onClick={() => setChangingBranch(false)}
-              className="text-sm text-white/65 mt-2 underline"
-            >
-              Cancel
-            </button>
-          </div>
-        ) : (
+      {/* Branch chip + sort */}
+      {!changingBranch && (
+        <div className="flex items-center gap-2 mb-3">
           <button
             type="button"
             onClick={() => setChangingBranch(true)}
@@ -194,8 +167,68 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             {branchLabel}
             <ChevronDown className="w-3.5 h-3.5" />
           </button>
-        )}
-      </div>
+          <button
+            type="button"
+            onClick={() => setSortNewest(v => !v)}
+            className="inline-flex items-center gap-1 text-sm text-white/50 hover:text-white/70 transition-colors border border-white/[0.12] rounded-lg px-2.5 py-1.5 min-h-[36px]"
+            title={sortNewest ? 'Sorted newest first' : 'Sorted oldest first'}
+          >
+            {sortNewest ? <ArrowDown className="w-3.5 h-3.5" /> : <ArrowUp className="w-3.5 h-3.5" />}
+            <span className="text-xs">{sortNewest ? 'Newest' : 'Oldest'}</span>
+          </button>
+        </div>
+      )}
+
+      {changingBranch && (
+        <div className="flex flex-col gap-2 mb-4">
+          <p className="text-sm text-white/65 mb-2">Select branch:</p>
+          {BRANCHES.map(b => (
+            <button
+              key={b.key}
+              type="button"
+              onClick={() => {
+                localStorage.setItem(LAST_BRANCH_KEY, b.key)
+                onBranchChange(b.key as BranchKey)
+                setChangingBranch(false)
+              }}
+              className={`w-full text-left px-4 py-3 rounded-lg text-base text-white transition-all min-h-[48px] border ${
+                b.key === branch
+                  ? 'border-emerald-500/60 bg-emerald-500/10'
+                  : 'border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06]'
+              }`}
+            >
+              {b.label}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => setChangingBranch(false)}
+            className="text-sm text-white/65 mt-2 underline"
+          >
+            Cancel
+          </button>
+        </div>
+      )}
+
+      {/* Status filter chips */}
+      {!changingBranch && (
+        <div className="flex items-center gap-2 mb-4">
+          {(['all', 'draft', 'confirmed'] as const).map(s => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setStatusFilter(s)}
+              className={`text-xs font-medium rounded-full px-3 min-h-[36px] transition-colors ${
+                statusFilter === s
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-white/[0.05] text-white/50 hover:text-white/70'
+              }`}
+            >
+              {s === 'all' ? 'All' : s === 'draft' ? 'Draft' : 'Confirmed'}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* List states */}
       {error && (
@@ -219,15 +252,30 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       )}
 
       {!error && assets !== null && assets.length > 0 && (() => {
-        const filtered = assets.filter(a => matchesSearch(a, search))
+        const filtered = assets
+          .filter(a => matchesSearch(a, search))
+          .filter(a => statusFilter === 'all' || a.status === statusFilter)
+          .sort((a, b) => {
+            const diff = new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
+            return sortNewest ? -diff : diff
+          })
+        const isFiltering = statusFilter !== 'all' || search.trim() !== ''
+        const countLabel = statusFilter === 'draft'
+          ? `${filtered.length} draft${filtered.length !== 1 ? 's' : ''}`
+          : statusFilter === 'confirmed'
+          ? `${filtered.length} confirmed`
+          : `${filtered.length} asset${filtered.length !== 1 ? 's' : ''}`
         return filtered.length === 0 ? (
           <div className="text-center py-10">
-            <p className="text-white/65 text-sm">No assets match &ldquo;{search}&rdquo;</p>
-            <button type="button" onClick={() => setSearch('')} className="text-xs text-emerald-400 hover:text-emerald-300 mt-2 transition-colors">Clear search</button>
+            <p className="text-white/65 text-sm">No assets match your filters</p>
+            <button type="button" onClick={() => { setSearch(''); setStatusFilter('all') }} className="text-xs text-emerald-400 hover:text-emerald-300 mt-2 transition-colors">Clear filters</button>
           </div>
         ) : (
-          <div className="flex flex-col gap-4">
-            {filtered.map(asset => (
+          <div className="flex flex-col gap-4 animate-in fade-in duration-300">
+            {isFiltering && (
+              <p className="text-xs text-white/40">{countLabel}</p>
+            )}
+            {filtered.map((asset, i) => (
               <AssetCard
                 key={asset.id}
                 id={asset.id}
@@ -237,6 +285,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
                 status={asset.status}
                 updated_at={asset.updated_at}
                 thumb_url={asset.thumb_url}
+                animationDelay={`${i * 50}ms`}
               />
             ))}
           </div>
