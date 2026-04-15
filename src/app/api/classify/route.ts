@@ -25,6 +25,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     imageUrl = body.imageUrl
     if (!imageUrl) return Response.json({ error: 'imageUrl required' }, { status: 400 })
+    if (typeof imageUrl !== 'string' || !imageUrl.startsWith('data:image/')) {
+      return Response.json({ error: 'Only base64 data URLs accepted' }, { status: 400 })
+    }
   } catch {
     return Response.json({ error: 'Invalid body' }, { status: 400 })
   }
@@ -46,7 +49,12 @@ Classify the asset shown in the photo into one of these types and subtypes:
 
 ${typeList}
 
-Return the exact key values (snake_case) from the list above. If you cannot confidently identify a subtype, return null for asset_subtype.`,
+Return the exact key values (snake_case) from the list above. If you cannot confidently identify a subtype, return null for asset_subtype.
+
+Confidence guide:
+- "high": asset type and subtype are clearly identifiable from the photo
+- "medium": asset type is clear but subtype is ambiguous (e.g. could be tipper or tray)
+- "low": image quality is poor, angle is extreme, or asset could belong to multiple types`,
       },
       {
         role: 'user',

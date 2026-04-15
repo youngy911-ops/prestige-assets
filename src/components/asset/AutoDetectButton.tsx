@@ -89,7 +89,7 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
         accept="image/*"
         capture="environment"
         className="hidden"
-        onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f) }}
+        onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = '' }}
       />
       <button
         type="button"
@@ -98,7 +98,7 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
         className="w-full flex items-center justify-center gap-2 rounded-xl border border-white/[0.10] bg-white/[0.03] hover:bg-white/[0.06] text-white/70 hover:text-white text-sm py-3 transition-all disabled:opacity-50"
       >
         {status === 'uploading' || status === 'detecting'
-          ? <><Loader2 className="w-4 h-4 animate-spin" />{status === 'detecting' ? 'Detecting…' : 'Loading…'}</>
+          ? <><Loader2 className="w-4 h-4 animate-spin" />{status === 'detecting' ? 'Detecting…' : 'Compressing…'}</>
           : <><Sparkles className="w-4 h-4 text-emerald-400" />Detect type from photo</>
         }
       </button>
