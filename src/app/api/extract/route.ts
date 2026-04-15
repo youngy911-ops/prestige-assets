@@ -73,23 +73,29 @@ export async function POST(req: NextRequest) {
   const userPrompt = buildUserPrompt(asset.inspection_notes, structuredFields)
 
   // 7. Call GPT-4o via Vercel AI SDK — use generateText + Output.object() (not deprecated generateObject)
-  const { output } = await generateText({
-    model: openai('gpt-4o'),
-    output: Output.object({ schema }),
-    messages: [
-      {
-        role: 'system',
-        content: systemPrompt,
-      },
-      {
-        role: 'user',
-        content: [
-          { type: 'text', text: userPrompt },
-          ...signedUrls.map(url => ({ type: 'image' as const, image: url })),
-        ],
-      },
-    ],
-  })
+  let output: Record<string, unknown> | undefined
+  try {
+    const result = await generateText({
+      model: openai('gpt-4o'),
+      output: Output.object({ schema }),
+      messages: [
+        {
+          role: 'system',
+          content: systemPrompt,
+        },
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: userPrompt },
+            ...signedUrls.map(url => ({ type: 'image' as const, image: url })),
+          ],
+        },
+      ],
+    })
+    output = result.output as Record<string, unknown> | undefined
+  } catch {
+    return Response.json({ error: 'Extraction failed' }, { status: 502 })
+  }
 
   // 8. Write extraction_result to DB — NEVER touch assets.fields
   await supabase

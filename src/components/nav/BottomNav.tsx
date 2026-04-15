@@ -8,6 +8,10 @@ import { createClient } from '@/lib/supabase/client'
 export function BottomNav() {
   const pathname = usePathname()
   const router = useRouter()
+
+  // Hide nav on the report page — it has its own toolbar and print layout
+  if (pathname.endsWith('/report')) return null
+
   const assetsActive = pathname === '/'
   const newActive = pathname.startsWith('/assets/new')
   const quickActive = pathname.startsWith('/assets/quick')

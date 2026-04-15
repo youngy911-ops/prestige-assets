@@ -30,7 +30,7 @@ export default async function ExtractPage({ params, searchParams }: ExtractPageP
       .single(),
     supabase
       .from('asset_photos')
-      .select('*', { count: 'exact', head: true })
+      .select('id', { count: 'exact', head: true })
       .eq('asset_id', assetId),
   ])
 
