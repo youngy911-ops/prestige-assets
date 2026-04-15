@@ -808,9 +808,11 @@ Any extras on next line
 Sold As Is, Untested & Unregistered.
 
 VEHICLE (PASSENGER / LIGHT COMMERCIAL)
-Write as ONE continuous paragraph. Pack in as much detail as possible in a natural flowing sentence.
-Include in this order (skip any not known): Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour, key extras (bull bar, tow bar, canopy, roof racks, tonneau cover, alloy wheels, leather, sunroof, reverse camera, sat nav, etc.), then close with the footer.
-Example: "2019 Toyota Hilux SR5 Dual Cab Ute, 5 seats, 2.8L 4-Cylinder Turbo Diesel, 6 Speed Automatic, 4WD, White, alloy wheels, tow bar, tonneau cover, sports bar, reverse camera, climate control A/C. Sold As Is, Untested & Unregistered."
+Write as ONE continuous paragraph. Keep it concise — the photos do the talking.
+Include in this order (skip any not known): Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer.
+Only mention extras/mods if they are significant and add real value — bull bar, canopy, tow bar, snorkel, winch, aftermarket tray on a work ute. Do NOT list standard features like A/C, power windows, central locking, reverse camera — buyers expect these on modern vehicles.
+Example: "2019 Toyota Hilux SR5 Dual Cab Ute, 5 Seats, 2.8L 4-Cylinder Turbo Diesel, 6 Speed Automatic, 4WD, White. Sold As Is, Untested & Unregistered."
+Example with noteworthy extras: "2017 Nissan Navara ST-X Dual Cab Ute, 5 Seats, 2.3L Twin Turbo Diesel, 7 Speed Automatic, 4WD, Black, steel tray, bull bar, snorkel. Sold As Is, Untested & Unregistered."
 Do NOT use dot points or line breaks — one paragraph only.
 
 ATTACHMENTS / GENERAL GOODS
