@@ -74,7 +74,7 @@ export const marineSchema: AssetSchema = {
     {
       key: 'main_engine_details', label: 'Main Engine Details', sfOrder: 10, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Engine cowling badge or plate: make + model + HP (e.g. Yamaha F150, Mercury 90hp, Suzuki DF200, Evinrude E-TEC 115, Volvo Penta D4-300, Honda BF115). Read cowling badge exactly.',
+      aiHint: 'Engine cowling badge or plate: make + model + HP. Outboard cowling colours help identify: Yamaha=white/grey/black, Mercury=black, Suzuki=white/blue, Honda=silver/red, Evinrude=white/blue, Tohatsu=black/red. Read cowling badge exactly (e.g. Yamaha F150, Mercury 90hp FourStroke, Suzuki DF200AP, Honda BF115, Evinrude E-TEC 115). For inboard/sterndrive: Volvo Penta D4-300, Mercruiser 4.5L MPI, Yanmar 6LY-STP. Prefix F/DF/BF usually = 4-stroke; E-TEC = 2-stroke DFI.',
       required: false,
     },
     {
@@ -157,7 +157,8 @@ export const marineSchema: AssetSchema = {
     },
     {
       key: 'extras', label: 'Extras', sfOrder: 25, inputType: 'textarea',
-      aiExtractable: false,
+      aiExtractable: true,
+      aiHint: 'Visible extras from helm, deck, and exterior photos: fish finder/sounder (Garmin, Lowrance, Simrad, Furuno), GPS/chartplotter, VHF radio, stereo, bimini top, clears/covers, anchor winch (electric/manual), rod holders, live bait tank, kill tank, ski pole/tower, boarding ladder, trim tabs, jack plate, transom shower, outriggers, rocket launcher (rod holder rack), deck wash, hydraulic steering. List all visible items with brand if badge readable.',
       required: false,
     },
   ],
