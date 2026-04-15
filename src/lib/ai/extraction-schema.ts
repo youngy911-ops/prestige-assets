@@ -53,11 +53,14 @@ READING BUILD PLATES / COMPLIANCE PLATES:
 
 READING ODOMETERS:
 - Odometers appear on the instrument cluster or dashboard display
-- Read the full number exactly as displayed — include all digits shown, including leading digits even if partially bright
-- Units: typically "km" for Australian vehicles; note if display shows "mi" and convert if confident, otherwise extract as-is
-- Do not round or estimate — only extract what is clearly legible
-- If the display is blurry or at an angle and digits are uncertain, return null — do not guess partial readings
-- For numeric fields return digits only — no units, commas, or spaces
+- Read the EXACT number as displayed — every digit matters, including decimals
+- If the odometer shows a decimal point or tenths digit (e.g. 187450.3), INCLUDE the decimal and tenths digit — do NOT drop it
+- Digital displays often show a smaller tenths digit after a dot — this must be captured (e.g. "68340.2" not "68340")
+- Mechanical odometers: the last digit may be on a half-turn — read the most visible position
+- Do not round, truncate, or estimate — read exactly what is shown
+- If ANY digit is unclear or uncertain, return null — never guess
+- Units: typically "km" for Australian vehicles; if display shows "mi" extract as-is
+- Return digits and decimal point only — no units, commas, or spaces (e.g. "187450.3" not "187,450.3 km")
 
 READING HOURMETERS:
 - Hourmeters appear on the instrument cluster, a separate panel gauge, or an adhesive label on the frame
