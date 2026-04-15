@@ -50,11 +50,14 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
     }
   }
 
+  const [confirmingRegen, setConfirmingRegen] = useState(false)
+
   async function handleRegenerate(currentText: string, hasEdited: boolean) {
-    if (hasEdited) {
-      const confirmed = window.confirm('Your edits will be lost. Regenerate description?')
-      if (!confirmed) return
+    if (hasEdited && !confirmingRegen) {
+      setConfirmingRegen(true)
+      return
     }
+    setConfirmingRegen(false)
     setIsRegenerating(true)
     try {
       const res = await fetch('/api/describe', {
@@ -138,13 +141,34 @@ export function OutputPanel({ assetId, fieldsText, initialDescription }: OutputP
       )}
 
       {descState === 'ready' && (
-        <DescriptionBlock
-          key={descKey}
-          assetId={assetId}
-          descriptionText={descText}
-          onRegenerate={handleRegenerate}
-          isRegenerating={isRegenerating}
-        />
+        <>
+          {confirmingRegen && (
+            <div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-900/15 px-4 py-3">
+              <p className="text-sm text-amber-300 flex-1">Your edits will be lost. Regenerate?</p>
+              <button
+                type="button"
+                onClick={() => handleRegenerate('', true)}
+                className="text-sm font-semibold text-white bg-amber-600 hover:bg-amber-500 px-3 py-1.5 rounded-lg transition-colors"
+              >
+                Yes
+              </button>
+              <button
+                type="button"
+                onClick={() => setConfirmingRegen(false)}
+                className="text-sm text-white/50 hover:text-white/80 px-2 py-1.5 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+          <DescriptionBlock
+            key={descKey}
+            assetId={assetId}
+            descriptionText={descText}
+            onRegenerate={handleRegenerate}
+            isRegenerating={isRegenerating}
+          />
+        </>
       )}
     </div>
   )

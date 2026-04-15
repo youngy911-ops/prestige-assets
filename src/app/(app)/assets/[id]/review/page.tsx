@@ -21,7 +21,7 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
 
   const { data: asset } = await supabase
     .from('assets')
-    .select('id, asset_type, asset_subtype, extraction_result, inspection_notes, fields, checklist_state')
+    .select('id, asset_type, asset_subtype, extraction_result, inspection_notes, fields, checklist_state, status')
     .eq('id', assetId)
     .single()
 
@@ -74,7 +74,7 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
           </p>
         </div>
       </div>
-      <StepIndicator current="review" />
+      {asset.status === 'draft' && <StepIndicator current="review" />}
 
       <ReviewPageClient
         assetId={assetId}

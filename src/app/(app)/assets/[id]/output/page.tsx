@@ -17,7 +17,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
 
   const { data: asset } = await supabase
     .from('assets')
-    .select('id, asset_type, asset_subtype, fields, description')
+    .select('id, asset_type, asset_subtype, fields, description, status')
     .eq('id', assetId)
     .single()
 
@@ -45,7 +45,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
           {getAssetDisplayTitle(asset.asset_type, asset.asset_subtype)}
         </p>
       </div>
-      <StepIndicator current="output" />
+      {asset.status === 'draft' && <StepIndicator current="output" />}
 
       {/* Output blocks */}
       <OutputPanel
