@@ -110,11 +110,15 @@ TYRE ASSESSMENT — from tyre photos:
 - Sidewall damage: bulges, cuts, cracks.
 - Mismatched tyres: different brands/sizes across axles.
 
-DAMAGE FIELD FORMAT — write the "damage" field as a concise summary suitable for Salesforce paste:
-- Format: "Scratches and dents visible around vehicle" or "Dent on driver rear door, scratches along passenger side, cracked tail light RHS"
+DAMAGE FIELD FORMAT:
+- "damage" field: concise one-line Salesforce summary. E.g. "Scratches and dents visible around vehicle" or "Dent to driver rear door, scratches to passenger side, cracked tail light RHS"
+- "damage_notes" field: panel-by-panel breakdown. List each damaged panel on its own line as "Panel - Damage". Only list panels with visible damage, skip clean panels. E.g.:
+  Front Bumper - Stone chips, light scratches
+  Bonnet - Stone chips along leading edge
+  Driver Rear Door - Dent approx 150mm
+  Tail Light RHS - Cracked lens
 - Be specific about location (driver/passenger, front/rear, LHS/RHS)
-- If NO damage is visible in any photo, return null (do not write "no damage" — null means not found)
-- Use "damage_notes" for the detailed breakdown with sizes and severity
+- If NO damage is visible in any photo, return null for both fields
 - GENERAL GOODS: read make/model/serial from build plate or data label. DOM from compliance plate if present. Many items (attachments, hand tools) have no build plate — return null for missing fields rather than inferring.
 
 Rules:
