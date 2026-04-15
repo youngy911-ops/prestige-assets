@@ -114,7 +114,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
                   </div>
                   <div className="text-left">
                     <p className="font-semibold">New Asset</p>
-                    <p className="text-xs text-white/45">Full photos + AI extract</p>
+                    <p className="text-xs text-white/45">Full photos + auto extract</p>
                   </div>
                 </button>
                 <button
@@ -287,7 +287,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             <Package className="w-8 h-8 text-emerald-400" />
           </div>
           <h2 className="text-white text-lg font-semibold">Ready to book in</h2>
-          <p className="text-white/50 text-sm mt-2 max-w-[280px]">Snap photos, AI extracts the details, paste to Salesforce.</p>
+          <p className="text-white/50 text-sm mt-2 max-w-[280px]">Snap photos, details extracted automatically, paste to Salesforce.</p>
           <div className="flex items-center gap-3 mt-6">
             <Link
               href="/assets/new"

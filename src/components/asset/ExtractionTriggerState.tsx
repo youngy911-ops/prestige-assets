@@ -10,7 +10,7 @@ export function ExtractionTriggerState({ assetId, hasPhotos, onTrigger }: Extrac
       <div className="text-center py-8 flex flex-col items-center gap-3">
         <p className="text-white font-semibold">No photos uploaded</p>
         <p className="text-sm text-white/65">
-          Upload photos first, then run AI extraction. Or skip to manual entry.
+          Upload photos first to auto-extract details. Or skip to manual entry.
         </p>
         <a
           href={`/assets/${assetId}/review`}
@@ -29,7 +29,7 @@ export function ExtractionTriggerState({ assetId, hasPhotos, onTrigger }: Extrac
         onClick={onTrigger}
         className="flex items-center justify-center w-full h-11 rounded-md bg-emerald-600 hover:bg-emerald-600/90 text-white font-medium text-sm transition-colors"
       >
-        Run AI Extraction
+        Extract Details
       </button>
       <a
         href={`/assets/${assetId}/review`}

@@ -27,7 +27,7 @@ export function VehiclePhotoGuide() {
       >
         <Camera className="w-4 h-4 text-emerald-400 flex-shrink-0" />
         <span className="flex-1 text-xs font-medium text-white/70">
-          Photo tips for best AI results
+          Photo tips for best results
         </span>
         <ChevronDown
           className={`w-4 h-4 text-white/40 transition-transform ${open ? 'rotate-180' : ''}`}

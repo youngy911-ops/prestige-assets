@@ -86,7 +86,7 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
           <AlertCircle className="w-4 h-4 text-white/65 flex-shrink-0 mt-0.5" />
           <div className="flex-1 min-w-0">
             <p className="text-sm text-white/85">
-              New photos added — re-run AI extraction to update extracted fields?
+              New photos added — re-run extraction to update fields?
             </p>
             <div className="flex gap-2 mt-2">
               <Link

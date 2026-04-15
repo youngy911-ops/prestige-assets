@@ -50,7 +50,7 @@ export default async function ExtractPage({ params, searchParams }: ExtractPageP
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-xl font-semibold text-white">AI Extraction</h1>
+          <h1 className="text-xl font-semibold text-white">Extracting Details</h1>
           <p className="text-sm text-white/65">
             {getAssetDisplayTitle(asset.asset_type, asset.asset_subtype)}
           </p>

@@ -216,7 +216,7 @@ export function ReviewPageClient({
         <div className="mb-4 rounded-lg border border-amber-500/40 bg-amber-900/20 p-4 flex flex-col gap-3">
           <p className="text-sm text-amber-300">
             Extraction found new values — {conflictFields.length} field(s) differ from your edits.
-            Accept all AI values or keep your edits.
+            Extraction found new values that differ from your edits.
           </p>
           <div className="flex gap-2">
             <Button
@@ -226,7 +226,7 @@ export function ReviewPageClient({
               className="border-amber-500/40 text-amber-300 hover:bg-amber-900/30"
               onClick={() => applyExtraction(pendingExtraction, true)}
             >
-              Use AI Values
+              Use Extracted Values
             </Button>
             <Button
               type="button"

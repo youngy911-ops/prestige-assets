@@ -254,11 +254,11 @@ export function PhotoUploadZone({
               type="button"
               onClick={handlePickHero}
               disabled={isPickingHero}
-              title="AI picks best cover photo"
+              title="Auto-pick best cover photo"
               className="flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 transition-colors disabled:opacity-40"
             >
               <Sparkles className={`w-3.5 h-3.5 ${isPickingHero ? 'animate-pulse' : ''}`} />
-              {isPickingHero ? 'Picking…' : 'AI Cover'}
+              {isPickingHero ? 'Picking…' : 'Best Cover'}
             </button>
           )}
           <Button

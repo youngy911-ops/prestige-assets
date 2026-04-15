@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 
 const STEPS = [
   { key: 'photos', label: 'Photos' },
-  { key: 'extract', label: 'AI Extract' },
+  { key: 'extract', label: 'Extract' },
   { key: 'review', label: 'Review' },
   { key: 'output', label: 'Output' },
 ]
