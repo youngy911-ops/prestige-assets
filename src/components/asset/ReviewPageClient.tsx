@@ -53,7 +53,7 @@ export function ReviewPageClient({
   } = useForm<ReviewFormValues>({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(schema) as any,
-    defaultValues: buildDefaultValues(fields, initialExtractionResult, savedFields),
+    defaultValues: buildDefaultValues(fields, initialExtractionResult, savedFields, assetType),
   })
 
   // Only watch fields the checklist cares about — avoids re-rendering on every keystroke
@@ -249,6 +249,7 @@ export function ReviewPageClient({
         errors={Object.fromEntries(
           Object.entries(errors).map(([k, v]) => [k, { message: v?.message }])
         )}
+        assetType={assetType}
       />
 
       {/* Checklist — below the form as a guide for what still needs attention */}
