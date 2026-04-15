@@ -1,5 +1,6 @@
 'use client'
 import { useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Camera, AlertCircle, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { processImageForUpload } from '@/lib/utils/image'
@@ -19,6 +20,7 @@ interface PhotoUploadZoneProps {
   userId: string
   initialPhotos?: PhotoItem[]
   onPhotosChange?: (photos: PhotoItem[]) => void
+  showCTA?: boolean
 }
 
 interface UploadError {
@@ -31,7 +33,9 @@ export function PhotoUploadZone({
   userId,
   initialPhotos = [],
   onPhotosChange,
+  showCTA = false,
 }: PhotoUploadZoneProps) {
+  const router = useRouter()
   const [photos, setPhotos] = useState<PhotoItem[]>(initialPhotos)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadingIds, setUploadingIds] = useState<Set<string>>(new Set())
@@ -321,6 +325,19 @@ export function PhotoUploadZone({
             </p>
           ))}
         </div>
+      )}
+
+      {/* Extract & Review CTA — always visible when photos exist */}
+      {showCTA && photos.length > 0 && (
+        <button
+          type="button"
+          disabled={isUploading}
+          onClick={() => router.push(`/assets/${assetId}/extract?autostart=1`)}
+          className="flex items-center justify-center gap-2 w-full h-12 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-colors disabled:opacity-40"
+        >
+          <Sparkles className="w-4 h-4" />
+          {isUploading ? 'Uploading…' : 'Extract & Review'}
+        </button>
       )}
     </div>
   )

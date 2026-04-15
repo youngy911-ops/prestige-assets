@@ -5,7 +5,6 @@ import { createClient } from '@/lib/supabase/server'
 import { PhotoUploadZone } from '@/components/asset/PhotoUploadZone'
 import type { PhotoItem } from '@/components/asset/PhotoUploadZone'
 import { InspectionNotesSection } from '@/components/asset/InspectionNotesSection'
-import { PhotosPageCTA } from '@/components/asset/PhotosPageCTA'
 import { StepIndicator } from '@/components/asset/StepIndicator'
 import { VehiclePhotoGuide } from '@/components/asset/VehiclePhotoGuide'
 import { getAssetDisplayTitle } from '@/lib/schema-registry'
@@ -113,10 +112,12 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
       )}
 
       {/* Photo upload zone — client component handles all upload interactions */}
+      {/* CTA lives inside PhotoUploadZone so it reacts to client-side upload state */}
       <PhotoUploadZone
         assetId={assetId}
         userId={user.id}
         initialPhotos={photosWithUrls}
+        showCTA
       />
 
       {/* Inspection notes — below photo grid, above CTA */}
@@ -126,25 +127,6 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
           assetType={asset.asset_type as AssetType}
           initialNotes={asset.inspection_notes ?? null}
         />
-      </div>
-
-      {/* Next action */}
-      <div className="mt-6">
-        {hasPhotos ? (
-          <PhotosPageCTA assetId={assetId} />
-        ) : (
-          <>
-            <Link
-              href={`/assets/${assetId}/review`}
-              className="flex items-center justify-center w-full h-11 rounded-md bg-emerald-600 hover:bg-emerald-600/90 text-white font-medium text-sm transition-colors"
-            >
-              Skip to Manual Entry
-            </Link>
-            <p className="text-xs text-white/65 text-center mt-2">
-              No photos? You can enter all fields manually.
-            </p>
-          </>
-        )}
       </div>
     </div>
   )
