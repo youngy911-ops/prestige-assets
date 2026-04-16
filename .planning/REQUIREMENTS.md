@@ -63,24 +63,24 @@ Deferred to future milestone. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BRAND-01 | — | Pending |
-| BRAND-02 | — | Pending |
-| BRAND-03 | — | Pending |
-| ERR-01 | — | Pending |
-| ERR-02 | — | Pending |
-| ASSET-01 | — | Pending |
-| ASSET-02 | — | Pending |
-| CODE-01 | — | Pending |
-| CODE-02 | — | Pending |
-| A11Y-01 | — | Pending |
-| A11Y-02 | — | Pending |
-| A11Y-03 | — | Pending |
+| BRAND-01 | Phase 20 | Pending |
+| BRAND-02 | Phase 20 | Pending |
+| BRAND-03 | Phase 20 | Pending |
+| ERR-01 | Phase 21 | Pending |
+| ERR-02 | Phase 21 | Pending |
+| ASSET-01 | Phase 22 | Pending |
+| ASSET-02 | Phase 22 | Pending |
+| CODE-01 | Phase 23 | Pending |
+| CODE-02 | Phase 23 | Pending |
+| A11Y-01 | Phase 23 | Pending |
+| A11Y-02 | Phase 23 | Pending |
+| A11Y-03 | Phase 23 | Pending |
 
 **Coverage:**
 - v1.5 requirements: 12 total
-- Mapped to phases: 0
-- Unmapped: 12
+- Mapped to phases: 12
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-16*
-*Last updated: 2026-04-16 after initial definition*
+*Last updated: 2026-04-16 — traceability updated after roadmap creation*

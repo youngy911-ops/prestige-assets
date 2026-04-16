@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Demo Polish
-status: defining-requirements
-stopped_at: Defining v1.5 requirements
+status: ready-to-plan
+stopped_at: Roadmap created, ready to plan Phase 20
 last_updated: "2026-04-16"
-last_activity: 2026-04-16 — Milestone v1.5 started
+last_activity: 2026-04-16 — v1.5 roadmap created (4 phases, 12 requirements)
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,15 +20,15 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-04-16)
 
-**Core value:** Photo a build plate → AI extracts identifiers → app generates copy-paste-ready Salesforce fields and a correctly formatted description — turning an hour of manual research into minutes.
-**Current focus:** v1.5 — Demo Polish
+**Core value:** Photo a build plate -> AI extracts identifiers -> app generates copy-paste-ready Salesforce fields and a correctly formatted description — turning an hour of manual research into minutes.
+**Current focus:** v1.5 Demo Polish — Phase 20: Brand & Config Consolidation
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-04-16 — Milestone v1.5 started
+Phase: 20 (first of 4 in v1.5: Phases 20-23)
+Plan: 0 of ? in current phase
+Status: Ready to plan
+Last activity: 2026-04-16 — v1.5 roadmap created
 
 Progress: [░░░░░░░░░░] 0% (v1.5)
 
@@ -47,7 +47,8 @@ Progress: [░░░░░░░░░░] 0% (v1.5)
 
 Recent decisions affecting current work (full log in PROJECT.md):
 
-- [v1.5 start]: Scope is polish + quick wins for demo readiness (2026-04-17 week); bigger features deferred to v1.6+
+- [v1.5 start]: Scope is polish + quick wins for demo readiness (2026-04-17 demo); bigger features deferred to v1.6+
+- [v1.5 roadmap]: 4 phases derived from 12 requirements; all phases independent (no inter-phase dependencies)
 
 ### Pending Todos
 
@@ -55,10 +56,10 @@ None.
 
 ### Blockers/Concerns
 
-None.
+- Demo on Friday 2026-04-17 — must be crash-proof
 
 ## Session Continuity
 
 Last session: 2026-04-16
-Stopped at: Defining v1.5 requirements
+Stopped at: v1.5 roadmap created, ready to plan Phase 20
 Resume file: None

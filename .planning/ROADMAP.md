@@ -7,6 +7,7 @@
 - ✅ **v1.2 Pre-fill Restoration** — Phase 11 (shipped 2026-03-22)
 - ✅ **v1.3 Asset Expansion** — Phases 12–15 (shipped 2026-03-23)
 - ✅ **v1.4 Salesforce Subtype Alignment** — Phases 16–19 (shipped 2026-03-24)
+- 🚧 **v1.5 Demo Polish** — Phases 20–23 (in progress)
 
 ## Phases
 
@@ -69,6 +70,58 @@ Full archive: `.planning/milestones/v1.4-ROADMAP.md`
 
 </details>
 
+### 🚧 v1.5 Demo Polish (In Progress)
+
+**Milestone Goal:** Tighten the app for demo readiness — fix broken/stub pages, consolidate hardcoded values, improve error UX, add asset deletion and status workflow.
+
+- [ ] **Phase 20: Brand & Config Consolidation** - Centralize brand identity, QR domain, and color tokens into single sources of truth
+- [ ] **Phase 21: Error UX & Broken Pages** - Contextual error pages and fix/remove the Edit Type stub
+- [ ] **Phase 22: Asset Lifecycle** - Asset deletion and status workflow (draft / reviewed / confirmed)
+- [ ] **Phase 23: Code Quality & Accessibility** - Deduplicate constants, replace emoji with icons, add ARIA attributes
+
+## Phase Details
+
+### Phase 20: Brand & Config Consolidation
+**Goal**: Every brand-visible value (domain, company name, logo, colors) is sourced from a single config — not scattered across files
+**Depends on**: Nothing (no v1.5 dependencies)
+**Requirements**: BRAND-01, BRAND-02, BRAND-03
+**Success Criteria** (what must be TRUE):
+  1. QR codes on output/report pages render using a configurable domain that can be changed in one place
+  2. Company name and logo monogram appear consistently across all pages from a single brand config file
+  3. No hardcoded hex color values remain in component files — all colors use semantic Tailwind variants (destructive, warning, success, etc.)
+**Plans**: TBD
+
+### Phase 21: Error UX & Broken Pages
+**Goal**: Users see helpful, contextual error messages and never hit dead-end stub pages
+**Depends on**: Nothing (independent of Phase 20)
+**Requirements**: ERR-01, ERR-02
+**Success Criteria** (what must be TRUE):
+  1. App error pages display a specific message explaining what went wrong and offer at least one recovery action (go back, retry, go home)
+  2. Edit Type page either allows the user to change asset type/subtype and re-triggers extraction, or the route is fully removed with no dead links pointing to it
+**Plans**: TBD
+
+### Phase 22: Asset Lifecycle
+**Goal**: Users can manage asset records through a clear lifecycle — including deletion and status progression
+**Depends on**: Nothing (independent of Phases 20–21)
+**Requirements**: ASSET-01, ASSET-02
+**Success Criteria** (what must be TRUE):
+  1. User can delete an asset from the asset list or detail view with a confirmation prompt — deleted asset no longer appears in the list
+  2. Asset records display a visible status badge (draft / reviewed / confirmed) on the list and detail views
+  3. Status advances automatically as the user progresses through the workflow (creation = draft, review complete = reviewed, output copied = confirmed)
+**Plans**: TBD
+
+### Phase 23: Code Quality & Accessibility
+**Goal**: Codebase constants are deduplicated, loading states use proper icons, and key UI elements have correct ARIA attributes
+**Depends on**: Nothing (independent of Phases 20–22)
+**Requirements**: CODE-01, CODE-02, A11Y-01, A11Y-02, A11Y-03
+**Success Criteria** (what must be TRUE):
+  1. LAST_BRANCH_KEY is defined in one shared location and imported by all consumers — no duplicate string literals
+  2. Extraction loading state uses Lucide icons instead of emoji characters
+  3. BottomNav active link has aria-current="page" set on the current route
+  4. Expandable/collapsible sections (e.g., extraction "not found" fields) have aria-expanded toggling between true/false
+  5. Photo thumbnails and asset card images have meaningful alt text describing the asset, or are marked role="presentation" if decorative
+**Plans**: TBD
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -92,3 +145,7 @@ Full archive: `.planning/milestones/v1.4-ROADMAP.md`
 | 17. Description Template Coverage | v1.4 | 4/4 | Complete | 2026-03-24 |
 | 18. Test Key Fidelity | v1.4 | 1/1 | Complete | 2026-03-24 |
 | 19. Prompt-Schema Alignment | v1.4 | 2/2 | Complete | 2026-03-24 |
+| 20. Brand & Config Consolidation | v1.5 | 0/? | Not started | - |
+| 21. Error UX & Broken Pages | v1.5 | 0/? | Not started | - |
+| 22. Asset Lifecycle | v1.5 | 0/? | Not started | - |
+| 23. Code Quality & Accessibility | v1.5 | 0/? | Not started | - |
