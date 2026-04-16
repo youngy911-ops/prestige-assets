@@ -6,6 +6,7 @@ import { BRAND } from '@/lib/constants/brand'
 import { generateFieldsBlock } from '@/lib/output/generateFieldsBlock'
 import { OutputPanel } from '@/components/asset/OutputPanel'
 import { StepIndicator } from '@/components/asset/StepIndicator'
+import { DeleteAssetButton } from '@/components/asset/DeleteAssetButton'
 import { getAssetDisplayTitle } from '@/lib/schema-registry'
 import type { AssetType } from '@/lib/schema-registry/types'
 
@@ -105,6 +106,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
         >
           Book In New Asset
         </Link>
+        <DeleteAssetButton assetId={assetId} />
       </div>
     </div>
   )

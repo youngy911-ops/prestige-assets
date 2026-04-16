@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Camera, Copy, Check, AlertTriangle } from 'lucide-react'
 import { FieldsBlock } from '@/components/asset/FieldsBlock'
 import { DescriptionBlock } from '@/components/asset/DescriptionBlock'
+import { markAssetConfirmed } from '@/lib/actions/asset.actions'
 
 type Tone = 'standard' | 'quick'
 
@@ -40,6 +41,8 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
     await navigator.clipboard.writeText(combined)
     setAllCopied(true)
     setTimeout(() => setAllCopied(false), 2000)
+    // Advance status to confirmed (fire-and-forget — don't block copy UX)
+    markAssetConfirmed(assetId).catch(() => {})
   }
 
   // Auto-generate on mount if no cached description

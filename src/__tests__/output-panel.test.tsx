@@ -3,6 +3,17 @@ import { render, screen, fireEvent, act } from '@testing-library/react'
 import { FieldsBlock } from '@/components/asset/FieldsBlock'
 import { DescriptionBlock } from '@/components/asset/DescriptionBlock'
 
+// Mock server actions — server actions use 'use server' + server-only which can't run in jsdom
+vi.mock('@/lib/actions/asset.actions', () => ({
+  deleteAsset: vi.fn().mockResolvedValue({ success: true }),
+  markAssetConfirmed: vi.fn().mockResolvedValue({ success: true }),
+}))
+
+vi.mock('@/lib/actions/review.actions', () => ({
+  saveDescription: vi.fn().mockResolvedValue({ success: true }),
+  saveReview: vi.fn().mockResolvedValue({ success: true }),
+}))
+
 beforeEach(() => {
   Object.assign(navigator, {
     clipboard: { writeText: vi.fn().mockResolvedValue(undefined) },

@@ -3,6 +3,12 @@ import { AssetCard } from '@/components/asset/AssetCard'
 import { describe, it, expect, vi } from 'vitest'
 import React from 'react'
 
+// Mock server actions — asset.actions uses 'use server' + server-only which can't run in jsdom
+vi.mock('@/lib/actions/asset.actions', () => ({
+  deleteAsset: vi.fn().mockResolvedValue({ success: true }),
+  markAssetConfirmed: vi.fn().mockResolvedValue({ success: true }),
+}))
+
 // Mock next/link — render as plain <a>
 vi.mock('next/link', () => ({
   default: ({ href, children, ...props }: { href: string; children: React.ReactNode }) => (
