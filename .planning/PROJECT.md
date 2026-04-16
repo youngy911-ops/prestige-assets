@@ -40,19 +40,24 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - ✓ All 8 asset types expose Salesforce-matching subtype lists (Truck 24, Trailer 24, Earthmoving 19, Marine 10, Agriculture 12, Forklift 9, Caravan 5, General Goods 16); Agriculture/Forklift/Caravan have subtype selectors for the first time — v1.4
 - ✓ AI description prompt has named template sections for every subtype across all 8 asset types; exact-match heading routing replaces inference fallback — v1.4
 
-## Current State: v1.4 Shipped (2026-03-24)
+## Current Milestone: v1.5 Demo Polish
 
-8 asset types, all subtypes aligned to Salesforce taxonomy. Full description template coverage for every subtype across all 8 types. 365 tests across 27 files, all green. App in active use.
+**Goal:** Tighten the app for demo readiness — fix broken/stub pages, consolidate hardcoded values, improve error UX, add asset deletion and status workflow.
 
-**v1.4 shipped:**
-- Truck: 24 subtypes (21 SF + EWP/Tilt Tray/Flat Deck) | Trailer: 24 | Earthmoving: 19 (Bulldozer/Crawler Tractor merged)
-- Marine: 10 (replacing Boat/Yacht/Jet Ski) | General Goods: 16 (replacing old 5)
-- Agriculture/Forklift/Caravan: subtype selectors added for the first time (12/9/5 options)
-- 31+ new ALL_CAPS description template sections covering all new/changed subtypes
-- Phantom test key fixes (6 keys corrected to real schema keys) + MOTOR GRADER/pig/tag routing assertions
-- Exact-match routing alignment: WASHING, PRIVATE, RECREATIONAL, BULLDOZER/CRAWLER TRACTOR headings aligned to schema keys
+**Target features:**
+- Configurable QR code domain and brand identity
+- Contextual error pages
+- Functional edit-type page (or clean removal)
+- Asset deletion
+- Asset status workflow (draft → reviewed → confirmed)
+- Accessibility quick hits
+- Visual consistency (semantic colors, deduplicated constants, proper icons)
 
-**Tech at v1.4:** ~9,500+ LOC TypeScript. 365 tests across 27 files. Next.js 15, Supabase, GPT-4o, vitest.
+## Current State: Post-v1.4 (2026-04-16)
+
+8 asset types with full Salesforce alignment. Significant untracked work since v1.4 shipped: damage/condition detection, Quick Book with auto-type detection, streamlined photo→extract→review flow, deep AI brand/model knowledge across all types, UX polish (photo guide, section headers, loading states, no "AI" branding), Copy All button, photo gallery on output, batch uploads, schema simplification.
+
+**Tech stack (current):** Next.js 16.1, React 19.2, Supabase, GPT-4o (Vercel AI SDK v6), Zod 4, Tailwind v4, vitest 4.1. 27 test files.
 
 ### Out of Scope
 
@@ -124,4 +129,4 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 | `normalizeFooter` appended to all description outputs post-generation (Phase 14) | Enforces correct footer regardless of GPT-4o output; `general_goods` gets distinct footer | ✓ Good — zero footer regressions since Phase 14 |
 
 ---
-*Last updated: 2026-03-24 after v1.4 milestone*
+*Last updated: 2026-04-16 after v1.5 milestone start*
