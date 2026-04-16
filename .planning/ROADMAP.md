@@ -75,7 +75,7 @@ Full archive: `.planning/milestones/v1.4-ROADMAP.md`
 **Milestone Goal:** Tighten the app for demo readiness — fix broken/stub pages, consolidate hardcoded values, improve error UX, add asset deletion and status workflow.
 
 - [x] **Phase 20: Brand & Config Consolidation** - Centralize brand identity, QR domain, and color tokens into single sources of truth (completed 2026-04-16)
-- [ ] **Phase 21: Error UX & Broken Pages** - Contextual error pages and fix/remove the Edit Type stub
+- [x] **Phase 21: Error UX & Broken Pages** - Contextual error pages and fix/remove the Edit Type stub (completed 2026-04-16)
 - [ ] **Phase 22: Asset Lifecycle** - Asset deletion and status workflow (draft / reviewed / confirmed)
 - [ ] **Phase 23: Code Quality & Accessibility** - Deduplicate constants, replace emoji with icons, add ARIA attributes
 
@@ -102,7 +102,7 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. App error pages display a specific message explaining what went wrong and offer at least one recovery action (go back, retry, go home)
   2. Edit Type page either allows the user to change asset type/subtype and re-triggers extraction, or the route is fully removed with no dead links pointing to it
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
 - [ ] 21-01-PLAN.md — Upgrade error boundaries with contextual UX, delete edit-type stub (ERR-01, ERR-02)
@@ -153,6 +153,6 @@ Plans:
 | 18. Test Key Fidelity | v1.4 | 1/1 | Complete | 2026-03-24 |
 | 19. Prompt-Schema Alignment | v1.4 | 2/2 | Complete | 2026-03-24 |
 | 20. Brand & Config Consolidation | 2/2 | Complete    | 2026-04-16 | - |
-| 21. Error UX & Broken Pages | v1.5 | 0/1 | Not started | - |
+| 21. Error UX & Broken Pages | 1/1 | Complete   | 2026-04-16 | - |
 | 22. Asset Lifecycle | v1.5 | 0/? | Not started | - |
 | 23. Code Quality & Accessibility | v1.5 | 0/? | Not started | - |

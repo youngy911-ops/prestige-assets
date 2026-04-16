@@ -15,8 +15,8 @@ Requirements for demo-ready polish. Each maps to roadmap phases.
 
 ### Error & Edge Cases
 
-- [ ] **ERR-01**: App error pages show contextual messages with recovery guidance (not just "Something went wrong" + retry)
-- [ ] **ERR-02**: Edit Type page is functional — user can change asset type/subtype after creation — or route is removed cleanly (no silent stub redirect)
+- [x] **ERR-01**: App error pages show contextual messages with recovery guidance (not just "Something went wrong" + retry)
+- [x] **ERR-02**: Edit Type page is functional — user can change asset type/subtype after creation — or route is removed cleanly (no silent stub redirect)
 
 ### Asset Management
 
@@ -66,8 +66,8 @@ Deferred to future milestone. Tracked but not in current roadmap.
 | BRAND-01 | Phase 20 | Complete |
 | BRAND-02 | Phase 20 | Complete |
 | BRAND-03 | Phase 20 | Complete |
-| ERR-01 | Phase 21 | Pending |
-| ERR-02 | Phase 21 | Pending |
+| ERR-01 | Phase 21 | Complete |
+| ERR-02 | Phase 21 | Complete |
 | ASSET-01 | Phase 22 | Pending |
 | ASSET-02 | Phase 22 | Pending |
 | CODE-01 | Phase 23 | Pending |
