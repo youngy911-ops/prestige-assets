@@ -20,8 +20,8 @@ Requirements for demo-ready polish. Each maps to roadmap phases.
 
 ### Asset Management
 
-- [ ] **ASSET-01**: User can delete an asset record from the asset list or detail view
-- [ ] **ASSET-02**: Asset records have a visible status (draft / reviewed / confirmed) that updates as the user progresses through the workflow
+- [x] **ASSET-01**: User can delete an asset record from the asset list or detail view
+- [x] **ASSET-02**: Asset records have a visible status (draft / reviewed / confirmed) that updates as the user progresses through the workflow
 
 ### Code Quality
 
@@ -68,8 +68,8 @@ Deferred to future milestone. Tracked but not in current roadmap.
 | BRAND-03 | Phase 20 | Complete |
 | ERR-01 | Phase 21 | Complete |
 | ERR-02 | Phase 21 | Complete |
-| ASSET-01 | Phase 22 | Pending |
-| ASSET-02 | Phase 22 | Pending |
+| ASSET-01 | Phase 22 | Complete |
+| ASSET-02 | Phase 22 | Complete |
 | CODE-01 | Phase 23 | Pending |
 | CODE-02 | Phase 23 | Pending |
 | A11Y-01 | Phase 23 | Pending |

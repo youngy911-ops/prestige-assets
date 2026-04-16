@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Demo Polish
 status: planning
-stopped_at: Completed 21-error-ux-broken-pages-01-PLAN.md
-last_updated: "2026-04-16T12:12:50.905Z"
+stopped_at: Completed 22-asset-lifecycle-01-PLAN.md
+last_updated: "2026-04-16T12:34:07.003Z"
 last_activity: 2026-04-16 — v1.5 roadmap created
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 5
+  completed_plans: 4
   percent: 0
 ---
 
@@ -54,6 +54,8 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 20-brand-config-consolidation]: Semantic Tailwind tokens (text-destructive, bg-card, bg-background, ring-offset-background) now used universally in place of hardcoded hex
 - [Phase 21-error-ux-broken-pages]: Used buttonVariants + Link instead of Button asChild — @base-ui/react/button uses render prop, not Radix asChild pattern
 - [Phase 21-error-ux-broken-pages]: global-error.tsx keeps inline styles only — CSS not loaded at root error boundary; ErrorDisplay className prop lets callers set max-width and padding
+- [Phase 22-asset-lifecycle]: AssetStatus type lives in asset.actions.ts and is imported by badge and card — single source of truth
+- [Phase 22-asset-lifecycle]: saveReview sets 'reviewed'; markAssetConfirmed advances to 'confirmed' with reviewed guard
 
 ### Pending Todos
 
@@ -65,6 +67,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-16T12:10:40.241Z
-Stopped at: Completed 21-error-ux-broken-pages-01-PLAN.md
+Last session: 2026-04-16T12:34:07.000Z
+Stopped at: Completed 22-asset-lifecycle-01-PLAN.md
 Resume file: None
