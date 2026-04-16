@@ -32,7 +32,7 @@ export async function saveReview(
     .update({
       fields,
       checklist_state: checklistState,
-      status: 'confirmed',
+      status: 'reviewed',
       description: null,  // Clear cached description — output page will regenerate for fresh fields
     })
     .eq('id', assetId)
