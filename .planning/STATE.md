@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Demo Polish
 status: planning
-stopped_at: Completed 22-asset-lifecycle-01-PLAN.md
-last_updated: "2026-04-16T12:34:07.003Z"
+stopped_at: Completed 22-asset-lifecycle-02-PLAN.md
+last_updated: "2026-04-16T12:40:46.362Z"
 last_activity: 2026-04-16 — v1.5 roadmap created
 progress:
   total_phases: 4
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
   percent: 0
 ---
 
@@ -56,6 +56,8 @@ Recent decisions affecting current work (full log in PROJECT.md):
 - [Phase 21-error-ux-broken-pages]: global-error.tsx keeps inline styles only — CSS not loaded at root error boundary; ErrorDisplay className prop lets callers set max-width and padding
 - [Phase 22-asset-lifecycle]: AssetStatus type lives in asset.actions.ts and is imported by badge and card — single source of truth
 - [Phase 22-asset-lifecycle]: saveReview sets 'reviewed'; markAssetConfirmed advances to 'confirmed' with reviewed guard
+- [Phase 22-asset-lifecycle]: Two-click inline confirm for delete: trash icon hover -> confirm bar with Delete/Cancel; DeleteAssetButton extracted as client component for server page embedding
+- [Phase 22-asset-lifecycle]: markAssetConfirmed fire-and-forget in handleCopyAll: .catch(() => {}) prevents blocking clipboard UX if server action fails
 
 ### Pending Todos
 
@@ -67,6 +69,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-16T12:34:07.000Z
-Stopped at: Completed 22-asset-lifecycle-01-PLAN.md
+Last session: 2026-04-16T12:40:46.360Z
+Stopped at: Completed 22-asset-lifecycle-02-PLAN.md
 Resume file: None
