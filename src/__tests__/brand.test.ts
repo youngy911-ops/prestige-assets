@@ -68,14 +68,40 @@ describe('BRAND smoke tests', () => {
     expect(matches, `Hardcoded assetbookintool.com found in: ${matches.join(', ')}`).toHaveLength(0)
   })
 
-  it.skip('no hardcoded hex #F87171 in component files (unskip in Plan 02)', () => {
+  it('no hardcoded hex colors in component/app files', () => {
+    // Hex values banned from component files — use semantic Tailwind tokens instead
+    const BANNED_HEX = ['#F87171', '#166534', '#111f11', '#0a1a0a']
+
     const srcDir = path.resolve(__dirname, '..')
     const dirs = [path.join(srcDir, 'components'), path.join(srcDir, 'app')]
     const files = dirs.flatMap(d => collectFiles(d, ['.tsx', '.ts']))
-    const matches = files.filter(f => {
+
+    const violations: string[] = []
+
+    for (const f of files) {
+      // global-error.tsx is exempt: uses intentional inline styles before CSS loads
+      if (f.endsWith('global-error.tsx')) continue
+      // Skip test files (they reference hex as string literals being searched for)
+      if (f.includes('.test.')) continue
+      // Skip brand constants files
+      if (f.endsWith('brand.ts')) continue
+
       const content = fs.readFileSync(f, 'utf-8')
-      return content.includes('#F87171')
-    })
-    expect(matches, `Hardcoded #F87171 found in: ${matches.join(', ')}`).toHaveLength(0)
+      for (const hex of BANNED_HEX) {
+        if (content.includes(hex)) {
+          violations.push(`${f}: ${hex}`)
+        }
+      }
+    }
+
+    expect(violations, `Hardcoded hex found:\n${violations.join('\n')}`).toHaveLength(0)
+  })
+
+  it('global-error.tsx uses brand-matching #0f1f0f, not old #166534', () => {
+    const globalErrorPath = path.resolve(__dirname, '..', 'app', 'global-error.tsx')
+    if (!fs.existsSync(globalErrorPath)) return
+    const content = fs.readFileSync(globalErrorPath, 'utf-8')
+    expect(content).not.toContain('#166534')
+    expect(content).toContain('#0f1f0f')
   })
 })
