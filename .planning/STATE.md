@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Demo Polish
 status: planning
-stopped_at: Phase 20 context gathered
-last_updated: "2026-04-16T11:08:37.805Z"
+stopped_at: Completed 20-01-PLAN.md
+last_updated: "2026-04-16T11:27:27.139Z"
 last_activity: 2026-04-16 — v1.5 roadmap created
 progress:
   total_phases: 4
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 1
   percent: 0
 ---
 
@@ -49,6 +49,7 @@ Recent decisions affecting current work (full log in PROJECT.md):
 
 - [v1.5 start]: Scope is polish + quick wins for demo readiness (2026-04-17 demo); bigger features deferred to v1.6+
 - [v1.5 roadmap]: 4 phases derived from 12 requirements; all phases independent (no inter-phase dependencies)
+- [Phase 20-brand-config-consolidation]: Brand config: single BRAND const module with as-const pattern; describe/route.ts AI prompt locked and not modified
 
 ### Pending Todos
 
@@ -60,6 +61,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-16T11:08:37.802Z
-Stopped at: Phase 20 context gathered
-Resume file: .planning/phases/20-brand-config-consolidation/20-CONTEXT.md
+Last session: 2026-04-16T11:27:27.136Z
+Stopped at: Completed 20-01-PLAN.md
+Resume file: None

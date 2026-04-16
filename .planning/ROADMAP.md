@@ -89,7 +89,7 @@ Full archive: `.planning/milestones/v1.4-ROADMAP.md`
   1. QR codes on output/report pages render using a configurable domain that can be changed in one place
   2. Company name and logo monogram appear consistently across all pages from a single brand config file
   3. No hardcoded hex color values remain in component files — all colors use semantic Tailwind variants (destructive, warning, success, etc.)
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 20-01-PLAN.md — Create brand config module and wire into all consumer files (BRAND-01, BRAND-02)
@@ -149,7 +149,7 @@ Plans:
 | 17. Description Template Coverage | v1.4 | 4/4 | Complete | 2026-03-24 |
 | 18. Test Key Fidelity | v1.4 | 1/1 | Complete | 2026-03-24 |
 | 19. Prompt-Schema Alignment | v1.4 | 2/2 | Complete | 2026-03-24 |
-| 20. Brand & Config Consolidation | v1.5 | 0/2 | Not started | - |
+| 20. Brand & Config Consolidation | 1/2 | In Progress|  | - |
 | 21. Error UX & Broken Pages | v1.5 | 0/? | Not started | - |
 | 22. Asset Lifecycle | v1.5 | 0/? | Not started | - |
 | 23. Code Quality & Accessibility | v1.5 | 0/? | Not started | - |
