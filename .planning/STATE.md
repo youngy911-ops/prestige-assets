@@ -4,7 +4,7 @@ milestone: v1.5
 milestone_name: Demo Polish
 status: planning
 stopped_at: Completed 20-02-PLAN.md
-last_updated: "2026-04-16T11:28:22.523Z"
+last_updated: "2026-04-16T11:30:39.367Z"
 last_activity: 2026-04-16 — v1.5 roadmap created
 progress:
   total_phases: 4

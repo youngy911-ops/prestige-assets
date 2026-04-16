@@ -149,7 +149,7 @@ Plans:
 | 17. Description Template Coverage | v1.4 | 4/4 | Complete | 2026-03-24 |
 | 18. Test Key Fidelity | v1.4 | 1/1 | Complete | 2026-03-24 |
 | 19. Prompt-Schema Alignment | v1.4 | 2/2 | Complete | 2026-03-24 |
-| 20. Brand & Config Consolidation | 2/2 | Complete   | 2026-04-16 | - |
+| 20. Brand & Config Consolidation | 2/2 | Complete    | 2026-04-16 | - |
 | 21. Error UX & Broken Pages | v1.5 | 0/? | Not started | - |
 | 22. Asset Lifecycle | v1.5 | 0/? | Not started | - |
 | 23. Code Quality & Accessibility | v1.5 | 0/? | Not started | - |
