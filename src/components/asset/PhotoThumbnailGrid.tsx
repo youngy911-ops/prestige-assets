@@ -141,7 +141,7 @@ export function PhotoThumbnailGrid({
       </DndContext>
 
       {orderError && (
-        <p className="text-sm text-[#F87171] mt-2">{orderError}</p>
+        <p className="text-sm text-destructive mt-2">{orderError}</p>
       )}
     </div>
   )

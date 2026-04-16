@@ -54,7 +54,7 @@ export const PhotoThumbnail = forwardRef<HTMLDivElement, PhotoThumbnailProps>(
           aria-label="Remove photo"
           onClick={() => onRemove(id)}
           disabled={isDeleting}
-          className="absolute top-1 right-1 w-8 h-8 flex items-center justify-center rounded text-white/65 hover:text-[#F87171] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="absolute top-1 right-1 w-8 h-8 flex items-center justify-center rounded text-white/65 hover:text-destructive transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <X className="w-4 h-4" />
         </button>

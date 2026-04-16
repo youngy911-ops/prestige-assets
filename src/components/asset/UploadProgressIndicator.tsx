@@ -12,7 +12,7 @@ export function UploadProgressIndicator({ isUploading, error }: UploadProgressIn
     <div
       className={`absolute inset-0 flex items-center justify-center rounded-md ${
         error
-          ? 'bg-[#F87171]/60'
+          ? 'bg-destructive/60'
           : 'bg-black/50'
       }`}
     >

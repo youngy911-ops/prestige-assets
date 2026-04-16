@@ -7,7 +7,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
   return (
-    <div className="min-h-screen bg-[#166534]">
+    <div className="min-h-screen bg-background">
       <main className="pb-[calc(env(safe-area-inset-bottom)+56px)]">
         {children}
       </main>

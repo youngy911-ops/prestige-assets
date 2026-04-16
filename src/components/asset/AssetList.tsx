@@ -103,7 +103,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             <>
               {/* Backdrop to close */}
               <div className="fixed inset-0 z-10" onClick={() => setShowBookInMenu(false)} />
-              <div className="absolute right-0 top-10 z-20 w-52 rounded-xl border border-white/[0.10] bg-[#111f11] shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
+              <div className="absolute right-0 top-10 z-20 w-52 rounded-xl border border-white/[0.10] bg-card shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
                 <button
                   type="button"
                   onClick={() => { setShowBookInMenu(false); router.push('/assets/new') }}

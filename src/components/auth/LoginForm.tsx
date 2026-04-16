@@ -56,7 +56,7 @@ export function LoginForm() {
         />
       </div>
       {error && (
-        <p role="alert" className="text-[#F87171] text-sm">{error}</p>
+        <p role="alert" className="text-destructive text-sm">{error}</p>
       )}
       <Button
         type="submit"

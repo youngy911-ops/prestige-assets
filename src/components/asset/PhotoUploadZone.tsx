@@ -223,7 +223,7 @@ export function PhotoUploadZone({
         {uploadErrors.length > 0 && (
           <div className="w-full max-w-xs space-y-1">
             {uploadErrors.map((err, i) => (
-              <p key={i} className="text-sm text-[#F87171] flex items-start gap-1">
+              <p key={i} className="text-sm text-destructive flex items-start gap-1">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <span><span className="font-medium">{err.filename}:</span> {err.message}</span>
               </p>
@@ -319,7 +319,7 @@ export function PhotoUploadZone({
       {uploadErrors.length > 0 && (
         <div className="space-y-1">
           {uploadErrors.map((err, i) => (
-            <p key={i} className="text-sm text-[#F87171] flex items-start gap-1">
+            <p key={i} className="text-sm text-destructive flex items-start gap-1">
               <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
               <span><span className="font-medium">{err.filename}:</span> {err.message}</span>
             </p>

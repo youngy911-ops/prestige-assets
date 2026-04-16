@@ -141,7 +141,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
                   onClick={() => setHeroIndex(i)}
                   className={`relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 transition-all ${
                     i === heroIndex
-                      ? 'ring-2 ring-emerald-500 ring-offset-1 ring-offset-[#0a1a0a]'
+                      ? 'ring-2 ring-emerald-500 ring-offset-1 ring-offset-background'
                       : 'opacity-60 hover:opacity-100'
                   }`}
                 >

@@ -133,7 +133,7 @@ export default function NewAssetPage() {
 
       {/* Error */}
       {error && (
-        <p className="text-[#F87171] text-sm mb-4">{error}</p>
+        <p className="text-destructive text-sm mb-4">{error}</p>
       )}
 
       {/* Spinner shown while creating asset after subtype selected */}
