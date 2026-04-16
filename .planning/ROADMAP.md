@@ -102,7 +102,10 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. App error pages display a specific message explaining what went wrong and offer at least one recovery action (go back, retry, go home)
   2. Edit Type page either allows the user to change asset type/subtype and re-triggers extraction, or the route is fully removed with no dead links pointing to it
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+- [ ] 21-01-PLAN.md — Upgrade error boundaries with contextual UX, delete edit-type stub (ERR-01, ERR-02)
 
 ### Phase 22: Asset Lifecycle
 **Goal**: Users can manage asset records through a clear lifecycle — including deletion and status progression
@@ -150,6 +153,6 @@ Plans:
 | 18. Test Key Fidelity | v1.4 | 1/1 | Complete | 2026-03-24 |
 | 19. Prompt-Schema Alignment | v1.4 | 2/2 | Complete | 2026-03-24 |
 | 20. Brand & Config Consolidation | 2/2 | Complete    | 2026-04-16 | - |
-| 21. Error UX & Broken Pages | v1.5 | 0/? | Not started | - |
+| 21. Error UX & Broken Pages | v1.5 | 0/1 | Not started | - |
 | 22. Asset Lifecycle | v1.5 | 0/? | Not started | - |
 | 23. Code Quality & Accessibility | v1.5 | 0/? | Not started | - |
