@@ -115,7 +115,11 @@ Plans:
   1. User can delete an asset from the asset list or detail view with a confirmation prompt — deleted asset no longer appears in the list
   2. Asset records display a visible status badge (draft / reviewed / confirmed) on the list and detail views
   3. Status advances automatically as the user progresses through the workflow (creation = draft, review complete = reviewed, output copied = confirmed)
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 22-01-PLAN.md — AssetStatus type, deleteAsset/markAssetConfirmed actions, 3-state badge, tests (ASSET-01, ASSET-02)
+- [ ] 22-02-PLAN.md — Wire delete UI into list/detail, reviewed filter chip, copy-to-confirm trigger (ASSET-01, ASSET-02)
 
 ### Phase 23: Code Quality & Accessibility
 **Goal**: Codebase constants are deduplicated, loading states use proper icons, and key UI elements have correct ARIA attributes
@@ -154,5 +158,5 @@ Plans:
 | 19. Prompt-Schema Alignment | v1.4 | 2/2 | Complete | 2026-03-24 |
 | 20. Brand & Config Consolidation | 2/2 | Complete    | 2026-04-16 | - |
 | 21. Error UX & Broken Pages | 1/1 | Complete    | 2026-04-16 | - |
-| 22. Asset Lifecycle | v1.5 | 0/? | Not started | - |
+| 22. Asset Lifecycle | v1.5 | 0/2 | Not started | - |
 | 23. Code Quality & Accessibility | v1.5 | 0/? | Not started | - |
