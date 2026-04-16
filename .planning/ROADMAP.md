@@ -70,7 +70,7 @@ Full archive: `.planning/milestones/v1.4-ROADMAP.md`
 
 </details>
 
-### 🚧 v1.5 Demo Polish (In Progress)
+### v1.5 Demo Polish (In Progress)
 
 **Milestone Goal:** Tighten the app for demo readiness — fix broken/stub pages, consolidate hardcoded values, improve error UX, add asset deletion and status workflow.
 
@@ -89,7 +89,11 @@ Full archive: `.planning/milestones/v1.4-ROADMAP.md`
   1. QR codes on output/report pages render using a configurable domain that can be changed in one place
   2. Company name and logo monogram appear consistently across all pages from a single brand config file
   3. No hardcoded hex color values remain in component files — all colors use semantic Tailwind variants (destructive, warning, success, etc.)
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 20-01-PLAN.md — Create brand config module and wire into all consumer files (BRAND-01, BRAND-02)
+- [ ] 20-02-PLAN.md — Replace hardcoded hex colors with semantic Tailwind tokens (BRAND-03)
 
 ### Phase 21: Error UX & Broken Pages
 **Goal**: Users see helpful, contextual error messages and never hit dead-end stub pages
@@ -145,7 +149,7 @@ Full archive: `.planning/milestones/v1.4-ROADMAP.md`
 | 17. Description Template Coverage | v1.4 | 4/4 | Complete | 2026-03-24 |
 | 18. Test Key Fidelity | v1.4 | 1/1 | Complete | 2026-03-24 |
 | 19. Prompt-Schema Alignment | v1.4 | 2/2 | Complete | 2026-03-24 |
-| 20. Brand & Config Consolidation | v1.5 | 0/? | Not started | - |
+| 20. Brand & Config Consolidation | v1.5 | 0/2 | Not started | - |
 | 21. Error UX & Broken Pages | v1.5 | 0/? | Not started | - |
 | 22. Asset Lifecycle | v1.5 | 0/? | Not started | - |
 | 23. Code Quality & Accessibility | v1.5 | 0/? | Not started | - |
