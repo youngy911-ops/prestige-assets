@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Demo Polish
 status: planning
-stopped_at: Phase 21 context gathered
-last_updated: "2026-04-16T11:43:32.477Z"
+stopped_at: Phase 21 UI-SPEC approved
+last_updated: "2026-04-16T11:54:27.425Z"
 last_activity: 2026-04-16 — v1.5 roadmap created
 progress:
   total_phases: 4
@@ -63,6 +63,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-16T11:43:32.475Z
-Stopped at: Phase 21 context gathered
-Resume file: .planning/phases/21-error-ux-broken-pages/21-CONTEXT.md
+Last session: 2026-04-16T11:54:27.423Z
+Stopped at: Phase 21 UI-SPEC approved
+Resume file: .planning/phases/21-error-ux-broken-pages/21-UI-SPEC.md
