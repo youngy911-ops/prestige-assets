@@ -36,7 +36,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
   const [changingBranch, setChangingBranch] = useState(false)
   const [todayCount, setTodayCount] = useState<number | null>(null)
   const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'confirmed'>('all')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'reviewed' | 'confirmed'>('all')
   const [sortNewest, setSortNewest] = useState(true)
   const isFirstRender = useRef(true)
 
@@ -72,6 +72,10 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       )
     })
   }, [assets?.map(a => a.id).join(',')]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function handleAssetDeleted(assetId: string) {
+    setAssets(prev => prev?.filter(a => a.id !== assetId) ?? prev)
+  }
 
   const branchLabel = BRANCHES.find(b => b.key === branch)?.label ?? branch
 
@@ -233,7 +237,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       {/* Status filter chips */}
       {!changingBranch && (
         <div className="flex items-center gap-2 mb-4">
-          {(['all', 'draft', 'confirmed'] as const).map(s => (
+          {(['all', 'draft', 'reviewed', 'confirmed'] as const).map(s => (
             <button
               key={s}
               type="button"
@@ -244,7 +248,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
                   : 'bg-white/[0.05] text-white/50 hover:text-white/70'
               }`}
             >
-              {s === 'all' ? 'All' : s === 'draft' ? 'Draft' : 'Confirmed'}
+              {s === 'all' ? 'All' : s === 'draft' ? 'Draft' : s === 'reviewed' ? 'Reviewed' : 'Confirmed'}
             </button>
           ))}
         </div>
@@ -318,6 +322,8 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
         const isFiltering = statusFilter !== 'all' || search.trim() !== ''
         const countLabel = statusFilter === 'draft'
           ? `${filtered.length} draft${filtered.length !== 1 ? 's' : ''}`
+          : statusFilter === 'reviewed'
+          ? `${filtered.length} reviewed`
           : statusFilter === 'confirmed'
           ? `${filtered.length} confirmed`
           : `${filtered.length} asset${filtered.length !== 1 ? 's' : ''}`
@@ -342,6 +348,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
                 updated_at={asset.updated_at}
                 thumb_url={asset.thumb_url}
                 animationDelay={`${i * 50}ms`}
+                onDeleted={handleAssetDeleted}
               />
             ))}
           </div>
