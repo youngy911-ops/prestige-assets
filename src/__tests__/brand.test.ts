@@ -56,7 +56,7 @@ describe('BRAND smoke tests', () => {
     return results
   }
 
-  it.skip('no hardcoded assetbookintool.com in consumer files (unskip after Task 2)', () => {
+  it('no hardcoded assetbookintool.com in consumer files', () => {
     const srcDir = path.resolve(__dirname, '..')
     const dirs = [path.join(srcDir, 'components'), path.join(srcDir, 'app')]
     const files = dirs.flatMap(d => collectFiles(d, ['.tsx', '.ts']))

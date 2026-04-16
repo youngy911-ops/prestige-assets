@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
+import { BRAND } from '@/lib/constants/brand'
 import { generateFieldsBlock } from '@/lib/output/generateFieldsBlock'
 import { OutputPanel } from '@/components/asset/OutputPanel'
 import { StepIndicator } from '@/components/asset/StepIndicator'
@@ -81,7 +82,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
       <div className="mt-8 flex flex-col gap-3">
         <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-4">
           <img
-            src={`https://api.qrserver.com/v1/create-qr-code/?size=80x80&bgcolor=1a2e1a&color=ffffff&data=${encodeURIComponent(`https://assetbookintool.com/assets/${assetId}/output`)}`}
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=80x80&bgcolor=1a2e1a&color=ffffff&data=${encodeURIComponent(`https://${BRAND.domain}/assets/${assetId}/output`)}`}
             alt="QR code for this asset"
             width={80}
             height={80}

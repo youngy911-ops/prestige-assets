@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { BRAND } from '@/lib/constants/brand'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -11,8 +12,8 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Slattery Auctions Book-in',
-  description: 'Asset book-in tool',
+  title: BRAND.appTitle,
+  description: BRAND.appDescription,
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

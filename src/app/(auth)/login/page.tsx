@@ -1,4 +1,5 @@
 import { LoginForm } from '@/components/auth/LoginForm'
+import { BRAND } from '@/lib/constants/brand'
 
 export default function LoginPage() {
   return (
@@ -6,10 +7,10 @@ export default function LoginPage() {
       <div className="w-full max-w-[380px] flex flex-col gap-6">
         <div className="text-center mb-2">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-emerald-600 mb-5 shadow-[0_0_24px_rgba(16,185,129,0.3)]">
-            <span className="text-2xl font-black text-white tracking-tight">S</span>
+            <span className="text-2xl font-black text-white tracking-tight">{BRAND.logoMonogram}</span>
           </div>
           <h1 className="text-[26px] font-bold text-white leading-tight tracking-tight">
-            Slattery Auctions
+            {BRAND.name}
           </h1>
           <p className="text-white/40 text-sm mt-1 font-medium">Asset Book-In</p>
         </div>
