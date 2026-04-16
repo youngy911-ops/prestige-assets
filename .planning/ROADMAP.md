@@ -158,5 +158,5 @@ Plans:
 | 19. Prompt-Schema Alignment | v1.4 | 2/2 | Complete | 2026-03-24 |
 | 20. Brand & Config Consolidation | 2/2 | Complete    | 2026-04-16 | - |
 | 21. Error UX & Broken Pages | 1/1 | Complete    | 2026-04-16 | - |
-| 22. Asset Lifecycle | 2/2 | Complete   | 2026-04-16 | - |
+| 22. Asset Lifecycle | 2/2 | Complete    | 2026-04-16 | - |
 | 23. Code Quality & Accessibility | v1.5 | 0/? | Not started | - |

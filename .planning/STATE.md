@@ -4,7 +4,7 @@ milestone: v1.5
 milestone_name: Demo Polish
 status: planning
 stopped_at: Completed 22-asset-lifecycle-02-PLAN.md
-last_updated: "2026-04-16T12:40:46.362Z"
+last_updated: "2026-04-16T13:25:15.367Z"
 last_activity: 2026-04-16 — v1.5 roadmap created
 progress:
   total_phases: 4
