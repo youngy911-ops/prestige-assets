@@ -1,5 +1,8 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
+
+export type AssetStatus = 'draft' | 'reviewed' | 'confirmed'
 
 export async function createAsset(
   branch: string,
@@ -32,7 +35,7 @@ export type AssetSummary = {
   asset_type: string
   asset_subtype: string | null
   fields: Record<string, string>
-  status: 'draft' | 'confirmed'
+  status: AssetStatus
   updated_at: string
   thumb_url: string | null
 }
@@ -129,4 +132,54 @@ export async function getTodayBookingCount(): Promise<number> {
     .gte('created_at', todayStart.toISOString())
 
   return count ?? 0
+}
+
+export async function deleteAsset(
+  assetId: string
+): Promise<{ success: true } | { error: string }> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Not authenticated' }
+
+  // 1. Fetch storage paths BEFORE cascade deletes photo rows
+  const { data: photos } = await supabase
+    .from('asset_photos')
+    .select('storage_path')
+    .eq('asset_id', assetId)
+
+  // 2. Delete storage objects (best-effort — don't block on missing files)
+  const paths = (photos ?? []).map(p => p.storage_path)
+  if (paths.length > 0) {
+    await supabase.storage.from('photos').remove(paths)
+  }
+
+  // 3. Delete asset row — cascade removes asset_photos rows
+  const { error } = await supabase
+    .from('assets')
+    .delete()
+    .eq('id', assetId)
+    .eq('user_id', user.id)
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/')
+  return { success: true }
+}
+
+export async function markAssetConfirmed(
+  assetId: string
+): Promise<{ success: true } | { error: string }> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Not authenticated' }
+
+  const { error } = await supabase
+    .from('assets')
+    .update({ status: 'confirmed' })
+    .eq('id', assetId)
+    .eq('user_id', user.id)
+    .eq('status', 'reviewed')
+
+  if (error) return { error: error.message }
+  return { success: true }
 }

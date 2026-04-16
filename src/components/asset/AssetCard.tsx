@@ -2,13 +2,14 @@ import Link from 'next/link'
 import { getAssetDisplayTitle } from '@/lib/schema-registry'
 import { AssetStatusBadge } from './AssetStatusBadge'
 import { relativeTime } from '@/lib/utils/relativeTime'
+import type { AssetStatus } from '@/lib/actions/asset.actions'
 
 interface AssetCardProps {
   id: string
   asset_type: string
   asset_subtype: string | null
   fields: Record<string, string>
-  status: 'draft' | 'confirmed'
+  status: AssetStatus
   updated_at: string
   thumb_url?: string | null
   /** Animation delay for staggered entrance */
