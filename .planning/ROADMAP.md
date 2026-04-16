@@ -74,7 +74,7 @@ Full archive: `.planning/milestones/v1.4-ROADMAP.md`
 
 **Milestone Goal:** Tighten the app for demo readiness — fix broken/stub pages, consolidate hardcoded values, improve error UX, add asset deletion and status workflow.
 
-- [ ] **Phase 20: Brand & Config Consolidation** - Centralize brand identity, QR domain, and color tokens into single sources of truth
+- [x] **Phase 20: Brand & Config Consolidation** - Centralize brand identity, QR domain, and color tokens into single sources of truth (completed 2026-04-16)
 - [ ] **Phase 21: Error UX & Broken Pages** - Contextual error pages and fix/remove the Edit Type stub
 - [ ] **Phase 22: Asset Lifecycle** - Asset deletion and status workflow (draft / reviewed / confirmed)
 - [ ] **Phase 23: Code Quality & Accessibility** - Deduplicate constants, replace emoji with icons, add ARIA attributes
@@ -89,7 +89,7 @@ Full archive: `.planning/milestones/v1.4-ROADMAP.md`
   1. QR codes on output/report pages render using a configurable domain that can be changed in one place
   2. Company name and logo monogram appear consistently across all pages from a single brand config file
   3. No hardcoded hex color values remain in component files — all colors use semantic Tailwind variants (destructive, warning, success, etc.)
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 20-01-PLAN.md — Create brand config module and wire into all consumer files (BRAND-01, BRAND-02)
@@ -149,7 +149,7 @@ Plans:
 | 17. Description Template Coverage | v1.4 | 4/4 | Complete | 2026-03-24 |
 | 18. Test Key Fidelity | v1.4 | 1/1 | Complete | 2026-03-24 |
 | 19. Prompt-Schema Alignment | v1.4 | 2/2 | Complete | 2026-03-24 |
-| 20. Brand & Config Consolidation | 1/2 | In Progress|  | - |
+| 20. Brand & Config Consolidation | 2/2 | Complete   | 2026-04-16 | - |
 | 21. Error UX & Broken Pages | v1.5 | 0/? | Not started | - |
 | 22. Asset Lifecycle | v1.5 | 0/? | Not started | - |
 | 23. Code Quality & Accessibility | v1.5 | 0/? | Not started | - |

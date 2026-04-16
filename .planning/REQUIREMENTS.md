@@ -11,7 +11,7 @@ Requirements for demo-ready polish. Each maps to roadmap phases.
 
 - [x] **BRAND-01**: QR code on output/report pages uses configurable domain (not hardcoded assetbookintool.com)
 - [x] **BRAND-02**: Company name, logo monogram, and page metadata are sourced from a single brand config — not scattered hardcoded strings
-- [ ] **BRAND-03**: Hardcoded color values (#F87171, bg-red-900/40, etc.) replaced with semantic Tailwind variants (destructive, etc.)
+- [x] **BRAND-03**: Hardcoded color values (#F87171, bg-red-900/40, etc.) replaced with semantic Tailwind variants (destructive, etc.)
 
 ### Error & Edge Cases
 
@@ -65,7 +65,7 @@ Deferred to future milestone. Tracked but not in current roadmap.
 |-------------|-------|--------|
 | BRAND-01 | Phase 20 | Complete |
 | BRAND-02 | Phase 20 | Complete |
-| BRAND-03 | Phase 20 | Pending |
+| BRAND-03 | Phase 20 | Complete |
 | ERR-01 | Phase 21 | Pending |
 | ERR-02 | Phase 21 | Pending |
 | ASSET-01 | Phase 22 | Pending |
