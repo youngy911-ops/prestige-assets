@@ -34,6 +34,29 @@ vi.mock('next/navigation', () => ({
 }))
 
 describe('saveReview', () => {
+  it('sets status to reviewed when updating asset', async () => {
+    const { createClient } = await import('@/lib/supabase/server')
+    const mockUpdateFn = vi.fn().mockReturnValue({
+      eq: vi.fn().mockReturnValue({
+        eq: vi.fn().mockResolvedValue({ error: null }),
+      }),
+    })
+    vi.mocked(createClient).mockResolvedValueOnce({
+      auth: {
+        getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'user-123' } } }),
+      },
+      from: vi.fn().mockReturnValue({
+        update: mockUpdateFn,
+      }),
+    } as any)
+
+    await saveReview('asset-1', { make: 'MACK' }, { vin: 'unknown' }).catch(() => {})
+
+    expect(mockUpdateFn).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'reviewed' })
+    )
+  })
+
   it('returns error when user is not authenticated', async () => {
     const { createClient } = await import('@/lib/supabase/server')
     vi.mocked(createClient).mockResolvedValueOnce({

@@ -12,15 +12,21 @@ const mockSingle = vi.fn()
 const mockInsert = vi.fn()
 const mockFrom = vi.fn()
 const mockGetUser = vi.fn()
+const mockStorageRemove = vi.fn()
 
 vi.mock('@/lib/supabase/server', () => ({
   createClient: async () => ({
     auth: { getUser: mockGetUser },
     from: mockFrom,
+    storage: {
+      from: () => ({
+        remove: mockStorageRemove,
+      }),
+    },
   }),
 }))
 
-const { createAsset, getAssets } = await import('@/lib/actions/asset.actions')
+const { createAsset, getAssets, deleteAsset, markAssetConfirmed } = await import('@/lib/actions/asset.actions')
 
 describe('createAsset', () => {
   beforeEach(() => {
@@ -105,5 +111,101 @@ describe('getAssets', () => {
 
     const result = await getAssets('brisbane')
     expect(result).toEqual({ error: 'DB error' })
+  })
+})
+
+describe('deleteAsset', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockStorageRemove.mockResolvedValue({ error: null })
+  })
+
+  it('returns error when not authenticated', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: null } })
+    const result = await deleteAsset('asset-1')
+    expect(result).toEqual({ error: 'Not authenticated' })
+  })
+
+  it('fetches photo paths then removes storage objects then deletes asset', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-123' } } })
+
+    const mockPhotosEq = vi.fn().mockResolvedValue({
+      data: [{ storage_path: 'path1' }, { storage_path: 'path2' }],
+      error: null,
+    })
+    const mockPhotosSelect = vi.fn().mockReturnValue({ eq: mockPhotosEq })
+
+    const mockDeleteEqUserId = vi.fn().mockResolvedValue({ error: null })
+    const mockDeleteEqId = vi.fn().mockReturnValue({ eq: mockDeleteEqUserId })
+    const mockDelete = vi.fn().mockReturnValue({ eq: mockDeleteEqId })
+
+    mockFrom.mockImplementation((table: string) => {
+      if (table === 'asset_photos') {
+        return { select: mockPhotosSelect }
+      }
+      if (table === 'assets') {
+        return { delete: mockDelete }
+      }
+      return {}
+    })
+
+    const result = await deleteAsset('asset-1')
+
+    expect(mockFrom).toHaveBeenCalledWith('asset_photos')
+    expect(mockPhotosSelect).toHaveBeenCalledWith('storage_path')
+    expect(mockPhotosEq).toHaveBeenCalledWith('asset_id', 'asset-1')
+    expect(mockStorageRemove).toHaveBeenCalledWith(['path1', 'path2'])
+    expect(mockFrom).toHaveBeenCalledWith('assets')
+    expect(mockDeleteEqUserId).toHaveBeenCalledWith('user_id', 'user-123')
+    expect(result).toEqual({ success: true })
+  })
+
+  it('returns { success: true } even when no photos exist', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-123' } } })
+
+    const mockPhotosEq = vi.fn().mockResolvedValue({ data: [], error: null })
+    const mockPhotosSelect = vi.fn().mockReturnValue({ eq: mockPhotosEq })
+
+    const mockDeleteEqUserId = vi.fn().mockResolvedValue({ error: null })
+    const mockDeleteEqId = vi.fn().mockReturnValue({ eq: mockDeleteEqUserId })
+    const mockDelete = vi.fn().mockReturnValue({ eq: mockDeleteEqId })
+
+    mockFrom.mockImplementation((table: string) => {
+      if (table === 'asset_photos') {
+        return { select: mockPhotosSelect }
+      }
+      if (table === 'assets') {
+        return { delete: mockDelete }
+      }
+      return {}
+    })
+
+    const result = await deleteAsset('asset-1')
+
+    expect(mockStorageRemove).not.toHaveBeenCalled()
+    expect(result).toEqual({ success: true })
+  })
+})
+
+describe('markAssetConfirmed', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('updates status with reviewed guard', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-123' } } })
+
+    const mockEqStatus = vi.fn().mockResolvedValue({ error: null })
+    const mockEqUserId = vi.fn().mockReturnValue({ eq: mockEqStatus })
+    const mockEqId = vi.fn().mockReturnValue({ eq: mockEqUserId })
+    const mockUpdate = vi.fn().mockReturnValue({ eq: mockEqId })
+
+    mockFrom.mockReturnValue({ update: mockUpdate })
+
+    const result = await markAssetConfirmed('asset-1')
+
+    expect(mockUpdate).toHaveBeenCalledWith({ status: 'confirmed' })
+    expect(mockEqStatus).toHaveBeenCalledWith('status', 'reviewed')
+    expect(result).toEqual({ success: true })
   })
 })

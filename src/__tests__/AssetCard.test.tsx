@@ -16,7 +16,7 @@ describe('AssetCard', () => {
     asset_type: 'truck',
     asset_subtype: 'prime_mover',
     fields: {},
-    status: 'draft' as const,
+    status: 'draft' as 'draft' | 'reviewed' | 'confirmed',
     updated_at: '2026-03-21T00:00:00Z',
   }
 
@@ -55,5 +55,16 @@ describe('AssetCard', () => {
   it("shows 'Confirmed' badge for confirmed status", () => {
     render(<AssetCard {...baseProps} status="confirmed" />)
     expect(screen.getByText('Confirmed')).toBeInTheDocument()
+  })
+
+  it("shows 'Reviewed' badge for reviewed status", () => {
+    render(<AssetCard {...baseProps} status="reviewed" />)
+    expect(screen.getByText('Reviewed')).toBeInTheDocument()
+  })
+
+  it('reviewed asset card links to /assets/[id]/output', () => {
+    render(<AssetCard {...baseProps} status="reviewed" />)
+    const link = screen.getByRole('link')
+    expect(link.getAttribute('href')).toBe('/assets/asset-123/output')
   })
 })
