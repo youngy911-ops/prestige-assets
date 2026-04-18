@@ -1,13 +1,15 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
+import { ScanLine, Search, Car, ClipboardList, FileCheck, CheckCircle2 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
-const STEPS = [
-  { text: 'Reading plates and labels…', icon: '🔍' },
-  { text: 'Scanning for damage…', icon: '📷' },
-  { text: 'Identifying make and model…', icon: '🏭' },
-  { text: 'Assessing condition…', icon: '📋' },
-  { text: 'Extracting details…', icon: '✅' },
-  { text: 'Finalising…', icon: '🎯' },
+const STEPS: { text: string; Icon: LucideIcon }[] = [
+  { text: 'Reading plates and labels…', Icon: ScanLine },
+  { text: 'Scanning for damage…', Icon: Search },
+  { text: 'Identifying make and model…', Icon: Car },
+  { text: 'Assessing condition…', Icon: ClipboardList },
+  { text: 'Extracting details…', Icon: FileCheck },
+  { text: 'Finalising…', Icon: CheckCircle2 },
 ]
 
 const STEP_INTERVAL = 3500 // 3.5s per step
@@ -39,7 +41,7 @@ export function ExtractionLoadingState() {
     return () => clearInterval(timer)
   }, [])
 
-  const step = STEPS[stepIndex]
+  const { text: stepText, Icon: StepIcon } = STEPS[stepIndex]
 
   return (
     <div className="flex flex-col items-center gap-6 py-12 text-center">
@@ -67,16 +69,19 @@ export function ExtractionLoadingState() {
 
       {/* Cycling status message */}
       <div className="min-h-[56px] flex flex-col items-center justify-center gap-1.5">
-        <p
-          className="text-white font-medium text-[15px] leading-snug"
+        <div
+          className="flex items-center gap-2"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(4px)',
             transition: `opacity ${FADE_DURATION}ms ease, transform ${FADE_DURATION}ms ease`,
           }}
         >
-          {step.text}
-        </p>
+          <StepIcon className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+          <p className="text-white font-medium text-[15px] leading-snug">
+            {stepText}
+          </p>
+        </div>
         <p className="text-sm text-white/40">
           Usually 10–20 seconds
         </p>

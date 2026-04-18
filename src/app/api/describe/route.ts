@@ -811,16 +811,17 @@ VEHICLE (PASSENGER / LIGHT COMMERCIAL)
 Write as ONE continuous paragraph. Keep it concise — the photos do the talking.
 Include in this order (skip any not known): Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer.
 Only mention extras/mods if they are significant and add real value — bull bar, canopy, tow bar, snorkel, winch, aftermarket tray on a work ute. Do NOT list standard features like A/C, power windows, central locking, reverse camera — buyers expect these on modern vehicles.
-The footer "Sold As Is, Untested & Unregistered." MUST be on its own line — put a blank line between the description paragraph and the footer.
-Example:
+Do NOT include damage in the description unless it is major — heavy rust throughout, accident/collision damage, significant structural damage. Minor scratches, dents, stone chips are normal wear and must NOT appear in the description (they are captured separately in the damage notes section).
+The footer "Sold As Is, Untested & Unregistered." MUST be on its own line with a blank line before it.
+Example (standard):
 "2019 Toyota Hilux SR5 Dual Cab Ute, 5 Seats, 2.8L 4-Cylinder Turbo Diesel, 6 Speed Automatic, 4WD, White.
 
 Sold As Is, Untested & Unregistered."
-Example with noteworthy extras:
-"2017 Nissan Navara ST-X Dual Cab Ute, 5 Seats, 2.3L Twin Turbo Diesel, 7 Speed Automatic, 4WD, Black, steel tray, bull bar, snorkel.
+Example (major damage only):
+"2008 Ford Ranger XL Dual Cab Ute, 5 Seats, 3.0L 4-Cylinder Turbo Diesel, 5 Speed Manual, 4WD, White. Heavy rust to chassis and body panels, previous accident damage to front end.
 
 Sold As Is, Untested & Unregistered."
-Do NOT use dot points — description is one paragraph, then blank line, then footer.
+Do NOT use dot points.
 
 ATTACHMENTS / GENERAL GOODS
 Year (if known), Make, Model

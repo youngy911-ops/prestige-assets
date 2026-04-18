@@ -273,29 +273,50 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
         </>
       )}
 
-      {/* Condition Report — vehicles only, shown when condition/damage data exists */}
-      {/* Damage report — vehicles only, shown when damage data exists */}
+      {/* Condition ratings — vehicles only, shown when any condition field is set */}
       {assetType === 'vehicle' && (() => {
-        const damage = fields.damage ?? ''
-        const damageNotes = fields.damage_notes ?? ''
-        if (!damage && !damageNotes) return null
-
+        const conditionFields = [
+          { label: 'Body Condition',   value: fields.body_condition },
+          { label: 'Paint Condition',  value: fields.paint_condition },
+          { label: 'Tyre Condition',   value: fields.tyre_condition },
+          { label: 'Rust Condition',   value: fields.rust_condition },
+          { label: 'Seat Condition',   value: fields.seat_condition },
+          { label: 'Carpet Condition', value: fields.carpet_condition },
+        ].filter(f => f.value)
+        if (conditionFields.length === 0) return null
         return (
           <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
+              <span className="text-sm font-semibold text-white">Condition</span>
+            </div>
+            <div className="divide-y divide-white/[0.06]">
+              {conditionFields.map(({ label, value }) => (
+                <div key={label} className="flex items-center justify-between px-4 py-2.5">
+                  <span className="text-sm text-white/60">{label}</span>
+                  <span className="text-sm font-medium text-white">{value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      })()}
+
+      {/* Damage — always shown for vehicles */}
+      {assetType === 'vehicle' && (() => {
+        const damageNotes = fields.damage_notes ?? ''
+        const noteLines = damageNotes.split('\n').filter((l: string) => l.trim())
+        return (
+          <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
+              <AlertTriangle className={`w-4 h-4 ${noteLines.length > 0 ? 'text-amber-400' : 'text-white/40'}`} />
               <span className="text-sm font-semibold text-white">Damage</span>
             </div>
-
-            <div className="px-4 py-3 flex flex-col gap-3">
-              {damage && (
-                <p className="text-sm text-red-300 bg-red-900/15 border border-red-500/20 rounded-lg px-3 py-2">
-                  {damage}
-                </p>
-              )}
-              {damageNotes && (
+            <div className="px-4 py-3 flex flex-col gap-2">
+              <p className="text-sm text-white/70">Scratches and dents visible around vehicle</p>
+              {noteLines.length > 0 && <div className="h-1" />}
+              {noteLines.length > 0 && (
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.06]">
-                  {damageNotes.split('\n').filter((l: string) => l.trim()).map((line: string, i: number) => {
+                  {noteLines.map((line: string, i: number) => {
                     const parts = line.split(' - ')
                     const panel = parts[0]?.trim()
                     const desc = parts.slice(1).join(' - ').trim()
