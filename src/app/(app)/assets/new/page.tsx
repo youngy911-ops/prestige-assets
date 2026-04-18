@@ -11,7 +11,7 @@ import { AutoDetectButton } from '@/components/asset/AutoDetectButton'
 import type { AssetType } from '@/lib/schema-registry/types'
 import type { BranchKey } from '@/lib/constants/branches'
 
-const LAST_BRANCH_KEY = 'lastUsedBranch'
+import { LAST_BRANCH_KEY } from '@/lib/constants/storage-keys'
 
 type WizardStep = 1 | 2 | 3
 

@@ -6,7 +6,7 @@ import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
 import { createAsset, updateAssetType } from '@/lib/actions/asset.actions'
 import { processImageForUpload } from '@/lib/utils/image'
 
-const LAST_BRANCH_KEY = 'lastUsedBranch'
+import { LAST_BRANCH_KEY } from '@/lib/constants/storage-keys'
 
 type QuickBookStatus = 'idle' | 'uploading' | 'creating' | 'done' | 'error'
 

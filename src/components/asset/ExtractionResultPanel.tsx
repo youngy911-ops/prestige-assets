@@ -66,6 +66,7 @@ export function ExtractionResultPanel({
           <button
             type="button"
             onClick={() => setShowNotFound(v => !v)}
+            aria-expanded={showNotFound}
             className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white/65 transition-colors w-full text-left py-1"
           >
             <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showNotFound ? 'rotate-180' : ''}`} />

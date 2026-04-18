@@ -10,7 +10,7 @@ import type { AssetType } from '@/lib/schema-registry'
 import { AssetCard } from './AssetCard'
 import { processImageForUpload } from '@/lib/utils/image'
 
-const LAST_BRANCH_KEY = 'lastUsedBranch'
+import { LAST_BRANCH_KEY } from '@/lib/constants/storage-keys'
 
 interface AssetListProps {
   branch: BranchKey

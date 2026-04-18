@@ -30,6 +30,7 @@ export function BottomNav() {
       <div className="max-w-[640px] mx-auto h-14 flex items-center justify-around">
         <Link
           href="/"
+          aria-current={assetsActive ? 'page' : undefined}
           className={cn(
             'flex flex-col items-center gap-1 min-h-[44px] justify-center px-6 transition-colors',
             assetsActive ? 'text-white' : 'text-white/40 hover:text-white/70'
@@ -40,6 +41,7 @@ export function BottomNav() {
         </Link>
         <Link
           href="/assets/new"
+          aria-current={newActive ? 'page' : undefined}
           className={cn(
             'flex flex-col items-center gap-1 min-h-[44px] justify-center px-6 transition-colors',
             newActive ? 'text-white' : 'text-white/40 hover:text-white/70'
@@ -51,6 +53,7 @@ export function BottomNav() {
         </Link>
         <Link
           href="/assets/quick"
+          aria-current={quickActive ? 'page' : undefined}
           className={cn(
             'flex flex-col items-center gap-1 min-h-[44px] justify-center px-6 transition-colors',
             quickActive ? 'text-white' : 'text-white/40 hover:text-white/70'

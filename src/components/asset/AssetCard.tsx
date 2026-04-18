@@ -72,6 +72,7 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
               <img
                 src={thumb_url}
                 alt=""
+                role="presentation"
                 className="absolute inset-0 w-full h-full object-cover animate-in fade-in duration-300"
                 loading="lazy"
               />

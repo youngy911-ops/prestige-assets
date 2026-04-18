@@ -5,8 +5,7 @@ import type { AssetSummary } from '@/lib/actions/asset.actions'
 import { getAssets } from '@/lib/actions/asset.actions'
 import { BranchPickerScreen } from '@/components/asset/BranchPickerScreen'
 import { AssetList } from '@/components/asset/AssetList'
-
-const LAST_BRANCH_KEY = 'lastUsedBranch'
+import { LAST_BRANCH_KEY } from '@/lib/constants/storage-keys'
 
 function saveBranch(branch: BranchKey) {
   try { localStorage.setItem(LAST_BRANCH_KEY, branch) } catch {}
