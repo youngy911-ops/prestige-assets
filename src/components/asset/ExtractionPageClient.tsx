@@ -83,7 +83,7 @@ export function ExtractionPageClient({
         />
       )}
 
-      {status === 'loading' && <ExtractionLoadingState />}
+      {status === 'loading' && <ExtractionLoadingState assetType={assetType} />}
 
       {status === 'success' && extractionResult && (
         <ExtractionResultPanel

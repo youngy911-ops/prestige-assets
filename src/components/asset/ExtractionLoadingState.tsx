@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react'
 import { ScanLine, Search, Car, ClipboardList, FileCheck, CheckCircle2 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
-const STEPS: { text: string; Icon: LucideIcon }[] = [
+const VEHICLE_STEPS: { text: string; Icon: LucideIcon }[] = [
   { text: 'Reading plates and labels…', Icon: ScanLine },
   { text: 'Scanning for damage…', Icon: Search },
   { text: 'Identifying make and model…', Icon: Car },
@@ -12,10 +12,22 @@ const STEPS: { text: string; Icon: LucideIcon }[] = [
   { text: 'Finalising…', Icon: CheckCircle2 },
 ]
 
+const GENERAL_STEPS: { text: string; Icon: LucideIcon }[] = [
+  { text: 'Reading plates and labels…', Icon: ScanLine },
+  { text: 'Identifying make and model…', Icon: Car },
+  { text: 'Extracting details…', Icon: FileCheck },
+  { text: 'Finalising…', Icon: CheckCircle2 },
+]
+
 const STEP_INTERVAL = 3500 // 3.5s per step
 const FADE_DURATION = 250
 
-export function ExtractionLoadingState() {
+interface ExtractionLoadingStateProps {
+  assetType?: string
+}
+
+export function ExtractionLoadingState({ assetType }: ExtractionLoadingStateProps) {
+  const STEPS = (assetType === 'vehicle' || assetType === 'truck') ? VEHICLE_STEPS : GENERAL_STEPS
   const [stepIndex, setStepIndex] = useState(0)
   const [visible, setVisible] = useState(true)
   const [elapsed, setElapsed] = useState(0)
