@@ -40,7 +40,18 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - ✓ All 8 asset types expose Salesforce-matching subtype lists (Truck 24, Trailer 24, Earthmoving 19, Marine 10, Agriculture 12, Forklift 9, Caravan 5, General Goods 16); Agriculture/Forklift/Caravan have subtype selectors for the first time — v1.4
 - ✓ AI description prompt has named template sections for every subtype across all 8 asset types; exact-match heading routing replaces inference fallback — v1.4
 
-## Current State: v1.5 Shipped (2026-04-18)
+## Current Milestone: v1.6 AI Quality & Workflow
+
+**Goal:** Close the gap between AI output and production-quality book-ins — better extraction accuracy, descriptions that sound like Jack, and inline field editing so a single wrong value doesn't force a full re-extraction.
+
+**Target features:**
+- Hourmeter decimal extraction fix (e.g. 1234.5 misread as 12345)
+- Suspension type inference from make/model/year manufacturer knowledge
+- Description quality uplift — style, selling points, tone to match Jack's standard
+- General extraction accuracy improvements (missing fields, confidence calibration, edge cases)
+- Inline field editing post-extraction — fix one field without re-running the full AI pipeline
+
+## Previous: v1.5 Shipped (2026-04-18)
 
 Demo-ready. 8 asset types with full Salesforce alignment, Quick Book with auto type detection, asset deletion and status workflow, contextual error pages, ARIA accessibility, and humanized confidence labels. Salesforce OAuth infrastructure scaffolded and ready when credentials are provided.
 
@@ -131,4 +142,4 @@ Demo-ready. 8 asset types with full Salesforce alignment, Quick Book with auto t
 | `normalizeFooter` appended to all description outputs post-generation (Phase 14) | Enforces correct footer regardless of GPT-4o output; `general_goods` gets distinct footer | ✓ Good — zero footer regressions since Phase 14 |
 
 ---
-*Last updated: 2026-04-16 after v1.5 milestone start*
+*Last updated: 2026-04-18 after v1.6 milestone start*
