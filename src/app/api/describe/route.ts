@@ -1107,7 +1107,14 @@ function buildDescriptionUserPrompt(asset: {
   fields: Record<string, string>
   inspection_notes: string | null
 }): string {
+  // Exclude damage/condition fields — these go in the damage notes section, not the description
+  const DESCRIPTION_EXCLUDED_KEYS = new Set([
+    'damage', 'damage_notes',
+    'body_condition', 'paint_condition', 'tyre_condition',
+    'rust_condition', 'seat_condition', 'carpet_condition',
+  ])
   const fieldLines = Object.entries(asset.fields ?? {})
+    .filter(([k]) => !DESCRIPTION_EXCLUDED_KEYS.has(k))
     .map(([k, v]) => `${k}: ${v}`)
     .join('\n')
 

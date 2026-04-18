@@ -23,7 +23,7 @@ export function VehiclePhotoGuide() {
       </button>
       {open && (
         <p className="px-3 pb-3 text-xs text-white/45 leading-relaxed">
-          Exterior walkaround, interior, odometer, build plate, tyres, any damage close-ups. Whatever you capture gets extracted — no specific order needed.
+          Exterior walkaround (all four sides + rear), interior (seats, carpet, dash), odometer, build plate, tyres, any damage close-ups. Interior shots are needed for seat and carpet condition ratings.
         </p>
       )}
     </div>

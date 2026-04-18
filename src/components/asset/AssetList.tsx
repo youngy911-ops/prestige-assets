@@ -2,12 +2,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowDown, ArrowUp, ChevronDown, Search, X, Plus, Zap, Package } from 'lucide-react'
+import { ArrowDown, ArrowUp, ChevronDown, Search, X, Plus, Zap, Package, Images, Loader2 } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
-import { getAssets, getAssetThumbs, getTodayBookingCount, type AssetSummary } from '@/lib/actions/asset.actions'
+import { getAssets, getAssetThumbs, getTodayBookingCount, createAsset, updateAssetType, type AssetSummary } from '@/lib/actions/asset.actions'
 import { SCHEMA_REGISTRY } from '@/lib/schema-registry'
 import type { AssetType } from '@/lib/schema-registry'
 import { AssetCard } from './AssetCard'
+import { processImageForUpload } from '@/lib/utils/image'
 
 const LAST_BRANCH_KEY = 'lastUsedBranch'
 
@@ -38,7 +39,65 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'reviewed' | 'confirmed'>('all')
   const [sortNewest, setSortNewest] = useState(true)
+  const [uploadingFiles, setUploadingFiles] = useState(false)
+  const uploadFilesRef = useRef<HTMLInputElement>(null)
   const isFirstRender = useRef(true)
+
+  async function handleUploadFiles(files: File[]) {
+    if (!files.length || uploadingFiles) return
+    setUploadingFiles(true)
+    setShowBookInMenu(false)
+    try {
+      const result = await createAsset(branch, 'general_goods', 'general_goods')
+      if ('error' in result) { setUploadingFiles(false); return }
+      const assetId = result.assetId
+
+      const processedFiles = await Promise.all(files.map(f => processImageForUpload(f)))
+      await Promise.allSettled(
+        processedFiles.map((file, i) => {
+          const formData = new FormData()
+          formData.append('file', file)
+          formData.append('assetId', assetId)
+          formData.append('sortOrder', String(i))
+          return fetch('/api/upload-photo', { method: 'POST', body: formData })
+        })
+      )
+
+      // Refresh list so new asset appears
+      getAssets(branch).then(r => { if (!('error' in r)) setAssets(r) })
+
+      // Auto-detect type from first photo in background
+      const firstFile = files[0]
+      const blobUrl = URL.createObjectURL(firstFile)
+      const img = new Image()
+      img.onload = async () => {
+        try {
+          const canvas = document.createElement('canvas')
+          const scale = Math.min(512 / img.width, 512 / img.height, 1)
+          canvas.width = Math.round(img.width * scale)
+          canvas.height = Math.round(img.height * scale)
+          canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height)
+          const base64 = canvas.toDataURL('image/jpeg', 0.8)
+          URL.revokeObjectURL(blobUrl)
+
+          const res = await fetch('/api/classify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ imageUrl: base64 }),
+          })
+          if (!res.ok) return
+          const data = await res.json()
+          if (data.confidence === 'low') return
+          await updateAssetType(assetId, data.asset_type, data.asset_subtype ?? data.asset_type)
+          // Refresh again to show detected type
+          getAssets(branch).then(r => { if (!('error' in r)) setAssets(r) })
+        } catch { URL.revokeObjectURL(blobUrl) }
+      }
+      img.src = blobUrl
+    } finally {
+      setUploadingFiles(false)
+    }
+  }
 
   useEffect(() => {
     getTodayBookingCount().then(setTodayCount)
@@ -95,19 +154,32 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
 
         {/* Book In button + dropdown */}
         <div className="relative">
+          <input
+            ref={uploadFilesRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={e => {
+              const files = Array.from(e.target.files ?? [])
+              e.target.value = ''
+              if (files.length) handleUploadFiles(files)
+            }}
+          />
           <button
             type="button"
             onClick={() => setShowBookInMenu(v => !v)}
-            className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-3 py-2 rounded-xl transition-colors"
+            disabled={uploadingFiles}
+            className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-3 py-2 rounded-xl transition-colors disabled:opacity-60"
           >
-            <Plus className="w-4 h-4" />
-            Book In
+            {uploadingFiles ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+            {uploadingFiles ? 'Uploading…' : 'Book In'}
           </button>
           {showBookInMenu && (
             <>
               {/* Backdrop to close */}
               <div className="fixed inset-0 z-10" onClick={() => setShowBookInMenu(false)} />
-              <div className="absolute right-0 top-10 z-20 w-52 rounded-xl border border-white/[0.10] bg-card shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
+              <div className="absolute right-0 top-10 z-20 w-56 rounded-xl border border-white/[0.10] bg-card shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150">
                 <button
                   type="button"
                   onClick={() => { setShowBookInMenu(false); router.push('/assets/new') }}
@@ -119,6 +191,19 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
                   <div className="text-left">
                     <p className="font-semibold">New Asset</p>
                     <p className="text-xs text-white/45">Full photos + auto extract</p>
+                  </div>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setShowBookInMenu(false); uploadFilesRef.current?.click() }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-white/[0.06] transition-colors border-b border-white/[0.06]"
+                >
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.08] flex items-center justify-center flex-shrink-0">
+                    <Images className="w-4 h-4 text-emerald-400" />
+                  </div>
+                  <div className="text-left">
+                    <p className="font-semibold">Upload Photos</p>
+                    <p className="text-xs text-white/45">Auto-detect type, book later</p>
                   </div>
                 </button>
                 <button

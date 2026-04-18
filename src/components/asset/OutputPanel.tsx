@@ -31,19 +31,24 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
   // Track the latest description text (including user edits) for Copy All
   const currentDescRef = useRef<string>(initialDescription ?? '')
   const [allCopied, setAllCopied] = useState(false)
+  const [staleResolved, setStaleResolved] = useState(false)
 
   const handleDescTextChange = useCallback((text: string) => {
     currentDescRef.current = text
   }, [])
 
   async function handleCopyAll() {
+    // fieldsText already includes all Salesforce fields (condition + damage via sfOrder)
     const combined = `${fieldsText}\n\n${currentDescRef.current}`
     await navigator.clipboard.writeText(combined)
     setAllCopied(true)
     setTimeout(() => setAllCopied(false), 2000)
-    // Advance status to confirmed (fire-and-forget — don't block copy UX)
     markAssetConfirmed(assetId).catch(() => {})
   }
+
+  // Detect stale description: cached description that likely still contains damage text
+  const DAMAGE_KEYWORDS = /\b(dent|scratch|chip|crack|rust|damage|condition)\b/i
+  const isStaleDesc = !!initialDescription && DAMAGE_KEYWORDS.test(initialDescription) && !staleResolved
 
   // Auto-generate on mount if no cached description
   useEffect(() => {
@@ -93,6 +98,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
       setDescText(data.description)
       currentDescRef.current = data.description
       setDescKey(k => k + 1)  // Force DescriptionBlock remount — resets hasEdited
+      setStaleResolved(true)
     } catch {
       // Regeneration failed — keep existing text, don't show error
     } finally {
@@ -243,6 +249,19 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
 
       {descState === 'ready' && (
         <>
+          {isStaleDesc && !isRegenerating && (
+            <div className="flex items-center gap-3 rounded-lg border border-amber-500/30 bg-amber-900/15 px-4 py-3">
+              <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
+              <p className="text-sm text-amber-300 flex-1">Description may include damage text — regenerate to fix.</p>
+              <button
+                type="button"
+                onClick={() => handleRegenerate('', false)}
+                className="text-xs font-semibold text-white bg-amber-600 hover:bg-amber-500 px-3 py-1.5 rounded-lg transition-colors flex-shrink-0"
+              >
+                Regenerate
+              </button>
+            </div>
+          )}
           {confirmingRegen && (
             <div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-900/15 px-4 py-3">
               <p className="text-sm text-amber-300 flex-1">Your edits will be lost. Regenerate?</p>

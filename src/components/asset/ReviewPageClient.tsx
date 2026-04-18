@@ -42,6 +42,7 @@ export function ReviewPageClient({
   const [saveError, setSaveError] = useState<string | null>(null)
   const [conflictFields, setConflictFields] = useState<Array<{ key: string, aiValue: string, staffValue: string }>>([])
   const [pendingExtraction, setPendingExtraction] = useState<ExtractionResult | null>(null)
+  const [reExtractionError, setReExtractionError] = useState(false)
 
   const {
     control,
@@ -114,7 +115,8 @@ export function ReviewPageClient({
         applyExtraction(newResult, false)
       }
     } catch {
-      // Extraction failed silently — staff can retry
+      setReExtractionError(true)
+      setTimeout(() => setReExtractionError(false), 4000)
     } finally {
       setIsExtracting(false)
     }
@@ -215,8 +217,7 @@ export function ReviewPageClient({
       {conflictFields.length > 0 && pendingExtraction && (
         <div className="mb-4 rounded-lg border border-amber-500/40 bg-amber-900/20 p-4 flex flex-col gap-3">
           <p className="text-sm text-amber-300">
-            Extraction found new values — {conflictFields.length} field(s) differ from your edits.
-            Extraction found new values that differ from your edits.
+            Extraction found {conflictFields.length} field{conflictFields.length !== 1 ? 's' : ''} that differ from your edits.
           </p>
           <div className="flex gap-2">
             <Button
@@ -266,6 +267,9 @@ export function ReviewPageClient({
         <div className="max-w-2xl mx-auto px-4 pt-3 pb-2 flex flex-col gap-2">
           {saveError && (
             <p role="alert" className="text-sm text-red-400 text-center">{saveError}</p>
+          )}
+          {reExtractionError && (
+            <p className="text-sm text-amber-400 text-center">Re-extraction failed — check your connection and try again.</p>
           )}
           {!isSaveAllowed && (
             <p className="text-xs text-amber-400/80 text-center">Some fields incomplete — you can still proceed and fill them in later</p>

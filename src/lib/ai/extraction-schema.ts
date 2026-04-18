@@ -85,6 +85,14 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
 Step 3 — DAMAGE & CONDITION ASSESSMENT (especially for VEHICLES):
 Carefully examine ALL photos for visible damage and condition issues. This is critical for auction cataloguing.
 
+CONDITION RATINGS — select the closest match for each field:
+- body_condition (overall exterior panels): Excellent = no dents, no visible damage; Good = minor stone chips or light scratches only; Fair = dents or moderate scratches; Poor = significant panel damage or heavy dents
+- paint_condition (paint surface quality): Excellent = no chips or scratches, uniform gloss; Good = minor stone chips or hairline scratches; Fair = clear coat fading, deeper scratches, or multiple chips; Poor = significant paint loss, primer showing, or oxidation
+- tyre_condition (tread and sidewalls across all tyres): Excellent = new or near-new, deep tread; Good = plenty of tread remaining, no sidewall damage; Fair = worn but serviceable, approaching wear indicators; Poor = bald, cracked sidewalls, or damaged
+- rust_condition (rust and corrosion): Nil = no rust visible anywhere; Surface = minor surface rust spots, no paint bubbling; Minor = rust through paint in some areas, wheel arches or sills affected; Major = rust holes, structural rust, or widespread corrosion
+- seat_condition (driver and passenger seats): Excellent = like new, no wear; Good = minor wear or light marks; Fair = visible wear, fading, or light stains; Poor = torn, ripped, heavily stained, or foam showing
+- carpet_condition (floor carpets and mats): Excellent = clean, no wear; Good = minor wear or marks; Fair = stained or worn through in places; Poor = heavily soiled, torn, or missing sections
+
 EXTERIOR DAMAGE INSPECTION — scan every photo for:
 - Dents: look for uneven reflections, shadow lines, or panel distortion. Note location and approximate size.
 - Scratches: look for linear marks on paint surface. "Light scratches" = surface only. "Deep scratches" = through paint to primer/metal.
