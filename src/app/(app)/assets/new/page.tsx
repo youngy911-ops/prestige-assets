@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader2, ChevronLeft } from 'lucide-react'
 import { BranchSelector } from '@/components/asset/BranchSelector'
@@ -22,14 +22,16 @@ export default function NewAssetPage() {
   const [assetType, setAssetType] = useState<AssetType | null>(null)
   const [assetSubtype, setAssetSubtype] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [submitLabel, setSubmitLabel] = useState('Creating…')
   const [error, setError] = useState<string | null>(null)
+  // Files from auto-detect — uploaded after asset creation, skip photos page
+  const pendingFilesRef = useRef<File[]>([])
 
-  // Pre-select last-used branch and skip straight to type selection
   useEffect(() => {
     const last = localStorage.getItem(LAST_BRANCH_KEY) as BranchKey | null
     if (last) {
       setBranch(last)
-      setStep(2)  // Skip branch step — user already has one saved
+      setStep(2)
     }
   }, [])
 
@@ -42,6 +44,7 @@ export default function NewAssetPage() {
   function handleTypeSelect(t: AssetType) {
     setAssetType(t)
     setAssetSubtype(null)
+    pendingFilesRef.current = []
     setStep(3)
   }
 
@@ -49,24 +52,44 @@ export default function NewAssetPage() {
     if (!branch || !assetType) return
     setAssetSubtype(subtype)
     setSubmitting(true)
+    setSubmitLabel('Creating…')
     setError(null)
+
     const result = await createAsset(branch, assetType, subtype)
     if ('error' in result) {
       setError(result.error)
       setSubmitting(false)
       return
     }
-    router.push(`/assets/${result.assetId}/photos`)
+    const assetId = result.assetId
+
+    const files = pendingFilesRef.current
+    if (files.length > 0) {
+      // Upload detected photos then go straight to extract
+      setSubmitLabel(`Uploading ${files.length} photo${files.length !== 1 ? 's' : ''}…`)
+      await Promise.allSettled(
+        files.map((file, i) => {
+          const fd = new FormData()
+          fd.append('file', file)
+          fd.append('assetId', assetId)
+          fd.append('sortOrder', String(i))
+          return fetch('/api/upload-photo', { method: 'POST', body: fd })
+        })
+      )
+      router.push(`/assets/${assetId}/extract?autostart=1`)
+    } else {
+      router.push(`/assets/${assetId}/photos`)
+    }
   }
 
   function handleBack() {
-    if (step === 2) router.push('/')  // From type selection, go home (branch already saved)
-    if (step === 3) setStep(2)
+    if (step === 2) router.push('/')
+    if (step === 3) { setStep(2); pendingFilesRef.current = [] }
   }
 
   const stepHeadings = {
     1: { heading: 'Select Branch', subheading: 'Which branch is booking this asset?' },
-    2: { heading: 'Asset Type',    subheading: 'What type of asset are you booking in?' },
+    2: { heading: 'Asset Type',    subheading: 'Upload photos to auto-detect, or select manually.' },
     3: {
       heading: assetType ? `${SCHEMA_REGISTRY[assetType].displayName} — Subtype` : 'Subtype',
       subheading: 'Select the specific subtype.',
@@ -77,7 +100,6 @@ export default function NewAssetPage() {
 
   return (
     <div className="max-w-[480px] mx-auto px-4 pt-8 pb-[calc(env(safe-area-inset-bottom)+24px)]">
-      {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         {step > 1 && (
           <button
@@ -95,7 +117,6 @@ export default function NewAssetPage() {
         </div>
       </div>
 
-      {/* Step content */}
       <div className="mb-8">
         {step === 1 && (
           <BranchSelector selected={branch} onSelect={handleBranchSelect} />
@@ -103,10 +124,10 @@ export default function NewAssetPage() {
         {step === 2 && (
           <div className="flex flex-col gap-4">
             <AutoDetectButton
-              onDetected={(type, subtype) => {
+              onDetected={(type, subtype, files) => {
+                pendingFilesRef.current = files
                 setAssetType(type)
                 if (subtype) {
-                  // Jump straight to subtype confirmed — same as tapping subtype
                   handleSubtypeSelect(subtype)
                 } else {
                   setStep(3)
@@ -131,15 +152,12 @@ export default function NewAssetPage() {
         )}
       </div>
 
-      {/* Error */}
-      {error && (
-        <p className="text-destructive text-sm mb-4">{error}</p>
-      )}
+      {error && <p className="text-destructive text-sm mb-4">{error}</p>}
 
-      {/* Spinner shown while creating asset after subtype selected */}
       {submitting && (
-        <div className="flex justify-center">
+        <div className="flex items-center justify-center gap-2">
           <Loader2 className="h-5 w-5 animate-spin text-white/65" />
+          <span className="text-sm text-white/65">{submitLabel}</span>
         </div>
       )}
     </div>

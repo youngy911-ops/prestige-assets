@@ -12,24 +12,27 @@ interface AutoDetectResult {
 }
 
 interface AutoDetectButtonProps {
-  onDetected: (type: AssetType, subtype: string | null) => void
+  // files: compressed File objects so caller can upload them without re-processing
+  onDetected: (type: AssetType, subtype: string | null, files: File[]) => void
 }
 
-async function compressToDataUrl(file: File): Promise<string> {
+async function compressFile(file: File): Promise<{ compressed: File; dataUrl: string }> {
   const imageCompression = (await import('browser-image-compression')).default
   const compressed = await imageCompression(file, { maxSizeMB: 0.4, maxWidthOrHeight: 1024, useWebWorker: true })
-  return new Promise((resolve, reject) => {
+  const dataUrl = await new Promise<string>((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => resolve(reader.result as string)
     reader.onerror = reject
     reader.readAsDataURL(compressed)
   })
+  return { compressed, dataUrl }
 }
 
 export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
   const [status, setStatus] = useState<'idle' | 'processing' | 'detecting' | 'done' | 'error'>('idle')
   const [result, setResult] = useState<AutoDetectResult | null>(null)
   const [photoCount, setPhotoCount] = useState(0)
+  const compressedFilesRef = useRef<File[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
 
   async function handleFiles(files: File[]) {
@@ -38,13 +41,15 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
     setPhotoCount(capped.length)
     setStatus('processing')
     setResult(null)
+    compressedFilesRef.current = []
     try {
-      const dataUrls = await Promise.all(capped.map(compressToDataUrl))
+      const results = await Promise.all(capped.map(compressFile))
+      compressedFilesRef.current = results.map(r => r.compressed)
       setStatus('detecting')
       const res = await fetch('/api/classify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageUrls: dataUrls }),
+        body: JSON.stringify({ imageUrls: results.map(r => r.dataUrl) }),
       })
       if (!res.ok) throw new Error('Classification failed')
       const data: AutoDetectResult = await res.json()
@@ -71,7 +76,7 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
         <div className="flex gap-2">
           <button
             type="button"
-            onClick={() => onDetected(result.asset_type, result.asset_subtype)}
+            onClick={() => onDetected(result.asset_type, result.asset_subtype, compressedFilesRef.current)}
             className="flex-1 text-sm font-semibold bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg px-3 py-2 transition-colors"
           >
             Use this

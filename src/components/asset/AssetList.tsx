@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowDown, ArrowUp, ChevronDown, Search, X, Plus, Zap, Package, Images, Loader2 } from 'lucide-react'
+import { ArrowDown, ArrowUp, ChevronDown, Search, X, Plus, Zap, Package, Images, Loader2, Sparkles } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
 import { getAssets, getAssetThumbs, getTodayBookingCount, createAsset, updateAssetType, type AssetSummary } from '@/lib/actions/asset.actions'
 import { SCHEMA_REGISTRY } from '@/lib/schema-registry'
@@ -40,6 +40,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'reviewed' | 'confirmed'>('all')
   const [sortNewest, setSortNewest] = useState(true)
   const [uploadingFiles, setUploadingFiles] = useState(false)
+  const [detectNote, setDetectNote] = useState<string | null>(null)
   const uploadFilesRef = useRef<HTMLInputElement>(null)
   const isFirstRender = useRef(true)
 
@@ -63,37 +64,37 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
         })
       )
 
-      // Refresh list so new asset appears
       getAssets(branch).then(r => { if (!('error' in r)) setAssets(r) })
 
-      // Auto-detect type from first photo in background
-      const firstFile = files[0]
-      const blobUrl = URL.createObjectURL(firstFile)
-      const img = new Image()
-      img.onload = async () => {
-        try {
-          const canvas = document.createElement('canvas')
-          const scale = Math.min(512 / img.width, 512 / img.height, 1)
-          canvas.width = Math.round(img.width * scale)
-          canvas.height = Math.round(img.height * scale)
-          canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height)
-          const base64 = canvas.toDataURL('image/jpeg', 0.8)
-          URL.revokeObjectURL(blobUrl)
-
-          const res = await fetch('/api/classify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ imageUrl: base64 }),
-          })
-          if (!res.ok) return
+      // Classify using up to 3 photos for best accuracy
+      setDetectNote('Detecting type…')
+      try {
+        const dataUrls = await Promise.all(
+          processedFiles.slice(0, 3).map(file => new Promise<string>((resolve, reject) => {
+            const reader = new FileReader()
+            reader.onload = () => resolve(reader.result as string)
+            reader.onerror = reject
+            reader.readAsDataURL(file)
+          }))
+        )
+        const res = await fetch('/api/classify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageUrls: dataUrls }),
+        })
+        if (res.ok) {
           const data = await res.json()
-          if (data.confidence === 'low') return
-          await updateAssetType(assetId, data.asset_type, data.asset_subtype ?? data.asset_type)
-          // Refresh again to show detected type
-          getAssets(branch).then(r => { if (!('error' in r)) setAssets(r) })
-        } catch { URL.revokeObjectURL(blobUrl) }
-      }
-      img.src = blobUrl
+          if (data.confidence !== 'low') {
+            await updateAssetType(assetId, data.asset_type, data.asset_subtype ?? data.asset_type)
+            const label = data.subtype_label ? `${data.type_label} — ${data.subtype_label}` : data.type_label
+            setDetectNote(`Detected: ${label}`)
+            getAssets(branch).then(r => { if (!('error' in r)) setAssets(r) })
+            setTimeout(() => setDetectNote(null), 4000)
+            return
+          }
+        }
+      } catch { /* detection failed — leave as general_goods */ }
+      setDetectNote(null)
     } finally {
       setUploadingFiles(false)
     }
@@ -224,6 +225,14 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
           )}
         </div>
       </div>
+
+      {/* Detect note */}
+      {detectNote && (
+        <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm">
+          <Sparkles className="w-4 h-4 flex-shrink-0" />
+          {detectNote}
+        </div>
+      )}
 
       {/* Search — always visible */}
       {!changingBranch && (
