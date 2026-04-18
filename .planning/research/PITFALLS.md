@@ -1,149 +1,255 @@
 # Pitfalls Research
 
-**Domain:** Pre-fill value restoration — adding saved-value re-hydration to an existing form with uncontrolled inputs (Next.js 15 App Router / react-hook-form / Radix Select)
-**Researched:** 2026-03-21
-**Confidence:** HIGH (direct codebase inspection + verified against React, react-hook-form, and Radix UI official docs/issues)
+**Domain:** AI extraction quality improvements + inline field editing — adding few-shot prompting, partial re-extraction, and description style uplift to an existing GPT-4o vision + Zod schema + react-hook-form pipeline
+**Researched:** 2026-04-18
+**Confidence:** HIGH (direct codebase inspection; MEDIUM for GPT-4o structured output behaviour — based on OpenAI documentation and community-verified patterns)
 
 ---
 
 ## Critical Pitfalls
 
-### Pitfall 1: Radix Select `defaultValue` Silently Ignored After First Mount
+### Pitfall 1: Prompt Edits Silently Regress Existing Asset Types
 
 **What goes wrong:**
-`InspectionNotesSection` currently uses `<Select onValueChange={...}>` with no `value` or `defaultValue` prop — fully uncontrolled. To restore a saved suspension type on reload, the natural fix is to add `defaultValue={parsedInitialValues['suspension']}`. This works on the first render when the component mounts with a value. But `defaultValue` is only read once at mount time — it is not reactive. If the component mounts before `parsedInitialValues` is available (e.g., because parsing runs in a `useEffect`), the Select will mount with no value and will not pick up `defaultValue` when it changes later. React and Radix both ignore `defaultValue` changes after the first render.
+The extraction system prompt in `extraction-schema.ts` (`buildSystemPrompt`) and the description system prompt in `describe/route.ts` (`DESCRIPTION_SYSTEM_PROMPT`) are single, monolithic strings used for all 8 asset types and 100+ subtypes. Any edit intended to improve hourmeter accuracy for Excavators, for example, can accidentally reduce accuracy for Forklifts or Trucks — because all asset types share the same prompt and model. There is no per-asset-type routing in the extraction prompt (only in the description prompt via template headings).
+
+The failure is silent: GPT-4o outputs still validate against the Zod schema, so no error is thrown. The regression only surfaces when staff notice the wrong value in the review form — or never notice because they trust AI output.
 
 **Why it happens:**
-Developers assume `defaultValue` behaves like a controlled `value` prop that re-triggers on state change. It does not. `defaultValue` is an initialiser, not a binding. Radix Select specifically checks for a `value` prop at mount to decide whether it is controlled or uncontrolled (MEDIUM confidence — confirmed via Radix UI issues #1223 and #3556). Passing `defaultValue={undefined}` at mount and then `defaultValue="Airbag"` after a re-render has no effect on the displayed value.
+The prompt is treated as a configuration string rather than logic with test coverage. Changes are evaluated against the specific asset type the developer is currently testing, not the full matrix of asset types and edge cases in production.
 
 **How to avoid:**
-Parse `initialNotes` synchronously — not in a `useEffect` — before the component's first render. Since `InspectionNotesSection` already receives `initialNotes` as a prop from the server-rendered `PhotosPage`, `parseStructuredFields(initialNotes)` can be called at the top of the component body (or in a `useMemo` with no async dependency). The parsed map is available synchronously before the first render, so `defaultValue={parsed['suspension']}` is correctly populated on mount. Do not use `useEffect` or async state to derive the initial values — the timing guarantees are not compatible with `defaultValue`.
+Before modifying any part of `buildSystemPrompt` or `DESCRIPTION_SYSTEM_PROMPT`, document exactly which lines apply to which asset types. Use a test fixture set: at minimum one real photo + expected extraction result for each of Truck, Excavator, Forklift, Tractor, and Trailer. Run the extraction against these fixtures before and after the prompt change. This does not need to be an automated CI test — a manual spot-check run is sufficient for v1.6 — but the fixture set must exist.
+
+Add a comment block at the top of each modified prompt section naming the asset type it targets and what behaviour it controls.
 
 **Warning signs:**
-- Suspension select renders blank on reload even though `inspection_notes` in the database contains `suspension: Airbag`.
-- Adding `console.log(defaultValue)` inside the Select component shows the correct string, but the rendered placeholder text still shows "Select suspension type".
-- The bug disappears when you hard-refresh and reappears only when navigating back using client-side routing (a hint that the component re-mounts after the value is available in some paths but not all).
+- A field that was reliably extracted before the prompt change (e.g. make/model for Truck) now comes back null or low-confidence.
+- GPT-4o starts producing values outside the Zod schema enum for select fields (e.g. `suspension` returning "Air Bags" instead of "Airbag") — subtle wording changes in the prompt alter the model's literal output.
+- Confidence calibration shifts: fields that previously returned "high" now return "medium" or vice versa, without any actual change in extraction quality.
 
-**Phase to address:** PREFILL-06 implementation phase. Decide the parsing strategy before writing any UI code — synchronous parse in component body is the only safe approach.
+**Phase to address:** Prompt improvement phase. Define and run spot-check fixtures before writing any prompt changes, not after.
 
 ---
 
-### Pitfall 2: Uncontrolled → Controlled Input Switching Warning
+### Pitfall 2: Hourmeter Decimal OCR — Model Refuses to Read Ambiguous Digits
 
 **What goes wrong:**
-React throws "A component is changing an uncontrolled input to be controlled" when an `<Input>` or `<textarea>` starts without a `value` prop and later receives one, or vice versa. The current `<Input>` fields in `InspectionNotesSection` have no `value` or `defaultValue` — purely uncontrolled. Adding `defaultValue={parsedValues['odometer']}` keeps them uncontrolled (correct). But if the implementation accidentally passes `value={parsedValues['odometer']}` (a controlled pattern) or passes `value={undefined}` initially and later `value="187450"`, React will emit the warning and the input will behave inconsistently.
+The current `buildSystemPrompt` already has a detailed READING HOURMETERS section including the instruction to include decimal hours. The likely root cause of `1234.5` being read as `12345` is that GPT-4o is collapsing the decimal point, not that it is ignoring the instruction. Adding a stronger instruction ("include the decimal") will not fix this if the model literally cannot visually resolve whether the small digit after the dot is a tenths digit or a continuation of the integer part.
 
-The controlled/uncontrolled boundary also applies to the existing `structuredValuesRef`. If the component is refactored to use `useState` for input values (to make them controlled), every field needs both `value` and `onChange` wired immediately — any field left with only `onChange` and no `value` will trigger the warning.
+The pitfall is incorrectly diagnosing this as a prompt problem when it is actually a photo quality / display font rendering problem. If the hourmeter display does not clearly separate the decimal digit (e.g., the tenths digit is in a smaller box with a different background, which is common on LCD hourmeters), GPT-4o may legitimately be unable to distinguish `1234.5` from `12345`.
+
+Spending time crafting elaborate prompt instructions for a case where the image itself is ambiguous produces no improvement and may cause the model to hallucinate a decimal that is not there.
 
 **Why it happens:**
-Developers mix approaches: some fields get `value={state}` (controlled), others keep `onChange` only (uncontrolled). React's rule is binary per input lifetime — pick one and don't switch. The Radix Select component has a harder version of this: if `value` is passed as `undefined` on first render, Radix treats it as controlled with an undefined value. If `value` is later passed as a string, Radix switches modes — which is technically not an uncontrolled→controlled switch but causes visual and functional inconsistency (documented in Radix issue #3556).
+Developers assume the model's failure is always a prompt issue. OCR quality from GPT-4o vision is strongly dependent on image resolution, contrast, and clarity. The 2MP resize already applied during upload is adequate for build plates but may not be sufficient for small LCD digits on an excavator hourmeter photographed at angle.
 
 **How to avoid:**
-Use `defaultValue` (uncontrolled) for restoration, not `value`. The current architecture using refs (`structuredValuesRef`) for change tracking is compatible with `defaultValue` — no refactor to controlled state is needed. Do not introduce `useState` for input values unless the entire component is converted to a controlled pattern. If conversion to controlled is needed later (e.g., for programmatic reset), convert all fields at once and initialise every state value to an empty string `""` (not `undefined` or `null`) to avoid the uncontrolled-starts-undefined problem. `value={undefined}` → React treats it as uncontrolled. `value=""` → React treats it as controlled with an empty value.
+Investigate the actual failure photos before writing prompt changes. If the decimal is visually clear in the image: add a targeted example to the prompt showing the digit format (e.g., "LCD hourmeter showing `1234.5` — the `5` after the dot is the tenths digit, not `12345`"). If the decimal is visually ambiguous in the image: the correct fix is staff guidance ("photograph the hourmeter from directly in front, full screen") rather than a prompt change. Adding a few-shot image example (a clear photo of a decimal hourmeter) to the user message may help more than text instructions.
 
 **Warning signs:**
-- React console warning: "A component is changing an uncontrolled input to be controlled."
-- Input value flickers or resets to blank after initial population.
-- Fields that restore correctly on first load lose their values after a state update elsewhere in the component.
+- The failure photo, when zoomed in closely, shows the decimal digit clearly — this is a prompt problem. Fix with targeted instruction.
+- The failure photo is blurry, at angle, or the tenths digit is in a smaller font that is not readable at the uploaded resolution — this is a photo problem. Prompt changes will not help.
 
-**Phase to address:** PREFILL-06 implementation phase. Audit every input and select in `InspectionNotesSection` to confirm each uses either `value` (controlled) or `defaultValue` (uncontrolled), never both, and never switches.
+**Phase to address:** Hourmeter accuracy phase. Inspect actual failure photos first; branch into prompt fix or staff guidance based on what the photo shows.
 
 ---
 
-### Pitfall 3: Stale Persisted Values Overriding Freshly Entered Data
+### Pitfall 3: Few-Shot Description Examples Cause Template Drift
 
 **What goes wrong:**
-`inspection_notes` in Supabase is the authoritative source for both pre-extraction values and the freeform notes textarea. The component's `persistNotes` function serialises `structuredValuesRef.current` and `notesRef.current` together and saves them on every keystroke (debounced to 500ms). If pre-fill restoration re-populates `structuredValuesRef.current` from parsed `initialNotes` on mount, and then the autosave fires before the user has a chance to change anything, the round-trip is harmless. But the failure mode is:
+The description prompt already contains quality reference examples (WHEEL LOADER EXAMPLE, PRIME MOVER EXAMPLE, etc.) at the end of `DESCRIPTION_SYSTEM_PROMPT`. Adding more examples to match Jack's writing style is the right approach — but if the examples are inconsistently formatted or contain subtle deviations from the template (e.g., the prime mover example shows hours in the body text, or a trailer example omits the axle config on line 1), GPT-4o will treat those deviations as valid and start producing descriptions that drift from the strict per-subtype format.
 
-1. Staff opens asset, sees pre-filled values (odometer: 187450, suspension: Airbag).
-2. Staff deletes the odometer value to correct it — the input is now empty.
-3. Before the debounce fires, the staff navigates away (or the browser tab sleeps briefly and restores).
-4. On return, `initialNotes` still contains `odometer: 187450` from the database — the deletion was not yet persisted.
-5. The form re-populates with the stale value. The correction is silently lost.
-
-This is a narrow race condition but the consequences in this domain are significant: a wrong odometer on an auction record is a business error.
+The model generalises across all examples. One example with a formatting error teaches the model that the error is acceptable.
 
 **Why it happens:**
-The 500ms debounce means there is always a window where in-progress changes have not been saved. If the component unmounts (navigation) within that window, the timeout is cleared and the save never fires. `clearTimeout` is not called on unmount in the current `InspectionNotesSection` — the debounce timer fires but if the component has unmounted, `saveInspectionNotes` is called against a React component that no longer exists. The Server Action itself will still execute (it is a server-side call), but the UI will not reflect its result.
+Few-shot examples are added by copying Jack's real descriptions without auditing them against the templates. Jack's real descriptions may predate the strict template rules, use a slightly different format for a particular subtype, or include fields that the current template says to omit.
 
 **How to avoid:**
-Two mitigations:
-1. **Flush save on unmount:** Add a `useEffect` cleanup that calls `persistNotes()` synchronously (not debounced) when the component unmounts. This ensures in-progress changes are saved when navigating away. This is the most important mitigation.
-2. **Confirm before navigation:** The CTA button ("Run AI Extraction") can be disabled with a brief "saving…" indicator while the debounce is pending, preventing navigation before the save completes. This is a UX enhancement, not strictly required.
+Every few-shot example added to the prompt must be manually verified against the corresponding template section. Check: line 1 format, field order, blank line placement, footer exact wording. The example must be compliant with the template, not just a good description. Prefer manufactured examples (written specifically to match the template) over raw copies of real descriptions, unless the real descriptions are known to comply perfectly.
 
-The pre-fill restoration itself does not introduce this risk — it existed before. But restoration makes the bug more visible because the pre-filled values give the illusion that everything is saved.
+Do not add more than 3-4 new examples per session — each addition increases prompt length, and the description prompt is already ~1,000 lines. Token limits are not a concern for GPT-4o (128k context), but longer prompts increase inference cost and latency slightly.
 
 **Warning signs:**
-- Staff reports entering a value, navigating to extraction, and finding the extraction result does not include their value.
-- The `inspection_notes` in the DB matches what was there before the edit, not what was typed.
-- Values appear correct on-screen (because of `structuredValuesRef`) but are not in the server state.
+- After adding examples, descriptions for other subtypes start showing formatting deviations they did not show before (e.g., bullet points appearing, different line 1 structure).
+- The footer starts appearing as "Sold As Is, Untested & Unregistered" (without the full stop) — indicates an example was copied without the correct footer.
+- `normalizeFooter` is correcting the footer more often than before — indicates the prompt's examples have inconsistent footers.
 
-**Phase to address:** PREFILL-06 implementation phase. Add unmount flush as part of the restoration implementation — this is the only phase where this code is being touched.
+**Phase to address:** Description quality phase. Audit every new example against its template before committing the prompt change.
 
 ---
 
-### Pitfall 4: Next.js App Router Hydration Mismatch from Parsed Restore Values
+### Pitfall 4: Inline Re-extraction Overwrites Staff Edits to Other Fields
 
 **What goes wrong:**
-`PhotosPage` is a Server Component that passes `initialNotes` to `InspectionNotesSection` (a `'use client'` component). The server-rendered HTML will include the `defaultValue` of `<textarea>` (rendered as text content by React) but will not include the `defaultValue` of uncontrolled `<Input>` elements or Radix Select triggers — those are rendered as empty during SSR and populated client-side. This is the correct and expected behaviour for uncontrolled inputs with `defaultValue`. No hydration mismatch occurs here.
+The current extraction flow writes the entire `extraction_result` to the database in one call (`/api/extract` route, `update({ extraction_result: output })`). Inline field-level re-extraction — re-extracting just the `suspension` field without touching `hourmeter` or `make` — must not overwrite fields that staff have already edited in the review form.
 
-The hydration risk arises if the restoration logic is moved to client-side storage (localStorage/sessionStorage) instead of using the server-provided `initialNotes` prop. If a `useEffect` reads from localStorage and sets a state value that differs from the server-rendered HTML, React will report a hydration mismatch error ("Text content does not match server-rendered HTML").
+The failure mode: staff edits `odometer` from AI-extracted value to corrected value. Staff then triggers inline re-extraction for `suspension`. The inline re-extraction call runs the full extraction, returns a new `extraction_result` with the old (wrong) `odometer` value, and writes it to `extraction_result`. The review form resets `odometer` to the wrong value.
+
+The review form uses `initialExtractionResult` as `defaultValues` via `buildDefaultValues`. If `extraction_result` in the DB is overwritten with stale data, the next page load will show the wrong value.
 
 **Why it happens:**
-Developers sometimes add a "belt and suspenders" localStorage backup — "save to Supabase AND localStorage." If the localStorage value is read and rendered during the first client render pass, it will not match the empty string rendered by the server, causing a hydration error. `useEffect` access to localStorage avoids this (since `useEffect` runs only after hydration), but then the `defaultValue` timing problem (Pitfall 1) reappears.
+Inline re-extraction is tempting to implement as "just call the extraction API for the whole asset again, but only show the result for the one field." But if it writes `extraction_result` back to the database, it silently clobbers all other fields. The stale extraction result will not be obvious until the user navigates away and returns, or until they copy the Salesforce fields block.
 
 **How to avoid:**
-Do not add localStorage-based persistence for pre-fill restoration in this app. The server already provides `initialNotes` synchronously via the Supabase query in `PhotosPage`. The prop is available at mount time with no async gap, making localStorage redundant and its hydration interaction dangerous. Use the server prop as the single source of truth.
+Inline re-extraction must NOT write to `extraction_result` in the database. It should return the re-extracted value to the client only, and the client applies it to the form state via `setValue(fieldKey, newValue)`. The DB write happens when the user saves the review form, which writes `assets.fields` (the confirmed values), not `assets.extraction_result`. Alternatively, if `extraction_result` must be updated, use a targeted merge: `update({ extraction_result: { ...existing, [fieldKey]: newValue } })` — but this requires a read-then-write and introduces a race condition if two fields are re-extracted simultaneously.
+
+The cleanest architecture: inline re-extraction is client-side only until the user clicks "Save Review". The re-extracted value is written to form state, not to the database, until save time.
 
 **Warning signs:**
-- React console error: "Hydration failed because the initial UI does not match what was rendered on the server."
-- Inputs flicker — they briefly show the wrong value before correcting.
-- The error only appears on hard refresh, not on client-side navigation (a tell-tale sign of SSR/CSR mismatch, not a logic bug).
+- Staff edits `odometer`, then re-extracts `suspension`, then saves — and the saved `odometer` is the original AI value, not the staff correction.
+- The review form appears correct immediately after inline re-extraction (because form state is right) but after a page refresh, the form shows the wrong value (because `extraction_result` in DB was overwritten).
+- The `extraction_stale` flag becomes unreliable — it was set `false` by the full extraction, then `false` again by inline re-extraction, even though the user has pending edits.
 
-**Phase to address:** PREFILL-06 implementation phase. Explicitly decide: server prop only, no localStorage. Document this as a constraint in the plan.
+**Phase to address:** Inline re-extraction phase. Establish the data flow architecture before writing any code: does inline re-extraction write to DB or not? Document the decision explicitly in the phase plan.
 
 ---
 
-### Pitfall 5: Supabase Realtime Conflicts Overwriting In-Progress Edits
+### Pitfall 5: GPT-4o Structured Output Schema Breaks on Zod 4 Features
 
 **What goes wrong:**
-This pitfall does not apply to the current codebase — there are no Supabase Realtime subscriptions in use anywhere in this app (confirmed by codebase search). The `inspection_notes` column is read once on page load (via server-side Supabase query) and written via the `saveInspectionNotes` Server Action. There is no live subscription that would push a remote change back into the UI and overwrite an in-progress edit.
+The project uses Zod 4 (confirmed — `package.json` and codebase). The Vercel AI SDK uses `Output.object({ schema })` with `generateText`. Zod 4 introduced breaking changes from Zod 3, and the AI SDK's schema conversion (from Zod to JSON Schema for the OpenAI API) may not handle Zod 4's new features correctly depending on the AI SDK version.
 
-**Why it happens (preventative note):**
-If Supabase Realtime were added in a future phase (e.g., for multi-staff collaboration on an asset), a subscription to `assets` row changes would receive the write from `saveInspectionNotes` and potentially trigger a re-render with the newly saved value. If the component is controlled (`value={state}`) and the subscription updates state, the UI would reflect the saved value — which is correct. If the component is uncontrolled (`defaultValue`) and the subscription updates a prop, the UI would not change (since `defaultValue` is read-once). Neither case is dangerous today, but the architectural decision matters if Realtime is added.
+Specific risk: if `buildExtractionSchema` is modified to use Zod 4-specific validators (e.g., new refinement APIs, new date types, new `.pipe()` chains) during the accuracy improvement work, the AI SDK may fail to serialise the schema, or may silently produce a different JSON Schema than intended, causing GPT-4o to return output that does not match the expected shape.
+
+**Why it happens:**
+Developers add validation to the Zod schema to improve type safety (e.g., `z.string().min(1)` on value fields, or custom refinements), not realising the Zod schema is being sent to GPT-4o as a structural constraint, not just used for local validation. Constraints that make sense locally (e.g., "value must be a non-empty string") break the GPT-4o structured output contract because GPT-4o cannot produce a non-empty string for a field that is genuinely not present.
+
+Currently, `value: z.string().nullable()` is the correct pattern — nullable explicitly allows null for "not found" fields. Adding `.min(1)` would break this contract.
 
 **How to avoid:**
-No action required for v1.2. If Realtime is added in a future phase, the session-level "don't overwrite dirty fields" pattern (check `isDirty` or a dirty timestamp before applying remote updates) must be implemented. Do not add Realtime to the `assets` table without a merge strategy for the `inspection_notes` column.
+Do not add Zod refinements (`.refine()`, `.min()`, `.max()`, `.regex()`) to the extraction schema fields. The extraction schema's purpose is to tell GPT-4o the shape of the output, not to validate business logic. Business logic validation belongs in the review form schema (`buildFormSchema` in `build-form-schema.ts`), not in the AI extraction schema.
 
-**Warning signs (future):**
-- Two staff members open the same asset simultaneously; one's changes overwrite the other's with no merge.
-- An autosave fires, the Realtime subscription receives the saved value, and the component state is reset to the just-saved value, discarding any further typing that happened in the 500ms debounce window.
+When modifying `buildExtractionSchema`, test the result by logging `JSON.stringify(schema)` (or the AI SDK's internal JSON Schema conversion) and verifying the OpenAI API receives the expected schema shape.
 
-**Phase to address:** Not applicable for v1.2. Flag as a constraint if Realtime is ever scoped.
+**Warning signs:**
+- GPT-4o returns a 400 error from the OpenAI API with a message about the schema not being valid JSON Schema.
+- `Output.object()` throws at runtime with a Zod validation error even though GPT-4o's response looks correct — indicates the Zod refinement is too strict.
+- Fields that were returning `null` start returning empty strings `""` — indicates the `nullable()` contract was accidentally removed.
+
+**Phase to address:** Any phase that modifies `buildExtractionSchema`. Apply the "schema is shape, not validation" rule before writing code.
 
 ---
 
-### Pitfall 6: `parseStructuredFields` Key Format Mismatch — Serialised Key Differs From Schema Key
+### Pitfall 6: Suspension Inference Confidence Calibration — "Medium" Used for Lookup vs Genuine Inference
 
 **What goes wrong:**
-`InspectionNotesSection` serialises structured values as `key: value\n` where `key` is `field.key` from the schema (e.g., `suspension`, `odometer`, `registration_number`). The existing `parseStructuredFields` function in `extract/route.ts` parses these back by splitting on `': '`. This round-trip is currently used only for the extraction API prompt.
+The target feature is inferring suspension type from make/model/year when it is not visible in photos. The extraction prompt already has a confidence scale where "medium" = inferred from vehicle knowledge. After implementing manufacturer knowledge inference for suspension, GPT-4o may return "medium" confidence for all suspension values — both for correctly inferred common configurations (e.g., a 2023 Kenworth T909 almost certainly has airbag rear suspension) and for ambiguous cases where the model is guessing (e.g., a 2004 Hino 500 where both spring and airbag were options).
 
-For pre-fill restoration, the same parse must be used to derive `defaultValue` for each input on mount. The critical constraint is that the serialisation key must exactly match the schema `field.key`. If any field's key contains a space, a colon, or if the serialisation format ever uses a different separator, the parse will silently fail — the value will not be extracted and the input will appear blank even though the database has the correct string.
-
-Concretely: if a future schema field has `key: "registration number"` (with a space), the serialised line would be `registration number: 123ABC`. The parser's `line.indexOf(': ')` logic returns the correct split index, but `const key = line.slice(0, colonIdx).trim()` yields `"registration number"` — which will only match if the lookup uses `"registration number"` as the key. If the lookup uses `"registration_number"`, the value is silently dropped.
+The review form uses confidence to highlight fields needing staff review. If "medium" is used indiscriminately, staff either over-review (wasting time) or under-review (trusting the inference when they should not).
 
 **Why it happens:**
-The serialisation format (`key: value`) is an implicit contract between `InspectionNotesSection` (writer) and `parseStructuredFields` (reader). There is no type or schema validation on this serialised format. A schema key change, a copy-paste error, or a label accidentally used as the key would silently break restoration without any error.
+The confidence scale was designed for direct extraction from photos. Adding an inference path blurs the meaning of "medium" — it used to mean "I can see it but the plate is partially obscured." Now it could mean "I know this make/model uses airbag as standard" or "I'm guessing based on general knowledge."
 
 **How to avoid:**
-For v1.2 restoration, the lookup must use the exact same `field.key` values that were used to write the `inspection_notes` string. Since both sides use `field.key` from `getInspectionPriorityFields(assetType)`, this is already consistent — provided the schema keys are not changed. Add a comment in `InspectionNotesSection` explicitly naming `parseStructuredFields` as the companion function and noting that the serialisation format is a shared contract. A longer-term fix is to store pre-extraction values in a `pre_extraction_fields JSONB` column, removing the string serialisation entirely.
+Explicitly encode the suspension inference knowledge in the `aiHint` for the suspension field rather than relying on GPT-4o's general knowledge. The current `aiHint` says: "Rear/under-vehicle photos: rubber airbags at axle ends = Airbag; leaf springs = Spring. Kenworth/Mack offer both." Extend this with a specific lookup table for common configurations:
+
+```
+KNOWN CONFIGURATIONS (use if suspension not visible — return confidence "medium"):
+Kenworth T909/T610 2015+: Airbag (standard)
+Kenworth T909/T610 pre-2015: Spring (spring standard; airbag was option — cannot confirm without photo)
+Mack Super-Liner/Trident: Airbag (standard for highway spec)
+Volvo FH/FM 2010+: Airbag (standard)
+Hino 300 Series: Spring (no airbag option)
+Isuzu NLR-FRR: Spring (no airbag option)
+Isuzu FVR/FVZ/FXZ: Spring (standard; airbag for some fleet specs — cannot confirm without photo)
+```
+
+For makes/models NOT in the lookup table, return null rather than guessing.
 
 **Warning signs:**
-- One field restores correctly; a neighbouring field does not — suggests a key mismatch for that specific field.
-- `inspection_notes` in the DB shows `odometer: 187,450` (with a comma in the value containing a colon — e.g. a ratio like `axle: 4:2`) and the parser incorrectly splits on the first colon-space in the value rather than the key-value separator.
-- Adding a new schema field with a key that already exists in `FIELD_PLACEHOLDERS` but was not in `getInspectionPriorityFields` previously causes unexpected parse output.
+- Suspension field returns "medium" confidence for a Hino 300 (which only ever has spring) — indicates the model is treating all inferences as medium regardless of certainty.
+- Staff frequently override the inferred suspension value — indicates the inference is unreliable.
+- Suspension returns "high" confidence when no suspension photo was provided — indicates the model incorrectly reported high confidence for an inference.
 
-**Phase to address:** PREFILL-06 implementation phase. Validate the round-trip (write → parse → restore) with a unit test covering all priority fields across all asset types before shipping.
+**Phase to address:** Suspension inference phase. Add the lookup table to the aiHint before testing; do not rely on GPT-4o's general knowledge without encoding the expected values explicitly.
+
+---
+
+### Pitfall 7: Inline Re-extraction API Design — Calling Full Extraction for One Field Is Wasteful and Slow
+
+**What goes wrong:**
+The simple implementation of inline re-extraction is to call `/api/extract` again with the same `assetId` and then only use the result for the target field. This works but has a 10-30 second latency (GPT-4o vision over multiple photos) and costs the same as a full extraction. Staff will not use a feature that takes 20 seconds to fix one field.
+
+**Why it happens:**
+The extraction prompt and schema are tightly coupled — `buildExtractionSchema` outputs a schema for all fields simultaneously, and `buildSystemPrompt` instructs the model to extract all fields. There is no existing path for single-field extraction.
+
+**How to avoid:**
+Build a separate API route (e.g., `/api/extract-field`) that accepts `assetId` and `fieldKey`, constructs a minimal single-field schema (`z.object({ [fieldKey]: z.object({ value, confidence }) })`), and sends a targeted prompt focused on extracting only that field. This will be significantly faster because:
+1. The model only needs to reason about one field.
+2. The response is much shorter (no need to populate 40+ fields).
+3. The prompt can include the current extracted values as context ("The field `suspension` currently shows `null`. Re-examine the photos and look specifically for suspension components visible under the rear axle.").
+
+For select-type fields (like `suspension`), include the allowed options directly in the single-field prompt. For complex inferred fields (like `transmission`), include the make/model/year from existing extracted data as context.
+
+**Warning signs:**
+- Inline re-extraction latency is similar to full extraction latency (>10 seconds) — indicates full extraction is being used.
+- Staff report that inline re-extraction is "too slow to bother with" — the feature will be abandoned if latency is not addressed.
+- API costs increase significantly after inline re-extraction ships — indicates per-field extractions are triggering full extractions.
+
+**Phase to address:** Inline re-extraction phase. Design the targeted API route first; do not ship inline re-extraction backed by full extraction even as a "temporary" implementation.
+
+---
+
+### Pitfall 8: Description Style Guide Prompting Conflicts With Subtype Template Routing
+
+**What goes wrong:**
+The description system prompt uses exact-match heading routing to select the correct template (e.g., `EXCAVATOR`, `TIPPER TRAILER`). Style-guide additions (few-shot examples, tone instructions, Jack's quality bar) may be inserted in positions that interfere with this routing.
+
+Specifically: if style instructions are added between the UNIVERSAL RULES section and the TEMPLATES section, or embedded within template blocks, GPT-4o may misinterpret them as template content rather than style constraints. The model may also start using style examples from other subtypes when generating for a given subtype (e.g., the Prime Mover example's narrative style bleeding into Excavator descriptions).
+
+**Why it happens:**
+The prompt has evolved across many phases and is now very long (~1,000 lines). Inserting style guidance at the wrong position can disrupt the model's attention on template routing. GPT-4o processes the prompt sequentially, and instructions near the end of the prompt receive more attention than instructions at the start — this is a known characteristic of large context windows.
+
+**How to avoid:**
+Add style guidance immediately before the QUALITY REFERENCE EXAMPLES section, not inside template blocks. Add a clear heading like "STYLE GUIDELINES — apply to all descriptions:" followed by no more than 5-8 specific, concrete rules. Do not bury style guidance in the middle of the template definitions.
+
+When adding new quality reference examples, place them in the correct section by subtype proximity (Truck examples near Truck templates, etc.) with a clearly labelled heading.
+
+Test with at least three different subtypes (one truck, one earthmoving, one forklift) after any style addition to confirm template routing still works correctly.
+
+**Warning signs:**
+- After adding style guidance, descriptions for a subtype start using the wrong template structure (e.g., Excavator descriptions using the Wheel Loader format).
+- The `asset_subtype` passed in the user prompt is ignored — the model picks a template based on visual recognition alone rather than the confirmed subtype.
+- The description quality improves for the test subtype but regresses for other subtypes that were not tested.
+
+**Phase to address:** Description quality phase. Test template routing for 3+ subtypes before and after each style addition.
+
+---
+
+### Pitfall 9: react-hook-form `setValue` for Inline Updates Does Not Mark Field as Dirty
+
+**What goes wrong:**
+The review form uses `react-hook-form` with `buildDefaultValues` as the initial state. Inline re-extraction will call `setValue(fieldKey, newValue)` to update a field without requiring the user to type. By default, `setValue` in react-hook-form does not mark the field as dirty (`isDirty: false`) unless the `shouldDirty: true` option is passed. 
+
+The existing code uses `dirtyFields` to determine which fields have been changed:
+
+```typescript
+const { control, handleSubmit, getValues, setValue, watch, formState: { errors, dirtyFields } } = useForm(...)
+```
+
+If the inline re-extracted value is not marked dirty, the save action may not include it in the saved fields, or the UI may not show the confidence badge updating correctly.
+
+Additionally, if `shouldValidate: true` is not passed to `setValue`, the field will not be validated immediately, and a newly set enum value (e.g., for a select field) may violate the Zod schema without showing an error.
+
+**Why it happens:**
+`setValue` options (`shouldDirty`, `shouldTouch`, `shouldValidate`) are easy to miss. The default behaviour (no options) was designed for programmatic resets, not for user-facing updates.
+
+**How to avoid:**
+All inline re-extraction `setValue` calls must include `{ shouldDirty: true, shouldTouch: true }`:
+
+```typescript
+setValue(fieldKey, newValue, { shouldDirty: true, shouldTouch: true })
+```
+
+If the field uses select inputs (e.g., `suspension`), also add `shouldValidate: true` to trigger immediate Zod validation against the allowed options.
+
+**Warning signs:**
+- After inline re-extraction, the field shows the new value in the form, but the "Save Review" button is disabled (because no dirty fields are detected).
+- After inline re-extraction and save, the re-extracted value does not appear in the saved `assets.fields` — because `dirtyFields` did not include it and the save action filtered it out.
+- The confidence badge does not update after inline re-extraction — indicates `setValue` did not trigger a re-render because the field was not marked as touched.
+
+**Phase to address:** Inline re-extraction phase. Include `shouldDirty: true` in all `setValue` calls as a non-negotiable implementation requirement.
 
 ---
 
@@ -151,10 +257,12 @@ For v1.2 restoration, the lookup must use the exact same `field.key` values that
 
 | Shortcut | Immediate Benefit | Long-term Cost | When Acceptable |
 |----------|-------------------|----------------|-----------------|
-| Parse `inspection_notes` string to restore values (no DB migration) | No schema change, no migration, no downtime | Brittle — format is an undocumented contract; colons in values can break the parser | MVP only if migration is blocked; JIRA/issue filed immediately |
-| Keep `structuredValuesRef` (uncontrolled) instead of converting to useState (controlled) | Avoids full refactor; `defaultValue` restoration is simpler | Cannot programmatically reset or observe field values; harder to test | Acceptable until a reset-after-extraction feature is required |
-| Restore only the freeform textarea `defaultValue` and leave structured fields blank | Zero risk, ships quickly | Staff re-enter structured values every time; defeats PREFILL-06 purpose | Never — partial restoration is worse than none (creates false confidence that state is saved) |
-| Flush save on unmount only (no dirty-state indicator) | Simpler implementation | Staff see no visual confirmation that a save is pending; they may navigate away before flush and lose the last partial edit on extremely slow connections | Acceptable for v1.2 given internal, LAN-adjacent use |
+| Call full `/api/extract` for inline re-extraction and filter client-side | Zero new backend code | 10-30s latency per field; staff stop using the feature | Never — latency is a dealbreaker |
+| Add few-shot style examples to description prompt without testing all subtypes | Fast to implement | Template drift for untested subtypes; silent regression | Never — test matrix is small (3 subtypes) and spot-checks take <5 minutes |
+| Write inline re-extracted value to `extraction_result` DB column | Simple data flow | Overwrites staff edits; trust in the review form is destroyed | Never — form state must be the source of truth for in-progress edits |
+| Add Zod refinements to extraction schema for "better validation" | Catches invalid values locally | GPT-4o structured output breaks silently; null fields start failing | Never — extraction schema is a shape contract, not a validator |
+| Rely on GPT-4o's general knowledge for suspension inference (no explicit lookup table in aiHint) | Zero prompt engineering effort | Inconsistent confidence calibration; medium confidence on known configurations AND guesses | Acceptable only if auditability of the inference source is not required |
+| Monolithic description prompt for all asset types (status quo) | Simple deployment | Any edit can regress any subtype; no isolation | Acceptable for v1.6 — splitting into per-type prompts is a v2 consideration |
 
 ---
 
@@ -162,11 +270,12 @@ For v1.2 restoration, the lookup must use the exact same `field.key` values that
 
 | Integration | Common Mistake | Correct Approach |
 |-------------|----------------|------------------|
-| Radix Select + defaultValue | Pass `defaultValue` derived from async state (useEffect) — Select has already mounted with undefined and ignores later changes | Parse `initialNotes` synchronously in component body; pass `defaultValue` before first render |
-| react-hook-form + Radix Select | Use `reset()` to restore Select value — Radix Select does not respond to react-hook-form reset unless `Controller` wrapper is used | If using react-hook-form, wrap Select with `<Controller>` and use `value` prop; otherwise avoid react-hook-form for uncontrolled Selects |
-| `saveInspectionNotes` Server Action | Component unmounts (navigation) within 500ms debounce window — in-progress changes not saved | Add `useEffect` cleanup that calls `persistNotes()` synchronously on unmount |
-| `parseStructuredFields` (extract/route.ts) | Duplicate the parse logic in `InspectionNotesSection` rather than importing it | Import `parseStructuredFields` directly from `@/app/api/extract/route` (already exported) — same pattern used in `describe/route.ts` |
-| Next.js SSR + uncontrolled inputs | Add localStorage read in render path — hydration mismatch | Use only the server-provided `initialNotes` prop; never localStorage for this feature |
+| GPT-4o + Zod schema (extraction) | Adding `.refine()` or `.min()` to value fields — breaks structured output contract | Keep value fields as `z.string().nullable()` only; no refinements on fields GPT-4o must populate |
+| GPT-4o + description prompt | Inserting style rules inside template blocks — disrupts template routing | Add style rules in a named section before QUALITY REFERENCE EXAMPLES, never inside template definitions |
+| react-hook-form `setValue` for programmatic updates | Calling `setValue(key, val)` without options — field not marked dirty, excluded from save | Always call `setValue(key, val, { shouldDirty: true, shouldTouch: true })` for externally sourced values |
+| Inline re-extraction + `extraction_result` DB column | Writing partial result back to DB — overwrites other fields | Return re-extracted value to client only; DB write happens at save-review time via `assets.fields` |
+| `DESCRIPTION_SYSTEM_PROMPT` + few-shot examples | Copying real descriptions that predate strict templates — teaches the model old formats | Verify every example against the current template for that subtype before adding |
+| Vercel AI SDK `Output.object()` + Zod 4 | Using Zod 4-specific validators unknown to AI SDK schema conversion | Stick to `z.object`, `z.string`, `z.enum`, `.nullable()`, `.describe()` — verified to work |
 
 ---
 
@@ -174,8 +283,10 @@ For v1.2 restoration, the lookup must use the exact same `field.key` values that
 
 | Trap | Symptoms | Prevention | When It Breaks |
 |------|----------|------------|----------------|
-| Re-parsing `initialNotes` on every render | Imperceptible at current scale but wasteful | Wrap `parseStructuredFields(initialNotes)` in `useMemo([initialNotes])` | Not a concern at this scale — add `useMemo` as good practice, not optimisation |
-| Autosave fires on every keystroke before debounce | Multiple simultaneous Supabase writes per second | Current 500ms debounce is correct — do not reduce it | If debounce is accidentally removed during refactor |
+| Full extraction called per field for inline re-extraction | 20-30s per click; staff abandon feature | Build targeted `/api/extract-field` route with single-field schema | Immediate — latency is noticeable from the first use |
+| Description prompt grows to >1,500 lines with new examples | Marginal latency increase; increased API cost per call | Audit prompt length before each addition; remove redundant examples | Not a hard limit, but >2,000 lines starts to affect coherence in long prompts |
+| Re-extraction triggered on every field visibility change in the review form | Runaway API calls; OpenAI rate limit errors | Inline re-extraction must be user-initiated (explicit button click); never auto-triggered | Immediately if auto-triggered |
+| Signed URL generation for re-extraction (3600s expiry) | Signed URLs from original extraction may have expired if asset was opened hours later | Generate fresh signed URLs in the inline re-extraction API call, not reuse cached ones | When >1 hour has passed since the original extraction |
 
 ---
 
@@ -183,8 +294,9 @@ For v1.2 restoration, the lookup must use the exact same `field.key` values that
 
 | Mistake | Risk | Prevention |
 |---------|------|------------|
-| Pre-fill restoration reads `initialNotes` from props (server-rendered) without auth re-check | None — `PhotosPage` already enforces `user_id` RLS on the Supabase query before passing `initialNotes` | No additional auth check needed in `InspectionNotesSection`; the prop was already validated server-side |
-| Storing pre-extraction values in localStorage | Client-side data leaks between users sharing a browser; ISO 27001 compliance concern | Do not use localStorage; Supabase is the only persistence layer |
+| Inline re-extraction API accepts arbitrary field names from client | Prompt injection — attacker crafts a field name that modifies the system prompt | Validate `fieldKey` against `getAIExtractableFieldDefs(assetType)` server-side before using in prompt |
+| Few-shot examples in description prompt contain real VINs or serial numbers from actual assets | Personal/commercial data leakage in prompt; ISO 27001 concern | Use fictional or redacted identifiers in all examples; audit existing examples for real VINs |
+| Inline re-extraction route lacks `user_id` guard | Any authenticated user can re-extract any asset | Mirror the pattern from `/api/extract`: `.eq('user_id', user.id)` on the Supabase query |
 
 ---
 
@@ -192,23 +304,25 @@ For v1.2 restoration, the lookup must use the exact same `field.key` values that
 
 | Pitfall | User Impact | Better Approach |
 |---------|-------------|-----------------|
-| Structured fields blank on reload while freeform textarea is populated | Staff assume structured values were not saved; re-enter them — potentially with different values that overwrite the correct saved data | Restore both structured inputs and textarea in the same implementation; never ship partial restoration |
-| Select shows placeholder text on reload despite saved value | Staff believe the suspension type was not captured; re-select — triggering an autosave that overwrites any stale-but-correct value | Fix `defaultValue` timing (synchronous parse) before shipping |
-| No visual indicator that values are being saved | Staff navigate away mid-save; lose changes with no warning | Flush save on unmount (Pitfall 3 mitigation); optionally show brief "saved" confirmation after debounce fires |
-| Input `defaultValue` restores but `structuredValuesRef` is still empty at mount | First keystroke after reload triggers autosave with correct new value; but if staff click "Run Extraction" immediately without editing anything, `structuredValuesRef` is empty and autosave never fires — the values exist in `initialNotes` in the DB but are not in the ref, so the next autosave would clear them | Initialise `structuredValuesRef.current` from parsed values at mount, not just the input `defaultValue` — both must be seeded |
+| Inline re-extraction button on every field in the review form | Visual clutter; cognitive overload; staff don't know which fields benefit from re-extraction | Show re-extract button only on AI-extractable fields with null or low-confidence values; hide for fields confirmed via inspection notes |
+| No loading state during inline re-extraction | Staff click multiple times thinking nothing happened; multiple concurrent API calls | Disable the re-extract button immediately on click; show a spinner; re-enable after result returns |
+| Re-extracted value replaces staff edit without warning | Staff correction is overwritten silently | If the field has been manually edited (dirty), show a confirmation before overwriting: "Replace your edit with AI result?" |
+| Description quality examples add complexity the model doesn't apply consistently | Descriptions for some subtypes improve but others regress; inconsistent quality across asset types | Add no more than one style improvement per phase; validate across a broad subtype matrix after each |
+| Suspension inference returns a value for assets where photos clearly show the wrong type | Staff distrust the AI output; stop using the tool | If the suspension field has a photo available (under-vehicle shot), always prefer the photo reading over the inference; only use inference when no rear/under-vehicle photo exists |
 
 ---
 
 ## "Looks Done But Isn't" Checklist
 
-- [ ] **Select restore:** Navigate away from an asset with suspension type "Airbag" saved, return — Select trigger shows "Airbag", not the placeholder "Select suspension type".
-- [ ] **Text input restore:** Navigate away from an asset with odometer 187450 saved, return — Input shows "187,450", not blank.
-- [ ] **structuredValuesRef seeded:** After restore, immediately click "Run AI Extraction" without touching any field — verify `inspection_notes` saved to DB still contains `odometer: 187,450`, not an empty structured section.
-- [ ] **Unmount flush:** Enter a new value, immediately click the browser Back button before 500ms elapses — reload the asset and verify the new value is present in the DB.
-- [ ] **No hydration error:** Hard-refresh the photos page for an asset with saved structured values — verify no React hydration error in console.
-- [ ] **Other notes textarea:** Verify the freeform "Other notes" textarea also restores correctly (it already has `defaultValue={initialNotes}` but `initialNotes` is the full serialised string including `key: value` lines — confirm the textarea does not show structured key lines; parse them out before setting textarea `defaultValue`).
-- [ ] **No controlled/uncontrolled warning:** Open an asset with saved values and check the browser console — no "A component is changing an uncontrolled input to be controlled" warning.
-- [ ] **Round-trip key correctness:** For every priority field across all asset types, verify the key used in serialisation matches the key used in the restore lookup.
+- [ ] **Inline re-extraction does not overwrite DB:** Edit a field in the review form, trigger inline re-extraction on a different field, save — verify the manually edited field is saved with the staff value, not the original AI value.
+- [ ] **Full extraction prompt regression check:** Run extraction against a Truck, Excavator, and Forklift with known-good photos before and after any prompt change — verify field counts and key values are consistent.
+- [ ] **Hourmeter decimal in actual failure photos:** Confirm the failure photo shows the decimal clearly (prompt fix needed) or ambiguously (photo guidance needed) before writing any prompt change.
+- [ ] **Few-shot examples are template-compliant:** Verify each new description example against its template: line 1 format, footer exact wording, no dot points, no marketing language.
+- [ ] **`setValue` marks field dirty:** After inline re-extraction, confirm the "Save Review" button is enabled and the re-extracted field is included in the saved `assets.fields`.
+- [ ] **Inline re-extraction latency:** Time a single-field re-extraction from click to result — must be under 8 seconds on a standard internet connection; if >8 seconds, the targeted API route is not in use.
+- [ ] **Suspension inference only fires when no photo:** Confirm that if a rear/under-vehicle photo is provided, GPT-4o uses the photo, not the lookup table inference.
+- [ ] **No real VINs or serials in prompt examples:** Search the description system prompt for patterns matching VIN format (17 characters) and serial number patterns before shipping.
+- [ ] **Description template routing intact after style additions:** After adding style guidance, generate descriptions for a Truck, an Excavator, a Forklift, and a Trailer — confirm each uses the correct template structure, not the closest example's structure.
 
 ---
 
@@ -216,10 +330,11 @@ For v1.2 restoration, the lookup must use the exact same `field.key` values that
 
 | Pitfall | Recovery Cost | Recovery Steps |
 |---------|---------------|----------------|
-| Select defaultValue not restoring (async timing) | LOW | Move parse from useEffect to synchronous useMemo; no data migration needed |
-| structuredValuesRef not seeded — next autosave clears DB values | MEDIUM | Add seed on mount; existing DB values not lost (still in `inspection_notes`) but user may have already triggered extraction with empty structured section; re-entry required |
-| Unmount flush not implemented — race condition loses a correction | LOW | Add useEffect cleanup that calls persistNotes(); no data migration; affects only the race window |
-| localStorage hydration mismatch shipped | LOW | Remove localStorage read; no data migration; fix is a deploy |
+| Prompt regression discovered post-deploy | MEDIUM | Revert the prompt string to its previous version (it is a constant in source code — git revert is fast); no DB migration needed |
+| Inline re-extraction overwrites staff edits (shipped incorrectly) | HIGH | Remove inline re-extraction feature from UI; fix data flow architecture; re-deploy; affected records need manual review by staff |
+| Few-shot examples cause template drift | LOW | Remove the offending examples; re-test; re-deploy |
+| Hourmeter prompt change causes regressions for other numeric fields | LOW | Revert the hourmeter section of the prompt; add a comment that the section was previously modified and why it was reverted |
+| `setValue` without `shouldDirty` causes saves to silently drop re-extracted values | MEDIUM | Add `shouldDirty: true` option; re-deploy; affected records cannot be automatically fixed — staff must re-review any records saved after the broken deploy |
 
 ---
 
@@ -227,27 +342,29 @@ For v1.2 restoration, the lookup must use the exact same `field.key` values that
 
 | Pitfall | Prevention Phase | Verification |
 |---------|------------------|--------------|
-| Radix Select defaultValue timing | PREFILL-06 | Navigate away, return — Select shows correct value, not placeholder |
-| Uncontrolled → controlled switching | PREFILL-06 | No React controlled/uncontrolled warning in console |
-| Stale values overriding corrections (unmount race) | PREFILL-06 | Edit → navigate away before 500ms → reload → DB has new value |
-| Hydration mismatch from localStorage | PREFILL-06 | Hard refresh with saved values — no hydration error in console |
-| Supabase Realtime conflicts | Not applicable v1.2 | N/A — no Realtime in use; flag if Realtime is scoped |
-| parseStructuredFields key mismatch | PREFILL-06 | Unit test: round-trip write → parse → restore for all priority fields |
-| structuredValuesRef not seeded | PREFILL-06 | Restore → immediately extract without edits → verify DB has correct structured values |
-| Partial restoration (textarea only) | PREFILL-06 | Both structured inputs AND textarea pre-filled on reload |
+| Prompt regression across asset types | Prompt improvement (hourmeter/suspension) | Run spot-check extractions for Truck, Excavator, Forklift before and after each prompt edit |
+| Hourmeter OCR — photo problem vs prompt problem | Hourmeter accuracy phase | Inspect failure photos before writing any prompt change; document the root cause finding |
+| Few-shot examples causing template drift | Description quality phase | Test description generation for 3+ subtypes after each example addition |
+| Inline re-extraction overwriting DB | Inline field editing phase | Data flow architecture decision documented in phase plan before code is written |
+| GPT-4o Zod schema constraints breaking structured output | Any schema modification phase | Log the JSON Schema sent to OpenAI; verify shape after any schema change |
+| Suspension confidence calibration | Suspension inference phase | Explicit lookup table in aiHint; test with known configurations (T909 = Airbag, Hino 300 = Spring) |
+| Targeted re-extraction latency | Inline field editing phase | Time the re-extraction before shipping; must be under 8 seconds |
+| `setValue` not marking field dirty | Inline field editing phase | After inline re-extract and save, confirm re-extracted field is in `assets.fields` |
+| Description style conflicts with template routing | Description quality phase | Generate descriptions for Truck + Excavator + Forklift after each style change |
+| Prompt injection via arbitrary fieldKey | Inline field editing API phase | Validate fieldKey against schema before use in prompt construction |
 
 ---
 
 ## Sources
 
-- Direct codebase inspection: `src/components/asset/InspectionNotesSection.tsx` (structuredValuesRef initialisation to `{}`, uncontrolled inputs, debounce without unmount flush), `src/app/api/extract/route.ts` (parseStructuredFields — exported, round-trip contract), `src/app/(app)/assets/[id]/photos/page.tsx` (server-side initialNotes prop delivery) — HIGH confidence
-- React documentation on controlled vs uncontrolled inputs: `value` prop → controlled; `defaultValue` → uncontrolled read-once initialiser; switching between them is forbidden and triggers warning — HIGH confidence (React official docs)
-- Radix UI Select issues: #1223 (wrong defaultValue in native select), #1569 (unable to clear to placeholder), #1808 (reset with react-hook-form fails), #3556 (controlled/uncontrolled switch on Tabs) — MEDIUM confidence (GitHub issues, not in official release notes)
-- react-hook-form documentation: `defaultValues` are cached and not reactive; use `reset()` with new values for async-loaded data; `setValue` after `reset` can cause inconsistency — HIGH confidence (official react-hook-form docs and FAQ)
-- Next.js hydration error documentation: browser-only APIs (localStorage, sessionStorage) must not be accessed during render; use `useEffect` for client-only state; `useEffect` timing is incompatible with `defaultValue` — HIGH confidence (Next.js official docs: `/docs/messages/react-hydration-error`)
-- Codebase search confirming no Supabase Realtime subscriptions in this project — HIGH confidence (direct grep, zero results)
+- Direct codebase inspection: `src/app/api/extract/route.ts`, `src/app/api/describe/route.ts`, `src/lib/ai/extraction-schema.ts`, `src/components/asset/ReviewPageClient.tsx` — HIGH confidence
+- react-hook-form documentation: `setValue` options (`shouldDirty`, `shouldTouch`, `shouldValidate`); `dirtyFields` behaviour; `defaultValues` caching — HIGH confidence (official docs)
+- OpenAI structured output documentation: JSON Schema constraints supported by GPT-4o; Zod-to-JSON-Schema conversion via Vercel AI SDK — MEDIUM confidence (OpenAI platform docs + Vercel AI SDK source)
+- GPT-4o vision OCR behaviour: decimal digits in LCD displays; positional attention in long prompts — MEDIUM confidence (community-verified patterns; not in official OpenAI documentation)
+- Vercel AI SDK v6: `Output.object()` pattern; `generateText` with structured output — HIGH confidence (Vercel AI SDK official docs, confirmed as correct pattern in this codebase)
+- Description prompt template routing: Phase 16-19 decisions documented in PROJECT.md — HIGH confidence (project history)
 
 ---
 
-*Pitfalls research for: v1.2 pre-fill value restoration — prestige_assets / Slattery Auctions*
-*Researched: 2026-03-21*
+*Pitfalls research for: v1.6 AI quality improvements + inline field editing — prestige_assets / Slattery Auctions*
+*Researched: 2026-04-18*

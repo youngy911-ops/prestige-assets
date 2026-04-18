@@ -1,41 +1,22 @@
 # Feature Research
 
-**Domain:** Pre-fill value restoration — in-progress form persistence for internal inspection tool
-**Researched:** 2026-03-21
-**Confidence:** HIGH (direct codebase analysis of all relevant files; established React patterns)
-
-> Supersedes v1.1 feature research. All v1.1 features are shipped and validated.
-> This file covers v1.2 PREFILL-06 only.
+**Domain:** AI extraction quality and inline field editing — auction asset book-in pipeline
+**Researched:** 2026-04-18
+**Confidence:** HIGH (codebase verified) / MEDIUM (AI behaviour patterns from multiple sources)
 
 ---
 
-## Context: The Exact Problem
+## Context: What Already Exists
 
-`InspectionNotesSection` renders type-specific structured fields (VIN, Odometer, Hourmeter,
-Suspension Type select, Unladen Weight, Length, etc.) plus a freeform "Other notes" textarea.
+The v1.5 pipeline is:
+1. Staff photograph build plate + asset
+2. GPT-4o vision extracts fields from photos into typed Zod schema with per-field `{ value, confidence }` objects
+3. Staff review form highlights low-confidence fields; staff correct and confirm
+4. Two aiHint layers: schema description strings per field, plus system prompt inference blocks per asset type
+5. `inspection_notes` structured fields (VIN, odometer, hourmeter, suspension, etc.) flow as authoritative overrides — AI cannot clobber them
+6. Second GPT-4o call generates description text from confirmed fields + locked per-subtype template
 
-On every user input, the component serialises all values into a single `inspection_notes` text
-string in Supabase via a 500ms debounce autosave. The serialisation format is:
-
-```
-vin: 1HGCM82633A123456
-odometer: 187,450
-suspension: Air
-Notes: full log books, 3 keys
-```
-
-On page load, this string is fetched server-side and passed to the component as `initialNotes`.
-
-**What works:** The freeform `<textarea>` uses `defaultValue={initialNotes ?? ''}` — it displays
-the entire raw string on reload (including structured lines — a secondary bug).
-
-**What breaks:** The structured `<Input>` and `<Select>` fields have no `defaultValue` or `value`
-prop. They start blank on every page load regardless of what `initialNotes` contains.
-`structuredValuesRef` is initialised to `{}` — so the first autosave after reload overwrites the
-persisted notes string with only whatever fields the user re-types, silently dropping the rest.
-
-This is a deliberate deferral: PROJECT.md key decisions — "Select uncontrolled in
-InspectionNotesSection (no value/defaultValue) (Phase 9): Re-hydration deferred to v1.2 (PREFILL-06)".
+This research covers five new features for v1.6, all improving output quality without changing the core pipeline architecture.
 
 ---
 
@@ -43,86 +24,106 @@ InspectionNotesSection (no value/defaultValue) (Phase 9): Re-hydration deferred 
 
 ### Table Stakes (Users Expect These)
 
+These features are blocking quality issues — the current output fails in predictable, reproducible ways. Treating them as "nice to have" is wrong.
+
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| Structured field inputs pre-populated on reload | Staff enter VIN and odometer during on-site inspection, navigate away, return — values must be there. Re-entry wastes time and risks transcription errors on a second attempt. The data is already in Supabase; the component just fails to read it back. | LOW | Parse `initialNotes` into `{ [fieldKey]: string }` at component mount. Pass parsed value as `defaultValue` to each `<Input>`. Known field keys come from `getInspectionPriorityFields(assetType)` — no guessing required. |
-| Suspension select pre-selected on reload | The suspension `<Select>` shows its placeholder ("Select suspension type") even when a value has been saved. Same root cause as text inputs — no `defaultValue` prop. | LOW | Same parse step; pass `defaultValue={parsedValues['suspension']}` to `<Select>`. `undefined` when no stored value leaves the placeholder intact. Base UI Select accepts `defaultValue` for uncontrolled pre-selection. |
-| `structuredValuesRef` seeded from parsed values on mount | This is the correctness requirement hidden behind the display requirement. If only `defaultValue` props are added without seeding the ref, the first autosave after reload will serialise only the newly modified field plus an empty object for all others — silently erasing the persisted VIN, odometer, etc. | LOW | Initialise `structuredValuesRef.current` to the parsed map at mount, before any user interaction. One line change to the ref initialisation. |
-| Freeform textarea shows only the freeform portion | Currently `defaultValue={initialNotes ?? ''}` shows the entire raw string including structured lines like "vin: 1HGCM...". Staff see their free notes mixed with serialised key-value pairs. | LOW | Extract the "Notes: ..." suffix from `initialNotes` when present; use only that portion for textarea `defaultValue`. When no "Notes:" line exists, textarea is empty. `notesRef.current` must also be initialised from the extracted portion (not the full string) or the next autosave re-introduces the structured lines as freeform text. |
+| Hourmeter decimal fix | "1,234.5 hrs" misread as "12345" happens on every instrument cluster with tenths digit; staff must manually correct every time | LOW-MEDIUM | Prompt-only fix. The system prompt already has detailed hourmeter reading instructions (lines 65-76 in extraction-schema.ts) but the decimal preservation instruction is weaker than the odometer counterpart. The odometer block uses three reinforcing phrases: "INCLUDE the decimal", "do NOT drop it", and a worked example. Hourmeter says "include the decimal" without the same force. Alignment of the two blocks + a worked example covering the comma-as-thousands-separator merge problem is the fix. No new infrastructure. |
+| Suspension type inference | Trucks with known make/model/year can confidently be assigned Spring or Airbag without a photo of the chassis — buyers expect this field filled; blank is worse than an inferred value | LOW | GPT-4o already infers engine specs, transmission, and drive type from make/model/year (Step 2 of system prompt). Suspension is absent from the TRUCKS inference block — it appears only in the TRAILER block. Adding a compact suspension lookup table (same format as the gearbox/engine series tables already in truck schema aiHint) covers more than 90% of cases. Pure aiHint/system-prompt addition. |
+| Description quality uplift | Jack's handwritten descriptions include specific selling points, factual detail, and industry-standard phrasing. Current AI output is technically correct but comparatively flat. | MEDIUM | Not a model capability problem — it is a few-shot example coverage problem. The existing QUALITY REFERENCE EXAMPLES block in DESCRIPTION_SYSTEM_PROMPT has about 10 examples concentrated on trucks and earthmoving. Forklifts, agriculture, marine, and caravan have no quality reference examples. Adding 6-8 more examples for the weak categories + an explicit "lead with the most valuable spec" rule in UNIVERSAL RULES is the primary lever. |
+| Extraction accuracy (missing fields, confidence calibration) | Staff must manually fill too many fields that should be extractable; mis-calibrated confidence (high confidence on wrong values) undermines the review workflow | MEDIUM | Two sub-problems: (a) Missing fields — gaps are in fields where aiExtractable is false or aiHint is sparse; audit required. (b) Confidence calibration — the current confidence description is accurate but GPT-4o over-reports "high" for inferred values. Adding a worked example per level ("high: you read the badge directly. medium: you inferred from model knowledge. low: you guessed.") reduces this. |
+| Inline field editing post-extraction | Staff cannot fix one wrong value without re-running the full AI pipeline; re-extraction is slow and risks overwriting other correct fields | MEDIUM | The review form already supports direct editing — all fields render as editable inputs via DynamicFieldForm. The dirtyFields tracking and conflict-detection modal in ReviewPageClient already protect manually edited fields during re-extraction. The feature is mostly friction removal: add a per-field dirty/locked indicator, confirm that manual edits survive re-extraction (they do), and clarify to staff that typing directly is the correct path for single-field fixes. |
 
 ### Differentiators (Competitive Advantage)
 
-This is an internal tool with one user group. Competitive differentiation is not applicable.
-The value is reliability: staff should never re-enter data they have already entered.
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| Suspension inference knowledge table | Removes the number-one most-blank field in truck records with zero effort from staff; no other auction software does this | LOW | Pure prompt data addition. Cover: Kenworth T909/T610 prime mover spec → Airbag; Kenworth T909 vocational/tipper spec → Spring; Mack Super-Liner/Trident → Airbag; Mack Granite vocational → Spring; Volvo FH → Airbag; Scania R/S → Airbag; Hino 500/700 series → Spring; Isuzu FVZ and above → Spring. Subtype context changes the answer for Kenworth/Mack — `buildSystemPrompt` already receives `asset_subtype`, so conditional inference is possible. |
+| Style-matched descriptions via expanded few-shot bank | If descriptions sound like Jack, staff paste without edits — saves 2-5 min per asset | MEDIUM | Expand QUALITY REFERENCE EXAMPLES with one example per currently-uncovered category: forklift with damage note, agricultural tractor with full linkage/PTO detail, marine with twin engines, caravan with full fit-out. Each example demonstrates the rhythm: present tense, lead with headline spec, name brand components verbatim. |
+| Per-field locked indicator in review form | Visual confirmation that a manually edited field will not be overwritten by re-extraction | LOW | UI-only. A pencil icon or coloured left-border on fields where `dirtyFields[key]` is true. The protection already exists in the conflict-detection logic; the lock makes it visible. Zero backend change. |
+| Stale description badge | Prevents staff pasting a description that was generated before they corrected key fields | LOW | Track a `descriptionGeneratedAt` timestamp client-side or in DB. If confirmed fields have been saved after that timestamp, show a yellow badge on the description block. One `useState` or one DB column. |
 
 ### Anti-Features (Commonly Requested, Often Problematic)
 
 | Feature | Why Requested | Why Problematic | Alternative |
 |---------|---------------|-----------------|-------------|
-| Migrate to a `pre_fill_fields` JSONB column | Dedicated column makes parse/restore trivial and eliminates fragility in the `key: value` format | New Supabase migration + update to `saveInspectionNotes` + update to all call sites that read inspection notes in `/api/extract` and `/api/describe`. High blast radius for a problem already solvable by parsing known field keys from the existing string. | Parse only known field keys from the existing format. The format is controlled entirely by the app, so the only keys that appear are the ones `InspectionNotesSection` serialises. |
-| Switch structured fields from uncontrolled to controlled (`useState`) | Seems cleaner; enables programmatic clear/reset | Forces a re-render per keystroke × N fields. The ref-based approach is a deliberate v1.1 decision (PROJECT.md). Switching requires reconciling `notesRef` / `structuredValuesRef` architecture. | Keep ref-based approach; add `defaultValue` only. No controlled state needed for restore. |
-| Auto-save success indicator ("Saved" toast) | Reassures users data is being persisted | Constant UI noise on a 500ms debounce. Internal tool. | Show an error state only on `saveInspectionNotes` returning `{ error }`. Do not add per-save success feedback. |
-| Clear-fields button | "Start over" option | Uncontrolled inputs cannot be cleared without a React `key` remount trick. Adding it requires controlled state or an unmount/remount. Staff can overtype existing values. | Not needed. Staff overtype to correct. |
-| Restore structured field values post-extraction | Staff might want to see what they entered while reviewing extraction results | `InspectionNotesSection` is intentionally hidden when `status === 'success'` in `ExtractionPageClient`. Structured values are already baked into the extracted Salesforce fields. Showing stale pre-extraction values alongside extraction results creates confusion ("did the AI use these?"). | Keep existing hide-on-success behaviour. |
+| Automatic description regeneration on field edit | Staff edit a field and expect the description to update automatically | Descriptions take 10-20s and cost API credits; silent background regeneration creates version confusion; staff may paste the stale version | Keep "Regenerate Description" as an explicit button. Add stale description badge (above). |
+| Logprobs-based confidence from OpenAI | More "scientific" confidence scores using token probabilities | Confirmed unavailable: OpenAI API returns empty logprobs arrays when Structured Outputs (json_schema) is enabled — which is the current architecture. Switching away from structured outputs breaks the typed extraction schema. | Keep self-reported confidence (high/medium/low). It is well-calibrated for this use case and honest about uncertainty. |
+| Per-asset-type fine-tuned model | Higher accuracy on specific asset types | Dataset cost of $20k+, weeks of fine-tuning, retraining on every schema change, model versioning complexity | Better aiHint data and expanded few-shot examples achieve equivalent improvement for free. |
+| Single-field re-extraction from photos | "Re-extract just the hourmeter from this photo" | Requires new `/api/extract-field` route, focused schema, signed URL re-fetch, context passing, 10-20s wait — all for a correction that takes 3 seconds to type manually | Staff type the correct value directly. The form already accepts it. Build this only if evidence shows staff need photo re-extraction more than direct input. |
+| Confidence score as percentage (0-100%) | Appears more precise than high/medium/low | GPT-4o's self-reported certainty is not linearly calibrated — "87% confident" implies false precision that does not exist | Keep three-tier system. Consider adding extraction source type ("read from photo" vs "inferred from model knowledge") as a meaningful supplement. |
 
 ---
 
 ## Feature Dependencies
 
 ```
-[Parse initialNotes → { [fieldKey]: string } map]
-    └──required by──> [defaultValue on each <Input>]
-    └──required by──> [defaultValue on <Select>]
-    └──required by──> [Seed structuredValuesRef.current at mount]
+Hourmeter decimal fix
+    └──requires──> System prompt change in extraction-schema.ts buildSystemPrompt
+                       └──QA: manual test with real hourmeter photos
 
-[Seed structuredValuesRef.current at mount]
-    └──required for──> [Correct autosave on first keystroke after reload]
-                           Without this: first save drops all unmodified persisted fields.
-                           This is a silent data-loss bug, not just a display issue.
+Suspension type inference
+    └──requires──> Suspension lookup table in truck schema aiHint + buildSystemPrompt Step 2 TRUCKS block
+    └──no structural dependencies (select field + options already exist)
 
-[Extract freeform "Notes: ..." suffix from initialNotes]
-    └──required for──> [Textarea defaultValue shows only freeform text]
-    └──required for──> [notesRef.current initialised correctly]
-                           Without this: first autosave after reload re-introduces structured
-                           lines into the freeform notes portion of the serialised string,
-                           producing double-serialisation on next autosave.
+Description quality uplift
+    └──requires──> Expanded QUALITY REFERENCE EXAMPLES in DESCRIPTION_SYSTEM_PROMPT (describe/route.ts)
+    └──enhances──> Suspension type inference (inferred suspension used verbatim in description)
 
-[getInspectionPriorityFields(assetType)]
-    └──provides──> [Known field keys for targeted parse]
-                       Limits parse to keys the component actually renders.
-                       Prevents ambiguous "key: value" lines in freeform notes
-                       from being misread as structured fields.
+Extraction accuracy audit
+    └──requires──> Field-by-field audit of aiExtractable=false fields and sparse aiHints
+    └──requires──> Confidence calibration language update in buildSystemPrompt
+    └──enhances──> Hourmeter decimal fix (part of same extraction accuracy domain)
+
+Inline field editing (review form, no re-extraction)
+    └──requires──> nothing new — form already has setValue() and dirty tracking
+    └──enhances──> Per-field locked indicator (visual layer on existing dirtyFields)
+
+Per-field locked indicator
+    └──requires──> Inline field editing confirmed working (locked = dirty + intentionally set)
+    └──no backend change
+
+Stale description badge
+    └──requires──> Tracking when description was last generated vs when fields were last saved
+    └──enhances──> Inline field editing (signals that description needs regeneration after edit)
+
+Single-field re-extraction route (deferred)
+    └──requires──> New /api/extract-field route, focused schema, context passing
+    └──conflicts──> Should NOT be built until inline form editing proves insufficient
 ```
 
 ### Dependency Notes
 
-- **Parse must happen before render.** The parsed map must be available before `structuredValuesRef` is assigned and before JSX is returned. A `useMemo` or inline calculation at the top of the component body is correct. `useEffect` is wrong — it runs after render, so the first paint would still show empty inputs.
-
-- **Known-key parse is safer than regex.** Only parse lines whose key matches a field key returned by `getInspectionPriorityFields(assetType)`. Do not attempt to parse all `key: value` lines generically — staff freeform notes may contain colons (e.g. "Condition: good").
-
-- **Both surfaces are covered by one fix.** `InspectionNotesSection` is rendered on both the photos page (`/assets/[id]/photos`) and the extract page (`/assets/[id]/extract`) pre-extraction. Both pass `initialNotes` from the server. One fix to the component covers both surfaces.
-
-- **Post-extraction surface is unchanged.** The extract page hides `InspectionNotesSection` when `status === 'success'`. No restoration behaviour is needed for the post-extraction state.
+- **All five v1.6 features are independent of each other** — each can ship in isolation.
+- **Hourmeter fix is pure prompt change** — lowest risk, highest return, ship first.
+- **Suspension inference is pure aiHint/prompt data** — no schema change, no new fields.
+- **Description uplift is string literal expansion** — only file touched is `describe/route.ts`.
+- **Inline editing is already possible** — the implementation task is removing friction and adding visual signals, not building new form infrastructure.
+- **Single-field re-extraction is deferred** — direct typing is faster for the corrections that actually occur (one-digit decimal, wrong suspension option). Build only if staff feedback contradicts this.
 
 ---
 
 ## MVP Definition
 
-### v1.2 Launch With (this milestone)
+### Launch With (v1.6)
 
-- [ ] **Parse `initialNotes` into known-key value map at component mount** — the foundation for all other restore behaviour
-- [ ] **Pass parsed value as `defaultValue` to each `<Input>`** — structured text fields display their persisted values on load
-- [ ] **Pass parsed value as `defaultValue` to `<Select>`** — suspension type (and any future select fields) display their persisted selection on load
-- [ ] **Seed `structuredValuesRef.current` from parsed map** — prevents silent data loss on first autosave after reload
-- [ ] **Extract freeform suffix for textarea `defaultValue` and `notesRef` init** — fixes secondary display bug where textarea showed serialised key-value lines; prevents double-serialisation
+- [ ] Hourmeter decimal fix — align with odometer block: three-layer instruction + comma-separator worked example
+- [ ] Suspension type inference — add TRUCKS suspension table to Step 2 of buildSystemPrompt, covering major makes/subtypes
+- [ ] Description quality uplift — expand QUALITY REFERENCE EXAMPLES with forklift, agriculture, marine, caravan; add "lead with headline spec" rule
+- [ ] Inline field editing — confirm dirtyFields protection works, add per-field locked indicator (pencil icon)
+- [ ] Extraction accuracy audit — review aiExtractable flags for extras/attachments fields, add confidence calibration worked examples
 
-### Add After Validation
+### Add After Validation (v1.x)
 
-- [ ] **Save failure inline error** — surface `saveInspectionNotes({ error })` to the user. Low priority; the connection is reliable, but an error state is better than silent failure.
+- [ ] Stale description badge — add after staff confirm they regenerate after field corrections
+- [ ] Suspension inference for Trailer schema — airbag vs spring matters for tipper/side-tipper; same pattern as truck, extend after truck version stable
+- [ ] Suspension inference for Agriculture schema — rear axle suspension relevant for tractors on road
 
 ### Future Consideration (v2+)
 
-- [ ] **`pre_fill_fields` JSONB column** — only if the parse approach proves fragile in practice. The current format is app-controlled, so fragility is unlikely. Add only if evidence of real bugs emerges.
+- [ ] Single-field re-extraction route — defer until evidence staff need this over direct typing
+- [ ] Description A/B testing — systematic comparison of AI vs Jack's output requires catalogued asset corpus
+- [ ] Fine-tuned model for specific asset types — defer indefinitely unless dataset cost is justified by business scale
 
 ---
 
@@ -130,63 +131,31 @@ The value is reliability: staff should never re-enter data they have already ent
 
 | Feature | User Value | Implementation Cost | Priority |
 |---------|------------|---------------------|----------|
-| Text input defaultValue on reload | HIGH — primary reported gap; staff re-enter VIN, odometer every time | LOW — parse + prop | P1 |
-| Select defaultValue on reload | HIGH — suspension is common; shows placeholder when value exists | LOW — same parse, pass to Select | P1 |
-| Seed structuredValuesRef | HIGH — silent correctness bug; data loss without it | LOW — one-line initialisation change | P1 |
-| Freeform textarea freeform-only defaultValue | MEDIUM — visible bug but textarea content is functional despite noise | LOW — extract Notes: suffix | P1 (same task, negligible added cost) |
-| Save failure error state | LOW — infra is reliable | LOW | P3 |
-
-**Priority key:**
-- P1: Must have — directly addresses PREFILL-06
-- P2: Should add when possible
-- P3: Defer until evidence of need
-
----
-
-## Existing Workflow Integration
-
-Restoration sits entirely within the pre-extraction phase:
-
-```
-Photos page (/assets/[id]/photos)
-  Server Component: loads asset.inspection_notes from Supabase
-  InspectionNotesSection receives initialNotes
-      RESTORATION NEEDED HERE — structured fields must pre-populate
-      |
-      v (user clicks "Go to Extraction")
-
-Extract page (/assets/[id]/extract)
-  Server Component: loads asset.inspection_notes
-  ExtractionPageClient passes as inspectionNotes prop
-  InspectionNotesSection receives initialNotes (pre-extraction state)
-      ALSO BENEFITS FROM FIX — same component, same initialNotes prop
-      |
-      v (user clicks "Run Extraction")
-
-  InspectionNotesSection HIDDEN (status === 'success')
-      No restoration needed post-extraction.
-      |
-      v
-
-Review page (/assets/[id]/review)
-  Structured pre-fill values are already in Salesforce fields output.
-  InspectionNotesSection does not render here.
-```
-
-The fix is entirely self-contained within `InspectionNotesSection.tsx`. No changes to server
-pages, no changes to database schema, no changes to API routes.
+| Hourmeter decimal fix | HIGH — every tenths-digit instrument cluster fails today | LOW — prompt only | P1 |
+| Suspension type inference | HIGH — most-blank field in truck records | LOW — aiHint data addition | P1 |
+| Inline field editing (form-level dirty indicator) | HIGH — removes re-extraction workflow for single-field corrections | LOW — UI indicator on existing dirty state | P1 |
+| Description quality uplift | HIGH — descriptions require staff rewrites today | MEDIUM — few-shot expansion + rule | P1 |
+| Extraction accuracy audit + confidence calibration | MEDIUM — general improvement, not one specific bug | MEDIUM — field audit + prompt tuning | P2 |
+| Stale description badge | MEDIUM — prevents pasting outdated description | LOW — timestamp comparison | P2 |
+| Suspension inference for Trailers | MEDIUM — airbag is a premium signal in trailer records | LOW — same pattern | P2 |
+| Single-field re-extraction route | LOW — typing is faster for all likely correction types | HIGH — new route, focused schema | P3 |
 
 ---
 
 ## Sources
 
-- Direct codebase read: `src/components/asset/InspectionNotesSection.tsx` — uncontrolled inputs, `structuredValuesRef` initialisation, `persistNotes` serialisation format, `notesRef` initialisation
-- Direct codebase read: `src/lib/actions/inspection.actions.ts` — single `inspection_notes` text column confirmed, no structured storage
-- Direct codebase read: `src/app/(app)/assets/[id]/photos/page.tsx` — server-side load of `asset.inspection_notes`, passed as `initialNotes`
-- Direct codebase read: `src/components/asset/ExtractionPageClient.tsx` — `inspectionNotes` prop passed to `InspectionNotesSection`; hide-on-success behaviour confirmed
-- PROJECT.md key decisions: "Select uncontrolled in InspectionNotesSection (no value/defaultValue) (Phase 9): Re-hydration deferred to v1.2 (PREFILL-06)" — confirms scope and intent
-- React documentation pattern: uncontrolled inputs accept `defaultValue` for initial render without becoming controlled components; this is the standard pattern for restore-on-load without continuous re-render
+- Codebase: `/home/jack/projects/prestige_assets/src/app/api/extract/route.ts`
+- Codebase: `/home/jack/projects/prestige_assets/src/app/api/describe/route.ts`
+- Codebase: `/home/jack/projects/prestige_assets/src/lib/ai/extraction-schema.ts`
+- Codebase: `/home/jack/projects/prestige_assets/src/lib/schema-registry/schemas/truck.ts`
+- Codebase: `/home/jack/projects/prestige_assets/src/components/asset/ReviewPageClient.tsx`
+- [GPT-4o Vision OCR Limitations](https://medium.com/@tinyidp/gpt4o-vision-is-not-good-at-ocr-heres-the-solution-cd3bc0425e1b) — confirms digit/decimal accuracy issues with vision OCR; hybrid OCR approach documented
+- [How Examples Improve LLM Style Consistency](https://latitude.so/blog/how-examples-improve-llm-style-consistency) — 2-3 contextually relevant examples establish reliable style; diminishing returns after 3
+- [OpenAI Structured Outputs Guide](https://developers.openai.com/api/docs/guides/structured-outputs) — json_schema structured outputs confirmed for gpt-4o-2024-08-06+
+- [OpenAI Community: logprobs empty with Structured Outputs](https://community.openai.com/t/gpt-5-1-5-2-message-output_text-logprobs-is-empty-when-structured-outputs-json-schema-is-enabled-in-responses-api/1371927) — confirms self-reported confidence is only viable option; logprobs unavailable with json_schema
+- [GPT-4o OCR Experience](https://www.techjays.com/blog/optical-character-recognition-with-gpt-4o-an-experience) — prompt phrasing, resolution, and cropping tips for vision accuracy
 
 ---
-*Feature research for: Prestige Assets v1.2 — Pre-fill Value Restoration (PREFILL-06)*
-*Researched: 2026-03-21*
+
+*Feature research for: v1.6 AI Quality and Inline Field Editing — Prestige Assets*
+*Researched: 2026-04-18*

@@ -1,19 +1,17 @@
 # Project Research Summary
 
-**Project:** Prestige Assets v1.2 — Pre-fill Value Restoration (PREFILL-06)
-**Domain:** Pre-extraction form persistence and restoration — internal AI-powered asset data-capture tool (Next.js + Supabase)
-**Researched:** 2026-03-21
-**Confidence:** HIGH — all four research areas based on direct codebase analysis; no speculative assumptions
-
-> Note: This file supersedes the v1.1 summary (2026-03-21). v1.1 is shipped and validated (phases 08, 09, 10 complete). This summary covers v1.2 PREFILL-06 only.
+**Project:** Prestige Assets v1.6 — AI Quality & Workflow
+**Domain:** GPT-4o vision extraction quality improvements + inline field editing for auction asset book-in pipeline
+**Researched:** 2026-04-18
+**Confidence:** HIGH
 
 ## Executive Summary
 
-PREFILL-06 is a tightly scoped bug fix and restoration feature for `InspectionNotesSection`, an internal form component used by auction staff to capture structured asset data (VIN, odometer, suspension type, etc.) before AI extraction. The data is already being saved correctly to a single `inspection_notes text` column in Supabase using a `key: value\n` serialisation format. The bug is purely on the read side: the component does not parse `initialNotes` back into its structured inputs on mount, so fields appear blank on every reload. A companion bug causes the freeform "Other notes" textarea to display the entire serialised string (including structured key-value lines) instead of just the staff's freeform notes.
+Prestige Assets v1.6 is a focused quality milestone on top of a proven extraction pipeline. The existing stack (Vercel AI SDK v6, GPT-4o, Zod 4, react-hook-form, Supabase) requires zero new dependencies — all improvements are prompt engineering, schema annotation, and targeted UI/route changes. Research across all four domains confirms this is not a capability gap; it is a configuration and calibration gap. The three categories of work are: (1) fixing known extraction misfires via prompt and aiHint changes, (2) improving description style via expanded few-shot examples, and (3) enabling inline field-level re-extraction so staff can correct a single field without triggering a full AI re-run.
 
-The recommended approach requires zero new dependencies and no database migrations. The fix involves three coordinated changes: (1) extracting the already-written `parseStructuredFields` function to a shared utility accessible by client components, (2) calling it synchronously in the `InspectionNotesSection` component body on mount to derive `parsedInitial` and `freeformInitial` maps, and (3) passing these values as `defaultValue` to text inputs, as `defaultValue` or controlled `value` to the Radix/Base UI Select, and as `defaultValue` to the textarea. The `structuredValuesRef` and `notesRef` refs must also be seeded from the parsed maps at mount — failing to do this causes a silent data-loss bug where the first autosave after reload overwrites all saved structured values with an empty object.
+The recommended approach is to treat the milestone as three parallel-capable workstreams with a clear sequencing constraint: prompt accuracy work (hourmeter decimal, suspension inference) ships first and independently, description quality work ships in parallel, and inline re-extraction ships last because it depends on the `buildExtractionSchema` filter extension. Every change is reversible — all improvements live in string constants and small route modifications, making git revert the full recovery plan for any regression.
 
-The main implementation risk is timing. Radix Select's `defaultValue` is read-once at mount — if parsing is deferred to a `useEffect`, the Select will mount with no value and will not recover. All parsing must happen synchronously in the component function body. A secondary risk is the existing 500ms debounce without an unmount flush: if staff navigate away mid-edit, in-progress changes are silently lost. Adding a `useEffect` cleanup that flushes `persistNotes()` on unmount is a required part of this implementation and should not be deferred — PREFILL-06 is the only planned code window to touch this component.
+The key risks are silent prompt regression across asset types (a change for Excavators can break Forklifts in the shared monolithic prompt), inline re-extraction incorrectly writing to the DB and overwriting staff edits, and few-shot description examples drifting from the strict per-subtype templates. All three risks are well-understood and preventable with specific, low-effort verification steps identified in research. There are no architectural unknowns.
 
 ---
 
@@ -21,110 +19,102 @@ The main implementation risk is timing. Radix Select's `defaultValue` is read-on
 
 ### Recommended Stack
 
-No new technology is introduced for v1.2. The entire fix operates within the existing stack. `parseStructuredFields` (already written and tested in `extract/route.ts`) is moved to `src/lib/utils/parseStructuredFields.ts`; a companion `extractFreeformNotes` function (5 lines) is added alongside it. React `defaultValue` handles text input restoration; a minimal `useState` handles the Radix/Base UI Select if `defaultValue` alone proves unreliable on hydration.
+Zero new dependencies. The entire milestone is delivered within the current stack. `generateText + Output.object({ schema })` is the validated Vercel AI SDK v6 pattern for structured extraction — `generateObject` is deprecated and must not be used. GPT-4.1 cannot be used as a model upgrade because it does not support `json_schema` structured outputs (community-confirmed "Unsupported model" error as of April 2025). Stay on `openai('gpt-4o')`.
 
-**Core technologies (all existing):**
-- `inspection_notes text` (Supabase): Storage for all pre-extraction values — no schema change needed; data is already present and correctly saved
-- `parseStructuredFields` (existing function, moved to shared lib): Pure parser from `"key: value\n"` string to `Record<string, string>` — already handles all edge cases including the `Notes:` freeform exclusion guard
-- `extractFreeformNotes` (new companion function, ~5 lines): Extracts the value after `Notes: ` prefix for the freeform textarea `defaultValue`
-- React `defaultValue` (React 19, existing): Sets initial DOM value for uncontrolled text inputs once on mount — compatible with the existing `onChange` → ref pattern; requires synchronous parse before first render
-- React controlled `value` + `useState` (React 19, existing): Required for Radix/Base UI Select when initial value comes from a server-rendered prop if `defaultValue` risks a blank trigger on hydration timing differences
-
-See `.planning/research/STACK.md` for the full per-file change table and version compatibility notes.
+**Core technologies:**
+- `ai` (Vercel AI SDK ^6.0.116): `generateText + Output.object()` for structured extraction — already validated, no upgrade needed
+- `@ai-sdk/openai` ^3.0.41: `openai('gpt-4o')` is the correct model string — do NOT switch to `gpt-4.1`
+- `zod` ^4.3.6: `.describe()` on fields is the primary prompt engineering mechanism — extraction schema is a shape contract, not a validator; no `.refine()` or `.min()` on extracted fields
+- Next.js Route Handlers (not Server Actions): correct for long-running AI calls; inline re-extraction extends the existing `/api/extract` route with an optional `fieldKeys` param rather than creating a separate new route
+- `react-hook-form` ^7.71.2: `setValue(key, val, { shouldDirty: true, shouldTouch: true })` is required for all programmatic field updates from re-extraction
 
 ### Expected Features
 
-**Must have (table stakes — all P1 for PREFILL-06):**
-- Structured text inputs (`<Input>`) pre-populated on reload — staff should never re-enter VIN, odometer, etc. after saving them once
-- Suspension `<Select>` pre-selected on reload — currently displays placeholder despite saved value being present in DB; primary visible symptom reported
-- `structuredValuesRef` seeded from parsed values at mount — hidden correctness requirement; without this, the first autosave after reload silently erases all saved structured values even if inputs display correctly
-- Freeform textarea shows only freeform notes portion — secondary display bug fixed as part of the same change; `notesRef` must also be initialised from freeform-only portion to prevent double-serialisation on next autosave
+**Must have (table stakes — blocking quality issues):**
+- Hourmeter decimal fix — `1234.5` misread as `12345` on every tenths-digit instrument cluster; pure prompt change aligned with existing odometer block
+- Suspension type inference — most-blank field in truck records; add manufacturer knowledge lookup table to `suspension` aiHint in truck/trailer schemas
+- Description quality uplift — current output is flat; expand `QUALITY REFERENCE EXAMPLES` with forklift, agriculture, marine, caravan examples
+- Inline field editing with dirty indicator — remove re-extraction friction; dirty tracking already exists, visual lock indicator is the missing piece
+- Extraction accuracy audit + confidence calibration — audit `aiExtractable` flags and add worked examples per confidence level
 
-**Should have (add after validation):**
-- Save failure inline error state — surface `saveInspectionNotes` errors to the user; currently fails silently
+**Should have (differentiators, v1.x):**
+- Stale description badge — shows when description was generated before field corrections were saved
+- Suspension inference for Trailer and Agriculture schemas — same pattern, ship after truck version is stable
 
 **Defer (v2+):**
-- `pre_extraction_fields JSONB` column — eliminates the string serialisation contract entirely; only warranted if the parse approach proves fragile in practice (unlikely given app-controlled format)
-
-See `.planning/research/FEATURES.md` for the full feature dependency graph, MVP checklist, and prioritisation matrix.
+- Single-field re-extraction via a separate `/api/extract-field` route — direct form editing is faster for all likely correction types; build only on evidence
+- Fine-tuned model — requires 150+ labelled examples, training cost, model management; in-context few-shot achieves equivalent style for free
+- Description A/B testing — requires catalogued asset corpus
 
 ### Architecture Approach
 
-The change is self-contained within five files: one new shared utility, three import-path updates (no logic change), and one component modification. No Server Components, no API routes, no database schema, and no new React component boundaries change. The architecture decision to keep data in the existing text column (rather than adding per-field columns) is explicitly supported: any new `inspectionPriority` fields added to the schema registry automatically participate in the round-trip without a migration.
+All v1.6 changes fit within the existing component hierarchy with no new route handlers required. The key architectural decision confirmed by research is that inline re-extraction extends `/api/extract` with an optional `fieldKeys?: string[]` body parameter — when present, `buildExtractionSchema` filters to only those fields, the result is returned to the client as a partial `ExtractionResult`, and no write to `assets.extraction_result` occurs. The DB write only happens at `saveReview()` time via `assets.fields`. This keeps the extraction snapshot clean and protects staff edits. The only new file is `src/lib/ai/description-prompt.ts` — an extraction of the 1,000-line `DESCRIPTION_SYSTEM_PROMPT` constant from the route handler, which makes it independently editable and testable.
 
-**Files changed:**
-1. `src/lib/utils/parseStructuredFields.ts` (new) — shared utility: `parseStructuredFields()` + `extractFreeformNotes()`
-2. `src/components/asset/InspectionNotesSection.tsx` (modified) — synchronous parse on mount; `defaultValue` on inputs; Select fix; textarea fix; unmount flush
-3. `src/app/api/extract/route.ts` (modified) — remove inline definition; import from shared lib
-4. `src/app/api/describe/route.ts` (modified) — update import path
-5. `src/__tests__/extract-route.test.ts` (modified) — update import path if test imports the function directly
-
-**Unchanged:** Server Components, all Server Actions, all route handler logic, `ExtractionPageClient.tsx`, `inspection.actions.ts`, entire Supabase schema
-
-See `.planning/research/ARCHITECTURE.md` for the current vs. target data flow diagrams, step-by-step build order, and the annotated system overview diagram.
+**Major components and what changes:**
+1. `buildSystemPrompt()` in `extraction-schema.ts` — strengthen hourmeter decimal rule with three-layer instruction + worked example; add chain-of-thought verification loop for numeric fields
+2. `aiHint` on `suspension` in `truck.ts` / `trailer.ts` — add explicit make/model/year lookup table covering common Australian truck fleet configurations
+3. `src/lib/ai/description-prompt.ts` (new) — extract `DESCRIPTION_SYSTEM_PROMPT` and `QUICK_DESCRIPTION_PROMPT`; expand `QUALITY REFERENCE EXAMPLES` for weak categories
+4. `/api/extract` route — add optional `fieldKeys` + `fieldHints` params; return partial result without DB write when `fieldKeys` present
+5. `FieldRow.tsx` — add per-field re-extract icon button (aiExtractable fields with null/low-confidence only); spinner during in-flight call
+6. `ReviewPageClient.tsx` + `DynamicFieldForm.tsx` — wire `triggerFieldReExtraction(fieldKey)` callback; handle partial result merge via `setValue(key, val, { shouldDirty: true, shouldTouch: true })`
 
 ### Critical Pitfalls
 
-Full detail with warning signs, recovery steps, and verification checklists in `.planning/research/PITFALLS.md`.
+1. **Silent prompt regression across asset types** — `buildSystemPrompt` is a monolithic string shared by all 8 asset types. A hourmeter fix can break Forklift extractions without any error being thrown. Prevention: run spot-check extractions for Truck, Excavator, and Forklift with known-good photos before and after every prompt change.
 
-1. **Radix Select `defaultValue` timing** — `defaultValue` is read-once at mount; if parsing runs in a `useEffect`, the Select mounts with no value and ignores all later changes. Parse `initialNotes` synchronously in the component body (or `useMemo`) before the first render — never in an effect.
+2. **Inline re-extraction writes to `extraction_result` DB column** — overwrites staff edits to other fields; the review form shows wrong values on next page load. Prevention: the route must NOT write to the DB when `fieldKeys` is present; return only to client state. Architecture decision documented before code is written.
 
-2. **`structuredValuesRef` not seeded — silent data loss** — Adding `defaultValue` to inputs without also seeding `structuredValuesRef.current` means the first autosave after reload serialises an empty object, overwriting VIN, odometer, etc. already in the DB. Both the display props and the ref initialisation must be fixed together in the same commit.
+3. **Few-shot description examples cause template drift** — adding real descriptions that predate strict templates teaches GPT-4o old formats. Prevention: every new example manually verified against its subtype template before committing.
 
-3. **Unmount flush missing — race condition on navigation** — The existing 500ms debounce has no `useEffect` cleanup. Staff who navigate away within 500ms of an edit lose the change. Add a synchronous `persistNotes()` call in `useEffect` cleanup. This is a pre-existing bug that must be fixed in PREFILL-06 — it has no other planned implementation window.
+4. **`setValue` without `shouldDirty: true` silently excludes re-extracted fields from save** — `dirtyFields` filter skips the re-extracted field; it is not written to `assets.fields`. Prevention: all re-extraction `setValue` calls must include `{ shouldDirty: true, shouldTouch: true }`.
 
-4. **Uncontrolled → controlled switching warning** — Use `defaultValue` (uncontrolled) for text inputs. Do not pass `value={parsedValues[key]}` to inputs that currently have no `value` prop. For Radix Select: if using controlled `value`, initialise to `''` (never `undefined`) to remain unambiguously controlled throughout the component lifetime.
-
-5. **`parseStructuredFields` key format contract** — Serialisation uses `field.key` verbatim as the line prefix; restoration must look up by the exact same key. A schema key change silently breaks restoration without any error or warning. Unit-test the round-trip across all priority fields before shipping.
+5. **Hourmeter decimal root cause misdiagnosis** — the failure may be photo quality (ambiguous image), not a prompt problem. Prevention: inspect actual failure photos before writing any prompt change. Prompt changes cannot fix a blurry display.
 
 ---
 
 ## Implications for Roadmap
 
-PREFILL-06 is a single focused milestone with a clear dependency order. The research points to one implementation phase with four sequential steps that should proceed in order to prevent broken intermediate states.
+Research confirms three natural phases with clear sequencing. Phases A and B are independent and can run in parallel. Phase C depends on Phase A completing the `buildExtractionSchema` filter extension.
 
-### Phase 1: Shared Utility Extraction
+### Phase A: Extraction Prompt Accuracy
 
-**Rationale:** `InspectionNotesSection` is a `'use client'` component that cannot import from a route handler. The shared utility must exist before the component can be updated. This step is a pure refactor with no behaviour change — safe to implement and verify in isolation before touching the UI.
-**Delivers:** `src/lib/utils/parseStructuredFields.ts` with both `parseStructuredFields` and `extractFreeformNotes`; updated import paths in `extract/route.ts`, `describe/route.ts`, and the test file. All existing tests pass unchanged.
-**Addresses:** Pitfall 5 (key format contract) — the shared utility becomes the single authoritative implementation, eliminating the risk of divergent copies
-**Avoids:** Duplicating parse logic in the component (identified as a common mistake in integration gotchas)
+**Rationale:** Lowest risk, highest return. Pure prompt and aiHint changes with no new infrastructure. Hourmeter and suspension are confirmed P1 blocking issues. Ships independently with no dependencies.
+**Delivers:** Hourmeter decimal reads correctly; suspension type auto-populated for known makes/models; numeric OCR chain-of-thought verification.
+**Addresses:** Hourmeter decimal fix (P1), suspension type inference (P1), extraction accuracy / confidence calibration (P2).
+**Files changed:** `extraction-schema.ts` (buildSystemPrompt), `truck.ts`, `trailer.ts`, `earthmoving.ts` (aiHint fields).
+**Avoids:** Prompt regression (spot-check fixture set before/after), hourmeter root-cause misdiagnosis (inspect failure photos first), suspension confidence calibration drift (explicit lookup table, not GPT-4o general knowledge).
 
-### Phase 2: Component Restoration
+### Phase B: Description Quality Uplift
 
-**Rationale:** Depends on Phase 1. All four restoration requirements — text inputs, Select, textarea, ref seeding — must be implemented together. Partial restoration (e.g., textarea only) is explicitly worse than none: it creates false confidence that values are saved while silently allowing data loss on autosave.
-**Delivers:** `InspectionNotesSection` fully restores all structured inputs and the freeform textarea on reload; `structuredValuesRef` and `notesRef` seeded correctly from parsed values; no console warnings
-**Implements:** Synchronous `parseStructuredFields` + `extractFreeformNotes` calls at top of component body; `defaultValue` on all text `<Input>` fields; controlled `useState` on `<Select>` (or `defaultValue` if library honours it); `freeformInitial` on textarea; `parsedInitial` seeded into both refs
-**Avoids:** Pitfalls 1 (Select timing), 2 (ref not seeded), 4 (controlled/uncontrolled switch)
+**Rationale:** Independent of Phase A. Extracting `DESCRIPTION_SYSTEM_PROMPT` to its own file is a low-risk refactor that pays off immediately for ongoing iteration. Few-shot expansion targets the weakest categories (forklift, agriculture, marine, caravan) which currently have zero quality reference examples.
+**Delivers:** Descriptions for all major asset categories match Jack's style; prompt is independently editable and version-controlled.
+**Addresses:** Description quality uplift (P1), stale description badge groundwork.
+**Files changed:** `description-prompt.ts` (new), `describe/route.ts` (import change only).
+**Avoids:** Template drift from unvetted examples (audit every example against subtype template), style guide conflicts with subtype routing (add style rules before QUALITY REFERENCE EXAMPLES, never inside template blocks).
 
-**Decision required before implementation:** Test whether Base UI `<Select>` honours `defaultValue` correctly for server-rendered initial values in dev. If the trigger renders correctly → use `defaultValue` (simpler). If blank → switch to controlled `value` + `useState`. The fallback path is fully designed in STACK.md and ARCHITECTURE.md; it is a two-line change.
+### Phase C: Inline Field Re-extraction
 
-### Phase 3: Unmount Flush
-
-**Rationale:** Can be in the same PR as Phase 2, but called out separately because it addresses a distinct pre-existing race condition rather than the restoration display bug. It must not be deferred — PREFILL-06 is the only planned code window for `InspectionNotesSection`.
-**Delivers:** `useEffect` cleanup that calls `persistNotes()` synchronously on unmount; in-progress edits no longer silently lost on fast navigation
-**Avoids:** Pitfall 3 (stale value race / data loss on unmount)
-
-### Phase 4: Test Coverage
-
-**Rationale:** The `parseStructuredFields` key format is an implicit contract. Unit tests validate the round-trip across all asset types and field keys, providing a regression barrier if schema keys change in future phases.
-**Delivers:** Unit tests: `parseStructuredFields(serialised)` recovers each field key correctly for all priority fields across all asset types; `extractFreeformNotes` edge cases covered (no Notes line, empty Notes value)
-**Addresses:** Pitfall 5 (key mismatch); provides ongoing confidence in the text-column approach as the schema registry grows
+**Rationale:** Depends on Phase A completing the `buildExtractionSchema` fieldKeys filter. More UI and API surface than A or B. The architectural constraint that partial results must not touch the DB must be documented at phase start.
+**Delivers:** Staff can re-extract a single field from photos with a button click; spinner shows progress; result merges into form state; no other field values are touched; re-extracted value saved with next form save.
+**Addresses:** Inline field editing / per-field dirty indicator (P1), targeted per-field re-extraction.
+**Files changed:** `extract/route.ts`, `extraction-schema.ts` (fieldKeys param), `ReviewPageClient.tsx`, `DynamicFieldForm.tsx`, `FieldRow.tsx`.
+**Avoids:** DB overwrite of staff edits (architecture decision in phase plan), setValue without shouldDirty (non-negotiable), latency from full extraction per field (verify under 8s empirically), prompt injection via arbitrary fieldKey (validate against getAIExtractableFieldDefs server-side).
 
 ### Phase Ordering Rationale
 
-- Phase 1 must precede Phase 2 because the client component cannot import from a route handler — this is a hard dependency
-- Phases 2 and 3 can be implemented in a single PR; separating them conceptually ensures the unmount flush is treated as mandatory, not optional
-- Phase 4 should be in the same PR as Phases 2–3 — tests should be written before the PR is merged, not as a follow-up
-- The entire milestone is one logical PR: 1 new file, 4 modified files, 0 migrations, 0 new dependencies
+- Phases A and B are independent and can be assigned to separate developers or executed sequentially in either order.
+- Phase C has a hard dependency on Phase A (the `buildExtractionSchema` fieldKeys filter must exist).
+- Starting with Phase A means any re-extraction in Phase C benefits from improved hourmeter and suspension logic from day one.
+- The description prompt extraction in Phase B is a low-risk refactor that makes all subsequent description quality work faster.
 
 ### Research Flags
 
-Phases with standard patterns (no deeper research needed):
-- **All phases:** Patterns are fully established from direct codebase analysis. React `defaultValue`, Next.js Server Component prop threading, and Server Action autosave patterns are all well-documented and verified in existing code.
+Phases with standard, well-documented patterns — no deeper research needed:
+- **Phase A (prompt accuracy):** aiHint and buildSystemPrompt patterns are fully documented and validated from Phase 06.1. Direct extension of existing work.
+- **Phase B (description quality):** Few-shot placement and count confirmed. Prompt constant extraction is a standard refactor with zero logic change.
 
-Phases that need one validation point during implementation:
-- **Phase 2 (Select restoration):** Verify Base UI `<Select>` `defaultValue` behaviour with a server-rendered initial value in dev before finalising the approach. STACK.md provides the controlled fallback (Option B). This is a one-decision point, not a research gap.
+Phases requiring a documented architecture decision before code is written:
+- **Phase C (inline re-extraction):** The DB-write vs client-only data flow decision must be explicitly documented at the start of the phase plan. The answer is clear (client-only until saveReview), but it must be written down — the recovery cost if implemented incorrectly is HIGH.
 
 ---
 
@@ -132,42 +122,39 @@ Phases that need one validation point during implementation:
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | Direct codebase analysis; all files verified; zero new dependencies means zero version compatibility uncertainty |
-| Features | HIGH | Problem is precisely specified in PROJECT.md as a deliberate v1.2 deferral; scope is unambiguous; all field keys verified against live schema files |
-| Architecture | HIGH | All integration points verified from source; import constraint (route handler not importable by client component) is a hard fact; build order is provably correct |
-| Pitfalls | HIGH (4 of 5 critical) / MEDIUM (Radix Select defaultValue sub-case) | React controlled/uncontrolled and unmount behaviour are stable guarantees; Radix Select `defaultValue` edge case documented via GitHub issues, not official release notes — hence MEDIUM for that specific sub-case only |
+| Stack | HIGH | Verified from direct codebase inspection + Vercel AI SDK v6 official docs. GPT-4.1 limitation confirmed across multiple community sources. Zero uncertainty about technology choices. |
+| Features | HIGH (codebase) / MEDIUM (AI behaviour) | Must-have features confirmed from codebase inspection of actual failure patterns. AI behaviour improvement estimates (few-shot 15-40%) from peer-reviewed 2025 research. |
+| Architecture | HIGH | Direct codebase inspection of all affected files. Component responsibilities, data flow, and anti-patterns grounded in existing code. |
+| Pitfalls | HIGH (code pitfalls) / MEDIUM (GPT-4o behaviour) | react-hook-form setValue options and DB overwrite risks from official docs and codebase. GPT-4o OCR behaviour on small LCD displays is MEDIUM — empirically verified pattern, not guaranteed. |
 
-**Overall confidence:** HIGH
+**Overall confidence: HIGH**
 
 ### Gaps to Address
 
-- **Radix/Base UI Select `defaultValue` vs controlled:** STACK.md recommends controlled `value` + `useState` as the safe default. ARCHITECTURE.md suggests attempting `defaultValue` first. Test in dev during Phase 2 implementation. If the trigger renders the saved value correctly → use `defaultValue` (simpler). If blank → switch to controlled. The fallback path is already fully designed; no additional research needed.
-
-- **`extractFreeformNotes` edge cases:** Function is straightforward (~5 lines) but should be verified against: (a) assets where `inspection_notes` has no `Notes:` line — must return `''`; (b) `Notes: ` with empty value — must return `''`; (c) assets where freeform notes themselves contain `Notes:` mid-text — confirm split behaviour. Write these as explicit unit test cases in Phase 4.
+- **Hourmeter decimal root cause:** Cannot be determined without inspecting the actual failure photos. Phase A must begin with a photo inspection step before any prompt change. Branch into prompt fix (decimal visible in photo) or staff guidance (decimal ambiguous in photo).
+- **Zod 4 + AI SDK schema conversion:** The current schema uses only `z.string().nullable()` and `z.enum()` — both confirmed safe. Any new Zod construct introduced during Phase A must be verified by logging the JSON Schema sent to OpenAI. No automated guard exists.
+- **Inline re-extraction latency target:** The 8-second target is an estimate based on single-field schema response time. Must be empirically measured during Phase C. If latency exceeds 8 seconds the UX design needs adjustment before shipping.
 
 ---
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- `src/components/asset/InspectionNotesSection.tsx` — uncontrolled inputs, `structuredValuesRef` initialisation to `{}`, `persistNotes` serialisation format, `notesRef` initialisation, debounce without unmount flush
-- `src/app/api/extract/route.ts` — `parseStructuredFields` function confirmed exported and round-trip correct
-- `src/lib/actions/inspection.actions.ts` — `inspection_notes text` column confirmed; write path serialisation confirmed
-- `src/app/(app)/assets/[id]/extract/page.tsx` — Server Component already selects and passes `inspection_notes`
-- `src/components/asset/ExtractionPageClient.tsx` — prop threading to `InspectionNotesSection` as `initialNotes` confirmed; hide-on-success confirmed
-- `src/app/(app)/assets/[id]/photos/page.tsx` — Server Component passes `initialNotes` confirmed
-- `supabase/migrations/20260318000003_extraction.sql` — `inspection_notes text` column; no JSONB structured fields column
-- `.planning/PROJECT.md` — PREFILL-06 explicitly deferred from v1.1; scope confirmed
-- React official documentation — `defaultValue` sets initial uncontrolled value once at mount; switching controlled/uncontrolled is forbidden and triggers warning
-- Next.js official documentation — hydration error docs; `useEffect` for client-only state; server component prop serialisation
+- Codebase: `src/app/api/extract/route.ts`, `src/app/api/describe/route.ts`, `src/lib/ai/extraction-schema.ts`, `src/lib/schema-registry/schemas/truck.ts`, `src/components/asset/ReviewPageClient.tsx`, `src/components/asset/FieldRow.tsx` — direct inspection
+- Vercel AI SDK v6 docs (ai-sdk.dev/docs/ai-sdk-core/generating-structured-data) — `Output.object()` pattern, `.describe()` as hint mechanism
+- react-hook-form docs — `setValue` options: `shouldDirty`, `shouldTouch`, `shouldValidate`; `dirtyFields` behaviour
 
 ### Secondary (MEDIUM confidence)
-- Radix UI GitHub issues #1223, #1569, #1808, #3556 — Select `defaultValue` edge cases on hydration; controlled/uncontrolled switch behaviour
-- `@base-ui/react ^1.3.0` release notes — controlled `value` prop for Select supported; `onValueChange` callback signature
+- OpenAI community forum — GPT-4.1 returns "Unsupported model" for `json_schema` response format (April 2025)
+- OpenAI community — logprobs empty arrays confirmed when Structured Outputs enabled
+- Frontiers in AI / PMC 2025 — few-shot prompting improves structured generation accuracy 15-40% vs zero-shot
+- Prompt Engineering Guide (promptingguide.ai) — few-shot placement and example count best practices
+- GPT-4o OCR behaviour on LCD displays — community-verified patterns
 
-### Tertiary (LOW confidence — no action required)
-- Supabase Realtime conflict patterns — not applicable to v1.2; no Realtime subscriptions in codebase (confirmed by grep, zero results); noted only as a constraint if Realtime is ever scoped in a future phase
+### Tertiary (LOW confidence)
+- DataCamp / F22 Labs (April 2025) — GPT-4.1 vs GPT-4o comparison; structured output limitation confirmed
 
 ---
-*Research completed: 2026-03-21*
+
+*Research completed: 2026-04-18*
 *Ready for roadmap: yes*
