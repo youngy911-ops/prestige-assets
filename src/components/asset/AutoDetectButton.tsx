@@ -1,6 +1,6 @@
 'use client'
 import { useState, useRef } from 'react'
-import { Loader2, Sparkles } from 'lucide-react'
+import { Loader2, Sparkles, Images } from 'lucide-react'
 import type { AssetType } from '@/lib/schema-registry/types'
 
 interface AutoDetectResult {
@@ -15,29 +15,36 @@ interface AutoDetectButtonProps {
   onDetected: (type: AssetType, subtype: string | null) => void
 }
 
+async function compressToDataUrl(file: File): Promise<string> {
+  const imageCompression = (await import('browser-image-compression')).default
+  const compressed = await imageCompression(file, { maxSizeMB: 0.4, maxWidthOrHeight: 1024, useWebWorker: true })
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = reject
+    reader.readAsDataURL(compressed)
+  })
+}
+
 export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
-  const [status, setStatus] = useState<'idle' | 'uploading' | 'detecting' | 'done' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'processing' | 'detecting' | 'done' | 'error'>('idle')
   const [result, setResult] = useState<AutoDetectResult | null>(null)
+  const [photoCount, setPhotoCount] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  async function handleFile(file: File) {
-    setStatus('uploading')
+  async function handleFiles(files: File[]) {
+    if (files.length === 0) return
+    const capped = files.slice(0, 4)
+    setPhotoCount(capped.length)
+    setStatus('processing')
     setResult(null)
     try {
-      // Compress to max 400KB before sending — phone photos can be 5-10MB as base64
-      const imageCompression = (await import('browser-image-compression')).default
-      const compressed = await imageCompression(file, { maxSizeMB: 0.4, maxWidthOrHeight: 1024, useWebWorker: true })
-      const dataUrl = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => resolve(reader.result as string)
-        reader.onerror = reject
-        reader.readAsDataURL(compressed)
-      })
+      const dataUrls = await Promise.all(capped.map(compressToDataUrl))
       setStatus('detecting')
       const res = await fetch('/api/classify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageUrl: dataUrl }),
+        body: JSON.stringify({ imageUrls: dataUrls }),
       })
       if (!res.ok) throw new Error('Classification failed')
       const data: AutoDetectResult = await res.json()
@@ -54,8 +61,8 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
         <div className="flex items-start gap-2">
           <Sparkles className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-medium text-emerald-300">Detected:</p>
-            <p className="text-white font-semibold mt-0.5">
+            <p className="text-xs text-emerald-400/70 mb-0.5">Detected from {photoCount} photo{photoCount !== 1 ? 's' : ''}</p>
+            <p className="text-white font-semibold">
               {result.type_label}{result.subtype_label ? ` — ${result.subtype_label}` : ''}
             </p>
             <p className="text-xs text-white/40 mt-0.5 capitalize">{result.confidence} confidence</p>
@@ -81,29 +88,44 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
     )
   }
 
+  const busy = status === 'processing' || status === 'detecting'
+
   return (
     <>
       <input
         ref={inputRef}
         type="file"
         accept="image/*"
-        capture="environment"
+        multiple
         className="hidden"
-        onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = '' }}
+        onChange={e => {
+          const files = Array.from(e.target.files ?? [])
+          e.target.value = ''
+          if (files.length) handleFiles(files)
+        }}
       />
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        disabled={status === 'uploading' || status === 'detecting'}
-        className="w-full flex items-center justify-center gap-2 rounded-xl border border-white/[0.10] bg-white/[0.03] hover:bg-white/[0.06] text-white/70 hover:text-white text-sm py-3 transition-all disabled:opacity-50"
+        disabled={busy}
+        className="w-full flex items-center justify-center gap-2 rounded-xl border border-emerald-500/25 bg-emerald-500/8 hover:bg-emerald-500/12 text-emerald-300 hover:text-emerald-200 text-sm py-3.5 font-medium transition-all disabled:opacity-50"
       >
-        {status === 'uploading' || status === 'detecting'
-          ? <><Loader2 className="w-4 h-4 animate-spin" />{status === 'detecting' ? 'Detecting…' : 'Compressing…'}</>
-          : <><Sparkles className="w-4 h-4 text-emerald-400" />Detect type from photo</>
-        }
+        {busy ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            {status === 'detecting'
+              ? `Detecting from ${photoCount} photo${photoCount !== 1 ? 's' : ''}…`
+              : 'Compressing…'}
+          </>
+        ) : (
+          <>
+            <Images className="w-4 h-4" />
+            Upload photos to detect type
+          </>
+        )}
       </button>
       {status === 'error' && (
-        <p className="text-xs text-red-400 text-center mt-1">Detection failed — select manually below</p>
+        <p className="text-xs text-red-400 text-center -mt-2">Detection failed — select type manually below</p>
       )}
     </>
   )

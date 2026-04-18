@@ -20,12 +20,18 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
-  let imageUrl: string
+  let imageUrls: string[]
   try {
     const body = await req.json()
-    imageUrl = body.imageUrl
-    if (!imageUrl) return Response.json({ error: 'imageUrl required' }, { status: 400 })
-    if (typeof imageUrl !== 'string' || !imageUrl.startsWith('data:image/')) {
+    // Accept either imageUrl (single) or imageUrls (multiple)
+    if (Array.isArray(body.imageUrls)) {
+      imageUrls = body.imageUrls.slice(0, 4)
+    } else if (typeof body.imageUrl === 'string') {
+      imageUrls = [body.imageUrl]
+    } else {
+      return Response.json({ error: 'imageUrl or imageUrls required' }, { status: 400 })
+    }
+    if (imageUrls.length === 0 || imageUrls.some(u => !u.startsWith('data:image/'))) {
       return Response.json({ error: 'Only base64 data URLs accepted' }, { status: 400 })
     }
   } catch {
@@ -45,20 +51,34 @@ export async function POST(req: NextRequest) {
       {
         role: 'system',
         content: `You are an expert heavy equipment and vehicle classifier for an Australian auction house.
-Classify the asset shown in the photo into one of these types and subtypes:
+You will be shown one or more photos of the same asset — use ALL photos together to make the most accurate classification.
+
+Classify the asset into one of these types and subtypes:
 
 ${typeList}
 
-Return the exact key values (snake_case) from the list above. If you cannot confidently identify a subtype, return null for asset_subtype.
+Return the exact key values (snake_case) from the list above.
+
+SUBTYPE HINTS for common Australian auction assets:
+- vehicle: dual_cab_ute (4-door tray/ute), single_cab_ute (2-door), suv (raised, wagon-like), sedan, van (transit/sprinter/hiace cargo), bus, 4wd
+- truck: tipper (hydraulic tipping body), tray_truck (flat tray), pantech (enclosed box body), prime_mover (semi tractor, 5th wheel), cab_chassis (no body fitted), service_truck (crane or service body), refrigerated_pantech, flat_deck, water_truck, vacuum_truck
+- trailer: tipper_trailer, flat_deck_trailer, curtainsider_trailer, pantech_trailer, low_loader, skel_trailer
+- earthmoving: excavator, bulldozer, wheel_loader, motor_grader, skid_steer, dump_truck, compactor, telehandler
+- forklift: clearview_mast (standard warehouse forklift), container_mast (tall mast), walkie_stacker, electric_pallet_jack
+- agriculture: tractor, combine_harvester, spray_rig, baler, air_seeder
+- marine: trailer_boat, personal_watercraft, barge, commercial_vessel
+- caravan: caravan, camper_trailer, motorhome
+
+If you cannot confidently identify a subtype from the photos available, return null for asset_subtype.
 
 Confidence guide:
-- "high": asset type and subtype are clearly identifiable from the photo
-- "medium": asset type is clear but subtype is ambiguous (e.g. could be tipper or tray)
-- "low": image quality is poor, angle is extreme, or asset could belong to multiple types`,
+- "high": asset type and subtype clearly identifiable
+- "medium": asset type clear but subtype ambiguous
+- "low": poor image quality or asset could belong to multiple types`,
       },
       {
         role: 'user',
-        content: [{ type: 'image', image: imageUrl }],
+        content: imageUrls.map(url => ({ type: 'image' as const, image: url })),
       },
     ],
   })
