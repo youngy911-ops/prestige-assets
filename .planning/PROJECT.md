@@ -40,24 +40,26 @@ Photo a build plate → AI extracts identifiers → app generates copy-paste-rea
 - ✓ All 8 asset types expose Salesforce-matching subtype lists (Truck 24, Trailer 24, Earthmoving 19, Marine 10, Agriculture 12, Forklift 9, Caravan 5, General Goods 16); Agriculture/Forklift/Caravan have subtype selectors for the first time — v1.4
 - ✓ AI description prompt has named template sections for every subtype across all 8 asset types; exact-match heading routing replaces inference fallback — v1.4
 
-## Current Milestone: v1.5 Demo Polish
+## Current State: v1.5 Shipped (2026-04-18)
 
-**Goal:** Tighten the app for demo readiness — fix broken/stub pages, consolidate hardcoded values, improve error UX, add asset deletion and status workflow.
+Demo-ready. 8 asset types with full Salesforce alignment, Quick Book with auto type detection, asset deletion and status workflow, contextual error pages, ARIA accessibility, and humanized confidence labels. Salesforce OAuth infrastructure scaffolded and ready when credentials are provided.
 
-**Target features:**
-- Configurable QR code domain and brand identity
-- Contextual error pages
-- Functional edit-type page (or clean removal)
-- Asset deletion
-- Asset status workflow (draft → reviewed → confirmed)
-- Accessibility quick hits
-- Visual consistency (semantic colors, deduplicated constants, proper icons)
+**Tech stack (current):** Next.js 15 (App Router), React 19, Supabase, GPT-4o (Vercel AI SDK v6), Zod 4, Tailwind v4, vitest. ~13,487 LOC TypeScript.
 
-## Current State: Post-v1.4 (2026-04-16)
+### Validated Requirements (v1.5)
 
-8 asset types with full Salesforce alignment. Significant untracked work since v1.4 shipped: damage/condition detection, Quick Book with auto-type detection, streamlined photo→extract→review flow, deep AI brand/model knowledge across all types, UX polish (photo guide, section headers, loading states, no "AI" branding), Copy All button, photo gallery on output, batch uploads, schema simplification.
-
-**Tech stack (current):** Next.js 16.1, React 19.2, Supabase, GPT-4o (Vercel AI SDK v6), Zod 4, Tailwind v4, vitest 4.1. 27 test files.
+- ✓ QR code domain configurable from single brand config — v1.5
+- ✓ Company name, logo monogram, and page metadata from single brand config — v1.5
+- ✓ Semantic Tailwind color tokens replace all hardcoded hex values — v1.5
+- ✓ Contextual error pages with recovery actions — v1.5
+- ✓ Edit Type route cleanly removed (no dead links) — v1.5
+- ✓ Asset deletion with confirmation from list and detail views — v1.5
+- ✓ Asset status badge (draft / reviewed / confirmed) with automatic progression — v1.5
+- ✓ LAST_BRANCH_KEY in shared constant, imported by all consumers — v1.5
+- ✓ Extraction loading uses Lucide icons — v1.5
+- ✓ BottomNav aria-current="page" on active route — v1.5
+- ✓ Extraction panel aria-expanded on collapsible section — v1.5
+- ✓ Decorative thumbnails marked role="presentation" — v1.5
 
 ### Out of Scope
 
