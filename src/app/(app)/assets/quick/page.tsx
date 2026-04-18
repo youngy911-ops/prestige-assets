@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Camera, Check, Loader2, ChevronLeft, Zap, FolderOpen, Images, Sparkles } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
