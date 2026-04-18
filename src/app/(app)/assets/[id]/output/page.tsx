@@ -7,6 +7,7 @@ import { generateFieldsBlock } from '@/lib/output/generateFieldsBlock'
 import { OutputPanel } from '@/components/asset/OutputPanel'
 import { StepIndicator } from '@/components/asset/StepIndicator'
 import { DeleteAssetButton } from '@/components/asset/DeleteAssetButton'
+import { SalesforcePushButton } from '@/components/asset/SalesforcePushButton'
 import { getAssetDisplayTitle } from '@/lib/schema-registry'
 import type { AssetType } from '@/lib/schema-registry/types'
 
@@ -17,7 +18,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const [{ data: asset }, { data: photos }] = await Promise.all([
+  const [{ data: asset }, { data: photos }, { data: sfConn }] = await Promise.all([
     supabase
       .from('assets')
       .select('id, asset_type, asset_subtype, fields, description, status')
@@ -28,6 +29,11 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
       .select('storage_path, sort_order')
       .eq('asset_id', assetId)
       .order('sort_order', { ascending: true }),
+    supabase
+      .from('salesforce_connections')
+      .select('user_id')
+      .eq('user_id', user.id)
+      .single(),
   ])
 
   if (!asset) redirect('/assets/new')
@@ -100,6 +106,11 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
             </Link>
           </div>
         </div>
+        <SalesforcePushButton
+          assetId={assetId}
+          isConnected={!!sfConn}
+          returnTo={`/assets/${assetId}/output`}
+        />
         <Link
           href="/assets/new"
           className="flex items-center justify-center w-full rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white h-11 px-4 text-sm font-semibold transition-colors"

@@ -15,6 +15,7 @@ interface BookedItem {
   label: string
   thumbUrl: string
   photoCount: number
+  dataUrls?: string[]
   detectStatus?: 'idle' | 'detecting' | 'done' | 'error'
   detectedLabel?: string
 }
@@ -74,18 +75,29 @@ export default function QuickBookPage() {
       if (failed.length === files.length) throw new Error('All photos failed to upload')
       // Partial success is still a success — asset created with some photos
 
+      // Build dataUrls from processed files for multi-image classify
+      const dataUrls = await Promise.all(
+        processedFiles.slice(0, 3).map(file => new Promise<string>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.onload = () => resolve(reader.result as string)
+          reader.onerror = reject
+          reader.readAsDataURL(file)
+        }))
+      )
+
       setBooked(prev => [...prev, {
         id: assetId,
         label: `Item ${prev.length + 1}`,
         thumbUrl,
         photoCount: files.length,
+        dataUrls,
         detectStatus: 'detecting' as const,
       }])
       setStatus('idle')
       setUploadProgress(null)
 
       // Auto-detect type in background — don't block the UI
-      detectType(assetId, thumbUrl)
+      detectType(assetId, dataUrls)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong')
       setStatus('error')
@@ -97,35 +109,16 @@ export default function QuickBookPage() {
     await bookInFiles([file])
   }
 
-  async function detectType(itemId: string, thumbUrlOverride?: string) {
+  async function detectType(itemId: string, dataUrlsOverride?: string[]) {
     setBooked(prev => prev.map(i => i.id === itemId ? { ...i, detectStatus: 'detecting' as const } : i))
     try {
-      const imgSrc = thumbUrlOverride ?? booked.find(i => i.id === itemId)?.thumbUrl
-      if (!imgSrc) return
-
-      // Convert blob URL to base64 via canvas
-      const img = new Image()
-      img.crossOrigin = 'anonymous'
-      const loaded = new Promise<void>((resolve, reject) => {
-        img.onload = () => resolve()
-        img.onerror = () => reject(new Error('Failed to load image'))
-      })
-      img.src = imgSrc
-      await loaded
-
-      const canvas = document.createElement('canvas')
-      // Downscale for classification — 512px max dimension is plenty
-      const scale = Math.min(512 / img.width, 512 / img.height, 1)
-      canvas.width = Math.round(img.width * scale)
-      canvas.height = Math.round(img.height * scale)
-      const ctx = canvas.getContext('2d')!
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-      const base64 = canvas.toDataURL('image/jpeg', 0.8)
+      const imageUrls = dataUrlsOverride ?? booked.find(i => i.id === itemId)?.dataUrls
+      if (!imageUrls?.length) return
 
       const res = await fetch('/api/classify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageUrl: base64 }),
+        body: JSON.stringify({ imageUrls }),
       })
       if (!res.ok) throw new Error('Classification failed')
       const data = await res.json()

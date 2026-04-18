@@ -11,25 +11,25 @@ const config: Record<ConfidenceLevel, { icon: React.ElementType; className: stri
   high: {
     icon: CheckCircle2,
     className: 'text-green-400',
-    srLabel: 'High confidence',
-    label: 'High',
+    srLabel: 'Read from photo',
+    label: 'From photo',
   },
   medium: {
     icon: AlertCircle,
     className: 'text-amber-400',
-    srLabel: 'Medium confidence',
-    label: 'Medium',
+    srLabel: 'Inferred from model knowledge',
+    label: 'Inferred',
   },
   low: {
     icon: MinusCircle,
     className: 'text-white/40',
-    srLabel: 'Low confidence',
-    label: 'Low',
+    srLabel: 'Uncertain — verify before saving',
+    label: 'Uncertain',
   },
   not_found: {
     icon: MinusCircle,
     className: 'text-white/40',
-    srLabel: 'Not found',
+    srLabel: 'Not found in photos',
     label: 'Not found',
   },
 }

@@ -59,22 +59,39 @@ ${typeList}
 
 Return the exact key values (snake_case) from the list above.
 
-SUBTYPE HINTS for common Australian auction assets:
-- vehicle: dual_cab_ute (4-door tray/ute), single_cab_ute (2-door), suv (raised, wagon-like), sedan, van (transit/sprinter/hiace cargo), bus, 4wd
-- truck: tipper (hydraulic tipping body), tray_truck (flat tray), pantech (enclosed box body), prime_mover (semi tractor, 5th wheel), cab_chassis (no body fitted), service_truck (crane or service body), refrigerated_pantech, flat_deck, water_truck, vacuum_truck
-- trailer: tipper_trailer, flat_deck_trailer, curtainsider_trailer, pantech_trailer, low_loader, skel_trailer
-- earthmoving: excavator, bulldozer, wheel_loader, motor_grader, skid_steer, dump_truck, compactor, telehandler
-- forklift: clearview_mast (standard warehouse forklift), container_mast (tall mast), walkie_stacker, electric_pallet_jack
-- agriculture: tractor, combine_harvester, spray_rig, baler, air_seeder
-- marine: trailer_boat, personal_watercraft, barge, commercial_vessel
-- caravan: caravan, camper_trailer, motorhome
+IMPORTANT: You MUST always return an asset_type. Even if the photo is blurry, dark, or only shows a partial view, make your best guess. Use every visual cue available — shape, colour, tyres, cab style, attachments, tracks, mast, tray, body type. Never refuse to classify.
 
-If you cannot confidently identify a subtype from the photos available, return null for asset_subtype.
+VISUAL IDENTIFICATION CUES:
+- Tracks + boom arm = earthmoving (excavator most common)
+- Yellow body + bucket/blade = earthmoving
+- Mast + forks at front = forklift
+- 5th wheel coupling on tray = truck (prime_mover)
+- Hydraulic tipping body = truck (tipper) or trailer (tipper_trailer)
+- 4-door tray with towbar = vehicle (dual_cab_ute)
+- Enclosed box body on rigid chassis = truck (pantech)
+- Long trailer, curtains on sides = trailer (curtainsider_trailer)
+- Boat hull on trailer = marine (trailer_boat)
+- Drawbar + living quarters = caravan
+- Large tyres + open operator station + boom = agriculture (tractor or telehandler)
+- Orange/red warning lights on roof = likely service_truck or emergency vehicle
+- Spray booms folded on sides = agriculture (spray_rig)
+
+SUBTYPE HINTS:
+- vehicle: dual_cab_ute (4-door tray/ute), single_cab_ute (2-door tray), suv (raised, wagon-like), sedan, van (transit/sprinter/hiace cargo), bus, 4wd (large SUV with visible lift or off-road tyres)
+- truck: tipper (hydraulic tipping body, rams visible), tray_truck (flat steel tray), pantech (enclosed box body), prime_mover (semi tractor, 5th wheel plate on tray, no body), cab_chassis (bare chassis, no body fitted), service_truck (knuckle boom crane or service body with drawers), refrigerated_pantech (white insulated box body), water_truck (round tank on tray), vacuum_truck (cylindrical tank + hose reel)
+- trailer: tipper_trailer (tipping body on trailer), flat_deck_trailer (bare flat deck), curtainsider_trailer (side curtains, skeletal ends), pantech_trailer (enclosed box), low_loader (dropped deck for machinery), skel_trailer (skeletal frame for containers)
+- earthmoving: excavator (tracks + cab + boom arm), bulldozer (blade at front + tracks), wheel_loader (bucket at front + wheels), motor_grader (long blade underneath), skid_steer (compact, bucket, 4 wheels), dump_truck (large rigid haul truck with tipping body), compactor (drum roller), telehandler (telescopic boom forklift)
+- forklift: clearview_mast (standard counterbalance forklift), container_mast (very tall mast 4m+), walkie_stacker (pedestrian stacker), electric_pallet_jack (ride-on or walk-behind pallet jack)
+- agriculture: tractor (cab + large rear tyres), combine_harvester (large header at front), spray_rig (boom arms extending from sides), baler (intake + discharge chute at rear), air_seeder (large tank + distribution tubes)
+- marine: trailer_boat (boat hull on road trailer), personal_watercraft (jet ski), barge (flat-bottom work vessel), commercial_vessel (larger work or passenger boat)
+- caravan: caravan (tow-behind living quarters), camper_trailer (fold-out tent trailer), motorhome (self-propelled living vehicle)
+
+Subtype: If you can identify a subtype, return it. If truly ambiguous between two subtypes, pick the most common one for Australian auctions. Return null only if there is genuinely no meaningful subtype distinction possible.
 
 Confidence guide:
-- "high": asset type and subtype clearly identifiable
-- "medium": asset type clear but subtype ambiguous
-- "low": poor image quality or asset could belong to multiple types`,
+- "high": asset type and subtype clearly identifiable from photos
+- "medium": asset type clear but subtype uncertain, OR one good photo but partially obscured
+- "low": poor quality, heavily cropped, or ambiguous — but still return your best guess`,
       },
       {
         role: 'user',
