@@ -325,17 +325,17 @@ describe('buildSystemPrompt — hourmeter decimal instruction', () => {
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should `inputMode="decimal"` change be in this phase or a separate cleanup?**
    - What we know: `inputMode="numeric"` blocks the decimal key on iOS/Android for manual entry. The extraction path (AI writes the value, not the user) works regardless of inputMode. So it only affects manual correction of extracted values.
    - What's unclear: Whether staff ever manually edit hourmeter after AI extraction fails, and whether they use mobile.
-   - Recommendation: Include it — it is a one-line change in `FieldRow.tsx`, affects no tests, and the fix is obviously correct. If it creates problems, it is trivially reverted.
+   - RESOLVED: Include it — it is a one-line change in `FieldRow.tsx`, affects no tests, and the fix is obviously correct. If it creates problems, it is trivially reverted. Included as Task C+D in 24-01-PLAN.md.
 
 2. **Do other `inputType: 'number'` fields (odometer, year, GVM, etc.) need decimal support?**
    - What we know: Odometer already has correct decimal instruction in the system prompt. Year, GVM, GCM, tare, horsepower are whole numbers in practice. The regex fix affects all of them.
    - What's unclear: Whether the regex fix causes any regression on whole-number fields.
-   - Recommendation: The fix `/^\d*\.?\d*$/` is strictly more permissive than `/^\d*$/` — it still accepts all strings the old regex accepted, and adds decimal strings. No regression possible. Whole-number fields simply never receive a decimal from extraction.
+   - RESOLVED: No regression possible — `/^\d*\.?\d*$/` is strictly more permissive than `/^\d*$/`. It still accepts all strings the old regex accepted and adds decimal strings. Whole-number fields simply never receive a decimal from extraction.
 
 ---
 

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asset Book-In App — Slattery Auctions</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: #0a0f1e;
+  color: #fff;
+  height: 100vh;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+}
+
+.deck {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  display: none;
+  position: absolute;
+  inset: 0;
+  padding: 60px 80px;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide.active { display: flex; }
+
+/* ── Accent bar ── */
+.slide::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2a6ef5, #38d0c8);
+}
+
+/* ── Typography ── */
+.eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #38d0c8;
+  margin-bottom: 18px;
+}
+
+h1 { font-size: 52px; font-weight: 800; line-height: 1.1; color: #fff; margin-bottom: 16px; }
+h2 { font-size: 38px; font-weight: 800; line-height: 1.15; color: #fff; margin-bottom: 20px; }
+h3 { font-size: 20px; font-weight: 700; color: #38d0c8; margin: 28px 0 12px; }
+
+p { font-size: 18px; line-height: 1.6; color: #ccd6f0; margin-bottom: 12px; }
+.lead { font-size: 22px; color: #e8eeff; line-height: 1.5; }
+
+ul { list-style: none; padding: 0; }
+ul li {
+  font-size: 18px;
+  color: #ccd6f0;
+  padding: 8px 0 8px 28px;
+  position: relative;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #2a6ef5;
+  font-size: 14px;
+  top: 10px;
+}
+ol { padding-left: 0; list-style: none; counter-reset: ol; }
+ol li {
+  counter-increment: ol;
+  font-size: 18px;
+  color: #ccd6f0;
+  padding: 10px 0 10px 48px;
+  position: relative;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+ol li::before {
+  counter-increment: none;
+  content: counter(ol);
+  position: absolute;
+  left: 0;
+  width: 32px; height: 32px;
+  background: #2a6ef5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  top: 8px;
+}
+
+/* ── Tables ── */
+table { width: 100%; border-collapse: collapse; font-size: 16px; margin: 8px 0; }
+th { background: rgba(42,110,245,0.3); color: #fff; padding: 10px 16px; text-align: left; font-weight: 600; font-size: 14px; letter-spacing: 0.05em; }
+td { padding: 9px 16px; color: #ccd6f0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+tr:last-child td { border-bottom: none; }
+td strong, td b { color: #fff; }
+
+/* ── Stat boxes ── */
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 24px 0; }
+.stat-box {
+  background: rgba(42,110,245,0.15);
+  border: 1px solid rgba(42,110,245,0.4);
+  border-radius: 10px;
+  padding: 28px 20px;
+  text-align: center;
+}
+.stat-box .number { font-size: 44px; font-weight: 800; color: #38d0c8; line-height: 1; }
+.stat-box .label { font-size: 13px; color: #8899cc; margin-top: 8px; }
+
+/* ── ROI box ── */
+.roi-box {
+  background: linear-gradient(135deg, rgba(42,110,245,0.25), rgba(56,208,200,0.15));
+  border: 1px solid rgba(42,110,245,0.5);
+  border-radius: 10px;
+  padding: 28px 32px;
+  margin-top: 20px;
+}
+.roi-box .big { font-size: 40px; font-weight: 800; color: #38d0c8; }
+.roi-box p { color: #ccd6f0; font-size: 16px; margin-bottom: 6px; }
+.roi-box .sub { font-size: 14px; color: #8899cc; margin-top: 8px; }
+
+/* ── Two-column layout ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 12px; }
+
+/* ── Flow steps ── */
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 24px 0;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.flow-step {
+  background: rgba(42,110,245,0.2);
+  border: 1px solid rgba(42,110,245,0.5);
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+}
+.flow-arrow { color: #38d0c8; font-size: 22px; font-weight: 300; }
+
+/* ── Ask box ── */
+.ask-box {
+  background: rgba(56,208,200,0.1);
+  border: 2px solid #38d0c8;
+  border-radius: 10px;
+  padding: 28px 32px;
+  margin-top: 20px;
+}
+.ask-box ol li { color: #e8eeff; font-size: 17px; }
+
+/* ── Timeline ── */
+.timeline { margin-top: 16px; }
+.tl-row {
+  display: flex;
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  align-items: flex-start;
+}
+.tl-time { min-width: 80px; font-size: 13px; font-weight: 700; color: #38d0c8; padding-top: 2px; }
+.tl-text { font-size: 16px; color: #ccd6f0; line-height: 1.4; }
+.tl-owner { min-width: 60px; font-size: 13px; color: #8899cc; padding-top: 2px; text-align: right; margin-left: auto; }
+
+/* ── Title slide ── */
+.slide-title { background: radial-gradient(ellipse at 30% 50%, rgba(42,110,245,0.2) 0%, transparent 70%), #0a0f1e; }
+.slide-title h1 { font-size: 58px; }
+.tagline {
+  font-size: 20px;
+  color: #8899cc;
+  font-style: italic;
+  border-left: 3px solid #2a6ef5;
+  padding-left: 20px;
+  margin-top: 24px;
+  line-height: 1.6;
+  max-width: 820px;
+}
+
+/* ── Demo slide ── */
+.demo-list li { font-size: 20px; padding: 14px 0 14px 36px; }
+
+/* ── Navigation ── */
+#nav {
+  position: fixed;
+  bottom: 24px;
+  right: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 100;
+}
+#counter {
+  font-size: 13px;
+  color: #556;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+.nav-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.nav-btn:hover { background: rgba(42,110,245,0.4); }
+
+/* ── Progress bar ── */
+#progress {
+  position: fixed;
+  bottom: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2a6ef5, #38d0c8);
+  transition: width 0.25s ease;
+  z-index: 100;
+}
+
+/* ── Fullscreen hint ── */
+#hint {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  font-size: 12px;
+  color: #334;
+  z-index: 100;
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide slide-title active">
+    <div class="eyebrow">Slattery Auctions · 2026</div>
+    <h1>Asset Book-In AI App</h1>
+    <p class="lead">Photos in. Salesforce-ready data out.</p>
+    <div class="tagline">
+      "A book-in that takes 15 minutes today takes 1 minute with Salesforce API access.<br>
+      Here's what I've built — and what I need to get there."
+    </div>
+  </div>
+
+  <!-- SLIDE 2: THE PROBLEM -->
+  <div class="slide">
+    <div class="eyebrow">The Problem</div>
+    <h2>Book-ins take 10–15 minutes per asset.<br>Most of that isn't inspection — it's admin.</h2>
+    <ul>
+      <li>Photograph asset on site</li>
+      <li>Research specs manually — RitchieSpecs, PowerTorque, manufacturer sites</li>
+      <li>Type every field into Salesforce individually</li>
+      <li>Write the auction description from scratch</li>
+    </ul>
+    <p style="margin-top:24px;font-size:20px;color:#e8eeff;">The inspection is quick. <strong style="color:#fff">The bottleneck is everything after it.</strong></p>
+  </div>
+
+  <!-- SLIDE 3: THE SOLUTION -->
+  <div class="slide">
+    <div class="eyebrow">The Solution</div>
+    <h2>Photo → AI → Salesforce-ready output.</h2>
+    <div class="flow">
+      <div class="flow-step">📷 Photograph asset</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Upload to app</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">AI reads compliance plate</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">Staff reviews (30 sec)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">✅ Paste into Salesforce</div>
+    </div>
+    <p>Extracts VIN, make, model, year, engine, GVM/GCM, hours and generates a correctly formatted auction description.</p>
+    <p style="color:#8899cc;font-size:15px;margin-top:12px;">Supported: trucks · trailers · earthmoving · agricultural · forklifts · marine · caravans · motor vehicles · general goods</p>
+  </div>
+
+  <!-- SLIDE 4: LIVE DEMO -->
+  <div class="slide">
+    <div class="eyebrow">Slide 4 — Live Demo</div>
+    <h2>Let me show you.</h2>
+    <ol class="demo-list">
+      <li><strong>Clean case</strong> — clear compliance plate, fast extraction</li>
+      <li><strong>Messy case</strong> — older machine or dusty plate (graceful handling)</li>
+      <li><strong>Motor vehicle</strong> — damage report alongside specs</li>
+    </ol>
+    <p style="color:#556;font-size:14px;margin-top:32px;">Backup video ready if needed.</p>
+  </div>
+
+  <!-- SLIDE 5: TIME SAVINGS -->
+  <div class="slide">
+    <div class="eyebrow">Cost-Benefit — Time</div>
+    <h2>90% reduction in book-in time per asset.</h2>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="number">10 min</div>
+        <div class="label">Manual process today</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">2 min</div>
+        <div class="label">App + copy-paste (today)</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">1 min</div>
+        <div class="label">App + API integration</div>
+      </div>
+    </div>
+    <table>
+      <tr><th></th><th>Manual</th><th>With API</th></tr>
+      <tr><td>Hours per week (100 assets)</td><td>16.7 hrs</td><td>1.7 hrs</td></tr>
+      <tr><td>Hours per year</td><td>867 hrs</td><td>87 hrs</td></tr>
+      <tr><td><strong>Hours freed per year</strong></td><td colspan="2"><strong style="color:#38d0c8">≈ 780 hrs — nearly half a full-time headcount</strong></td></tr>
+    </table>
+  </div>
+
+  <!-- SLIDE 6: ROI -->
+  <div class="slide">
+    <div class="eyebrow">Cost-Benefit — ROI</div>
+    <h2>Under $900/year to run. ~$31,000/year in value.</h2>
+    <div class="two-col">
+      <div>
+        <h3>Running costs</h3>
+        <table>
+          <tr><td>AI per booking</td><td style="color:#fff">$0.02–$0.05</td></tr>
+          <tr><td>At 100/week</td><td style="color:#fff">~$2–5/week</td></tr>
+          <tr><td>Annual AI cost</td><td style="color:#fff">~$150–$250</td></tr>
+          <tr><td>Hosting + domain</td><td style="color:#fff">~$615/year</td></tr>
+          <tr><td><strong>Total annual</strong></td><td><strong style="color:#38d0c8">~$865/year</strong></td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="roi-box">
+          <p>Labour value unlocked/year</p>
+          <div class="big">~$31,200</div>
+          <p style="margin-top:12px;">≈ <strong style="color:#fff;font-size:20px;">36× return</strong> on run cost</p>
+          <p class="sub">780 hrs × $40/hr loaded rate<br>(on $62k yardhand salary inc. super + on-costs)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: BUSINESS VALUE -->
+  <div class="slide">
+    <div class="eyebrow">Cost-Benefit — Business Value</div>
+    <h2>More than just time.</h2>
+    <table>
+      <tr><th>Benefit</th><th>Impact</th></tr>
+      <tr><td>Labour hours saved</td><td>~780 hrs/year at 100 assets/week</td></tr>
+      <tr><td>Same team, higher volume</td><td>More assets without adding headcount</td></tr>
+      <tr><td>Consistent descriptions</td><td>On-brand, uniform — Slattery format every time</td></tr>
+      <tr><td>Faster to market</td><td>Book-ins done on site, not batched for later</td></tr>
+      <tr><td>Fewer data entry errors</td><td>AI reads plates directly — no retyping</td></tr>
+      <tr><td>Anyone can do it correctly</td><td>Format rules are built in — no training required</td></tr>
+    </table>
+  </div>
+
+  <!-- SLIDE 8: THE ASK -->
+  <div class="slide">
+    <div class="eyebrow">The Ask</div>
+    <h2>Sandbox access + approval to build Salesforce API integration.</h2>
+    <p class="lead" style="margin-bottom:8px;">Today: copy-paste ready output. Goal: direct write into Salesforce — no copy-paste step.</p>
+    <div class="ask-box">
+      <h3 style="margin-top:0;color:#38d0c8;">Specifically requesting:</h3>
+      <ol>
+        <li>Salesforce <strong>sandbox access</strong> for development and testing</li>
+        <li><strong>External Client App</strong> in sandbox — OAuth 2.0 Web Server Flow (Consumer Key + Secret)</li>
+        <li>Defined <strong>pilot scope</strong> — one site, 2 weeks, small user group</li>
+        <li><strong>Review meeting</strong> at end of pilot to decide on production rollout</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: RISK & DATA -->
+  <div class="slide">
+    <div class="eyebrow">Risk &amp; Governance</div>
+    <h2>The hard questions, answered.</h2>
+    <div class="two-col">
+      <div>
+        <h3>Data &amp; privacy</h3>
+        <ul>
+          <li>Photos → Supabase, Sydney (au-southeast-2)</li>
+          <li>AI call → OpenAI. Not used for training. AU data residency available.</li>
+          <li>All Salesforce writes carry the user's identity — native audit trail</li>
+          <li>Zero Data Retention (ZDR) available via enterprise agreement</li>
+        </ul>
+      </div>
+      <div>
+        <h3>If something goes wrong</h3>
+        <ul>
+          <li>Bad photos → flags missing fields, doesn't invent data</li>
+          <li>Wrong AI extraction → human review step catches it before any write</li>
+          <li>OpenAI outage → clear error, fall back to manual entry</li>
+          <li>Vendor risk → extraction layer is modular, swap providers without rewrite</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: PATH FORWARD -->
+  <div class="slide">
+    <div class="eyebrow">Path Forward</div>
+    <h2>Six weeks to a working pilot.</h2>
+    <div class="timeline">
+      <div class="tl-row">
+        <div class="tl-time">Today</div>
+        <div class="tl-text">Approval in principle from managers</div>
+        <div class="tl-owner">Managers</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">Week 1–2</div>
+        <div class="tl-text">IT provisions sandbox, creates External Client App (Consumer Key + Secret)</div>
+        <div class="tl-owner">IT</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">Week 3–4</div>
+        <div class="tl-text">Build and test Salesforce write-back against sandbox</div>
+        <div class="tl-owner">Jack</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">Week 5</div>
+        <div class="tl-text">IT security review of integration</div>
+        <div class="tl-owner">IT</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">Week 6</div>
+        <div class="tl-text">Limited production pilot — one site, small user group</div>
+        <div class="tl-owner">Jack + Mgrs</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-time">Week 8</div>
+        <div class="tl-text">Pilot review — decision on full rollout</div>
+        <div class="tl-owner">Managers</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: WHAT BECOMES POSSIBLE -->
+  <div class="slide">
+    <div class="eyebrow">The Bigger Picture</div>
+    <h2>The book-in app is just the start.<br>The same foundation unlocks AI automation across Salesforce.</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;">
+      <div style="background:rgba(42,110,245,0.12);border:1px solid rgba(42,110,245,0.3);border-radius:10px;padding:20px 22px;">
+        <div style="font-size:26px;margin-bottom:10px;">🏷️</div>
+        <div style="font-weight:700;color:#fff;font-size:16px;margin-bottom:6px;">Auction creation</div>
+        <div style="font-size:14px;color:#8899cc;line-height:1.5;">AI reads a sale brief and creates the full auction structure in Salesforce — dates, lots, assignments. What takes an admin an hour, done in seconds.</div>
+      </div>
+      <div style="background:rgba(42,110,245,0.12);border:1px solid rgba(42,110,245,0.3);border-radius:10px;padding:20px 22px;">
+        <div style="font-size:26px;margin-bottom:10px;">📬</div>
+        <div style="font-weight:700;color:#fff;font-size:16px;margin-bottom:6px;">Consignor updates</div>
+        <div style="font-size:14px;color:#8899cc;line-height:1.5;">AI monitors asset status and automatically emails consignors when their asset is listed, sold, or settled — no manual chasing.</div>
+      </div>
+      <div style="background:rgba(42,110,245,0.12);border:1px solid rgba(42,110,245,0.3);border-radius:10px;padding:20px 22px;">
+        <div style="font-size:26px;margin-bottom:10px;">📄</div>
+        <div style="font-weight:700;color:#fff;font-size:16px;margin-bottom:6px;">Settlement automation</div>
+        <div style="font-size:14px;color:#8899cc;line-height:1.5;">Post-sale, AI generates settlement statements from Salesforce lot data, attaches them to records, and triggers the finance workflow.</div>
+      </div>
+      <div style="background:rgba(42,110,245,0.12);border:1px solid rgba(42,110,245,0.3);border-radius:10px;padding:20px 22px;">
+        <div style="font-size:26px;margin-bottom:10px;">🎙️</div>
+        <div style="font-weight:700;color:#fff;font-size:16px;margin-bottom:6px;">Voice-to-Salesforce</div>
+        <div style="font-size:14px;color:#8899cc;line-height:1.5;">Field staff record a voice note walking around an asset. AI transcribes it and populates the right Salesforce fields — no typing on site at all.</div>
+      </div>
+    </div>
+    <p style="margin-top:20px;font-size:15px;color:#556;">The External Client App approved today is the authentication layer for all of this. One approval — built once — reused across every future workflow.</p>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- Nav controls -->
+<div id="nav">
+  <span id="counter">1 / 11</span>
+  <button class="nav-btn" id="btnPrev" onclick="move(-1)">‹</button>
+  <button class="nav-btn" id="btnNext" onclick="move(1)">›</button>
+</div>
+
+<div id="progress"></div>
+<div id="hint">Press F11 for fullscreen · ← → to navigate</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let cur = 0;
+
+function show(n) {
+  slides[cur].classList.remove('active');
+  cur = Math.max(0, Math.min(slides.length - 1, n));
+  slides[cur].classList.add('active');
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + slides.length;
+  document.getElementById('progress').style.width = ((cur + 1) / slides.length * 100) + '%';
+}
+
+function move(dir) { show(cur + dir); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') move(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                     move(-1);
+  if (e.key === 'Home') show(0);
+  if (e.key === 'End')  show(slides.length - 1);
+});
+
+document.getElementById('deck').addEventListener('click', e => {
+  if (!e.target.closest('.nav-btn')) move(1);
+});
+
+show(0);
+</script>
+</body>
+</html>

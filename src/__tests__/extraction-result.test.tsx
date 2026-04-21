@@ -53,10 +53,13 @@ describe('ExtractionResultPanel', () => {
         onRerun={vi.fn()}
       />
     )
-    // All 3 fields should be present (from mock)
+    // Found fields are visible immediately
     expect(screen.getByText('Make')).toBeTruthy()
-    expect(screen.getByText('Model')).toBeTruthy()
     expect(screen.getByText('Year')).toBeTruthy()
+    // Not-found fields are in a collapsed section — expand it first
+    const toggleButton = screen.getByRole('button', { name: /not found/i })
+    fireEvent.click(toggleButton)
+    expect(screen.getByText('Model')).toBeTruthy()
   })
 
   it('shows extracted value in white bold when value is present', async () => {
@@ -92,6 +95,9 @@ describe('ExtractionResultPanel', () => {
         onRerun={vi.fn()}
       />
     )
+    // Not-found fields are collapsed by default — expand the section first
+    const toggleButton = screen.getByRole('button', { name: /not found/i })
+    fireEvent.click(toggleButton)
     const notFoundElements = screen.getAllByText('Not found')
     expect(notFoundElements.length).toBeGreaterThan(0)
   })
@@ -156,7 +162,7 @@ describe('ExtractionPageClient', () => {
         hasPhotos={true}
       />
     )
-    expect(screen.getByText('Run AI Extraction')).toBeTruthy()
+    expect(screen.getByText('Extract Details')).toBeTruthy()
   })
 
   it('shows ExtractionResultPanel when initialExtractionResult is provided', async () => {
@@ -183,17 +189,16 @@ describe('PhotosPageCTA', () => {
     global.fetch = vi.fn().mockResolvedValue({ ok: true })
   })
 
-  it('renders "Run AI Extraction" button', async () => {
+  it('renders "Extract & Review" button', async () => {
     const { PhotosPageCTA } = await import('@/components/asset/PhotosPageCTA')
     render(<PhotosPageCTA assetId="asset-1" />)
-    expect(screen.getByText('Run AI Extraction')).toBeTruthy()
+    expect(screen.getByText('Extract & Review')).toBeTruthy()
   })
 
-  it('fires fetch to /api/extract and navigates to /extract on click', async () => {
+  it('navigates to /extract?autostart=1 on click', async () => {
     const { PhotosPageCTA } = await import('@/components/asset/PhotosPageCTA')
     render(<PhotosPageCTA assetId="asset-1" />)
-    fireEvent.click(screen.getByText('Run AI Extraction'))
-    // Should navigate immediately (fire-and-navigate pattern)
-    expect(mockRouterPush).toHaveBeenCalledWith('/assets/asset-1/extract')
+    fireEvent.click(screen.getByText('Extract & Review'))
+    expect(mockRouterPush).toHaveBeenCalledWith('/assets/asset-1/extract?autostart=1')
   })
 })

@@ -37,24 +37,24 @@ describe('FieldsBlock', () => {
 
   it('copy button calls navigator.clipboard.writeText with the full fields text', async () => {
     render(<FieldsBlock fieldsText={SAMPLE_FIELDS} />)
-    const copyBtn = screen.getByRole('button', { name: /copy fields/i })
+    const copyBtn = screen.getByRole('button', { name: /^copy$/i })
     await act(async () => { fireEvent.click(copyBtn) })
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(SAMPLE_FIELDS)
   })
 
   it('copy button label changes to "Copied!" immediately after click', async () => {
     render(<FieldsBlock fieldsText={SAMPLE_FIELDS} />)
-    const copyBtn = screen.getByRole('button', { name: /copy fields/i })
+    const copyBtn = screen.getByRole('button', { name: /^copy$/i })
     await act(async () => { fireEvent.click(copyBtn) })
     expect(screen.getByRole('button', { name: /copied!/i })).toBeTruthy()
   })
 
-  it('copy button label reverts to "Copy Fields" after 2000ms', async () => {
+  it('copy button label reverts to "Copy" after 2000ms', async () => {
     render(<FieldsBlock fieldsText={SAMPLE_FIELDS} />)
-    const copyBtn = screen.getByRole('button', { name: /copy fields/i })
+    const copyBtn = screen.getByRole('button', { name: /^copy$/i })
     await act(async () => { fireEvent.click(copyBtn) })
     await act(async () => { vi.advanceTimersByTime(2001) })
-    expect(screen.getByRole('button', { name: /copy fields/i })).toBeTruthy()
+    expect(screen.getByRole('button', { name: /^copy$/i })).toBeTruthy()
   })
 })
 
@@ -69,14 +69,14 @@ describe('DescriptionBlock', () => {
 
   it('copy button calls navigator.clipboard.writeText with description text', async () => {
     render(<DescriptionBlock descriptionText={SAMPLE_DESC} onRegenerate={noop} isRegenerating={false} />)
-    const copyBtn = screen.getByRole('button', { name: /copy description/i })
+    const copyBtn = screen.getAllByRole('button').find(btn => btn.textContent?.includes('Copy') && !btn.textContent?.includes('Regenerate'))!
     await act(async () => { fireEvent.click(copyBtn) })
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(SAMPLE_DESC)
   })
 
   it('copy button label changes to "Copied!" immediately after click', async () => {
     render(<DescriptionBlock descriptionText={SAMPLE_DESC} onRegenerate={noop} isRegenerating={false} />)
-    const copyBtn = screen.getByRole('button', { name: /copy description/i })
+    const copyBtn = screen.getAllByRole('button').find(btn => btn.textContent?.includes('Copy') && !btn.textContent?.includes('Regenerate'))!
     await act(async () => { fireEvent.click(copyBtn) })
     expect(screen.getByRole('button', { name: /copied!/i })).toBeTruthy()
   })

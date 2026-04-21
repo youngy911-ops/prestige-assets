@@ -5,7 +5,7 @@ import type { ExtractionResult } from '@/lib/ai/extraction-schema'
 
 const vinField: FieldDefinition = {
   key: 'vin', label: 'VIN', sfOrder: 2, inputType: 'text',
-  aiExtractable: true, required: false,
+  aiExtractable: true, required: false, inspectionPriority: true,
 }
 const makeField: FieldDefinition = {
   key: 'make', label: 'Make', sfOrder: 3, inputType: 'text',
@@ -13,7 +13,7 @@ const makeField: FieldDefinition = {
 }
 const extrasField: FieldDefinition = {
   key: 'extras', label: 'Extras', sfOrder: 33, inputType: 'textarea',
-  aiExtractable: false, required: false,
+  aiExtractable: false, required: true,
 }
 
 describe('buildChecklist', () => {

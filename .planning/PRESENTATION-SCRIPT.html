@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speaker Script — Asset Book-In App</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: #f6f7f9;
+  color: #1a1a1a;
+  padding: 40px 0 80px;
+}
+.page { max-width: 740px; margin: 0 auto; padding: 0 32px; }
+
+h1 { font-size: 26px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
+.subtitle { font-size: 14px; color: #888; margin-bottom: 48px; }
+
+.slide-block {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+.slide-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  background: #0f1c3f;
+}
+.slide-num {
+  background: #2a6ef5;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.slide-title-text { font-size: 15px; font-weight: 700; color: #fff; }
+.slide-cue { font-size: 12px; color: #7eb3ff; margin-left: auto; white-space: nowrap; }
+
+.script {
+  padding: 22px 24px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #2a2a2a;
+}
+.script p { margin-bottom: 14px; }
+.script p:last-child { margin-bottom: 0; }
+
+.note {
+  background: #fffbea;
+  border-left: 3px solid #f5a623;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #7a5a00;
+  margin: 12px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.qa-section {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  overflow: hidden;
+  margin-top: 40px;
+}
+.qa-header {
+  padding: 16px 24px;
+  background: #1a3a6b;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+.qa-item { padding: 18px 24px; border-bottom: 1px solid #f0f0f0; }
+.qa-item:last-child { border-bottom: none; }
+.qa-q { font-size: 15px; font-weight: 700; color: #0f1c3f; margin-bottom: 8px; }
+.qa-a { font-size: 15px; line-height: 1.65; color: #444; }
+
+@media print {
+  body { background: #fff; padding: 20px 0; }
+  .slide-block { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; margin-bottom: 20px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Speaker Script</h1>
+<p class="subtitle">Asset Book-In App · Slattery Auctions presentation · Keep this open on your phone or a second screen</p>
+
+<!-- SLIDE 1 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">1</div>
+    <div class="slide-title-text">Title</div>
+    <div class="slide-cue">~30 sec</div>
+  </div>
+  <div class="script">
+    <p>"Thanks for the time. I want to show you something I've built that I think changes how we do asset book-ins. It's live, it's working, and I've been using it on real jobs."</p>
+    <p>"I'll keep this short — a few slides, then I'd rather just show you the actual tool."</p>
+  </div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">2</div>
+    <div class="slide-title-text">The Problem</div>
+    <div class="slide-cue">~1 min</div>
+  </div>
+  <div class="script">
+    <p>"Here's what currently happens when we book in an excavator or a prime mover. We take photos on-site — that part's fine. But then we're manually cross-referencing websites to get the right specs, finding the exact Salesforce field order, and writing a description that has to follow our formatting rules exactly."</p>
+    <p>"That's around 10 minutes per asset, every single asset. Multiply that across a full sale — 50, 100 lots — and it adds up fast. And the consistency isn't always there either, especially across different staff or asset types they don't book in often."</p>
+  </div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">3</div>
+    <div class="slide-title-text">The Solution</div>
+    <div class="slide-cue">~1 min</div>
+  </div>
+  <div class="script">
+    <p>"The app flips that process. Staff upload the build plate photos directly from their phone. The AI reads the plate and extracts every relevant Salesforce field — VIN, make, model, year, engine details, weight ratings, hours — and it uses its own knowledge to fill in spec fields it can infer from the model."</p>
+    <p>"The staff member reviews the AI's work, fixes anything wrong, and hits confirm. They get a ready-to-paste Salesforce fields block and a correctly formatted description. The whole thing takes about two minutes today, and under a minute once we have API access."</p>
+  </div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">4</div>
+    <div class="slide-title-text">Live Demo</div>
+    <div class="slide-cue">~3–4 min</div>
+  </div>
+  <div class="script">
+    <div class="note">⚡ Open the app before this slide. Have assets ready.</div>
+    <p>"Let me just show you. [Open app] This is what staff see — they pick the asset type, upload their photos, and the AI runs. [Wait ~15 sec] Here are the extracted fields. The ones highlighted are fields it's less confident about — we review those. [Fix one if needed]"</p>
+    <p>"Here's the Salesforce fields output, ready to paste. And then [tap Generate Description] here's the description — correct format for the subtype, correct footer. [Show copy button] That's it."</p>
+    <div class="note">🔁 If the live demo fails, switch to backup video immediately — don't troubleshoot in the room.</div>
+  </div>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">5</div>
+    <div class="slide-title-text">Time Savings</div>
+    <div class="slide-cue">~1 min</div>
+  </div>
+  <div class="script">
+    <p>"The numbers are straightforward. We're at about 10 minutes per asset today. The app with copy-paste brings that to two minutes now. With the API integration, it's one minute."</p>
+    <p>"At 100 assets a week, that's about 780 hours a year freed up. That's nearly half a full-time headcount that could be doing inspections, yard work, or processing more volume — not typing specs into Salesforce."</p>
+  </div>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">6</div>
+    <div class="slide-title-text">ROI</div>
+    <div class="slide-cue">~1 min</div>
+  </div>
+  <div class="script">
+    <p>"The cost to run this is under $900 a year — that's AI fees, hosting, domain. All in."</p>
+    <p>"At a yardhand's fully loaded rate — $62k salary with super and on-costs works out to about $40 an hour — 780 hours freed up is worth around $31,000 a year. That's a 36-to-1 return on running costs. And that's just at 100 assets a week; it scales linearly from there."</p>
+  </div>
+</div>
+
+<!-- SLIDE 7 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">7</div>
+    <div class="slide-title-text">Business Value</div>
+    <div class="slide-cue">~45 sec</div>
+  </div>
+  <div class="script">
+    <p>"Beyond the hours, there are a few things that are harder to put a number on. Anyone can do a correct book-in, first time — a new staff member doesn't need to know the Salesforce field order or the description rules. That knowledge is just built in."</p>
+    <p>"On-site auctions are a big one too. Right now there's a lag — photos on site, data entry later. With this, you walk the yard and you're done before you leave."</p>
+  </div>
+</div>
+
+<!-- SLIDE 8 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">8</div>
+    <div class="slide-title-text">The Ask</div>
+    <div class="slide-cue">~1 min</div>
+  </div>
+  <div class="script">
+    <p>"The one thing that would make this a lot more powerful is Salesforce API access. Right now it gives you copy-paste ready output — that's already saving real time. But if IT can set up an External Client App, the copy-paste step goes away entirely."</p>
+    <p>"I can build that side of it. I just need IT to approve it and provision a sandbox. What I'm asking today is for your support to make that happen."</p>
+    <div class="note">💬 Pause here. Let them respond before moving on.</div>
+  </div>
+</div>
+
+<!-- SLIDE 9 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">9</div>
+    <div class="slide-title-text">Risk &amp; Governance</div>
+    <div class="slide-cue">~1 min</div>
+  </div>
+  <div class="script">
+    <p>"A few things on data. Photos go to Supabase in Sydney — stays in Australia. The AI call goes to OpenAI but it's not used for training by default, and AU data residency is available if that's a concern."</p>
+    <p>"Every write to Salesforce goes through the user's own login — there's a full audit trail, it's not a service account writing on behalf of everyone."</p>
+    <p>"And if the AI gets something wrong — the review step catches it. Nothing writes to Salesforce until a person has confirmed it."</p>
+  </div>
+</div>
+
+<!-- SLIDE 10 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">10</div>
+    <div class="slide-title-text">Path Forward</div>
+    <div class="slide-cue">~45 sec</div>
+  </div>
+  <div class="script">
+    <p>"The timeline is six weeks from when IT has the sandbox ready. Weeks one and two are IT setting up the External Client App — that's the only blocker on my end. Weeks three and four I build and test the write-back. Week five is IT security review. Week six we run a limited pilot, and week eight we review and decide on full rollout."</p>
+    <p>"Everything else is already done. I just need the credentials from IT and an agreement on pilot scope. Can we make that happen?"</p>
+    <div class="note">✅ End here. Invite questions — don't rush to fill silence.</div>
+  </div>
+</div>
+
+<!-- SLIDE 11 -->
+<div class="slide-block">
+  <div class="slide-header">
+    <div class="slide-num">11</div>
+    <div class="slide-title-text">The Bigger Picture</div>
+    <div class="slide-cue">~1 min</div>
+  </div>
+  <div class="script">
+    <p>"The book-in app is what I'm asking you to approve today — but I want to be clear about what we're actually building here. The External Client App that IT provisions isn't just for book-ins. It's the authentication layer for AI automation across Salesforce."</p>
+    <p>"Once it's in place, the same foundation can power auction creation — AI reads a sale brief and builds the full Salesforce structure in seconds instead of an admin spending an hour on it. Consignor updates sent automatically when an asset status changes. Settlement statements generated and attached post-sale without anyone touching them. Field staff recording voice notes on site and having them populate Salesforce fields automatically."</p>
+    <p>"We approve this once, we build it once — and every future workflow that needs to talk to Salesforce uses it. The book-in app is the proof of concept. This is what it leads to."</p>
+    <div class="note">💬 Let this land. Good place to invite questions about future potential before wrapping up.</div>
+  </div>
+</div>
+
+<!-- Q&A -->
+<div class="qa-section">
+  <div class="qa-header">Probable Q&amp;A</div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What if the AI gets something wrong?"</div>
+    <div class="qa-a">Every extraction is reviewed by a human before it touches Salesforce. The app shows what was extracted vs what was inferred — reviewer knows exactly what to double-check. Actually more reliable than manual entry, where a mistyped spec never gets flagged.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Why not buy an off-the-shelf tool?"</div>
+    <div class="qa-a">Nothing on the market is built around Slattery's Salesforce schema and description conventions. Anything we bought would still need custom integration work, plus ongoing subscription costs. This is built around how Slattery actually works.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What if you leave?"</div>
+    <div class="qa-a">Part of what the pilot decision covers. If it proves value, it becomes a supported internal tool — documented, handed over, or rebuilt by IT. Today it's a proof of concept; the pilot is how we decide whether to formalise it.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Our data leaving the country concerns me."</div>
+    <div class="qa-a">Photos are hosted in Sydney. The AI call goes to OpenAI, but AU data residency is available now — images can be processed and stored at-rest in Australia. Zero Data Retention agreements are also available if needed. Happy to walk IT through the options.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"How much does this cost to run?"</div>
+    <div class="qa-a">About $0.02–$0.05 per asset in AI fees. At 100 a week that's $2–$5 a week. Total annual cost including hosting is under $900. Scales linearly so even at 10× volume it stays trivial.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What does IT actually have to do?"</div>
+    <div class="qa-a">Create an External Client App in a sandbox, issue a Consumer Key and Secret, grant sandbox access, and set up a Permission Set for the pilot users. Everything else is on me. Production isn't touched until after the pilot review.</div>
+  </div>
+
+</div>
+
+</div><!-- /page -->
+</body>
+</html>

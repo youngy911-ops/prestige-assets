@@ -40,8 +40,7 @@ describe('saveInspectionNotes', () => {
     expect(mockUpdate).toHaveBeenCalledWith({ inspection_notes: 'some notes' })
   })
 
-  it('calls revalidatePath with correct path after successful update', async () => {
-    const { revalidatePath } = await import('next/cache')
+  it('returns {} (success) after successful update without requiring revalidatePath', async () => {
     mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
     mockFrom.mockReturnValue({
       update: () => ({
@@ -51,8 +50,8 @@ describe('saveInspectionNotes', () => {
       }),
     })
 
-    await saveInspectionNotes('asset-1', 'some notes')
-    expect(revalidatePath).toHaveBeenCalledWith('/assets/asset-1/photos')
+    const result = await saveInspectionNotes('asset-1', 'some notes')
+    expect(result).toEqual({})
   })
 
   it('returns error when DB update fails', async () => {

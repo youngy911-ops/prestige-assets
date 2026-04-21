@@ -40,9 +40,9 @@ Extras: "
 exports[`generateFieldsBlock > snapshot: general_goods with all fields empty 1`] = `
 "Make: 
 Model: 
+Year: 
 Serial Number: 
-Date of Manufacture: 
-Extras: "
+Extras / Notes: "
 `;
 
 exports[`generateFieldsBlock > snapshot: trailer with all fields empty 1`] = `

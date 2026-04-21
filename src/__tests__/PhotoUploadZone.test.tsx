@@ -2,6 +2,11 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 
+// Mock next/navigation (component now uses useRouter)
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
+}))
+
 // Mock all external dependencies before importing the component
 vi.mock('@/lib/actions/photo.actions', () => ({
   insertPhoto: vi.fn().mockResolvedValue({ id: 'photo-123' }),

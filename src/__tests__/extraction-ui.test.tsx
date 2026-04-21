@@ -41,7 +41,7 @@ describe('ConfidenceBadge', () => {
     const wrapper = container.querySelector('span')
     expect(wrapper?.className).toContain('text-green-400')
     // Screen-reader label
-    expect(screen.getByText('High confidence')).toBeTruthy()
+    expect(screen.getByText('Read from photo')).toBeTruthy()
   })
 
   it('renders AlertCircle icon with text-amber-400 for level="medium"', async () => {
@@ -49,7 +49,7 @@ describe('ConfidenceBadge', () => {
     const { container } = render(<ConfidenceBadge level="medium" />)
     const wrapper = container.querySelector('span')
     expect(wrapper?.className).toContain('text-amber-400')
-    expect(screen.getByText('Medium confidence')).toBeTruthy()
+    expect(screen.getByText('Inferred from model knowledge')).toBeTruthy()
   })
 
   it('renders MinusCircle icon with text-white/40 for level="low"', async () => {
@@ -125,13 +125,13 @@ describe('InspectionNotesSection', () => {
 // ─── ExtractionTriggerState ─────────────────────────────────────────────────
 
 describe('ExtractionTriggerState', () => {
-  it('renders "Run AI Extraction" button and "Skip to Manual Entry" link when hasPhotos=true', async () => {
+  it('renders "Extract Details" button and "Skip to Manual Entry" link when hasPhotos=true', async () => {
     const { ExtractionTriggerState } = await import('@/components/asset/ExtractionTriggerState')
     const onTrigger = vi.fn()
     render(
       <ExtractionTriggerState assetId="asset-1" hasPhotos={true} onTrigger={onTrigger} />
     )
-    expect(screen.getByText('Run AI Extraction')).toBeTruthy()
+    expect(screen.getByText('Extract Details')).toBeTruthy()
     expect(screen.getByText('Skip to Manual Entry')).toBeTruthy()
   })
 
@@ -149,16 +149,16 @@ describe('ExtractionTriggerState', () => {
 // ─── ExtractionLoadingState ─────────────────────────────────────────────────
 
 describe('ExtractionLoadingState', () => {
-  it('renders "Analysing photos and notes…" message', async () => {
+  it('renders the first step message on mount', async () => {
     const { ExtractionLoadingState } = await import('@/components/asset/ExtractionLoadingState')
     render(<ExtractionLoadingState />)
-    expect(screen.getByText('Analysing photos and notes…')).toBeTruthy()
+    expect(screen.getByText('Reading plates and labels…')).toBeTruthy()
   })
 
-  it('renders the can-navigate-away sub-message', async () => {
+  it('renders the timing sub-message', async () => {
     const { ExtractionLoadingState } = await import('@/components/asset/ExtractionLoadingState')
     render(<ExtractionLoadingState />)
-    expect(screen.getByText(/This takes 5–30 seconds/)).toBeTruthy()
+    expect(screen.getByText(/Usually 10–20 seconds/)).toBeTruthy()
   })
 })
 

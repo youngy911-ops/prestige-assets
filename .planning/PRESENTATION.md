@@ -1,246 +1,305 @@
-# Manager Presentation — AI Asset Book-In App
-*Slide deck outline + presenter script*
+# Asset Book-In App — Presentation Pack
+*Manager presentation + IT supporting document + Q&A talking points*
+*Updated: 2026-04-21 | Demo target: week of 2026-04-21*
 
 ---
 
-## Slide 1 — Title
+## SLIDE 0 — Opening
 
-**Heading:** AI-Powered Asset Book-In
-**Subheading:** Turning 5–15 minutes of manual work per asset into under 2
-
-*[Your name] · Slattery Auctions · [Date]*
-
----
-**Script:**
-> "Thanks for the time. I want to show you something I've built that I think changes how we do asset book-ins. It's live, it's working, and I've been using it on real jobs. I'll keep this short — five minutes of slides, then I'd rather show you the actual tool."
+> **"A book-in that takes 15 minutes today takes 1 minute with Salesforce API access. Here's what I've built, and here's what I need to get there."**
 
 ---
 
-## Slide 2 — The Problem
+## SLIDE 1 — The Problem
 
-**Heading:** Book-ins take too long
+**Manual book-in takes 10–15 minutes per asset. Most of that is research and typing, not inspection.**
 
-**Bullet points:**
-- Staff photograph build plates on-site
-- Then manually look up VIN, serial, make/model, specs in RitchieSpecs, PowerTorque, manufacturer sites
-- Then manually type all Salesforce fields — correct order, correct labels
-- Then write the description from scratch following our format rules
-- **One asset = 5–15 minutes of research and typing, every single asset**
+Current process for every asset:
+- Photograph asset on site
+- Research specs (make, model, year, GVM, GCM, engine, etc.)
+- Type data field-by-field into Salesforce
+- Write auction description manually
 
----
-**Script:**
-> "Here's what currently happens when we book in an excavator or a prime mover. We take photos on-site, which is fine. But then we're manually cross-referencing websites to get the right specs, finding the exact Salesforce field order, and writing a description that has to follow our formatting rules exactly — no dot points, right footer, correct subtype layout. That's 5–15 minutes per asset. Multiply that across a full sale — 50, 100 lots — and it adds up fast. And the consistency isn't always there either, especially across different staff or asset types they don't book in often."
+The inspection itself is quick. The bottleneck is everything that happens after — specs research, data entry, description writing. That's what's eating the time.
 
 ---
 
-## Slide 3 — The Solution
+## SLIDE 2 — The Solution
 
-**Heading:** Photo → AI → Salesforce. Done.
+**Asset Book-In AI App — photos in, Salesforce-ready data out.**
 
-**Single image/diagram:**
-```
-📷 Photo on-site
-      ↓
-🤖 GPT-4o reads the plate, extracts all fields
-      ↓
-✅ Staff reviews and confirms (30 seconds)
-      ↓
-📋 Copy-paste-ready Salesforce fields + formatted description
-```
+Built independently, outside work hours.
 
-**Caption:** No manual research. No formatting. Just confirm and copy.
+How it works:
+1. Field worker photographs asset (focus on compliance plate)
+2. Uploads photos to the app
+3. App extracts VIN, make, model, year, engine, GVM/GCM, etc. from the plate
+4. App generates a Salesforce-ready record and auction description
+5. User reviews, then data goes into Salesforce
 
----
-**Script:**
-> "The app flips that process. Staff upload the build plate photos directly from their phone. GPT-4o reads the plate and extracts every relevant Salesforce field — VIN, make, model, year, engine details, weight ratings, hours — and it uses its own knowledge to fill in spec fields it can infer from the model. The staff member reviews the AI's work, fixes anything wrong, and hits confirm. They get a ready-to-paste Salesforce fields block and a correctly formatted description. The whole thing takes about two minutes."
+Supported asset categories: trucks, trailers, earthmoving, agricultural, forklifts, marine, caravans, motor vehicles, general goods.
 
 ---
 
-## Slide 4 — What It Covers
+## SLIDE 3 — Live Demo
 
-**Heading:** All 8 asset types. Every Salesforce subtype.
+*No text — walk through 2–3 real assets live.*
 
-| Asset Type | Subtypes |
-|------------|----------|
-| Truck | 24 subtypes (Prime Mover, Tipper, Vacuum Truck, Concrete Pump, EWP...) |
-| Trailer | 24 subtypes (Flat Deck, Low Loader, Skel, Timber Jinker...) |
-| Earthmoving | 19 subtypes (Excavator, Motor Grader, Bulldozer/Crawler Tractor...) |
-| Agriculture | 12 subtypes — first time with subtype-aware descriptions |
-| Forklift | 9 subtypes (Telehandler, EWP, Walkie Stacker...) |
-| Caravan / Motorhome | 5 subtypes |
-| Marine | 10 subtypes (replacing Boat/Yacht/Jet Ski) |
-| General Goods | 16 subtypes |
+Suggested demo order:
+1. **Clean case** — common vehicle with a clear compliance plate (fast, clean extraction)
+2. **Messy case** — older machine or dusty plate (shows graceful handling)
+3. **Motor vehicle** — shows damage reporting alongside specs
 
-**Footer note:** Every subtype has its own description template — not generic output.
-
----
-**Script:**
-> "It's not just trucks and excavators. We cover all eight asset types with every Salesforce subtype aligned exactly to the SF taxonomy — the same choices you'd pick in the dropdown. Agriculture, Forklift, Caravan all have subtype selectors now for the first time. And critically, every subtype has its own description template. An EWP description looks different to a Tipper, a Telehandler looks different to a Walkie Stacker. The AI knows the difference and formats accordingly."
+Have a backup video ready in case the live demo fails or the API is slow.
 
 ---
 
-## Slide 5 — Who Can Use It
+## SLIDE 4 — Cost-Benefit Analysis
 
-**Heading:** Anyone can book in an asset. First time, every time.
+### Time per asset
 
-**The app guides you through it — you don't need to already know the rules.**
+| Process | Time |
+|---------|------|
+| Manual (current) | ~10 minutes |
+| App with copy-paste (today) | ~2 minutes |
+| App with API integration (the goal) | ~1 minute |
 
-| Role | What it means for them |
-|------|------------------------|
-| **Valuations team** | Book-ins done before they leave the yard — no data entry back at the desk |
-| **BDMs** | Can book in assets themselves on-site without relying on admin |
-| **Admin staff** | No more chasing specs across RitchieSpecs, PowerTorque, manufacturer sites |
-| **New staff** | Correct Salesforce format and description rules built in — no training required to get it right |
-| **On-site auctions** | Walk the yard, photograph each asset, book-ins complete before you leave |
-| **Bulk general goods** | Rapid-fire through a large lot — photo, type, confirm, next — no per-item research |
-
-**On-site auctions:**
-> Staff walk the yard with their phone. Each asset gets photographed, AI does the work, and by the time the auction starts the book-ins are done — not sitting as a backlog on someone's desk.
-
-**Bulk general goods / large lots:**
-> General goods used to mean typing individual descriptions for every item. Now it's: photo, select the category, confirm, copy. Move to the next one. You can process a large general goods consignment in a fraction of the time.
-
----
-**Script:**
-> "Think about what this means for on-site auctions. Right now there's a lag — someone walks the yard, takes photos, and then all that data entry happens later. With this, you walk the yard and you're done. Photos go straight into the app, AI pulls the fields, you confirm it in 30 seconds and move to the next asset. By the time you're back at the office the book-ins are already in Salesforce. And for large general goods lots — workshop clearances, estate sales, that kind of thing — instead of sitting there writing individual descriptions for 40 items, you're just moving through them on your phone. It genuinely changes the pace of how we can turn a job around."
+**90% reduction in book-in time per asset.**
 
 ---
 
-## Slide 6 — The Description Quality
+### Time saved at scale
 
-**Heading:** Descriptions that follow our rules. Every time.
+*Worked example at 100 assets/week — adjust to actual weekly volume*
 
-**Two-column layout:**
-
-*Before (manual):*
-> ❌ Inconsistent format between staff
-> ❌ Wrong footer variant on attachments
-> ❌ Marketing language slipping in
-> ❌ TBC for unknown specs
-> ❌ Hours/serial in description body
-
-*After (app):*
-> ✅ Correct footer enforced — always, no exceptions
-> ✅ No dot points, no marketing language
-> ✅ Omits unknown fields rather than guessing
-> ✅ Subtype-specific format (Tipper ≠ Prime Mover ≠ EWP)
-> ✅ Editable before copy-paste
-
----
-**Script:**
-> "One thing I was firm about from the start: the descriptions have to follow our format rules exactly, every time — not just when I'm the one writing them. The footer is enforced programmatically. It cannot output the wrong footer variant. It never writes TBC for a spec it doesn't know — it just omits it. And because every subtype has its own template, a concrete agitator description has the drum capacity and mix details, an EWP has boom length and platform height. The output is editable before you copy it, so staff can make adjustments, but the starting point is already correct."
-
----
-
-## Slide 7 — Live Demo
-
-**Heading:** Let me show you
-
-**Talking points for demo:**
-1. Open the app on phone — show the asset type selector (8 tiles)
-2. Create new asset → select Truck → Tipper
-3. Upload build plate photo(s)
-4. Show AI extraction in progress → fields populate
-5. Review screen — show confidence indicators, fix a field
-6. Show the Salesforce fields output (copy button)
-7. Generate description → show the formatted result
-8. Copy and paste into a Salesforce record
-
----
-**Script:**
-> "Let me just show you. [Open app] This is what staff see when they start a book-in. They pick the asset type — here I'll pick Truck, Tipper. They upload their photos from the phone's camera roll. [Upload] The AI runs for about 15–20 seconds. [Wait] And here are the extracted fields — make, model, VIN from the plate, year, engine details. The yellow ones are fields it's less confident about — we review those. [Fix one if needed] Here's the Salesforce fields output, ready to paste. And then [tap Generate Description] here's the description. Tipper format — body dimensions, payload, correct footer. [Show copy button] That's it."
-
----
-
-## Slide 8 — Built to Last
-
-**Heading:** Not a prototype. Production software.
-
-- **365 automated tests** — regression protection as we add features
-- **ISO 27001 compatible** — all AI calls server-side, no data leaves our stack in client code
-- **Extendable** — adding a new subtype is one file change + one test
-- **5 shipped versions** in 7 days — v1.0 → v1.4
-- **In active use** on real Slattery assets
-
----
-**Script:**
-> "A few things for context. This isn't a quick demo script I threw together — it's production software with 365 automated tests. Every description rule, every field extraction path, every Salesforce subtype is tested. When we add something new, we know immediately if something breaks. The AI calls are all server-side, so no asset data touches a client browser in a way that would concern compliance. And because it's built on the same Schema Registry we use for Salesforce, adding a new asset type when Slattery adds a new category is a matter of hours, not weeks."
-
----
-
-## Slide 9 — What's Next: Salesforce API Integration
-
-**Heading:** The next step eliminates copy-paste entirely
-
-**The vision:**
-```
-📷 Photo on-site
-      ↓
-🤖 AI extracts all fields
-      ↓
-✅ Staff confirms (30 seconds)
-      ↓
-🚀 App pushes directly to Salesforce record — done
-```
-
-**What's needed:**
-- IT to approve a Salesforce Connected App (standard configuration, no custom development required on the SF side)
-- Once approved: the app already has all the data in the right format — it's one integration step
-
-**Also on the roadmap:**
-- Multi-user access — roll out to the full book-in team, each with their own login
-- PPSR result capture — store the PPSR check result against the asset record in the app
-
----
-**Script:**
-> "The one thing that would make this a lot more powerful is Salesforce API access. Right now the app gives you the output ready to paste — that's already saving real time. But if IT can set up a Connected App, the copy-paste step goes away entirely. You confirm the AI's work and the app writes straight into Salesforce. I can build that side of it, I just need IT to approve it. Would you be able to help move that along?"
-
----
-
-## Slide 10 — Summary
-
-**Heading:** Where things stand
-
-| | Today | With Salesforce API |
+| | Manual | With API |
 |---|---|---|
-| Time per asset | ~2 min (down from 5–15) | ~1 min |
-| Salesforce entry | Copy-paste | Automatic |
-| Description format | Enforced by the app | Enforced by the app |
-| Who can use it | Anyone — no training needed | Anyone — no training needed |
-| 100-lot sale | ~3 hrs of data entry | ~1.5 hrs, zero formatting errors |
+| Time per asset | 10 min (avg) | 1 min |
+| Hours per week | 16.7 hrs | 1.7 hrs |
+| Hours per year | **867 hrs** | **87 hrs** |
+| **Hours freed up per year** | | **≈ 780 hrs** |
 
-**Valuations, BDMs, admin, new staff — anyone can do a correct book-in, first time.**
-**The knowledge is in the app.**
-
-Running cost: a few cents per asset in AI fees.
-
----
-**Script:**
-> "That's where things stand. It's already saving real time and the quality is consistent regardless of who does the booking — that's the part I think is underrated. A new staff member can do their first book-in correctly without anyone showing them the Salesforce field order or the description rules. That knowledge is just built in. The Salesforce API is the next step that makes it seamless for everyone. I've done everything I can on my end. I just need the Connected App sorted with IT. That's the ask."
+That's nearly **half a full-time headcount freed up** to do inspections, customer work, yard management, or increase throughput.
 
 ---
 
-## Appendix — Technical Details (if asked)
+### Running costs
 
-**Stack:**
-- Next.js 15 (App Router) — web app, phone browser + desktop
-- Supabase — database, photo storage, auth
-- GPT-4o — field extraction (photos → structured fields) and description generation
-- Vitest — 365 automated tests
+| Item | Cost |
+|------|------|
+| AI extraction (per booking) | $0.02–$0.05 |
+| At 100 bookings/week | ~$2–$5/week |
+| Annual AI cost at 100/week | **~$150–$250/year** |
+| Hosting (Vercel + Supabase) | ~$50/month (~$600/year) |
+| Domain | ~$15/year |
+| **Total annual running cost** | **~$765–$865/year** |
 
-**How AI extraction works:**
-- Photos uploaded → sent to GPT-4o with a Zod schema specifying every Salesforce field for that asset type
-- Each field has an `aiHint` annotation with field-specific guidance (e.g. "read from compliance plate", "infer from engine model if not visible")
-- GPT-4o returns structured JSON; confidence scores flag uncertain fields
-- Pre-entered values (VIN, odometer, hours) are injected as authoritative overrides before extraction
-
-**How descriptions work:**
-- Second GPT-4o call after user confirms fields
-- System prompt contains ALL_CAPS template sections for every subtype (e.g. `TIPPER`, `PRIME MOVER`, `EWP`)
-- GPT-4o selects the matching template for the confirmed subtype
-- `normalizeFooter` post-processes output to enforce correct footer regardless of GPT output
-- Result is editable before copy-paste
+No new hardware. No new licences. No new infrastructure.
 
 ---
 
-*Presentation prepared: 2026-03-24*
+### Business value
+
+| Benefit | Impact |
+|---------|--------|
+| Labour hours saved | ~996 hrs/year at 100 assets/week |
+| Same team, higher volume | Process more assets without adding headcount |
+| Consistent auction descriptions | On-brand, uniform, follows Slattery conventions every time |
+| Faster listing to market | Book-ins on site in real time, not batched for later |
+| Fewer data entry errors | AI extracts from compliance plates directly — no retyping |
+| Better field staff experience | Less typing specs into mobile, more time on quality inspection |
+| Better data for buyers | Damage reports and specs more consistent across listings |
+
+---
+
+### Risks and mitigations
+
+| Risk | Mitigation |
+|------|------------|
+| AI extracts wrong data | Human review step before every Salesforce write — user confirms or edits |
+| Bad/unreadable photos | App extracts what it can, flags missing fields rather than inventing data |
+| OpenAI service outage | Clear error shown, user falls back to manual entry. No data lost. |
+| Data residency concerns | Hosting in Australia (Sydney). OpenAI AU residency available if required. |
+| Vendor lock-in | Extraction layer is modular — can swap providers without rewriting app |
+| Ongoing maintenance | Addressed through pilot review → formalise as supported internal tool |
+
+---
+
+### ROI summary
+
+- **Cost to run:** under $1,000/year
+- **Value returned:** ~780 labour hours/year (at 100 assets/week) plus consistency, speed, and scalability
+- **Payback period:** effectively immediate
+
+*Yardhand loaded rate ~$40/hr (inc. super + on-costs on $62k salary): 780 hrs = ~$31,200 of labour capacity unlocked annually at a run cost of under $900. That's roughly a 36× return on run cost.*
+
+---
+
+## SLIDE 5 — The Ask
+
+**Sandbox access + approval to build Salesforce API integration.**
+
+Today: the app outputs copy-paste ready data.
+Goal: direct write into Salesforce, no copy-paste step.
+
+Specifically requesting:
+1. Access to a Salesforce sandbox for development and testing
+2. Creation of an **External Client App** in the sandbox (OAuth 2.0 Web Server Flow)
+3. A defined pilot scope — e.g. one auction site, 2 weeks, X users
+4. Review meeting at the end of pilot to decide on production rollout
+
+---
+
+## SLIDE 6 — Risk & Governance
+
+### What happens when the photos are bad?
+The app degrades gracefully. It extracts what it can from whatever photos are usable and flags missing fields rather than guessing. User can re-photograph or fill gaps manually. Worst case, partial extraction still beats starting from scratch.
+
+### Who owns the data and where does it go?
+- **Photos** are uploaded to Supabase (Sydney region, ap-southeast-2) — data stays in Australia
+- **Extraction call** goes to OpenAI's API. Per OpenAI's API terms (updated Jan 2026): inputs and outputs are **not used for training by default**, retained up to 30 days for abuse monitoring only, then deleted.
+- **Important upgrade available:** OpenAI now offers **data residency in Australia** for eligible API customers — sensitive content can be stored and processed at-rest in AU, addressing any "our data leaves the country" concern.
+- **Zero Data Retention (ZDR)** is also available through OpenAI Enterprise agreements if required — eliminates the 30-day abuse monitoring retention entirely.
+- **Extracted data** sits in Supabase (Sydney) — Slattery-owned, not shared
+- Nothing is made public, nothing is shared with third parties beyond the OpenAI extraction call
+
+### How does it integrate with Salesforce long-term?
+Staged approach:
+- **Stage 1 (now):** Copy-paste. Zero integration risk, no IT approvals needed, already working.
+- **Stage 2 (the ask):** Direct write-back via Salesforce REST API, using an External Client App with OAuth 2.0 Web Server Flow. Users log in as themselves — writes carry correct audit trails.
+- **Stage 3 (future):** Deeper features — photo attachments to asset records, triggering from Salesforce, damage inspection module.
+
+### What's the fallback if OpenAI goes down or changes pricing?
+- **Availability:** API down = clear error in the app, user falls back to manual entry. Same as today's process. No data lost.
+- **Vendor risk:** Extraction is modular. Swapping to Claude, Gemini, or a local vision model is a change at the API layer, not a rewrite.
+
+### Who maintains this?
+Currently Jack, outside hours. If the pilot proves value, formalise it as a supported internal tool — this is part of what the pilot decision covers.
+
+---
+
+## SLIDE 7 — Path Forward
+
+| Step | Timing | Owner |
+|------|--------|-------|
+| Approval in principle from managers | Today | Managers |
+| IT provisions sandbox, creates External Client App (Consumer Key + Secret) | Week 1–2 | IT |
+| Build and test Salesforce write-back against sandbox | Week 3–4 | Jack |
+| IT security review of integration | Week 5 | IT |
+| Limited production pilot — one site, small user group | Week 6 | Jack + Managers |
+| Pilot review, decision on full rollout | Week 8 | Managers |
+
+---
+
+---
+
+# SUPPORTING DOCUMENT FOR IT
+*Hand this out or email after the meeting*
+
+## Asset Book-In App — Technical Overview for IT
+
+### What it is
+A web/mobile app that extracts asset data from photographs and writes structured records into Salesforce. Designed specifically for Slattery's auction book-in workflow and schema (spo_Auction__c, spo_AssociatedAsset__c, Asset).
+
+### Architecture (summary)
+- **Frontend:** Web app (responsive, mobile-friendly for field use)
+- **Backend / Database:** Hosted in Australia (ap-southeast-2 Sydney)
+- **AI extraction:** Vision model via third-party API
+- **Target:** Salesforce (slattery.my.salesforce.com, AUS72 instance, Unlimited Edition)
+
+### Authentication & Authorisation
+- **Flow:** OAuth 2.0 Web Server Flow (authorization code grant)
+- **App type:** Salesforce **External Client App** (current recommended approach for new integrations as of Spring '26 — Connected Apps are being phased out for new creation)
+- **User model:** Each user authenticates as themselves via Salesforce login. Access tokens are scoped per user, refreshed via refresh tokens.
+- **Result:** All Salesforce writes carry the user's identity. Native Salesforce audit trail on every record.
+
+### Salesforce scopes requested (minimum viable)
+- `api` — access to REST API
+- `refresh_token` — to keep sessions alive without re-login
+- Object-level: read/write on `spo_Auction__c`, `spo_AssociatedAsset__c`, `Asset`, `Lot__c`, `Account` (read only), and related custom objects
+- Gated to specific users via a Permission Set
+
+### Salesforce API usage profile
+- Current org API limit: 45,625,000 requests / 24 hours
+- Expected app usage: ~10 API calls per asset booking (create record, upload attachments, related object writes)
+- Estimated daily load: well under 0.01% of the available limit
+
+### Data residency & privacy
+
+| Data type | Location | Notes |
+|-----------|----------|-------|
+| Photos | Supabase (Sydney, AU) | Stored in Supabase Storage, AU data residency |
+| Extracted structured data | Supabase (Sydney, AU) | Slattery-owned |
+| AI extraction request | OpenAI API | Default processing region is US. **AU data residency available** for eligible API customers (Jan 2026 onwards) — images can be processed and stored at-rest in Australia |
+| Salesforce records | Salesforce AUS72 (AU) | Written via OAuth-authenticated REST API |
+
+**OpenAI API terms (current as of January 2026):** API inputs/outputs are **not** used to train models by default. Data is retained up to 30 days for abuse monitoring only, then deleted.
+- **AU data residency** available for eligible API customers (announced Jan 2026)
+- **Zero Data Retention (ZDR)** available through enterprise agreements
+- **Enterprise Key Management (EKM)** available — customer-managed encryption keys
+- **Data Processing Addendum (DPA)** can be signed to support enterprise data handling requirements
+
+### Security
+- All traffic HTTPS / TLS 1.2+
+- OAuth client secret stored in server-side environment variables, never exposed to client
+- No Salesforce credentials ever stored in the app
+- Supabase Row Level Security (RLS) policies restrict data access per user
+- Access tokens stored encrypted; refresh tokens rotated
+
+### Integration plan (phased)
+
+| Phase | Scope | IT involvement |
+|-------|-------|----------------|
+| 1 — Current | Copy-paste output | None |
+| 2 — Pilot (the ask) | Sandbox External Client App, read/write Asset objects | Create ECA, issue Consumer Key/Secret, grant sandbox access |
+| 3 — Production | Promote to prod org after pilot sign-off | Security review, prod ECA creation |
+| 4 — Future | Attachments, webhooks, deeper workflow | TBD based on pilot outcomes |
+
+### What we need from IT to proceed
+1. Access to a Salesforce **sandbox**
+2. Creation of a Salesforce **External Client App** in the sandbox with:
+   - OAuth 2.0 Web Server Flow enabled
+   - Callback URL: *(to be provided — will be the app's hosted domain + /auth/callback)*
+   - Scopes: `api`, `refresh_token`, `openid`
+3. Permission Set for pilot users
+4. Consumer Key + Consumer Secret for the ECA
+5. Agreement on pilot scope and success criteria
+
+---
+
+---
+
+# TALKING POINTS — PROBABLE Q&A
+
+**"What if the AI gets something wrong and we publish wrong specs to buyers?"**
+Every extraction is reviewed by a human before it goes live. The app shows what was extracted from the plate vs what was inferred, so the reviewer knows exactly what to double-check. This is actually more reliable than current manual entry, where mistyped data never gets flagged.
+
+**"Why not just buy an off-the-shelf tool?"**
+Nothing on the market is built around Slattery's Salesforce schema and auction description conventions. Anything we bought would need custom integration work anyway, plus ongoing subscription costs. This is tailored to how Slattery actually works.
+
+**"What stops a user writing garbage into Salesforce?"**
+The review step. The app shows the proposed record before any write. Users confirm, then the API call happens. No write happens automatically from extraction alone.
+
+**"What if you leave or get hit by a bus?"**
+Fair question, and part of what the pilot decision covers. If it proves value, it becomes a supported internal tool — documented, handed over, or rebuilt by IT as appropriate. Today it's a proof of concept.
+
+**"Why OpenAI and not [X]?"**
+OpenAI's vision model is currently the strongest at reading messy real-world compliance plates. But the app is built so the extraction layer can be swapped — Claude, Gemini, or a local model — without rewriting the rest.
+
+**"How much does this cost to run?"**
+Approximately $0.02–$0.05 per asset in OpenAI API fees (GPT-4o Vision pricing). At ~100 assets a week that's $2–$5/week in AI costs, plus existing Supabase hosting. Costs scale linearly with volume, and would remain trivial even at 10× the current throughput.
+
+**"Can we run this on-premise / avoid sending photos to OpenAI?"**
+Three paths, in order of what's available now:
+1. **AU data residency on OpenAI** (available now, Jan 2026 onwards) — images processed and stored at-rest in Australia, no US transit
+2. **Zero Data Retention agreement** (via OpenAI enterprise contract) — eliminates even the 30-day abuse monitoring retention
+3. **Local vision model** (future option) — e.g. Claude on AWS Bedrock in ap-southeast-2, or a self-hosted open-source model. Worth revisiting in 6–12 months.
+
+The extraction layer is modular, so any of these are a swap at the API layer, not a rewrite.
+
+**"What does IT actually have to do?"**
+Create an External Client App in a sandbox, issue a Consumer Key and Secret, grant sandbox access, and set up a Permission Set for the pilot users. Everything else is on me. All work happens in the sandbox — production isn't touched until after the pilot review.
+
+---
+
+*Updated: 2026-04-21*

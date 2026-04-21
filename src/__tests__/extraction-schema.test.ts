@@ -76,19 +76,19 @@ describe('buildExtractionSchema', () => {
     for (const key of aiFields) {
       testObj[key] = { value: null, confidence: null }
     }
-    // chassis_number is NOT aiExtractable for truck — adding it should be stripped (Zod strips by default)
-    testObj['chassis_number'] = { value: '12345', confidence: 'high' }
+    // some_unknown_field is NOT aiExtractable for truck — adding it should be stripped (Zod strips by default)
+    testObj['some_unknown_field'] = { value: '12345', confidence: 'high' }
     const result = schema.safeParse(testObj)
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data).not.toHaveProperty('chassis_number')
+      expect(result.data).not.toHaveProperty('some_unknown_field')
     }
   })
 
-  it('general_goods schema contains make, model, serial_number, dom fields', async () => {
+  it('general_goods schema contains make, model, year, serial_number, extras fields', async () => {
     const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
     const schema = buildExtractionSchema('general_goods')
-    expect(Object.keys(schema.shape)).toEqual(['make', 'model', 'serial_number', 'dom'])
+    expect(Object.keys(schema.shape)).toEqual(['make', 'model', 'year', 'serial_number', 'extras'])
   })
 
   it('parsing { vin: { value: null, confidence: null } } against truck schema succeeds', async () => {
@@ -214,13 +214,13 @@ describe('buildSystemPrompt — plate routing', () => {
 })
 
 describe('marine schema — AI extraction integration', () => {
-  it('buildExtractionSchema("marine") returns a valid Zod schema that accepts all 14 aiExtractable fields', async () => {
+  it('buildExtractionSchema("marine") returns a valid Zod schema that accepts all 18 aiExtractable fields', async () => {
     const { buildExtractionSchema } = await import('@/lib/ai/extraction-schema')
     const { getAIExtractableFields } = await import('@/lib/schema-registry')
     const schema = buildExtractionSchema('marine')
     const aiFields = getAIExtractableFields('marine')
-    // marine has 15 aiExtractable fields
-    expect(aiFields.length).toBe(15)
+    // marine has 18 aiExtractable fields
+    expect(aiFields.length).toBe(18)
     const testObj: Record<string, unknown> = {}
     for (const key of aiFields) {
       testObj[key] = { value: null, confidence: null }

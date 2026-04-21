@@ -62,12 +62,24 @@ describe('POST /api/extract', () => {
 
   it('returns 404 when asset does not exist', async () => {
     mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
-    mockFrom.mockReturnValue({
-      select: () => ({
-        eq: () => ({
-          single: () => Promise.resolve({ data: null, error: { message: 'Not found' } }),
+    mockFrom.mockImplementation((table: string) => {
+      if (table === 'assets') {
+        return {
+          select: () => ({
+            eq: () => ({
+              single: () => Promise.resolve({ data: null, error: { message: 'Not found' } }),
+            }),
+          }),
+        }
+      }
+      // asset_photos parallel query
+      return {
+        select: () => ({
+          eq: () => ({
+            order: () => Promise.resolve({ data: [], error: null }),
+          }),
         }),
-      }),
+      }
     })
     const res = await POST(makeRequest({ assetId: 'nonexistent' }) as Parameters<typeof POST>[0])
     expect(res.status).toBe(404)

@@ -2,12 +2,12 @@ import { describe, it, expect } from 'vitest'
 import { SCHEMA_REGISTRY, ASSET_TYPES, getSchema, getSubtypes, getAIExtractableFields } from '@/lib/schema-registry/index'
 
 describe('SCHEMA_REGISTRY structure', () => {
-  it('contains exactly 8 asset types', () => {
-    expect(Object.keys(SCHEMA_REGISTRY)).toHaveLength(8)
+  it('contains exactly 9 asset types', () => {
+    expect(Object.keys(SCHEMA_REGISTRY)).toHaveLength(9)
   })
 
-  it('ASSET_TYPES tuple has exactly 8 entries', () => {
-    expect(ASSET_TYPES).toHaveLength(8)
+  it('ASSET_TYPES tuple has exactly 9 entries', () => {
+    expect(ASSET_TYPES).toHaveLength(9)
   })
 
   it('every asset type in ASSET_TYPES has a corresponding registry entry', () => {
@@ -23,9 +23,9 @@ describe('SCHEMA_REGISTRY structure', () => {
     }
   })
 
-  it('truck has exactly 24 subtypes — 21 SF plus EWP, Tilt Tray, Flat Deck', () => {
+  it('truck has exactly 25 subtypes — 21 SF plus EWP, Tilt Tray, Flat Deck, plus Tipper', () => {
     const subtypes = getSubtypes('truck')
-    expect(subtypes).toHaveLength(24)
+    expect(subtypes).toHaveLength(25)
     expect(subtypes.map(s => s.key)).toContain('service_truck')
     expect(subtypes.map(s => s.key)).not.toContain('service')
     expect(subtypes.map(s => s.key)).toContain('crane_truck')
@@ -34,7 +34,7 @@ describe('SCHEMA_REGISTRY structure', () => {
     expect(subtypes.map(s => s.key)).toContain('tilt_tray')
     expect(subtypes.map(s => s.key)).toContain('flat_deck')
     expect(subtypes.map(s => s.key)).toContain('prime_mover')
-    expect(subtypes.map(s => s.key)).not.toContain('tipper')
+    expect(subtypes.map(s => s.key)).toContain('tipper')
     expect(subtypes.map(s => s.key)).toContain('other')
     const concrete_agitator = subtypes.find(s => s.key === 'concrete_agitator')
     expect(concrete_agitator?.label).toBe('Concrete - Agitator')
@@ -199,8 +199,8 @@ describe('AI-extractable fields', () => {
     expect(fields).toContain('serial')
   })
 
-  it('general_goods has aiExtractable fields: make, model, serial_number, dom', () => {
-    expect(getAIExtractableFields('general_goods')).toEqual(['make', 'model', 'serial_number', 'dom'])
+  it('general_goods has aiExtractable fields: make, model, year, serial_number, extras', () => {
+    expect(getAIExtractableFields('general_goods')).toEqual(['make', 'model', 'year', 'serial_number', 'extras'])
   })
 })
 

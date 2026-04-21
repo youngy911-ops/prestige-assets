@@ -27,18 +27,18 @@ const unknownEntry: ChecklistEntry = {
 }
 
 describe('MissingInfoChecklist', () => {
-  it('renders heading "Missing Information"', () => {
+  it('renders heading "Fields Still Needed"', () => {
     const { getByText } = render(
       <MissingInfoChecklist checklist={[blockingEntry]} onUpdate={vi.fn()} />
     )
-    expect(getByText('Missing Information')).toBeTruthy()
+    expect(getByText('Fields Still Needed')).toBeTruthy()
   })
 
   it('renders intro copy', () => {
     const { getByText } = render(
       <MissingInfoChecklist checklist={[blockingEntry]} onUpdate={vi.fn()} />
     )
-    expect(getByText(/could not be confidently extracted/)).toBeTruthy()
+    expect(getByText(/Fill in above, or mark N\/A to proceed/)).toBeTruthy()
   })
 
   it('renders "Required" for blocking flagged item', () => {
