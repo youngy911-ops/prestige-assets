@@ -100,7 +100,10 @@ Full archive: `.planning/milestones/v1.5-ROADMAP.md`
   2. Whole-number hourmeter readings (e.g. 5000) are unaffected and still extract correctly
   3. Spot-check fixtures for Truck, Excavator, and Forklift all pass after the prompt change with no regression on other numeric fields
   4. The extraction confidence for hourmeter reflects actual legibility (high when decimal is clearly visible, low/null when display is ambiguous)
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 24-01-PLAN.md — Fix form validation regex, agriculture aiHint, truck/earthmoving/forklift aiHints, and FieldRow inputMode
 
 ### Phase 25: Suspension Type Inference
 **Goal**: AI populates suspension type from manufacturer knowledge when make/model/year unambiguously identify a known configuration, so staff no longer need to enter it manually for common trucks and trailers
@@ -111,7 +114,10 @@ Full archive: `.planning/milestones/v1.5-ROADMAP.md`
   2. For a truck make/model/year that is not in the lookup table, the suspension field is left null rather than guessing
   3. Staff-entered suspension values from InspectionNotesSection are not overridden by the inferred value
   4. Spot-check fixtures for Truck and Trailer pass before and after the change with no regression on extraction of other fields
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 24-01-PLAN.md — Fix form validation regex, agriculture aiHint, truck/earthmoving/forklift aiHints, and FieldRow inputMode
 
 ### Phase 26: Extraction Accuracy Audit
 **Goal**: Every AI-extractable field across all 8 asset types has correct aiExtractable flags, useful aiHint content, and calibrated confidence language — closing the gap between what the AI can reliably read and what it attempts
@@ -122,7 +128,10 @@ Full archive: `.planning/milestones/v1.5-ROADMAP.md`
   2. Fields where AI extraction is not reliable (e.g. fields only legible from compliance plates that are rarely photographed) have `aiExtractable: false` or a low-confidence default rather than attempting extraction
   3. Confidence language across all 8 asset types uses consistent terminology — no schema files using free-text confidence descriptions that differ from the established pattern
   4. Spot-check fixtures for all 8 asset types pass after audit changes with no regression on previously-correct fields
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 24-01-PLAN.md — Fix form validation regex, agriculture aiHint, truck/earthmoving/forklift aiHints, and FieldRow inputMode
 
 ## Progress
 
