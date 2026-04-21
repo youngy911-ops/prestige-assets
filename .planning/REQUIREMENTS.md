@@ -36,15 +36,15 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| EXTRACT-01 | TBD | Pending |
-| EXTRACT-02 | TBD | Pending |
-| EXTRACT-03 | TBD | Pending |
+| EXTRACT-01 | Phase 24 | Pending |
+| EXTRACT-02 | Phase 25 | Pending |
+| EXTRACT-03 | Phase 26 | Pending |
 
 **Coverage:**
 - v1.6 requirements: 3 total
-- Mapped to phases: 0 (roadmap pending)
-- Unmapped: 3 ⚠️
+- Mapped to phases: 3 (100%) ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-18*
-*Last updated: 2026-04-18 after initial definition*
+*Last updated: 2026-04-18 — traceability updated after roadmap creation*

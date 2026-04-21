@@ -8,6 +8,7 @@
 - ✅ **v1.3 Asset Expansion** — Phases 12–15 (shipped 2026-03-23)
 - ✅ **v1.4 Salesforce Subtype Alignment** — Phases 16–19 (shipped 2026-03-24)
 - ✅ **v1.5 Demo Polish** — Phases 20–23 (shipped 2026-04-18)
+- 🔄 **v1.6 AI Quality & Workflow** — Phases 24–26 (in progress)
 
 ## Phases
 
@@ -82,6 +83,47 @@ Full archive: `.planning/milestones/v1.5-ROADMAP.md`
 
 </details>
 
+### v1.6 AI Quality & Workflow
+
+- [ ] **Phase 24: Hourmeter Decimal Fix** — AI reads decimal hourmeter values correctly (e.g. 1,234.5 not 12345)
+- [ ] **Phase 25: Suspension Type Inference** — AI infers suspension type from make/model/year for common truck/trailer configurations
+- [ ] **Phase 26: Extraction Accuracy Audit** — All aiExtractable flags and confidence language audited and corrected across all 8 asset types
+
+## Phase Details
+
+### Phase 24: Hourmeter Decimal Fix
+**Goal**: AI reliably extracts hourmeter values that include a decimal point without collapsing or rounding them
+**Depends on**: Nothing (first v1.6 phase)
+**Requirements**: EXTRACT-01
+**Success Criteria** (what must be TRUE):
+  1. A hourmeter reading of 1,234.5 hrs is extracted as `1234.5`, not `12345` or `1234`
+  2. Whole-number hourmeter readings (e.g. 5000) are unaffected and still extract correctly
+  3. Spot-check fixtures for Truck, Excavator, and Forklift all pass after the prompt change with no regression on other numeric fields
+  4. The extraction confidence for hourmeter reflects actual legibility (high when decimal is clearly visible, low/null when display is ambiguous)
+**Plans**: TBD
+
+### Phase 25: Suspension Type Inference
+**Goal**: AI populates suspension type from manufacturer knowledge when make/model/year unambiguously identify a known configuration, so staff no longer need to enter it manually for common trucks and trailers
+**Depends on**: Phase 24
+**Requirements**: EXTRACT-02
+**Success Criteria** (what must be TRUE):
+  1. For a Kenworth T610 or Volvo FH with known airbag fitment, the suspension field is populated as `Airbag` without any staff input
+  2. For a truck make/model/year that is not in the lookup table, the suspension field is left null rather than guessing
+  3. Staff-entered suspension values from InspectionNotesSection are not overridden by the inferred value
+  4. Spot-check fixtures for Truck and Trailer pass before and after the change with no regression on extraction of other fields
+**Plans**: TBD
+
+### Phase 26: Extraction Accuracy Audit
+**Goal**: Every AI-extractable field across all 8 asset types has correct aiExtractable flags, useful aiHint content, and calibrated confidence language — closing the gap between what the AI can reliably read and what it attempts
+**Depends on**: Phase 25
+**Requirements**: EXTRACT-03
+**Success Criteria** (what must be TRUE):
+  1. Every field with `aiExtractable: true` that was previously returning null or wrong values on well-photographed assets has an improved aiHint that addresses the known failure mode
+  2. Fields where AI extraction is not reliable (e.g. fields only legible from compliance plates that are rarely photographed) have `aiExtractable: false` or a low-confidence default rather than attempting extraction
+  3. Confidence language across all 8 asset types uses consistent terminology — no schema files using free-text confidence descriptions that differ from the established pattern
+  4. Spot-check fixtures for all 8 asset types pass after audit changes with no regression on previously-correct fields
+**Plans**: TBD
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -109,3 +151,6 @@ Full archive: `.planning/milestones/v1.5-ROADMAP.md`
 | 21. Error UX & Broken Pages | v1.5 | 1/1 | Complete | 2026-04-16 |
 | 22. Asset Lifecycle | v1.5 | 2/2 | Complete | 2026-04-16 |
 | 23. Code Quality & Accessibility | v1.5 | 1/1 | Complete | 2026-04-18 |
+| 24. Hourmeter Decimal Fix | v1.6 | 0/TBD | Not started | - |
+| 25. Suspension Type Inference | v1.6 | 0/TBD | Not started | - |
+| 26. Extraction Accuracy Audit | v1.6 | 0/TBD | Not started | - |
