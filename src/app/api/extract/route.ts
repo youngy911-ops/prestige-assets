@@ -51,6 +51,7 @@ export async function POST(req: NextRequest) {
   const signedUrls = (signedUrlData ?? [])
     .map(r => r.signedUrl)
     .filter((url): url is string => !!url)
+    .slice(0, 5)
 
   // 6. Build extraction schema + prompts
   const assetType = asset.asset_type as AssetType
