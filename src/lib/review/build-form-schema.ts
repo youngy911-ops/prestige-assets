@@ -17,7 +17,7 @@ export function buildFormSchema(fields: FieldDefinition[]) {
   const shape: Record<string, z.ZodTypeAny> = {}
   for (const field of fields) {
     shape[field.key] = field.inputType === 'number'
-      ? z.string().regex(/^\d*$/, 'Must be a number').or(z.literal(''))
+      ? z.string().regex(/^\d*\.?\d*$/, 'Must be a number').or(z.literal(''))
       : z.string()
   }
   return z.object(shape)

@@ -59,6 +59,15 @@ describe('buildFormSchema', () => {
     const schema = buildFormSchema([numberField])
     expect(() => schema.parse({ year: '' })).not.toThrow()
   })
+  it('accepts decimal string for number field', () => {
+    const schema = buildFormSchema([numberField])
+    expect(() => schema.parse({ year: '1234.5' })).not.toThrow()
+  })
+  it('rejects multiple-decimal string for number field', () => {
+    const schema = buildFormSchema([numberField])
+    const result = schema.safeParse({ year: '1234.5.6' })
+    expect(result.success).toBe(false)
+  })
   it('accepts string for select field', () => {
     const schema = buildFormSchema([selectField])
     expect(() => schema.parse({ fuel_type: 'Diesel' })).not.toThrow()

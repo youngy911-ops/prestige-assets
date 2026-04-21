@@ -186,6 +186,20 @@ describe('buildExtractionSchema — rich descriptions', () => {
   })
 })
 
+describe('buildSystemPrompt — decimal hourmeter guidance', () => {
+  it('truck/prime_mover system prompt contains "include the decimal"', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('truck', 'prime_mover')
+    expect(prompt).toContain('include the decimal')
+  })
+
+  it('agriculture system prompt does NOT contain "no decimals"', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('agriculture', 'tractor')
+    expect(prompt).not.toContain('no decimals')
+  })
+})
+
 describe('buildSystemPrompt — plate routing', () => {
   it('contains BUILD PLATE section', async () => {
     const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')

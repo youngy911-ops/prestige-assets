@@ -70,7 +70,7 @@ export function FieldRow({ field, confidence, control, error }: FieldRowProps) {
             <Input
               id={`field-${field.key}`}
               type="text"
-              inputMode={field.inputType === 'number' ? 'numeric' : 'text'}
+              inputMode={field.inputType === 'number' ? 'decimal' : 'text'}
               className={INPUT_BASE}
               {...rhfField}
             />
