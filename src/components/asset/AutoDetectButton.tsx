@@ -130,7 +130,16 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
         )}
       </button>
       {status === 'error' && (
-        <p className="text-xs text-red-400 text-center -mt-2">Detection failed — select type manually below</p>
+        <div className="flex items-center justify-between -mt-2 px-1">
+          <p className="text-xs text-red-400">Couldn't detect — select type below or try again</p>
+          <button
+            type="button"
+            onClick={() => { setStatus('idle'); setResult(null) }}
+            className="text-xs text-white/50 hover:text-white/80 underline transition-colors ml-3 shrink-0"
+          >
+            Try again
+          </button>
+        </div>
       )}
     </>
   )
