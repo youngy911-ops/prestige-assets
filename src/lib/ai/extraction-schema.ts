@@ -96,6 +96,7 @@ CONDITION RATINGS — select the closest match for each field:
 
 EXTERIOR DAMAGE INSPECTION — scan every photo for:
 - Dents: look for uneven reflections, shadow lines, or panel distortion. Note location and approximate size.
+- Hail damage: multiple small uniform shallow dents across roof, bonnet, and boot lid — describe as "Hail damage to roof/bonnet/boot".
 - Scratches: look for linear marks on paint surface. "Light scratches" = surface only. "Deep scratches" = through paint to primer/metal.
 - Stone chips: clusters of small paint chips, common on bonnet/bumper.
 - Cracked/chipped windscreen: look for star cracks, bullseyes, or chips.
