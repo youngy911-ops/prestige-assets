@@ -255,7 +255,7 @@ h1 { font-size: 24px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
       <li>If IT push back: "It's a small setup task on their end. All the actual build is on me."</li>
     </ul>
   </div>
-  <div class="note">✅ Close with: "Can we make that happen?", then stop talking.</div>
+  <div class="note">✅ Close with: "Can we make that happen?" — then stop. Do not fill the silence. Let them speak first.</div>
 </div>
 
 <!-- SLIDE 11 -->
@@ -311,6 +311,108 @@ h1 { font-size: 24px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
   <div class="qa-item">
     <div class="qa-q">Technical IT question you don't know</div>
     <div class="qa-a">"Good question, I'll find out and come back to you on that."</div>
+  </div>
+
+</div>
+
+<!-- PRACTICE THESE -->
+<div class="slide-block" style="margin-top:32px;">
+  <div class="slide-header" style="background:#1a3a1a;">
+    <div class="slide-title-text">Practise saying these out loud</div>
+  </div>
+  <div class="points">
+    <ul>
+      <li>"Built this in my own time over two weeks. It's live now."</li>
+      <li>"It's already saving time today. The copy-paste version is working."</li>
+      <li>"IT's part is minimal — sandbox setup, send me a couple of credentials. All the build is on me."</li>
+      <li>"The integration code is already scaffolded. Give me the credentials and I'll have test records writing within a day or two."</li>
+      <li>"On-site auctions — you walk the yard, book in as you go, done before you leave."</li>
+      <li>"New yardhand, first correct book-in, day one. The format rules are built in."</li>
+      <li>"Wrong GVM in a listing is a compliance issue, not just an embarrassment."</li>
+      <li>"To put it in perspective — outsourcing this build would cost $40,000 to $80,000 minimum." <em style="color:#8899cc;">(only if it lands well)</em></li>
+      <li>"Can we make that happen?" — <strong style="color:#38d0c8;">then stop. Wait for them.</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- BACKGROUND KNOWLEDGE -->
+<div class="qa-section" style="margin-top:24px;">
+  <div class="qa-header" style="background:#2a3a1a;">Plain English — Know This Cold</div>
+
+  <div class="qa-item">
+    <div class="qa-q">What is an API?</div>
+    <div class="qa-a">A way for two software systems to talk to each other directly. Right now the app produces copy-paste output — a human has to move that data into Salesforce. With API access, the app sends it directly, no human step. Like the difference between emailing someone a document vs giving them live access to the file.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">What is a sandbox?</div>
+    <div class="qa-a">A copy of Salesforce used for testing. Nothing in it is real or live. IT creates one, I build and test against it, and nothing touches the real Salesforce until we've verified it all works. Standard practice — IT will know exactly what it means.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">What is OAuth? (if IT asks)</div>
+    <div class="qa-a">It's the login method — the same thing you use when you click "Sign in with Google" on a website. Each user logs into Salesforce through the app using their own credentials. Means every action is tracked to the person who did it. I wouldn't raise this unless IT specifically asks.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">What does "External Client App" mean? (if IT asks)</div>
+    <div class="qa-a">It's Salesforce's term for a third-party app that connects to their system. IT creates it inside Salesforce, it generates a pair of keys, they send me the keys, I plug them in and the connection works. It's their standard process for integrations — they'll know the steps.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">What is Supabase / Vercel? (if IT asks)</div>
+    <div class="qa-a">Supabase is the database (hosted in Sydney). Vercel is where the app is hosted. Both are standard cloud platforms used by thousands of companies. The relevant thing for IT is that all data storage is in Australia.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">What does "not used for training" mean?</div>
+    <div class="qa-a">When you use OpenAI's API (the paid business version), your data is not used to train their AI model. It goes in, comes back out, gets deleted after 30 days. It's different to using the free ChatGPT website where your chats can be used to improve the model.</div>
+  </div>
+
+</div>
+
+<!-- OFF-SCRIPT LINES -->
+<div class="qa-section" style="margin-top:24px;">
+  <div class="qa-header" style="background:#1a2a3a;">Lines to Have Ready — Say Naturally, Not Scripted</div>
+
+  <div class="qa-item">
+    <div class="qa-q">If the demo goes well and they're impressed</div>
+    <div class="qa-a">"To put it in perspective — outsourcing a build like this to a dev agency would run $40,000 to $80,000 minimum. It's already live and working." Say it once, move on.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">If they ask how long it took</div>
+    <div class="qa-a">"About two weeks, built in my own time outside work hours." Leave it there — don't qualify it, don't explain the tools. Let that land.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">If IT says it sounds like a big project on their end</div>
+    <div class="qa-a">"It's genuinely minimal on IT's side — sandbox setup and a connection. Probably 30 minutes. All the actual build is on me. Production isn't touched until after a pilot review."</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">If they push back on timeline</div>
+    <div class="qa-a">"The integration code is already scaffolded and ready to go. As soon as I have sandbox credentials I can have it writing test records within a day or two."</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">On-site auctions — use this if it comes up</div>
+    <div class="qa-a">"The big one for me is on-site auctions. Right now photos happen on site, data entry happens later. With this you walk the yard, book in as you go, and you're done before you drive out the gate."</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">On consistency across branches / staff</div>
+    <div class="qa-a">"A new yardhand doesn't need to know the Salesforce field order or the description rules. The app knows. First correct book-in, day one."</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">If they ask about wrong data going to buyers</div>
+    <div class="qa-a">"Wrong GVM or GCM in a listing isn't just embarrassing — it's a compliance issue for buyers who need it for permits and registration. AI reading directly from the plate is more accurate than retyping from a website."</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Closing — after the ask slide, if silence</div>
+    <div class="qa-a">Let the silence sit. Don't fill it. They're processing. The next person to speak loses.</div>
   </div>
 
 </div>

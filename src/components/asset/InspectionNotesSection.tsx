@@ -146,7 +146,7 @@ export function InspectionNotesSection({
           <textarea
             id="other-notes"
             className="w-full min-h-[80px] rounded-md border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 resize-y"
-            placeholder="VIN, rego, dimensions, body builder, service history, number of keys, condition notes…"
+            placeholder="Condition, damage, service history, keys, any other details…"
             defaultValue={notesRef.current}
             onChange={(e) => handleNotesChange(e.target.value)}
           />

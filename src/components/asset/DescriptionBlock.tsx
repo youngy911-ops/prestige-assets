@@ -85,7 +85,7 @@ export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isReg
         onChange={handleChange}
         readOnly={isRegenerating}
         placeholder="Description will appear here once generated."
-        className="min-h-48 text-sm leading-relaxed font-mono resize-y border-0 rounded-none bg-transparent focus-visible:ring-0 px-4 py-3"
+        className="min-h-48 text-sm leading-loose font-sans resize-y border-0 rounded-none bg-transparent focus-visible:ring-0 px-4 py-3 text-white/90 placeholder:text-white/30"
         rows={10}
       />
     </div>
