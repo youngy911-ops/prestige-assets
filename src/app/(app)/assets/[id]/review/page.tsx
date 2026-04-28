@@ -61,7 +61,7 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
         <Link
-          href={asset.extraction_result ? `/assets/${assetId}/extract` : '/'}
+          href="/"
           className="text-white/65 hover:text-white transition-colors p-1 -ml-1"
           aria-label="Back"
         >

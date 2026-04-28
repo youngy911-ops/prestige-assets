@@ -1,7 +1,7 @@
 'use client'
 import { forwardRef } from 'react'
 import type { CSSProperties } from 'react'
-import { X, GripVertical } from 'lucide-react'
+import { X, GripVertical, TriangleAlert } from 'lucide-react'
 import { CoverPhotoBadge } from './CoverPhotoBadge'
 import { UploadProgressIndicator } from './UploadProgressIndicator'
 
@@ -13,6 +13,7 @@ export interface PhotoThumbnailProps {
   uploadError?: string | null
   onRemove: (id: string) => void
   isDeleting?: boolean
+  qualityWarnings?: string[]
   // dnd-kit passthrough props (provided by PhotoThumbnailGrid via useSortable)
   dragHandleProps?: Record<string, unknown>
   style?: CSSProperties
@@ -21,7 +22,7 @@ export interface PhotoThumbnailProps {
 
 export const PhotoThumbnail = forwardRef<HTMLDivElement, PhotoThumbnailProps>(
   function PhotoThumbnail(
-    { id, signedUrl, isCover, isUploading, uploadError, onRemove, isDeleting, dragHandleProps, style, isDragging },
+    { id, signedUrl, isCover, isUploading, uploadError, onRemove, isDeleting, qualityWarnings, dragHandleProps, style, isDragging },
     ref
   ) {
     return (
@@ -45,6 +46,20 @@ export const PhotoThumbnail = forwardRef<HTMLDivElement, PhotoThumbnailProps>(
 
         {/* Cover badge (position-0 only) */}
         {isCover && <CoverPhotoBadge />}
+
+        {/* Quality warning badge — shown when photo is blurry or too dark */}
+        {qualityWarnings && qualityWarnings.length > 0 && (
+          <div
+            title={qualityWarnings.join(', ')}
+            className="absolute bottom-1 right-1 flex items-center gap-0.5 rounded bg-amber-500/90 px-1 py-0.5 pointer-events-none"
+            aria-label={`Photo quality warning: ${qualityWarnings.join(', ')}`}
+          >
+            <TriangleAlert className="w-3 h-3 text-white" />
+            <span className="text-[10px] font-medium text-white leading-none">
+              {qualityWarnings[0]}
+            </span>
+          </div>
+        )}
 
         {/* Upload overlay (during upload or on error) */}
         <UploadProgressIndicator isUploading={!!isUploading} error={uploadError} />

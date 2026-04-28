@@ -112,8 +112,14 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
           returnTo={`/assets/${assetId}/output`}
         />
         <Link
-          href="/assets/new"
+          href="/"
           className="flex items-center justify-center w-full rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white h-11 px-4 text-sm font-semibold transition-colors"
+        >
+          Back to Assets
+        </Link>
+        <Link
+          href="/assets/new"
+          className="flex items-center justify-center w-full rounded-xl border border-white/15 hover:border-white/30 text-white/70 hover:text-white h-11 px-4 text-sm font-medium transition-colors"
         >
           Book In New Asset
         </Link>

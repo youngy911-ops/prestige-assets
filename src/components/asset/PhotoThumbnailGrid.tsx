@@ -25,9 +25,10 @@ interface SortablePhotoProps {
   isCover: boolean
   onRemove: (id: string) => void
   isDeleting: boolean
+  qualityWarnings?: string[]
 }
 
-function SortablePhoto({ photo, isCover, onRemove, isDeleting }: SortablePhotoProps) {
+function SortablePhoto({ photo, isCover, onRemove, isDeleting, qualityWarnings }: SortablePhotoProps) {
   const {
     attributes,
     listeners,
@@ -53,6 +54,7 @@ function SortablePhoto({ photo, isCover, onRemove, isDeleting }: SortablePhotoPr
       style={style}
       isDragging={isDragging}
       isDeleting={isDeleting}
+      qualityWarnings={qualityWarnings}
     />
   )
 }
@@ -61,12 +63,14 @@ export interface PhotoThumbnailGridProps {
   photos: PhotoItem[]
   onPhotosChange: (photos: PhotoItem[]) => void
   isUploading?: boolean
+  qualityWarnings?: Map<string, string[]>
 }
 
 export function PhotoThumbnailGrid({
   photos,
   onPhotosChange,
   isUploading = false,
+  qualityWarnings,
 }: PhotoThumbnailGridProps) {
   const [orderError, setOrderError] = useState<string | null>(null)
   const [deletingIds, setDeletingIds] = useState<Set<string>>(new Set())
@@ -134,6 +138,7 @@ export function PhotoThumbnailGrid({
                 isCover={index === 0}
                 onRemove={handleRemove}
                 isDeleting={deletingIds.has(photo.id)}
+                qualityWarnings={qualityWarnings?.get(photo.id)}
               />
             ))}
           </div>

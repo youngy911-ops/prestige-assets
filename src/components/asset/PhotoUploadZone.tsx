@@ -7,6 +7,7 @@ import { processImageForUpload } from '@/lib/utils/image'
 import { insertPhoto, pickHeroShot, updatePhotoOrder } from '@/lib/actions/photo.actions'
 import { PhotoThumbnailGrid } from './PhotoThumbnailGrid'
 import { createClient } from '@/lib/supabase/client'
+import { checkPhotoQuality } from '@/lib/utils/photoQuality'
 
 export interface PhotoItem {
   id: string
@@ -43,6 +44,7 @@ export function PhotoUploadZone({
   const [uploadProgress, setUploadProgress] = useState<{ done: number; total: number } | null>(null)
   const [isPickingHero, setIsPickingHero] = useState(false)
   const [heroPickResult, setHeroPickResult] = useState<'updated' | 'already-best' | null>(null)
+  const [qualityWarnings, setQualityWarnings] = useState<Map<string, string[]>>(new Map())
   const fileInputRef = useRef<HTMLInputElement>(null)
   const supabase = createClient()
 
@@ -147,6 +149,16 @@ export function PhotoUploadZone({
         onPhotosChange?.(updated)
         return updated
       })
+      // Run quality checks in the background — non-blocking
+      for (const photo of newPhotos) {
+        if (photo.signedUrl) {
+          checkPhotoQuality(photo.signedUrl).then((warnings) => {
+            if (warnings.length > 0) {
+              setQualityWarnings((prev) => new Map(prev).set(photo.id, warnings))
+            }
+          }).catch(() => { /* ignore quality check failures */ })
+        }
+      }
     }
     if (errors.length > 0) setUploadErrors(errors)
 
@@ -308,6 +320,7 @@ export function PhotoUploadZone({
           onPhotosChange?.(updated)
         }}
         isUploading={isUploading}
+        qualityWarnings={qualityWarnings}
       />
 
       {/* Upload errors */}
