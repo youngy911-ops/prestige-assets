@@ -44,6 +44,7 @@ TRUCK (PRIME MOVER)
 Line 1: Year, Make, Model, Drive Type
 Engine: Make, cylinders, fuel type, HP
 Transmission, key extras (diff locks, exhaust brake, cruise control, UHF etc.)
+Fifth wheel brand/model if known (e.g. Jost JSK 37, SAF-Holland FW35)
 GCM for high-rated prime movers
 Sold As Is, Untested & Unregistered.
 
