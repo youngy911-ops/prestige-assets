@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Camera, Check, Loader2, ChevronLeft, Zap, FolderOpen, Images, Sparkles } from 'lucide-react'
+import { Camera, Check, Loader2, ChevronLeft, Zap, FolderOpen, Images, Sparkles, AlertCircle } from 'lucide-react'
 import { BRANCHES, type BranchKey } from '@/lib/constants/branches'
 import { createAsset, updateAssetType } from '@/lib/actions/asset.actions'
 import { processImageForUpload } from '@/lib/utils/image'
@@ -287,7 +287,7 @@ export default function QuickBookPage() {
                     ) : item.detectStatus === 'detecting' ? (
                       <Loader2 className="w-4 h-4 text-amber-400 animate-spin flex-shrink-0" />
                     ) : item.detectStatus === 'error' ? (
-                      <Check className="w-4 h-4 text-white/20 flex-shrink-0" />
+                      <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
                     ) : (
                       <button
                         type="button"
