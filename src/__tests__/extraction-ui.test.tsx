@@ -52,19 +52,18 @@ describe('ConfidenceBadge', () => {
     expect(screen.getByText('Inferred from model knowledge')).toBeTruthy()
   })
 
-  it('renders MinusCircle icon with text-white/40 for level="low"', async () => {
+  it('renders AlertCircle icon with text-red-400 for level="low"', async () => {
     const { ConfidenceBadge } = await import('@/components/asset/ConfidenceBadge')
     const { container } = render(<ConfidenceBadge level="low" />)
     const wrapper = container.querySelector('span')
-    expect(wrapper?.className).toContain('text-white/40')
+    expect(wrapper?.className).toContain('text-red-400')
   })
 
-  it('renders MinusCircle icon with text-white/40 for level="not_found"', async () => {
+  it('renders MinusCircle icon with text-white/25 for level="not_found"', async () => {
     const { ConfidenceBadge } = await import('@/components/asset/ConfidenceBadge')
     const { container } = render(<ConfidenceBadge level="not_found" />)
     const wrapper = container.querySelector('span')
-    expect(wrapper?.className).toContain('text-white/40')
-    // Two spans both say "Not found" — sr-only and visible; getAllByText asserts at least one exists
+    expect(wrapper?.className).toContain('text-white/25')
     expect(screen.getAllByText('Not found').length).toBeGreaterThan(0)
   })
 })
