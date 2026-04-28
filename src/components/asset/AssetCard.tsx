@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
-import { Trash2, Loader2 } from 'lucide-react'
+import { Trash2, Loader2, Camera } from 'lucide-react'
 import { getAssetDisplayTitle } from '@/lib/schema-registry'
 import { AssetStatusBadge } from './AssetStatusBadge'
 import { relativeTime } from '@/lib/utils/relativeTime'
@@ -78,7 +78,7 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-8 h-8 rounded-md bg-white/[0.06]" />
+                <Camera className="w-6 h-6 text-white/15" />
               </div>
             )}
           </div>
@@ -89,8 +89,8 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
               <span className="text-xs font-semibold text-white/40 uppercase tracking-widest truncate mr-2">{displayName}</span>
               <AssetStatusBadge status={status} />
             </div>
-            <p className={`text-[16px] font-semibold leading-snug truncate ${subtitle ? 'text-white' : 'text-white/30 italic font-normal'}`}>
-              {subtitle ?? 'No data yet'}
+            <p className={`text-[16px] font-semibold leading-snug truncate ${subtitle ? 'text-white' : 'text-white/25 font-normal'}`}>
+              {subtitle ?? displayName}
             </p>
             <p className="text-xs text-white/35 mt-1">{relativeTime(updated_at)}</p>
             <button

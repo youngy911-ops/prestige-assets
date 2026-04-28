@@ -374,8 +374,10 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       )}
 
       {!error && assets === null && (
-        <div className="flex justify-center py-16">
-          <Loader2 className="w-6 h-6 text-white/30 animate-spin" />
+        <div className="flex flex-col gap-3">
+          {[0,1,2].map(i => (
+            <div key={i} className="h-[72px] rounded-xl bg-white/[0.04] border border-white/[0.06] animate-pulse" />
+          ))}
         </div>
       )}
 
@@ -427,7 +429,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             <button type="button" onClick={() => { setSearch(''); setStatusFilter('all') }} className="text-xs text-emerald-400 hover:text-emerald-300 mt-2 transition-colors">Clear filters</button>
           </div>
         ) : (
-          <div className="flex flex-col gap-4 animate-in fade-in duration-300">
+          <div className="flex flex-col gap-3 animate-in fade-in duration-300">
             {isFiltering && (
               <p className="text-xs text-white/40">{countLabel}</p>
             )}
