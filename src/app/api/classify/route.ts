@@ -69,12 +69,17 @@ VISUAL IDENTIFICATION CUES:
 - Hydraulic tipping body = truck (tipper) or trailer (tipper_trailer)
 - 4-door tray with towbar = vehicle (dual_cab_ute)
 - Enclosed box body on rigid chassis = truck (pantech)
-- Long trailer, curtains on sides = trailer (curtainsider_trailer)
+- Long trailer, curtains on sides = trailer (curtainsider)
 - Boat hull on trailer = marine (trailer_boat)
 - Drawbar + living quarters = caravan
 - Large tyres + open operator station + boom = agriculture (tractor or telehandler)
 - Orange/red warning lights on roof = likely service_truck or emergency vehicle
 - Spray booms folded on sides = agriculture (spray_rig)
+- Long chassis with NO cab, drawbar or kingpin plate at front, axle group at rear = trailer (could be flat_top, curtainsider, pantech, tipper, low_loader — pick closest subtype)
+- Flat steel deck, no sides, no cab, multiple axles = trailer (flat_top)
+- Build plate showing ATM or tare but no GVM, no cab visible = trailer
+- Any large towed asset with multiple axles and no engine/cab = trailer NOT general_goods
+- general_goods is ONLY for individual items: tools, small machinery, furniture, equipment lots — never for trailers, trucks, or vehicles
 
 SUBTYPE HINTS:
 - vehicle: dual_cab_ute (4-door tray/ute), single_cab_ute (2-door tray), suv (raised, wagon-like), sedan, van (transit/sprinter/hiace cargo), bus, 4wd (large SUV with visible lift or off-road tyres)
