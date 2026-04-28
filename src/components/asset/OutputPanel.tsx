@@ -18,21 +18,18 @@ interface OutputPanelProps {
 
 type DescriptionState = 'loading' | 'ready' | 'error'
 
-const DAMAGE_KEYWORDS = /\b(dent|scratch|chip|crack|rust|damage|condition)\b/i
-
 export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDescription, photoUrls }: OutputPanelProps) {
   const [heroIndex, setHeroIndex] = useState(0)
-  const isStale = !!initialDescription && DAMAGE_KEYWORDS.test(initialDescription)
   const [descState, setDescState] = useState<DescriptionState>(
-    initialDescription && !isStale ? 'ready' : 'loading'
+    initialDescription ? 'ready' : 'loading'
   )
-  const [descText, setDescText] = useState<string>(initialDescription && !isStale ? initialDescription : '')
+  const [descText, setDescText] = useState<string>(initialDescription ?? '')
   const [isRegenerating, setIsRegenerating] = useState(false)
   const [tone, setTone] = useState<Tone>('standard')
   // Increment to force DescriptionBlock remount after regeneration — resets edit state
   const [descKey, setDescKey] = useState(0)
   // Track the latest description text (including user edits) for Copy All
-  const currentDescRef = useRef<string>(initialDescription && !isStale ? initialDescription : '')
+  const currentDescRef = useRef<string>(initialDescription ?? '')
   const [allCopied, setAllCopied] = useState(false)
 
   const handleDescTextChange = useCallback((text: string) => {

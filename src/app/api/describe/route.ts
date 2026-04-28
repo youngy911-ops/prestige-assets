@@ -1215,20 +1215,26 @@ export async function POST(req: NextRequest) {
   // 6. Call GPT-4o — plain text output (NOT Output.object — that is for structured extraction only)
   const systemPrompt = tone === 'quick' ? QUICK_DESCRIPTION_PROMPT : DESCRIPTION_SYSTEM_PROMPT
   const abort = AbortSignal.timeout(50_000) // 50s hard cap — surfaces an error before Vercel kills it
-  const { text } = await generateText({
-    model: openai('gpt-4o'),
-    abortSignal: abort,
-    messages: [
-      { role: 'system', content: systemPrompt },
-      {
-        role: 'user',
-        content: [
-          { type: 'text', text: buildDescriptionUserPrompt(asset as Parameters<typeof buildDescriptionUserPrompt>[0]) },
-          ...signedUrls.map(url => ({ type: 'image' as const, image: url })),
-        ],
-      },
-    ],
-  })
+  let text: string
+  try {
+    const result = await generateText({
+      model: openai('gpt-4o'),
+      abortSignal: abort,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: buildDescriptionUserPrompt(asset as Parameters<typeof buildDescriptionUserPrompt>[0]) },
+            ...signedUrls.map(url => ({ type: 'image' as const, image: url })),
+          ],
+        },
+      ],
+    })
+    text = result.text
+  } catch {
+    return Response.json({ error: 'Description generation failed' }, { status: 502 })
+  }
 
   // 7. Guard against refusals/non-descriptions appearing as descriptions
   const lower = text.toLowerCase()
