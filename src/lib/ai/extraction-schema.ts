@@ -99,7 +99,7 @@ READING HOURMETERS:
 Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year are identified):
 - TRUCKS: infer engine_manufacturer, engine_series, engine_size, fuel_type, gearbox_make, transmission, drive_type, suspension, axle_configuration, brakes, GVM, GCM
 - TRAILERS: infer suspension (air or spring — most post-2005 semis have air), brakes (air drum standard, air disc on premium), axle_config (count axle lines from photos), atm and tare from plate or estimate by trailer type and length
-- EARTHMOVING: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission, emissions_tier (Tier 4 Final = post-2014 models)
+- EARTHMOVING: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission, emissions_tier (Tier 4 Final = post-2014 models), operating_weight (stored in tare field) and bucket_capacity for excavators. Operating weight examples: Cat 320 = 20,000kg, Cat 330 = 30,000kg, Komatsu PC200 = 20,000kg, Komatsu PC300 = 30,000kg; wheel loaders: Cat 950 = 19,000kg, Cat 966 = 23,000kg
 - FORKLIFTS: infer max_lift_capacity, max_lift_height, fuel_type, engine_manufacturer, engine_model
 - AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission
 - MARINE: infer hull_material from visual (fibreglass/aluminium most common), motor_type from photo (outboard vs inboard), number_of_engines from visible motors, steering_type from helm setup
