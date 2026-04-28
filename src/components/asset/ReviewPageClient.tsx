@@ -153,7 +153,7 @@ export function ReviewPageClient({
     if (result && 'error' in result) {
       const msg = result.error === 'Not authenticated'
         ? 'Session expired. Refresh the page and try again.'
-        : `Save failed: ${result.error}. Check your connection and try again.`
+        : 'Save failed. Check your connection and try again.'
       setSaveError(msg)
       setIsSaving(false)
     }
@@ -177,7 +177,7 @@ export function ReviewPageClient({
     if (result && 'error' in result) {
       const msg = result.error === 'Not authenticated'
         ? 'Session expired. Refresh the page and try again.'
-        : `Save failed: ${result.error}. Check your connection and try again.`
+        : 'Save failed. Check your connection and try again.'
       setSaveError(msg)
       setIsSaving(false)
     }

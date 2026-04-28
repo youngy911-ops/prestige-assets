@@ -49,7 +49,7 @@ export function SalesforcePushButton({ assetId, isConnected, returnTo }: Salesfo
       setSalesforceId(data.salesforce_id)
       setPushState('success')
     } catch (e) {
-      setErrorMsg(e instanceof Error ? e.message : 'Something went wrong')
+      setErrorMsg('Push to Salesforce failed. Check your connection and try again.')
       setPushState('error')
     }
   }
@@ -64,9 +64,7 @@ export function SalesforcePushButton({ assetId, isConnected, returnTo }: Salesfo
         <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
         <div className="flex-1 min-w-0">
           <p className="text-sm font-semibold text-emerald-300">Pushed to Salesforce</p>
-          {salesforceId && (
-            <p className="text-xs text-white/40 mt-0.5 font-mono">{salesforceId}</p>
-          )}
+          <p className="text-xs text-white/40 mt-0.5">Record created successfully</p>
         </div>
       </div>
     )
