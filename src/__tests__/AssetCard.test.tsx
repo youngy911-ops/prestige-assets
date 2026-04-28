@@ -48,9 +48,10 @@ describe('AssetCard', () => {
     expect(screen.getByText('Caterpillar 320 2020')).toBeInTheDocument()
   })
 
-  it("shows 'No data yet' when fields is empty", () => {
+  it("shows asset type name when fields is empty", () => {
     render(<AssetCard {...baseProps} fields={{}} />)
-    expect(screen.getByText('No data yet')).toBeInTheDocument()
+    // When no make/model/year, falls back to the displayName (asset type label)
+    expect(screen.getByText('Truck')).toBeInTheDocument()
   })
 
   it("shows 'Draft' badge for draft status", () => {
