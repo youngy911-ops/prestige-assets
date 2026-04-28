@@ -27,7 +27,7 @@ export function ExtractionTriggerState({ assetId, hasPhotos, onTrigger }: Extrac
       <button
         type="button"
         onClick={onTrigger}
-        className="flex items-center justify-center w-full h-11 rounded-md bg-emerald-600 hover:bg-emerald-600/90 text-white font-medium text-sm transition-colors"
+        className="flex items-center justify-center w-full h-11 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-colors"
       >
         Extract Details
       </button>

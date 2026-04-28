@@ -97,9 +97,9 @@ export function SalesforcePushButton({ assetId, isConnected, returnTo }: Salesfo
         className="flex items-center justify-center gap-2 w-full rounded-xl bg-[#00a1e0] hover:bg-[#0090c8] text-white h-11 px-4 text-sm font-semibold transition-colors disabled:opacity-60"
       >
         {pushState === 'pushing' ? (
-          <><Loader2 className="w-4 h-4 animate-spin" />Pushing to Salesforce…</>
+          <><Loader2 className="w-4 h-4 animate-spin" /> Pushing to Salesforce…</>
         ) : (
-          <><Cloud className="w-4 h-4" />Push to Salesforce</>
+          <><Cloud className="w-4 h-4" /> Push to Salesforce</>
         )}
       </button>
       {pushState === 'error' && (

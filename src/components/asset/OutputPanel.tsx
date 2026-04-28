@@ -202,7 +202,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
           ))}
         </div>
         {tone === 'quick' && (
-          <span className="text-xs text-white/30">Short summary for general goods</span>
+          <span className="text-xs text-white/30">Shorter, plain-English summary</span>
         )}
       </div>
 

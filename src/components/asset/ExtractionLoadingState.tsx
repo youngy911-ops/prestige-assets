@@ -1,33 +1,82 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
-import { ScanLine, Search, Car, ClipboardList, FileCheck, CheckCircle2 } from 'lucide-react'
+import { ScanLine, Search, Car, ClipboardList, FileCheck, CheckCircle2, Gauge, BookOpen, Wrench, Anchor, Tractor } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 const VEHICLE_STEPS: { text: string; Icon: LucideIcon }[] = [
-  { text: 'Reading plates and labels…', Icon: ScanLine },
-  { text: 'Scanning for damage…', Icon: Search },
+  { text: 'Reading compliance plate…', Icon: ScanLine },
   { text: 'Identifying make and model…', Icon: Car },
-  { text: 'Assessing condition…', Icon: ClipboardList },
-  { text: 'Extracting details…', Icon: FileCheck },
-  { text: 'Finalising…', Icon: CheckCircle2 },
+  { text: 'Reading odometer…', Icon: Gauge },
+  { text: 'Scanning for damage…', Icon: Search },
+  { text: 'Looking up specifications…', Icon: BookOpen },
+  { text: 'Generating description…', Icon: FileCheck },
+]
+
+const TRUCK_STEPS: { text: string; Icon: LucideIcon }[] = [
+  { text: 'Reading compliance plate…', Icon: ScanLine },
+  { text: 'Identifying make and model…', Icon: Car },
+  { text: 'Reading odometer and hourmeter…', Icon: Gauge },
+  { text: 'Scanning for damage…', Icon: Search },
+  { text: 'Looking up specifications…', Icon: BookOpen },
+  { text: 'Generating description…', Icon: FileCheck },
+]
+
+const EARTHMOVING_STEPS: { text: string; Icon: LucideIcon }[] = [
+  { text: 'Reading make and model plate…', Icon: ScanLine },
+  { text: 'Identifying machine type…', Icon: Wrench },
+  { text: 'Reading hourmeter…', Icon: Gauge },
+  { text: 'Scanning for wear and damage…', Icon: Search },
+  { text: 'Looking up specifications…', Icon: BookOpen },
+  { text: 'Generating description…', Icon: FileCheck },
+]
+
+const MARINE_STEPS: { text: string; Icon: LucideIcon }[] = [
+  { text: 'Reading hull identification…', Icon: ScanLine },
+  { text: 'Identifying make and model…', Icon: Anchor },
+  { text: 'Checking engine details…', Icon: Wrench },
+  { text: 'Scanning for damage…', Icon: Search },
+  { text: 'Looking up specifications…', Icon: BookOpen },
+  { text: 'Generating description…', Icon: FileCheck },
+]
+
+const AGRICULTURE_STEPS: { text: string; Icon: LucideIcon }[] = [
+  { text: 'Reading make and model plate…', Icon: ScanLine },
+  { text: 'Identifying machine type…', Icon: Tractor },
+  { text: 'Reading hourmeter…', Icon: Gauge },
+  { text: 'Scanning for wear and damage…', Icon: Search },
+  { text: 'Looking up specifications…', Icon: BookOpen },
+  { text: 'Generating description…', Icon: FileCheck },
 ]
 
 const GENERAL_STEPS: { text: string; Icon: LucideIcon }[] = [
-  { text: 'Reading plates and labels…', Icon: ScanLine },
-  { text: 'Identifying make and model…', Icon: Car },
-  { text: 'Extracting details…', Icon: FileCheck },
-  { text: 'Finalising…', Icon: CheckCircle2 },
+  { text: 'Reading labels and markings…', Icon: ScanLine },
+  { text: 'Identifying type and model…', Icon: Car },
+  { text: 'Scanning for damage…', Icon: Search },
+  { text: 'Assessing overall condition…', Icon: ClipboardList },
+  { text: 'Looking up specifications…', Icon: BookOpen },
+  { text: 'Generating description…', Icon: FileCheck },
 ]
 
-const STEP_INTERVAL = 3500 // 3.5s per step
+const STEP_INTERVAL = 3000 // 3s per step — 6 steps × 3s = 18s, within the 15–20s window
 const FADE_DURATION = 250
 
 interface ExtractionLoadingStateProps {
   assetType?: string
 }
 
+function getStepsForAssetType(assetType: string | undefined) {
+  switch (assetType) {
+    case 'vehicle': return VEHICLE_STEPS
+    case 'truck': return TRUCK_STEPS
+    case 'earthmoving': return EARTHMOVING_STEPS
+    case 'marine': return MARINE_STEPS
+    case 'agriculture': return AGRICULTURE_STEPS
+    default: return GENERAL_STEPS
+  }
+}
+
 export function ExtractionLoadingState({ assetType }: ExtractionLoadingStateProps) {
-  const STEPS = (assetType === 'vehicle' || assetType === 'truck') ? VEHICLE_STEPS : GENERAL_STEPS
+  const STEPS = getStepsForAssetType(assetType)
   const [stepIndex, setStepIndex] = useState(0)
   const [visible, setVisible] = useState(true)
   const [elapsed, setElapsed] = useState(0)
@@ -95,7 +144,7 @@ export function ExtractionLoadingState({ assetType }: ExtractionLoadingStateProp
           </p>
         </div>
         <p className="text-sm text-white/40">
-          Usually 10–20 seconds
+          Usually 15–20 seconds
         </p>
       </div>
 
