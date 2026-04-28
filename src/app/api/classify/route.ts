@@ -75,17 +75,18 @@ VISUAL IDENTIFICATION CUES:
 - Large tyres + open operator station + boom = agriculture (tractor or telehandler)
 - Orange/red warning lights on roof = likely service_truck or emergency vehicle
 - Spray booms folded on sides = agriculture (spray_rig)
-- Long chassis with NO cab, drawbar or kingpin plate at front, axle group at rear = trailer (could be flat_top, curtainsider, pantech, tipper, low_loader — pick closest subtype)
-- Flat steel deck, no sides, no cab, multiple axles = trailer (flat_top)
+- Long chassis with NO cab, drawbar or kingpin plate at front, axle group at rear = trailer (pick closest subtype)
+- Flat steel deck, no sides, no cab, multiple axles = trailer (flat_deck)
 - Build plate showing ATM or tare but no GVM, no cab visible = trailer
 - Any large towed asset with multiple axles and no engine/cab = trailer NOT general_goods
+- Car, sedan, hatchback, SUV, passenger vehicle, ute = vehicle (not general_goods)
 - general_goods is ONLY for individual items: tools, small machinery, furniture, equipment lots — never for trailers, trucks, or vehicles
 
 SUBTYPE HINTS:
-- vehicle: dual_cab_ute (4-door tray/ute), single_cab_ute (2-door tray), suv (raised, wagon-like), sedan, van (transit/sprinter/hiace cargo), bus, 4wd (large SUV with visible lift or off-road tyres)
-- truck: tipper (hydraulic tipping body, rams visible), tray_truck (flat steel tray), pantech (enclosed box body), prime_mover (semi tractor, 5th wheel plate on tray, no body), cab_chassis (bare chassis, no body fitted), service_truck (knuckle boom crane or service body with drawers), refrigerated_pantech (white insulated box body), water_truck (round tank on tray), vacuum_truck (cylindrical tank + hose reel)
-- trailer: tipper_trailer (tipping body on trailer), flat_deck_trailer (bare flat deck), curtainsider_trailer (side curtains, skeletal ends), pantech_trailer (enclosed box), low_loader (dropped deck for machinery), skel_trailer (skeletal frame for containers)
-- earthmoving: excavator (tracks + cab + boom arm), bulldozer (blade at front + tracks), wheel_loader (bucket at front + wheels), motor_grader (long blade underneath), skid_steer (compact, bucket, 4 wheels), dump_truck (large rigid haul truck with tipping body), compactor (drum roller), telehandler (telescopic boom forklift)
+- vehicle: dual_cab_ute (4-door tray/ute), single_cab_ute (2-door tray), suv (raised, wagon-like), sedan (standard 4-door car), hatchback (compact car, short rear), van (transit/sprinter/hiace cargo), bus, 4wd (large SUV with visible lift or off-road tyres)
+- truck: tipper (hydraulic tipping body, rams visible), tray_truck (flat steel tray), pantech (enclosed box body), prime_mover (semi tractor, 5th wheel plate on tray, no body), cab_chassis (bare chassis, no body fitted), service_truck (knuckle boom crane or service body with drawers), refrigerated_pantech (white insulated box body)
+- trailer: flat_deck (bare flat deck, no sides), curtainsider (side curtains), pantech (enclosed box body on trailer), low_loader (dropped/stepped deck for machinery), skel (skeletal frame for containers), dog (tag trailer with drawbar and rear axle group), stock (slatted livestock crate sides), side_tipper (hydraulic side-tipping body), tipper (rear-tipping body on trailer)
+- earthmoving: excavator (tracks + cab + boom arm), bulldozer (blade at front + tracks), wheel_loader (large articulated machine, bucket at front, full-size cab — NOT compact), skid_steer (compact, 4 wheels, turns by wheel speed not steering), motor_grader (long blade underneath), dump_truck (large rigid haul truck with tipping body), compactor (drum roller), telehandler (telescopic boom forklift)
 - forklift: clearview_mast (standard counterbalance forklift), container_mast (very tall mast 4m+), walkie_stacker (pedestrian stacker), electric_pallet_jack (ride-on or walk-behind pallet jack)
 - agriculture: tractor (cab + large rear tyres), combine_harvester (large header at front), spray_rig (boom arms extending from sides), baler (intake + discharge chute at rear), air_seeder (large tank + distribution tubes)
 - marine: trailer_boat (boat hull on road trailer), personal_watercraft (jet ski), barge (flat-bottom work vessel), commercial_vessel (larger work or passenger boat)

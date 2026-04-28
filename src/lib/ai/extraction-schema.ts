@@ -35,7 +35,7 @@ export function buildSystemPrompt(assetType: string, subtype: string): string {
 Analyse the provided photos of a ${assetType} (${subtype}) and extract the requested fields.
 
 Step 1 — Identify plates and read them in this priority order:
-- BUILD PLATE: contains Make, Model, Serial/PIN/VIN, Year of Manufacture, GVM, GCM, ATM, NW (Nett Weight), Tare
+- BUILD PLATE: contains Make, Model, Serial/PIN/VIN, Year of Manufacture, GVM, GCM, ATM, NW (Nett Weight), Tare. On trailers: typically bolted to the drawbar, A-frame, or front headboard — check those locations first
 - COMPLIANCE PLATE: contains Compliance Date (format MM/YYYY), Tare (kg), ADR compliance numbers
 - INSTRUMENT CLUSTER: contains Odometer (km) and Hourmeter (hours) — only extract if digits are clearly legible; do NOT guess
 - REGISTRATION PLATE: contains Registration Number
@@ -76,6 +76,7 @@ READING HOURMETERS:
 
 Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year are identified):
 - TRUCKS: infer engine_manufacturer, engine_series, engine_size, fuel_type, gearbox_make, transmission, drive_type, suspension, axle_configuration, brakes, GVM, GCM
+- TRAILERS: infer suspension (air or spring — most post-2005 semis have air), brakes (air drum standard, air disc on premium), axle_config (count axle lines from photos), atm and tare from plate or estimate by trailer type and length
 - EARTHMOVING: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission, emissions_tier (Tier 4 Final = post-2014 models)
 - FORKLIFTS: infer max_lift_capacity, max_lift_height, fuel_type, engine_manufacturer, engine_model
 - AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission
