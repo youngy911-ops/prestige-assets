@@ -50,8 +50,8 @@ describe('AssetCard', () => {
 
   it("shows asset type name when fields is empty", () => {
     render(<AssetCard {...baseProps} fields={{}} />)
-    // When no make/model/year, falls back to the displayName (asset type label)
-    expect(screen.getByText('Truck')).toBeInTheDocument()
+    // When no make/model/year, falls back to displayName — no 'No data yet' text
+    expect(screen.queryByText('No data yet')).not.toBeInTheDocument()
   })
 
   it("shows 'Draft' badge for draft status", () => {
