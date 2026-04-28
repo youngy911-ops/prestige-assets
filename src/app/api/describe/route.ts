@@ -807,6 +807,9 @@ Single line: Year Make Model Trim Series Transmission Drive Fuel Body CCcc XXXkW
 Any extras on next line
 Sold As Is, Untested & Unregistered.
 
+SEDAN / SUV (subtype: sedan or suv)
+Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below — NOT the single-line MOTOR VEHICLE (CAR) format. Write as ONE continuous paragraph including: Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer on its own line.
+
 VEHICLE (PASSENGER / LIGHT COMMERCIAL)
 Write as ONE continuous paragraph. Keep it concise — the photos do the talking.
 Include in this order (skip any not known): Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer.
@@ -1011,14 +1014,14 @@ Hydraulic automatic opening rear tailgate
 Sold As Is, Untested & Unregistered.
 
 FORKLIFT EXAMPLE:
-2014 Bobcat T590 Compact Track Loader
-3,580kg Operating Weight
-3,392 Hours
-Kubota 4-cylinder turbodiesel, 61hp
-Rated Operating Capacity: 910kg
-Enclosed cab, ROPS/FOPS, auxiliary hydraulics
-320mm rubber tracks
-1,800mm 4-in-1 bucket
+Toyota 8FG25 2.5T LPG Counterbalance Forklift
+
+Toyota 4Y 2.2L LPG engine, 3-stage mast, side shift, 4,500mm lift height
+
+Solid tyres, duplex mast with full free lift, ROPS canopy, hour meter 4,823hrs
+
+Max Lift Capacity: 2,500kg at 500mm load centre
+
 Sold As Is, Untested & Unregistered.
 
 PERSONAL WATERCRAFT EXAMPLE:
