@@ -51,6 +51,20 @@ READING BUILD PLATES / COMPLIANCE PLATES:
 - VIN/serial on a plate may be labelled "VIN", "PIN", "W.M.I.", "Serial No", "Chassis No", "Product ID" or similar — read whichever is present
 - If a build plate is partially obscured, extract whatever is legible — do not skip the whole plate just because some fields are unreadable
 
+VIN / SERIAL NUMBER READING — CHARACTER DISAMBIGUATION:
+VINs use only these characters: 0-9 and A-Z excluding I, O, Q (these three letters never appear in a valid VIN).
+When reading stamped, embossed, or printed VINs/serials from photos, use these rules to resolve ambiguous characters:
+- "0" (zero) vs "O" (letter O): VINs never contain letter O — always read as digit 0
+- "1" (one) vs "I" (letter I) vs "l" (lowercase L): VINs never contain I — if ambiguous between 1 and another character, prefer 1
+- "Q" vs "O" vs "0": VINs never contain Q or O — always digit 0
+- "8" vs "B": look at the top half — if symmetrical curves it's B, if the top loop is open at right it's 8
+- "5" vs "S": look at the top — 5 has a flat top-right, S has a curve top-right
+- "6" vs "G": 6 has a closed bottom loop, G has an open right side
+- "2" vs "Z": 2 has a curved bottom, Z has a flat bottom diagonal
+- If a character is genuinely illegible, substitute "?" for that character — do NOT guess
+- A valid VIN is exactly 17 characters — if you read more or fewer, recount carefully
+- Return null if fewer than 10 characters are legible — a partial VIN does more harm than good
+
 READING ODOMETERS:
 - Odometers appear on the instrument cluster or dashboard display
 - Read the EXACT number as displayed — every digit matters, including decimals
