@@ -121,6 +121,14 @@ DAMAGE FIELD FORMAT:
 - If NO damage is visible in any photo, return null for both fields
 - GENERAL GOODS: read make/model/serial from build plate or data label. DOM from compliance plate if present. Many items (attachments, hand tools) have no build plate — return null for missing fields rather than inferring.
 
+EXTRAS AND ATTACHMENTS — scan every photo, not just the compliance plate:
+- Do not focus only on the build plate. Look at every photo including wide shots, rear shots, interior shots, and photos of equipment stored with the asset.
+- Extras are often only visible in full-width exterior photos — a toolbox on the headboard, a tarp system rolled back, ramps folded under the deck, a crane stowed on the body.
+- For trucks: check for bull bars, spotlights, toolboxes, tail lifts, cranes, EWPs, tarp systems, curtains, beacon lights, sun visors, extra fuel tanks, cab features.
+- For trailers: check for toolboxes, tarp systems, load restraints, chains/ratchets, spare tyres, ramps, reefer units, mezzanine floors, stanchions, dropsides, hydraulic gear.
+- For earthmoving and agriculture: check for all attachments stored beside or on the machine — buckets, blades, rippers, forks, headers, implements.
+- If you can see it in any photo, include it. Do not leave extras blank if items are visible.
+
 Rules:
 - If a field value is not visible AND cannot be reasonably inferred from the identified vehicle, return null
 - Do NOT fabricate specific serial numbers, VINs, or odometer readings — only infer standard manufacturer specs
