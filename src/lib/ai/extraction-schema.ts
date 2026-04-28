@@ -65,6 +65,14 @@ When reading stamped, embossed, or printed VINs/serials from photos, use these r
 - A valid VIN is exactly 17 characters — if you read more or fewer, recount carefully
 - Return null if fewer than 10 characters are legible — a partial VIN does more harm than good
 
+READING ALL NUMERIC FIELDS FROM PLATES (GVM, GCM, ATM, Tare, Year, Model numbers):
+- Read every digit exactly as printed — do not round or estimate
+- Common character confusions on stamped/embossed metal plates: 1 vs 7, 3 vs 8, 6 vs 0, 5 vs 6
+- GVM/GCM/ATM are always whole numbers in kg (no decimals) — e.g. 23000, 68000, 42500
+- Year of Manufacture is always a 4-digit year — if you read 2 digits (e.g. "96") it is 1996
+- Model numbers often contain both letters and digits — read exactly as printed including hyphens and spaces
+- If a numeric field is partially obscured, return null rather than guess the missing digits
+
 READING ODOMETERS:
 - Odometers appear on the instrument cluster or dashboard display
 - Read the EXACT number as displayed — every digit matters, including decimals

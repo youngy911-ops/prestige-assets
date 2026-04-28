@@ -1087,8 +1087,9 @@ function toTitleCase(text: string): string {
     .join('\n')
 }
 
-function normalizeFooter(text: string, assetType: string): string {
-  const footer = assetType === 'general_goods'
+function normalizeFooter(text: string, assetType: string, assetSubtype?: string | null): string {
+  const isUntested = assetType === 'general_goods' || assetSubtype === 'attachments'
+  const footer = isUntested
     ? 'Sold As Is, Untested.'
     : 'Sold As Is, Untested & Unregistered.'
   const lines = text.trimEnd().split('\n')
@@ -1235,7 +1236,7 @@ export async function POST(req: NextRequest) {
 
   // 8. Apply Title Case, then normalise footer
   const titledText = toTitleCase(text)
-  const normalizedText = normalizeFooter(titledText, asset.asset_type)
+  const normalizedText = normalizeFooter(titledText, asset.asset_type, asset.asset_subtype)
 
   // 9. Persist to DB — user_id guard in addition to RLS (defense in depth, mirrors saveReview pattern)
   await supabase
