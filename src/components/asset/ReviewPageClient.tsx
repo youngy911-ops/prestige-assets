@@ -166,7 +166,7 @@ export function ReviewPageClient({
     if (isSaveAllowed) {
       // All required fields present — use validated submit path
       setIsSaving(true)
-      handleSubmit(onSubmit)().catch(() => setIsSaving(false))
+      handleSubmit(onSubmit)().catch(() => {}).finally(() => setIsSaving(false))
       return
     }
     // Partial proceed — save whatever's filled in, staff can complete later
