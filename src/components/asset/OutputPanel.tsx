@@ -47,7 +47,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
 
   // Auto-generate on mount; also silently fix stale cached descriptions
   useEffect(() => {
-    if (!initialDescription || isStale) {
+    if (!initialDescription) {
       generateDescription(false, tone)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
