@@ -148,16 +148,28 @@ describe('ExtractionTriggerState', () => {
 // ─── ExtractionLoadingState ─────────────────────────────────────────────────
 
 describe('ExtractionLoadingState', () => {
-  it('renders the first step message on mount', async () => {
+  it('renders the first step message on mount for default asset type', async () => {
     const { ExtractionLoadingState } = await import('@/components/asset/ExtractionLoadingState')
     render(<ExtractionLoadingState />)
-    expect(screen.getByText('Reading plates and labels…')).toBeTruthy()
+    expect(screen.getByText('Reading labels and markings…')).toBeTruthy()
+  })
+
+  it('renders the first step message on mount for vehicle asset type', async () => {
+    const { ExtractionLoadingState } = await import('@/components/asset/ExtractionLoadingState')
+    render(<ExtractionLoadingState assetType="vehicle" />)
+    expect(screen.getByText('Reading compliance plate…')).toBeTruthy()
+  })
+
+  it('renders the first step message on mount for truck asset type', async () => {
+    const { ExtractionLoadingState } = await import('@/components/asset/ExtractionLoadingState')
+    render(<ExtractionLoadingState assetType="truck" />)
+    expect(screen.getByText('Reading compliance plate…')).toBeTruthy()
   })
 
   it('renders the timing sub-message', async () => {
     const { ExtractionLoadingState } = await import('@/components/asset/ExtractionLoadingState')
     render(<ExtractionLoadingState />)
-    expect(screen.getByText(/Usually 10–20 seconds/)).toBeTruthy()
+    expect(screen.getByText(/Usually 15–20 seconds/)).toBeTruthy()
   })
 })
 
