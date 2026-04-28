@@ -21,14 +21,14 @@ const config: Record<ConfidenceLevel, { icon: React.ElementType; className: stri
     label: 'Inferred',
   },
   low: {
-    icon: MinusCircle,
-    className: 'text-white/40',
+    icon: AlertCircle,
+    className: 'text-red-400',
     srLabel: 'Uncertain — verify before saving',
-    label: 'Uncertain',
+    label: 'Verify',
   },
   not_found: {
     icon: MinusCircle,
-    className: 'text-white/40',
+    className: 'text-white/25',
     srLabel: 'Not found in photos',
     label: 'Not found',
   },

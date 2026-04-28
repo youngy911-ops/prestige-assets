@@ -284,7 +284,7 @@ export function ReviewPageClient({
           </Button>
           <button
             type="button"
-            className="text-xs text-white/40 hover:text-white/70 text-center w-full py-1 transition-colors"
+            className="text-xs text-white/60 hover:text-white border border-white/15 hover:border-white/30 rounded-lg text-center w-full py-2 transition-colors"
             onClick={triggerReExtraction}
             disabled={isExtracting}
           >
