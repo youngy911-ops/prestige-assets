@@ -62,7 +62,7 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
       <div className="flex items-center gap-3 mb-4">
         <Link
           href="/"
-          className="text-white/65 hover:text-white transition-colors p-1 -ml-1"
+          className="text-white/65 hover:text-white transition-colors p-2 -ml-2"
           aria-label="Back"
         >
           <ChevronLeft className="w-5 h-5" />
