@@ -104,6 +104,7 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
 - AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission
 - MARINE: infer hull_material from visual (fibreglass/aluminium most common), motor_type from photo (outboard vs inboard), number_of_engines from visible motors, steering_type from helm setup
 - VEHICLES: infer engine_type, fuel_type, transmission, drive_type from make/model/year knowledge. Read VIN from door jamb plate or windscreen base. Read registration from plates. Read odometer from instrument cluster. Identify body type, colour, and extras from photos.
+- GENERAL GOODS: read make/model/serial from any visible data plate, badge, or label. For single items (generators, compressors, pumps), extract brand and model from the unit badge. For mixed lots (pallets of tools, equipment bundles), use extras to list all visible items with quantities where countable (e.g. "Approx 20x assorted hand tools, 3x power tools, 1x toolbox"). Return null for make/model/year if no plate is visible rather than guessing.
 
 Step 3 — DAMAGE & CONDITION ASSESSMENT (especially for VEHICLES):
 Carefully examine ALL photos for visible damage and condition issues. This is critical for auction cataloguing.
@@ -121,7 +122,7 @@ EXTERIOR DAMAGE INSPECTION — scan every photo for:
 - Hail damage: multiple small uniform shallow dents across roof, bonnet, and boot lid — describe as "Hail damage to roof/bonnet/boot".
 - Scratches: look for linear marks on paint surface. "Light scratches" = surface only. "Deep scratches" = through paint to primer/metal.
 - Stone chips: clusters of small paint chips, common on bonnet/bumper.
-- Cracked/chipped windscreen: look for star cracks, bullseyes, or chips.
+- Cracked/chipped windscreen: look for star cracks, bullseyes, or chips. Also check for scratched glass or wiper damage (arc-shaped scratches from worn wiper blades).
 - Broken/cracked lights: tail lights, headlights, indicators, fog lights.
 - Missing parts: mirrors, trim pieces, badges, mud flaps, wheel covers.
 - Bumper damage: cracks, scrapes, misalignment, hanging sections.
