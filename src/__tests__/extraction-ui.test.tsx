@@ -49,7 +49,7 @@ describe('ConfidenceBadge', () => {
     const { container } = render(<ConfidenceBadge level="medium" />)
     const wrapper = container.querySelector('span')
     expect(wrapper?.className).toContain('text-amber-400')
-    expect(screen.getByText('Inferred from model knowledge')).toBeTruthy()
+    expect(screen.getByText('AI estimate — check if critical')).toBeTruthy()
   })
 
   it('renders AlertCircle icon with text-red-400 for level="low"', async () => {

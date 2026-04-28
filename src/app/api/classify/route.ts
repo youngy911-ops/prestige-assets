@@ -44,7 +44,9 @@ export async function POST(req: NextRequest) {
     return `${t} (subtypes: ${subtypes || 'none'})`
   }).join('\n')
 
-  const { object } = await generateObject({
+  let object: z.infer<typeof ClassifySchema>
+  try {
+    const result = await generateObject({
     model: openai('gpt-4o'),
     schema: ClassifySchema,
     messages: [
@@ -105,6 +107,10 @@ Confidence guide:
       },
     ],
   })
+    object = result.object
+  } catch {
+    return Response.json({ error: 'Classification failed' }, { status: 502 })
+  }
 
   const schema = SCHEMA_REGISTRY[object.asset_type as keyof typeof SCHEMA_REGISTRY]
   const subtypeLabel = schema?.subtypes?.find(s => s.key === object.asset_subtype)?.label ?? object.asset_subtype

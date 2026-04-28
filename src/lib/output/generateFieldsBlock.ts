@@ -15,6 +15,6 @@ export function generateFieldsBlock(
 ): string {
   const sortedFields = getFieldsSortedBySfOrder(assetType)
   return sortedFields
-    .map(f => `${f.label}: ${fields[f.key] ?? ''}`)
+    .map(f => `${f.label}: ${(fields[f.key] ?? '').replace(/\n/g, ', ')}`)
     .join('\n')
 }
