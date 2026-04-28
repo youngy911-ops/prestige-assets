@@ -374,8 +374,8 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       )}
 
       {!error && assets === null && (
-        <div className="text-center py-16">
-          <p className="text-white/65 text-sm">Loading...</p>
+        <div className="flex justify-center py-16">
+          <Loader2 className="w-6 h-6 text-white/30 animate-spin" />
         </div>
       )}
 

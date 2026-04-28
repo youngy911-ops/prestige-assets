@@ -316,7 +316,11 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
               <span className="text-sm font-semibold text-white">Damage</span>
             </div>
             <div className="px-4 py-3 flex flex-col gap-2">
-              <p className="text-sm text-white/70">Scratches and dents visible around vehicle</p>
+              {fields.damage ? (
+                <p className="text-sm text-white/70">{fields.damage}</p>
+              ) : (
+                <p className="text-sm text-white/40 italic">No damage recorded</p>
+              )}
               {noteLines.length > 0 && <div className="h-1" />}
               {noteLines.length > 0 && (
                 <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.06]">
