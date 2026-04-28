@@ -17,8 +17,8 @@ const config: Record<ConfidenceLevel, { icon: React.ElementType; className: stri
   medium: {
     icon: AlertCircle,
     className: 'text-amber-400',
-    srLabel: 'Inferred from model knowledge',
-    label: 'Inferred',
+    srLabel: 'AI estimate — check if critical',
+    label: 'AI estimate',
   },
   low: {
     icon: AlertCircle,
