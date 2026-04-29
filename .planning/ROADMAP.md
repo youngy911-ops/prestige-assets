@@ -128,10 +128,11 @@ Plans:
   2. Fields where AI extraction is not reliable (e.g. fields only legible from compliance plates that are rarely photographed) have `aiExtractable: false` or a low-confidence default rather than attempting extraction
   3. Confidence language across all 8 asset types uses consistent terminology — no schema files using free-text confidence descriptions that differ from the established pattern
   4. Spot-check fixtures for all 8 asset types pass after audit changes with no regression on previously-correct fields
-**Plans**: 1 plan
+**Plans**: 2 plans
 
 Plans:
-- [ ] 24-01-PLAN.md — Fix form validation regex, agriculture aiHint, truck/earthmoving/forklift aiHints, and FieldRow inputMode
+- [ ] 26-01-PLAN.md — Marine fuel_type field + main_engine_details hint + caravan trailer_length hint + test count update
+- [ ] 26-02-PLAN.md — General goods description template expanded with subtype-specific guidance
 
 ## Progress
 
@@ -162,4 +163,4 @@ Plans:
 | 23. Code Quality & Accessibility | v1.5 | 1/1 | Complete | 2026-04-18 |
 | 24. Hourmeter Decimal Fix | v1.6 | 0/TBD | Not started | - |
 | 25. Suspension Type Inference | v1.6 | 0/TBD | Not started | - |
-| 26. Extraction Accuracy Audit | v1.6 | 0/TBD | Not started | - |
+| 26. Extraction Accuracy Audit | v1.6 | 0/2 | In progress | - |
