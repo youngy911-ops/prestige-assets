@@ -285,6 +285,22 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
           { label: 'Carpet Condition', value: fields.carpet_condition },
         ].filter(f => f.value)
         if (conditionFields.length === 0) return null
+
+        // Colour-coded badge for each rating value
+        function conditionBadgeClass(value: string): string {
+          const v = value.toLowerCase()
+          if (v === 'excellent') return 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+          if (v === 'good')      return 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
+          if (v === 'fair')      return 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+          if (v === 'poor')      return 'bg-red-500/20 text-red-300 border border-red-500/30'
+          // Rust-specific values
+          if (v === 'nil')       return 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+          if (v === 'surface')   return 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
+          if (v === 'minor')     return 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+          if (v === 'major')     return 'bg-red-500/20 text-red-300 border border-red-500/30'
+          return 'bg-white/10 text-white/70 border border-white/10'
+        }
+
         return (
           <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
@@ -294,7 +310,9 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
               {conditionFields.map(({ label, value }) => (
                 <div key={label} className="flex items-center justify-between px-4 py-2.5">
                   <span className="text-sm text-white/60">{label}</span>
-                  <span className="text-sm font-medium text-white">{value}</span>
+                  <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${conditionBadgeClass(value)}`}>
+                    {value}
+                  </span>
                 </div>
               ))}
             </div>
@@ -306,15 +324,22 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
       {assetType === 'vehicle' && (() => {
         const damageNotes = fields.damage_notes ?? ''
         const noteLines = damageNotes.split('\n').filter((l: string) => l.trim())
+        // Prefer the explicit one-line summary; if absent but panel notes exist, derive a summary
+        const damageSummary = fields.damage
+          ? fields.damage
+          : noteLines.length > 0
+            ? `Damage noted to ${noteLines.length} panel${noteLines.length > 1 ? 's' : ''} — see breakdown below`
+            : null
+        const hasDamage = noteLines.length > 0 || !!fields.damage
         return (
           <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
-              <AlertTriangle className={`w-4 h-4 ${noteLines.length > 0 ? 'text-amber-400' : 'text-white/40'}`} />
+              <AlertTriangle className={`w-4 h-4 ${hasDamage ? 'text-amber-400' : 'text-white/40'}`} />
               <span className="text-sm font-semibold text-white">Damage</span>
             </div>
             <div className="px-4 py-3 flex flex-col gap-2">
-              {fields.damage ? (
-                <p className="text-sm text-white/70">{fields.damage}</p>
+              {damageSummary ? (
+                <p className="text-sm text-white/70">{damageSummary}</p>
               ) : (
                 <p className="text-sm text-white/40 italic">No damage recorded</p>
               )}
