@@ -44,16 +44,19 @@ TRUCK (PRIME MOVER)
 Line 1: Year, Make, Model, Drive Type
 Engine: Make, cylinders, fuel type, HP
 Transmission, key extras (diff locks, exhaust brake, cruise control, UHF etc.)
+Suspension type (airbag / road-friendly leaf spring / Kenworth AirGlide — name brand if known)
+Sleeper cab type and size if fitted (e.g. 48" single sleeper, 63" double bunk — use exact dimension from inspection notes; omit if day cab)
 Fifth wheel brand/model if known (e.g. Jost JSK 37, SAF-Holland FW35)
-GCM for high-rated prime movers
+GCM if 100,000kg or above
 Sold As Is, Untested & Unregistered.
 
 TIPPER
 Line 1: Year, Make, Model, Drive Type, Tipper
 Engine: Make, cylinders, fuel type, HP
 Transmission, Diff Locks, Exhaust Brake
+Suspension type if known
 Key extras
-Body builder, dimensions in mm, material, rock lining, tarp type, tailgate, Ringfeder if confirmed
+Body builder (name if known — common AU builders: Moore, Stoodley, Hamelex White, CJD, Hardox), dimensions in mm, material (steel / alloy / Hardox), rock lining if fitted, tarp type (electric roll / manual), tailgate type, Ringfeder hitch if confirmed
 Payload: Xkg
 Sold As Is, Untested & Unregistered.
 
@@ -270,13 +273,15 @@ FLAT DECK TRAILER
 Line 1: Year, Make, Model, Flat Deck Trailer. Axle config.
 Deck dimensions: L x W mm
 Payload: Xt, tare if known
-Headboard, tie rails, stoneguard if fitted
+Headboard, toolboxes, tie rails, stoneguard if fitted
+Pin sizes: 50mm / 90mm kingpin if known
 Sold As Is, Untested & Unregistered.
 
 CURTAINSIDER TRAILER
 Line 1: Year, Make, Model, Curtainsider Trailer. Axle config.
 Deck dimensions: L x W mm
 Number of curtain side posts, roof type
+Curtain brand if known (e.g. Tautliner, Mitchells), curtain condition (new / good / worn / damaged)
 Load restraint system
 Sold As Is, Untested & Unregistered.
 
@@ -290,14 +295,14 @@ Sold As Is, Untested & Unregistered.
 REFRIGERATED CURTAINSIDER
 Line 1: Year, Make, Model, Refrigerated Curtainsider. Axle config.
 Deck dimensions: L x W mm
-Refrigeration unit: make, model, fuel type
+Refrigeration unit: make, model, fuel type, hours if shown
 Temperature range
 Sold As Is, Untested & Unregistered.
 
 REFRIGERATED PANTECH (TRAILER)
 Line 1: Year, Make, Model, Refrigerated Pantech. Axle config.
 Internal dimensions: L x W x H mm
-Refrigeration unit: make, model, fuel type
+Refrigeration unit: make, model, fuel type, hours if shown
 Temperature range
 Sold As Is, Untested & Unregistered.
 
@@ -317,6 +322,7 @@ Sold As Is, Untested & Unregistered.
 
 TIPPER TRAILER
 Line 1: Year, Make, Model, Tipper Trailer. Axle config.
+Body builder if known (e.g. Robuk, MaxiTrans, Vawdrey, Lusty EMS)
 Body capacity: Xm³, body material (marine grade alloy / Hardox steel / Bisalloy), floor type (V-floor / flat)
 Axle brand, suspension type (airbag is premium — always note)
 Brake system (Knorr-Bremse TEBS / Haldex)
@@ -413,12 +419,12 @@ Operating Weight
 Hours
 Engine: Make, cylinders, fuel type, HP
 Max Digging Depth
-Track width
+Track width, track type (rubber / steel)
 Enclosed Cab / ROPS Canopy
-Quick hitch if fitted
-Dozer Blade: Xft | Boom Length: Xft
-Main bucket
-Attachments Included: others
+Quick hitch brand/model and rating if fitted (e.g. Steelwrist, Wedgelock, JB Sales)
+Dozer Blade: Xmm | Boom: Xm | Arm: Xm
+Main bucket: capacity in m³ and width in mm, tooth count if visible
+Attachments Included: list each item (make, model, coupling type where known)
 Sold As Is, Untested & Unregistered.
 
 BULLDOZER/CRAWLER TRACTOR
@@ -465,10 +471,11 @@ Operating Weight
 Hours
 Engine: Make, cylinders, fuel type, HP
 Enclosed Cab / ROPS
-Transmission
-Bucket capacity and width
-Tyre size
-Extras
+Transmission type (powershift / CVT / torque converter — name brand/model if known e.g. ZF 4WG)
+Articulated steering, top speed if known
+Bucket: capacity in m³, width in mm (name bucket type if known — general purpose / rock / 4-in-1)
+Tyre size and brand if visible (e.g. 20.5R25 Michelin XHA2)
+Extras (onboard scales, auto lube, rear hitch, forks if fitted)
 Attachments Included if any
 Sold As Is, Untested & Unregistered.
 
@@ -704,11 +711,12 @@ Year, Make, Model, [Clearview Mast / Container Mast] Forklift
 Hours (Showing): X,XXX
 Fuel Type: LPG / Diesel / Electric
 Capacity: X,XXXkg
-Mast Type: 2 Stage / 3 Stage / 4 Stage Mast
+Mast Type: Simplex (1-stage) / Duplex (2-stage) / Triplex (3-stage) / Quad (4-stage) — use the industry name if known, otherwise state the number of stages (e.g. "3-stage mast")
+Free Lift: Full Free Lift / Partial Free Lift — always note if present; critical for container and low-clearance operations
 Lift Height: X,XXXmm
 Resting Mast Height: X,XXXmm
 Tyne Length: X,XXXmm
-Features: list visible features (Side Shift, ROPS, Seat Belt, Flashing Beacon, Full Free Lift, Battery Charger if electric)
+Features: list visible features (Side Shift, Fork Positioner if fitted, ROPS, Seat Belt, Flashing Beacon, Battery Charger if electric)
 Tyres: Pneumatic / Solid / Cushion
 Damage: factual description of visible damage (e.g. "Marks, Scratches, Dents and Surface Rust") or "Nil Obvious" if none visible
 Sold As Is, Untested & Unregistered.
@@ -829,14 +837,75 @@ Do NOT use dot points.
 
 ATTACHMENTS / GENERAL GOODS
 Year (if known), Make, Model
-Key specs relevant to the item type — only include specs you can confirm from fields, notes, photos, or universal model knowledge:
-  - Power equipment: engine type, output rating (kW/kVA/CFM/HP), fuel type
-  - IT equipment: processor, RAM, storage, quantity if pallet lot
-  - Hospitality/medical: capacity, voltage, dimensions
-  - Tools: set contents, size/capacity
-  - Pallet lots: approximate quantity, general description of contents
-Condition notes if visible (damage, missing parts, wear)
-For items with no identifiable make/model, describe what is visible in the photos
+Key specs by category — use the subtype to pick the right focus, then apply your training knowledge of that exact make/model:
+
+GENERATORS (subtype: plant_equipment or miscellaneous):
+  Output: XkVA / XkW rated, fuel type (Diesel / Petrol / LPG), single or 3-phase
+  Engine: make, model, displacement
+  Enclosure type: open frame / soundproofed / canopy
+  Start type: electric start / recoil
+  Hours if known
+  Example: 2019 Denyo DCA-60ESK 60kVA Diesel Generator. Denyo 4-cylinder diesel, 1500 RPM, soundproofed canopy, electric start. Sold As Is, Untested.
+
+COMPRESSORS (subtype: plant_equipment):
+  Output: XCFM or XL/min FAD, pressure rating: Xbar / Xpsi
+  Drive: diesel / electric motor (XkW), belt or direct drive
+  Tank capacity: XL if fitted
+  Brand names: Atlas Copco, Kaeser, Ingersoll Rand, CompAir, Sullair, Chicago Pneumatic
+
+AIR TOOLS / POWER TOOLS (subtype: tools_toolboxes):
+  Item type, brand, key capacity (XAh battery, Xmm disc, Xmm chuck, XkW rating)
+  Quantity if a set or lot
+  Example: Makita 18V LXT 5-piece cordless tool kit with batteries and charger. Sold As Is, Untested.
+
+TOOLBOXES / CABINETS (subtype: tools_toolboxes):
+  Type: roller cabinet / side cabinet / wall cabinet
+  Dimensions (W x D x H mm), number of drawers
+  Material: steel, brand if visible
+  Contents: empty or note if tools included
+
+CATERING / HOSPITALITY EQUIPMENT (subtype: hospitality):
+  Item type (oven / refrigerator / display cabinet / coffee machine / dishwasher / mixer)
+  Key capacity: XL, XkW, X-burner, dimensions (W x D x H mm)
+  Power: single phase 240V / 3-phase 415V
+  Brand: Rational, Combi, Hobart, Stoddart, FED, Moffat, Unox, Electrolux Professional
+
+MEDICAL EQUIPMENT (subtype: medical):
+  Item type and intended use
+  Key specs: capacity, voltage, dimensions, certification status if known
+  Brand: Draeger, GE Healthcare, Philips, Mindray, Steris
+
+IT EQUIPMENT (subtype: it_computers):
+  For individual items: make, model, processor, RAM, storage, screen size if monitor
+  For pallet lots: approximate quantity, general item description (e.g. "Approx 12x Dell OptiPlex desktops, 4x monitors, mixed accessories")
+  State if items are wiped/ready for reuse or unknown data state
+
+OFFICE FURNITURE / FITOUT (subtype: office or retail_fit_out):
+  Item type: desk / chair / shelving / counter / display unit
+  Dimensions if known, quantity if multiple
+  Material / finish
+
+AGRICULTURAL ATTACHMENTS / IMPLEMENTS (subtype: agriculture):
+  Item type: header / auger / sprayer boom / seeder toolbar
+  Working width: Xm, coupling type
+  Brand, model, year if on plate
+
+EARTHMOVING ATTACHMENTS (subtype: plant_equipment):
+  Item type: bucket / hammer / auger / ripper / thumb / tilt bucket
+  Width: Xmm or capacity: Xm³ if applicable
+  Coupling type: OQ / pin-on / other, weight: Xkg
+  Brand: Caterpillar, Kinshofer, Epiroc, Roo-Te, JB Sales
+  Sold As Is, Untested. (NOT "Sold As Is, Untested & Unregistered." — attachments are not registered)
+
+MISCELLANEOUS / OTHER:
+  Describe what is visible from photos. State item type, brand, any readable specs (capacity, output, dimensions).
+  For lots with multiple items: list each type with approximate quantity.
+
+UNIVERSAL RULES for all general goods:
+- Only include specs you can confirm from fields, notes, photos, or universal model knowledge for that exact make/model
+- For items with no identifiable make/model, describe what is visible in the photos
+- Condition notes if visible (damage, missing parts, wear, operational status if stated)
+- Always close with "Sold As Is, Untested." (never "Sold As Is, Untested & Unregistered.")
 Sold As Is, Untested.
 
 MARINE (RECREATIONAL BOAT)
