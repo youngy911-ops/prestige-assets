@@ -273,17 +273,23 @@ Sold As Is, Untested & Unregistered.
 FLAT DECK TRAILER
 Line 1: Year, Make, Model, Flat Deck Trailer. Axle config.
 Deck dimensions: L x W mm
+Deck material: steel / alloy — always state if visible or known; alloy decks command a premium
 Payload: Xt, tare if known
-Headboard, toolboxes, tie rails, stoneguard if fitted
-Pin sizes: 50mm / 90mm kingpin if known
+Headboard: always note if fitted and describe (fixed / removable / drop-down)
+Toolboxes: note quantity and position (e.g. "2x underdeck toolboxes") if fitted
+Tie rails: note full-length or partial, material if known
+Stoneguard if fitted
+Pin sizes: 50mm / 90mm kingpin — always state; critical for compatibility
 Sold As Is, Untested & Unregistered.
 
 CURTAINSIDER TRAILER
 Line 1: Year, Make, Model, Curtainsider Trailer. Axle config.
 Deck dimensions: L x W mm
 Number of curtain side posts, roof type
-Curtain brand if known (e.g. Tautliner, Mitchells), curtain condition (new / good / worn / damaged)
-Load restraint system
+Curtain brand if known (e.g. Tautliner, Mitchells, Kerrafront), curtain condition (new / good / worn / damaged) — always state condition; worn curtains are a known cost for buyers
+Tracking system: always note if fitted (e.g. top and bottom curtain tracking rail) — critical for load restraint compliance
+Strapping rails: note if fitted (e.g. full-length strapping rails both sides) — buyers need to know load restraint capability
+Load restraint system: E-track / strapping rails / load bars — describe what is visible
 Sold As Is, Untested & Unregistered.
 
 PANTECH TRAILER
@@ -296,15 +302,15 @@ Sold As Is, Untested & Unregistered.
 REFRIGERATED CURTAINSIDER
 Line 1: Year, Make, Model, Refrigerated Curtainsider. Axle config.
 Deck dimensions: L x W mm
-Refrigeration unit: make, model, fuel type, hours if shown
-Temperature range
+Refrigeration unit: make, model, fuel type, hours if shown — always include all four; reefer hours diverge from trailer age and are a primary value driver (e.g. "Thermo King SLXi 300, diesel, 12,450 reefer hours"). Always name both make AND model.
+Temperature range: always state (e.g. "-25°C to +25°C")
 Sold As Is, Untested & Unregistered.
 
 REFRIGERATED PANTECH (TRAILER)
 Line 1: Year, Make, Model, Refrigerated Pantech. Axle config.
 Internal dimensions: L x W x H mm
-Refrigeration unit: make, model, fuel type, hours if shown
-Temperature range
+Refrigeration unit: make, model, fuel type, hours if shown — always include all four; reefer hours diverge from trailer age and are a primary value driver (e.g. "Carrier Transicold Vector 1950, diesel, 8,200 reefer hours"). Always name both make AND model.
+Temperature range: always state (e.g. "-25°C to +25°C")
 Sold As Is, Untested & Unregistered.
 
 LOW LOADER
@@ -323,14 +329,14 @@ Sold As Is, Untested & Unregistered.
 
 TIPPER TRAILER
 Line 1: Year, Make, Model, Tipper Trailer. Axle config.
-Body builder if known (e.g. Robuk, MaxiTrans, Vawdrey, Lusty EMS)
+Body builder: always name if known (e.g. Robuk, MaxiTrans, Vawdrey, Lusty EMS, Hamelex White) — body builder is a key value signal
 Body capacity: Xm³, body material (marine grade alloy / Hardox steel / Bisalloy), floor type (V-floor / flat)
 Axle brand, suspension type (airbag is premium — always note)
 Brake system (Knorr-Bremse TEBS / Haldex)
-Tarp system: brand and type (Razor Delta II / CoverMe — always name brand if known)
+Tarp system: brand AND type — always name brand if known (e.g. "Razor Delta II electric roll-over tarp", "CoverMe electric tarp"); omit only if no tarp fitted
+Tailgate type: always describe (e.g. hydraulic automatic opening rear tailgate / manual drop tailgate / barn doors) — tailgate type affects usability and value
 Onboard scales if fitted (RightWeigh / Haltech)
 Tyre inflation system if fitted (Tiremaax / Haldex)
-Electronic tailgate type if fitted
 Payload: Xt
 Sold As Is, Untested & Unregistered.
 
@@ -357,7 +363,10 @@ Sold As Is, Untested & Unregistered.
 STOCK TRAILER
 Line 1: Year, Make, Model, Stock Trailer. Axle config.
 Body builder, internal dimensions: L x W mm
-Number of decks, loading ramp type
+Number of decks: always state (e.g. single deck / double deck / triple deck) — deck count is the primary capacity indicator for livestock buyers
+Crate material: always state if known (steel / aluminium alloy) — alloy crates are lighter and command a premium
+Loading ramp: always describe type and configuration (e.g. full-width rear ramp / split rear ramp / side ramp, fold-up or removable)
+Ventilation: note if louvre panels, mesh sides, or forced ventilation fitted
 Sold As Is, Untested & Unregistered.
 
 SIDE LOADER
@@ -376,6 +385,7 @@ Sold As Is, Untested & Unregistered.
 DOG / PIG / TAG
 Line 1: Year, Make, Model, [Dog / Pig / Tag] Trailer. Axle config.
 B-train / A-train configuration
+Axle configuration: describe both axle groups separately (e.g. "tandem steer group, tridem drive group" or "lead axle group: tandem, rear axle group: tridem") — buyers and operators need both groups to assess compliance and weight distribution
 Deck type, payload: Xt
 Sold As Is, Untested & Unregistered.
 
@@ -709,16 +719,18 @@ Sold As Is, Untested & Unregistered.
 
 FORKLIFT (CLEARVIEW MAST / CONTAINER MAST)
 Year, Make, Model, [Clearview Mast / Container Mast] Forklift
-Hours (Showing): X,XXX
-Fuel Type: LPG / Diesel / Electric
-Capacity: X,XXXkg
+Hours (Showing): X,XXX — always state hours on meter; critical for buyers
+Fuel Type: LPG / Diesel / Electric — always state clearly; do not abbreviate or omit
+Capacity: X,XXXkg at Xmm load centre — max lift capacity is mandatory; include load centre distance if known
+Max Lift Height: X,XXXmm — always state; critical alongside capacity
 Mast Type: Simplex (1-stage) / Duplex (2-stage) / Triplex (3-stage) / Quad (4-stage) — use the industry name if known, otherwise state the number of stages (e.g. "3-stage mast")
-Free Lift: Full Free Lift / Partial Free Lift — always note if present; critical for container and low-clearance operations
-Lift Height: X,XXXmm
+Free Lift: Full Free Lift / Partial Free Lift — always note if present; critical for container and low-clearance operations. Omit only if genuinely unknown.
 Resting Mast Height: X,XXXmm
 Tyne Length: X,XXXmm
-Features: list visible features (Side Shift, Fork Positioner if fitted, ROPS, Seat Belt, Flashing Beacon, Battery Charger if electric)
-Tyres: Pneumatic / Solid / Cushion
+Side Shift: always note if fitted — side shift is the most common attachment and buyers expect it to be called out explicitly
+Features: list visible features (Fork Positioner if fitted, Seat Belt, Flashing Beacon, Battery Charger if electric, hour meter)
+Cab Type: ROPS Canopy / Enclosed Cab — always state; enclosed cab commands a premium
+Tyres: Pneumatic / Solid / Cushion — always state tyre type; solid tyres suit warehouses, pneumatic suit outdoor/rough terrain
 Damage: factual description of visible damage (e.g. "Marks, Scratches, Dents and Surface Rust") or "Nil Obvious" if none visible
 Sold As Is, Untested & Unregistered.
 
@@ -813,17 +825,18 @@ This subtype is a Salesforce system artifact. Describe whatever asset is visible
 Sold As Is, Untested & Unregistered.
 
 MOTOR VEHICLE (CAR)
-Single line: Year Make Model Trim Series Transmission Drive Fuel Body CCcc XXXkW Xsp Xcyl Xdr Xseat
-Any extras on next line
-Sold As Is, Untested & Unregistered.
+Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below. Do NOT use a single-line code format — write a full paragraph description.
 
 SEDAN / SUV (subtype: sedan or suv)
-Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below — NOT the single-line MOTOR VEHICLE (CAR) format. Write as ONE continuous paragraph including: Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer on its own line.
+Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below. Write as ONE continuous paragraph including: Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer on its own line.
 For SUVs: if a tow bar is fitted, always mention it — towing capacity is a key purchase driver. Mention roof racks or roof rails if visible. Otherwise treat the same as the VEHICLE template.
 
 UTE / 4WD (subtype: dual_cab_ute, single_cab_ute, extra_cab_ute, 4wd — the most common Slattery vehicle types)
 Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below.
 These are work vehicles — accessory fitment is CRITICAL to buyers and directly affects hammer price. After the core specs line, append a second sentence listing all confirmed or visible accessories.
+
+Core specs to include (all known): Year, Make, Model, Variant, body type, engine (displacement + cylinders + forced induction if applicable + fuel type), transmission, drive type (4WD/AWD/2WD), colour.
+
 Priority extras to mention if confirmed or visible (include every one that applies):
 - Tow bar — always mention if fitted (buyers universally ask; state Class/ball rating if visible)
 - Canopy / tray top — mention make and material if known (e.g. "fibreglass canopy", "Aeroklas alloy canopy", "steel canopy")
@@ -837,12 +850,19 @@ Priority extras to mention if confirmed or visible (include every one that appli
 - Suspension lift kit
 - Driving lights / spotlights (Lightforce, IPF, ARB, Hella — name if badged)
 - Tonneau cover / roller lid / hard lid (brand if badged e.g. Mountain Top, Ute-Lid, Roll-N-Lock)
-Do NOT list standard features like A/C, power windows, Apple CarPlay, reverse camera.
+- Alloy wheels (aftermarket or upgraded — note if distinctly non-standard)
+- Leather seats (if confirmed or clearly visible)
+- Apple CarPlay / Android Auto (mention only if confirmed — relevant to buyers in a work context)
+
+If odometer is known, append it as a standalone sentence on its own line: "Odometer: XX,XXXkm."
+If major damage or heavy wear is noted (accident damage, heavy rust, significant body damage), include a brief factual condition impression.
+Do NOT list minor wear, stone chips, small dents, or standard comfort features (A/C, power windows, reverse camera).
 
 VEHICLE (PASSENGER / LIGHT COMMERCIAL)
 Write as ONE continuous paragraph. Keep it concise — the photos do the talking.
 Include in this order (skip any not known): Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer.
-Only mention extras/mods if they are significant and add real value — bull bar, canopy, tow bar, snorkel, winch, aftermarket tray on a work ute. Do NOT list standard features like A/C, power windows, central locking, reverse camera — buyers expect these on modern vehicles.
+Only mention extras/mods if they are significant and add real value — bull bar, canopy, tow bar, snorkel, winch, aftermarket tray on a work ute. Do NOT list standard features like A/C, power windows, central locking — buyers expect these on modern vehicles.
+If odometer is known, include it as a standalone sentence after the main paragraph: "Odometer: XX,XXXkm."
 Do NOT include damage in the description unless it is major — heavy rust throughout, accident/collision damage, significant structural damage. Minor scratches, dents, stone chips are normal wear and must NOT appear in the description (they are captured separately in the damage notes section).
 The footer "Sold As Is, Untested & Unregistered." MUST be on its own line with a blank line before it.
 Example (standard sedan/hatch):
@@ -852,13 +872,23 @@ Sold As Is, Untested & Unregistered."
 Example (ute with accessories — most common Slattery type):
 "2021 Ford Ranger Wildtrak Dual Cab Ute, 5 Seats, 2.0L 4-Cylinder Bi-Turbo Diesel, 10 Speed Automatic, 4WD, Conquer Grey. Fitted with ARB steel bull bar, fibreglass canopy, tow bar, roof rack, and snorkel.
 
+Odometer: 87,432km.
+
 Sold As Is, Untested & Unregistered."
-Example (SUV with tow bar):
-"2022 Toyota LandCruiser 300 GR Sport SUV, 7 Seats, 3.3L V6 Twin Turbo Diesel, 10 Speed Automatic, 4WD, Graphite. Tow bar fitted.
+Example (4WD SUV with tow bar):
+"2022 Toyota LandCruiser 300 GR Sport SUV, 7 Seats, 3.3L V6 Twin-Turbo Diesel, 10 Speed Automatic, 4WD, Graphite. Tow bar fitted.
+
+Odometer: 34,200km.
 
 Sold As Is, Untested & Unregistered."
 Example (major structural damage):
 "2008 Ford Ranger XL Dual Cab Ute, 5 Seats, 3.0L 4-Cylinder Turbo Diesel, 5 Speed Manual, 4WD, White. Heavy rust to chassis and body panels, previous accident damage to front end.
+
+Sold As Is, Untested & Unregistered."
+Example (4WD with full accessories):
+"2020 Toyota HiLux SR5+ Double Cab Ute, 5 Seats, 2.8L 4-Cylinder Turbo Diesel, 6 Speed Automatic, 4WD, Glacier White. Fitted with ARB steel bull bar, TJM side steps, fibreglass canopy, tow bar, roof rack, snorkel, and Lightforce driving lights.
+
+Odometer: 112,600km.
 
 Sold As Is, Untested & Unregistered."
 Do NOT use dot points.
