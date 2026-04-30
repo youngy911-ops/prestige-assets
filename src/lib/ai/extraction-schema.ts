@@ -65,6 +65,13 @@ When reading stamped, embossed, or printed VINs/serials from photos, use these r
 - A valid VIN is exactly 17 characters — if you read more or fewer, recount carefully
 - Return null if fewer than 10 characters are legible — a partial VIN does more harm than good
 
+EARTHMOVING PIN / SERIAL — SPECIAL RULES (overrides the 17-char VIN rule above):
+- Earthmoving PINs and serials are NOT always 17 characters — shorter formats are the norm for many makes
+- Common format: model prefix + sequential number (e.g. "PC200-8 #12345" on Komatsu, "ZX200-3 #001234" on Hitachi)
+- Caterpillar plates are labelled "PIN" — look for that label specifically on the left-side main frame near the swing bearing or inside the left cab door jamb
+- Komatsu and Hitachi plates may be labelled "Serial No" rather than "PIN" — treat them as equivalent
+- NEVER return null for an earthmoving PIN/serial just because the format is shorter than 17 characters or does not match a standard VIN pattern — extract whatever is printed on the plate
+
 READING ALL NUMERIC FIELDS FROM PLATES (GVM, GCM, ATM, Tare, Year, Model numbers):
 - Read every digit exactly as printed — do not round or estimate
 - Common character confusions on stamped/embossed metal plates: 1 vs 7, 3 vs 8, 6 vs 0, 5 vs 6
