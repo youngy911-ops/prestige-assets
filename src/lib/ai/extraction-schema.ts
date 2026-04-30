@@ -154,6 +154,14 @@ EXTRAS AND ATTACHMENTS — scan every photo, not just the compliance plate:
 - For earthmoving and agriculture: check for all attachments stored beside or on the machine — buckets, blades, rippers, forks, headers, implements.
 - If you can see it in any photo, include it. Do not leave extras blank if items are visible.
 
+EXTERIOR PHOTO SCANNING — on every wide or full exterior shot, actively scan the entire visible surface before moving on:
+- ALL ASSETS: scan for body modifications, aftermarket additions, decals or badges that identify body builders or spec packages, visible damage or wear, tyre condition, glass and light condition, any mounted equipment (light bars, UHF antennas, cameras, beacons, mirrors, steps, rails)
+- TRUCKS (prime movers and rigids): scan the whole cab exterior for sun visor, spotlights, exhaust stack configuration, auxiliary fuel tank size and quantity, air deflectors, mudflaps, spray suppressors, bull bars, additional mirrors, cab-mounted toolboxes
+- EARTHMOVING: check tracks or tyres for wear patterns and condition, undercarriage and rollers for wear, any quick hitch indicators on the dipper arm, ripper presence on dozers, counterweight configuration, any attachments stored alongside or on the machine
+- VEHICLES (cars, utes, 4WDs): scan all four corners, roof, glass, all four wheels — note any aftermarket additions clearly visible (bull bar, snorkel, canopy, tow bar, winch, lift kit, aftermarket wheels)
+- TRAILERS: check tarp systems (rolled back or fitted), load restraint gear visible on deck or headboard, toolboxes on headboard or chassis, spare tyres, ramps folded under the deck, reefer unit on refrigerated trailers
+Do not skip this scan because another photo shows a close-up of the data plate — each photo type reveals different information and all must be examined.
+
 Rules:
 - If a field value is not visible AND cannot be reasonably inferred from the identified vehicle, return null
 - Do NOT fabricate specific serial numbers, VINs, or odometer readings — only infer standard manufacturer specs

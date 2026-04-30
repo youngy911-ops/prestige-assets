@@ -1230,3 +1230,84 @@ describe('Phase 17 — DESCR-08 marine subtype headings', () => {
     expect(s).toContain('COUPE (MARINE)')
   })
 })
+
+// Phase 26 — forklift and trailer template gap fixes
+describe('Phase 26 — forklift template improvements', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('forklift template includes simplex/duplex/triplex/quad mast terminology', async () => {
+    const s = await getSystemContentP17('forklift', 'clearview_mast')
+    expect(s).toContain('Simplex')
+    expect(s).toContain('Duplex')
+    expect(s).toContain('Triplex')
+    expect(s).toContain('Quad')
+  })
+
+  it('forklift template explicitly calls out Free Lift as its own field', async () => {
+    const s = await getSystemContentP17('forklift', 'clearview_mast')
+    expect(s).toContain('Free Lift')
+    expect(s).toContain('Full Free Lift')
+  })
+
+  it('forklift template includes Fork Positioner in features list', async () => {
+    const s = await getSystemContentP17('forklift', 'clearview_mast')
+    expect(s).toContain('Fork Positioner')
+  })
+
+  it('forklift template still includes Side Shift in features list', async () => {
+    const s = await getSystemContentP17('forklift', 'clearview_mast')
+    expect(s).toContain('Side Shift')
+  })
+
+  it('forklift template still includes Pneumatic / Solid tyre types', async () => {
+    const s = await getSystemContentP17('forklift', 'clearview_mast')
+    expect(s).toContain('Pneumatic')
+    expect(s).toContain('Solid')
+  })
+})
+
+describe('Phase 26 — trailer template improvements', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('flat deck trailer template includes toolboxes', async () => {
+    const s = await getSystemContentP17('trailer', 'flat_deck')
+    expect(s).toContain('toolboxes')
+  })
+
+  it('flat deck trailer template includes pin sizes', async () => {
+    const s = await getSystemContentP17('trailer', 'flat_deck')
+    expect(s).toContain('Pin sizes')
+  })
+
+  it('curtainsider trailer template includes curtain brand', async () => {
+    const s = await getSystemContentP17('trailer', 'curtainsider')
+    expect(s).toContain('Curtain brand')
+  })
+
+  it('curtainsider trailer template includes curtain condition', async () => {
+    const s = await getSystemContentP17('trailer', 'curtainsider')
+    expect(s).toContain('curtain condition')
+  })
+
+  it('refrigerated curtainsider template includes reefer hours', async () => {
+    const s = await getSystemContentP17('trailer', 'refrigerated_curtainsider')
+    expect(s).toContain('hours if shown')
+  })
+
+  it('refrigerated pantech trailer template includes reefer hours', async () => {
+    const s = await getSystemContentP17('trailer', 'refrigerated_pantech')
+    // Both REFRIGERATED PANTECH sections exist — truck and trailer; both should now have hours
+    expect(s).toContain('hours if shown')
+  })
+
+  it('tipper trailer template includes body builder field', async () => {
+    const s = await getSystemContentP17('trailer', 'tipper')
+    expect(s).toContain('Body builder')
+  })
+
+  it('tipper trailer body builder lists known brands as examples', async () => {
+    const s = await getSystemContentP17('trailer', 'tipper')
+    expect(s).toContain('Robuk')
+    expect(s).toContain('MaxiTrans')
+  })
+})

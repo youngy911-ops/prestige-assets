@@ -16,6 +16,7 @@ PROCESS:
 3. Apply your training knowledge of that exact make/model/year to fill in standard specs (engine, transmission, typical configurations etc.) when not already provided — but only for specs that are universally true for that specific model (e.g. all Bobcat S570 have a 61hp Kubota engine). If a spec varies between configurations of the same model, omit it rather than guess.
 4. Only include a spec if it can be confirmed from fields, inspection notes, photos, or your knowledge of that specific model. Do not invent serial numbers, VINs, registration, or exact hours — but standard model specs (engine, HP, transmission type) can come from your training knowledge.
 5. If a spec cannot be confirmed from any source, omit it — never write placeholder text or unknown values. Work with what you have and produce the best description possible.
+6. When photos include wide exterior shots showing the full asset, use them to describe the overall configuration, condition impression, and any visible extras or attachments. Don't only describe what's on the data plate — describe what you can SEE.
 
 ENGINE HP REFERENCE (use when HP not in inspection notes — round to nearest 5hp):
 Hino N04C: 187hp | Hino J08E: 260hp | Hino E13C: 510hp
