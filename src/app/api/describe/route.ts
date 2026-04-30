@@ -819,6 +819,25 @@ Sold As Is, Untested & Unregistered.
 
 SEDAN / SUV (subtype: sedan or suv)
 Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below — NOT the single-line MOTOR VEHICLE (CAR) format. Write as ONE continuous paragraph including: Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer on its own line.
+For SUVs: if a tow bar is fitted, always mention it — towing capacity is a key purchase driver. Mention roof racks or roof rails if visible. Otherwise treat the same as the VEHICLE template.
+
+UTE / 4WD (subtype: dual_cab_ute, single_cab_ute, extra_cab_ute, 4wd — the most common Slattery vehicle types)
+Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below.
+These are work vehicles — accessory fitment is CRITICAL to buyers and directly affects hammer price. After the core specs line, append a second sentence listing all confirmed or visible accessories.
+Priority extras to mention if confirmed or visible (include every one that applies):
+- Tow bar — always mention if fitted (buyers universally ask; state Class/ball rating if visible)
+- Canopy / tray top — mention make and material if known (e.g. "fibreglass canopy", "Aeroklas alloy canopy", "steel canopy")
+- Bull bar / nudge bar — name brand if badged (ARB, TJM, Ridgeback, Ironman, Opposite Lock)
+- Snorkel — mention if visible (signals off-road use and value to buyers)
+- Winch — mention if visible (state brand/capacity if badged)
+- Roof rack / roof basket / Rhino Rack / Thule
+- Side steps / rock sliders
+- UHF radio / CB (visible aerial or handset)
+- Aftermarket steel or alloy tray (with approx dimensions if known)
+- Suspension lift kit
+- Driving lights / spotlights (Lightforce, IPF, ARB, Hella — name if badged)
+- Tonneau cover / roller lid / hard lid (brand if badged e.g. Mountain Top, Ute-Lid, Roll-N-Lock)
+Do NOT list standard features like A/C, power windows, Apple CarPlay, reverse camera.
 
 VEHICLE (PASSENGER / LIGHT COMMERCIAL)
 Write as ONE continuous paragraph. Keep it concise — the photos do the talking.
@@ -826,11 +845,19 @@ Include in this order (skip any not known): Year, Make, Model, Variant, body typ
 Only mention extras/mods if they are significant and add real value — bull bar, canopy, tow bar, snorkel, winch, aftermarket tray on a work ute. Do NOT list standard features like A/C, power windows, central locking, reverse camera — buyers expect these on modern vehicles.
 Do NOT include damage in the description unless it is major — heavy rust throughout, accident/collision damage, significant structural damage. Minor scratches, dents, stone chips are normal wear and must NOT appear in the description (they are captured separately in the damage notes section).
 The footer "Sold As Is, Untested & Unregistered." MUST be on its own line with a blank line before it.
-Example (standard):
-"2019 Toyota Hilux SR5 Dual Cab Ute, 5 Seats, 2.8L 4-Cylinder Turbo Diesel, 6 Speed Automatic, 4WD, White.
+Example (standard sedan/hatch):
+"2019 Toyota Corolla Ascent Sport Hatchback, 5 Seats, 2.0L 4-Cylinder Petrol, CVT Automatic, FWD, White.
 
 Sold As Is, Untested & Unregistered."
-Example (major damage only):
+Example (ute with accessories — most common Slattery type):
+"2021 Ford Ranger Wildtrak Dual Cab Ute, 5 Seats, 2.0L 4-Cylinder Bi-Turbo Diesel, 10 Speed Automatic, 4WD, Conquer Grey. Fitted with ARB steel bull bar, fibreglass canopy, tow bar, roof rack, and snorkel.
+
+Sold As Is, Untested & Unregistered."
+Example (SUV with tow bar):
+"2022 Toyota LandCruiser 300 GR Sport SUV, 7 Seats, 3.3L V6 Twin Turbo Diesel, 10 Speed Automatic, 4WD, Graphite. Tow bar fitted.
+
+Sold As Is, Untested & Unregistered."
+Example (major structural damage):
 "2008 Ford Ranger XL Dual Cab Ute, 5 Seats, 3.0L 4-Cylinder Turbo Diesel, 5 Speed Manual, 4WD, White. Heavy rust to chassis and body panels, previous accident damage to front end.
 
 Sold As Is, Untested & Unregistered."
