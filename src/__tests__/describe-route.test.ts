@@ -1311,3 +1311,95 @@ describe('Phase 26 — trailer template improvements', () => {
     expect(s).toContain('MaxiTrans')
   })
 })
+
+// Phase 26 — caravan template and extraction improvements
+describe('Phase 26 — caravan description template completeness', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('caravan template instructs length in BOTH mm and feet', async () => {
+    const s = await getSystemContentP17('caravan', 'caravan')
+    expect(s).toContain('6300mm (20.67ft)')
+    expect(s).toMatch(/BOTH mm and feet|mm and feet/)
+  })
+
+  it('caravan template calls out hot water system brand', async () => {
+    const s = await getSystemContentP17('caravan', 'caravan')
+    expect(s).toContain('Hot water system')
+    expect(s).toContain('Suburban')
+  })
+
+  it('caravan template names air con brands including Houghton Belaire', async () => {
+    const s = await getSystemContentP17('caravan', 'caravan')
+    expect(s).toContain('Houghton Belaire')
+    expect(s).toContain('Dometic Air-Conditioning')
+  })
+
+  it('caravan template distinguishes ensuite vs separate bathroom layouts', async () => {
+    const s = await getSystemContentP17('caravan', 'caravan')
+    expect(s).toContain('Ensuite Shower & Toilet')
+    expect(s).toContain('Separate Shower & Toilet')
+  })
+
+  it('caravan template instructs solar wattage from panel label', async () => {
+    const s = await getSystemContentP17('caravan', 'caravan')
+    expect(s).toContain('Solar')
+    expect(s).toMatch(/wattage|Xw/)
+  })
+})
+
+describe('Phase 26 — caravan extraction schema improvements', () => {
+  beforeEach(() => { vi.clearAllMocks() })
+
+  it('buildSystemPrompt contains CARAVANS inference block', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('caravan', 'caravan')
+    expect(prompt).toContain('CARAVANS:')
+  })
+
+  it('caravan inference block instructs mm→ft conversion with division by 304.8', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('caravan', 'caravan')
+    expect(prompt).toContain('304.8')
+  })
+
+  it('caravan inference block names A/C brands including Houghton Belaire', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('caravan', 'caravan')
+    expect(prompt).toContain('Houghton Belaire')
+  })
+
+  it('caravan inference block names hot water system brands including Suburban', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('caravan', 'caravan')
+    expect(prompt).toContain('Suburban')
+  })
+
+  it('caravan inference block instructs electric brakes as default', async () => {
+    const { buildSystemPrompt } = await import('@/lib/ai/extraction-schema')
+    const prompt = buildSystemPrompt('caravan', 'caravan')
+    expect(prompt).toContain('Electric Brakes')
+  })
+
+  it('caravan trailer_length field hint contains 304.8 conversion', async () => {
+    const { getAIExtractableFieldDefs } = await import('@/lib/schema-registry')
+    const fields = getAIExtractableFieldDefs('caravan')
+    const lengthField = fields.find(f => f.key === 'trailer_length')
+    expect(lengthField?.aiHint).toContain('304.8')
+  })
+
+  it('caravan extras field hint names hot water system brands', async () => {
+    const { getAIExtractableFieldDefs } = await import('@/lib/schema-registry')
+    const fields = getAIExtractableFieldDefs('caravan')
+    const extrasField = fields.find(f => f.key === 'extras')
+    expect(extrasField?.aiHint).toContain('Suburban')
+    expect(extrasField?.aiHint).toContain('Truma')
+  })
+
+  it('caravan extras field hint names air con brands', async () => {
+    const { getAIExtractableFieldDefs } = await import('@/lib/schema-registry')
+    const fields = getAIExtractableFieldDefs('caravan')
+    const extrasField = fields.find(f => f.key === 'extras')
+    expect(extrasField?.aiHint).toContain('Dometic')
+    expect(extrasField?.aiHint).toContain('Houghton Belaire')
+  })
+})
