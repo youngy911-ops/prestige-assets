@@ -773,11 +773,12 @@ Sold As Is, Untested & Unregistered.
 
 FORKLIFT (CLEARVIEW MAST / CONTAINER MAST)
 Year, Make, Model, [Clearview Mast / Container Mast] Forklift
+Engine line (powered forklifts): [Engine Code] [X.X]-Litre [N]-Cylinder [Fuel Type], [X]kW ([X]hp), [Transmission] — use this format for LPG and diesel forklifts; omit engine line for electric forklifts (state battery voltage/capacity instead)
 Hours (Showing): X,XXX — always state hours on meter; critical for buyers
 Fuel Type: LPG / Diesel / Electric — always state clearly; do not abbreviate or omit
-Capacity: X,XXXkg at Xmm load centre — max lift capacity is mandatory; include load centre distance if known
+Capacity: X,XXXkg at Xmm Load Centre — max lift capacity is mandatory; always include load centre distance (standard is 500mm load centre for most counterbalance forklifts)
 Max Lift Height: X,XXXmm — always state; critical alongside capacity
-Mast Type: Simplex (1-stage) / Duplex (2-stage) / Triplex (3-stage) / Quad (4-stage) — use the industry name if known, otherwise state the number of stages (e.g. "3-stage mast")
+Mast Type: Simplex (1-stage) / Duplex (2-stage) / Triplex (3-stage) / Quad (4-stage) — use the industry name (Simplex, Duplex, Triplex) not just the number of stages
 Free Lift: Full Free Lift / Partial Free Lift — always note if present; critical for container and low-clearance operations. Omit only if genuinely unknown.
 Resting Mast Height: X,XXXmm
 Tyne Length: X,XXXmm
@@ -786,6 +787,15 @@ Features: list visible features (Fork Positioner if fitted, Seat Belt, Flashing 
 Cab Type: ROPS Canopy / Enclosed Cab — always state; enclosed cab commands a premium
 Tyres: Pneumatic / Solid / Cushion — always state tyre type; solid tyres suit warehouses, pneumatic suit outdoor/rough terrain
 Damage: factual description of visible damage (e.g. "Marks, Scratches, Dents and Surface Rust") or "Nil Obvious" if none visible
+Sold As Is, Untested & Unregistered.
+
+Example (LPG counterbalance):
+2018 Toyota 8FG25 LPG Clearview Mast Forklift
+
+Toyota 4Y 2.2-Litre 4-Cylinder LPG, Torque Converter Transmission
+
+2,500kg at 500mm Load Centre, Max Lift Height 4,700mm, Triplex Full Free Lift Mast, Resting Mast Height 2,130mm, 1,200mm Tynes, Side Shift, ROPS Canopy, Solid Tyres, 4,832 Hours Showing
+
 Sold As Is, Untested & Unregistered.
 
 WALKIE STACKER
@@ -1022,9 +1032,23 @@ EARTHMOVING ATTACHMENTS (subtype: plant_equipment):
   Brand: Caterpillar, Kinshofer, Epiroc, Roo-Te, JB Sales
   Sold As Is, Untested. (NOT "Sold As Is, Untested & Unregistered." — attachments are not registered)
 
+  Example (hydraulic attachment):
+  Soosan SB40II Silenced Hydraulic Rock Breaker
+
+  30mm Pin Diameter, 160mm Ear-to-Ear, 230mm Pin Centers, Fully Enclosed Housing, Dual Hydraulic Supply Hoses, Storage Stand Included
+
+  Sold As Is, Untested.
+
 MISCELLANEOUS / OTHER:
   Describe what is visible from photos. State item type, brand, any readable specs (capacity, output, dimensions).
   For lots with multiple items: list each type with approximate quantity.
+
+  Example (general goods with motor):
+  Westmix C&G Electric Concrete Mixer
+
+  65L Capacity, YL90S6AL Single-Phase Induction Motor, 240V 50Hz 920 RPM, Portable Wheeled Frame, Tip-to-Dump Mechanism
+
+  Sold As Is, Untested.
 
 UNIVERSAL RULES for all general goods:
 - Only include specs you can confirm from fields, notes, photos, or universal model knowledge for that exact make/model
@@ -1197,6 +1221,27 @@ Coronel Caravans Lifestyle 638 On-Road Dual-Axle Caravan
 
 Sold As Is, Untested & Unregistered.
 
+PLANT TRAILER EXAMPLE:
+Ross Allen Trucks Payload 10T Plant Trailer
+
+Dual-Axle Tandem, 10,000kg GTM, 6200mm (L) x 2450mm (W) Pressed Checker Plate Deck With Tapered Front & Side Rails, Pintle Ring Hitch, Rear Stabiliser Legs, Fold-Down Mesh Ramps With Extra Set Included, Dual Spare Tyre Holders, LHS Vertical Mounting Cage, Chassis-Mounted Toolbox, Fuerma Axles
+
+Sold As Is, Untested & Unregistered.
+
+DROP DECK SEMI-TRAILER EXAMPLE:
+Anda ST3 Drop Deck Semi-Trailer
+
+44ft Overall Length (Top Deck 3900mm, Bottom Deck 9500mm), 45,000kg ATM, 20,000kg GTM, K Hitch Tri-Axle, Hydraulic Rear Ramp, Container Pins, 4x Undermount Toolboxes, Undermount Water Tank, Wabco Brake Valve
+
+Sold As Is, Untested & Unregistered.
+
+CAMPER TRAILER EXAMPLE:
+2011 Customline Deluxe On Road Camper Trailer
+
+Canvas Fold-Out Tent With PVC Cover, Roof Rack With Roller Bar, Aluminium Checker Plate Side Toolbox, Undermount Water Tank, PowerPack 12V Battery System With Dual USB & Accessory Ports, Side Mesh Drop-Down Tailgate, Jockey Wheel, Spare Tyre Mounted Rear
+
+Sold As Is, Untested & Unregistered.
+
 COMPACT TRACTOR EXAMPLE:
 2020 Kubota B3150SUHD 4WD Compact Utility Tractor With Cutting Disc & Flail Mower
 
@@ -1223,6 +1268,29 @@ Kawasaki FR651V 656cc V-Twin Petrol, 16.0kW (21.5hp), Hydro-Gear ZT-2800 Hydrost
 42in (1067mm) 2-Blade Fabricated Steel Deck, Foot-Operated Deck Lift, Bolstered High-Back Seat With Armrests, 7.5mph Mowing Speed
 
 Sold As Is, Untested & Unregistered.
+
+FORKLIFT EXAMPLE:
+2018 Toyota 8FG25 LPG Clearview Mast Forklift
+
+Toyota 4Y 2.2-Litre 4-Cylinder LPG, Torque Converter Transmission
+
+2,500kg at 500mm Load Centre, Max Lift Height 4,700mm, Triplex Full Free Lift Mast, Resting Mast Height 2,130mm, 1,200mm Tynes, Side Shift, ROPS Canopy, Solid Tyres, 4,832 Hours Showing
+
+Sold As Is, Untested & Unregistered.
+
+HYDRAULIC ATTACHMENT EXAMPLE:
+Soosan SB40II Silenced Hydraulic Rock Breaker
+
+30mm Pin Diameter, 160mm Ear-to-Ear, 230mm Pin Centers, Fully Enclosed Housing, Dual Hydraulic Supply Hoses, Storage Stand Included
+
+Sold As Is, Untested.
+
+GENERAL GOODS WITH MOTOR EXAMPLE:
+Westmix C&G Electric Concrete Mixer
+
+65L Capacity, YL90S6AL Single-Phase Induction Motor, 240V 50Hz 920 RPM, Portable Wheeled Frame, Tip-to-Dump Mechanism
+
+Sold As Is, Untested.
 
 Return the completed description as plain text only, exactly matching the correct template format. No extra commentary, no explanations, just the description.`
 
