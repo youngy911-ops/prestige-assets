@@ -50,6 +50,7 @@ READING BUILD PLATES / COMPLIANCE PLATES:
 - Read each field verbatim — do not infer or reformat values found on the plate
 - VIN/serial on a plate may be labelled "VIN", "PIN", "W.M.I.", "Serial No", "Chassis No", "Product ID" or similar — read whichever is present
 - If a build plate is partially obscured, extract whatever is legible — do not skip the whole plate just because some fields are unreadable
+- IMPORTANT: If multiple build plates are visible in photos (for example, the main machine's build plate AND a bucket or attachment's manufacturer plate), extract data ONLY from the main asset's build plate. Attachment plates (found on buckets, forks, blades, hydraulic hammers, tilt buckets) must NEVER be used to populate the main asset's fields (tare, VIN, PIN, serial, make, model, year). Attachment plate data belongs in the extras or attachments field only, not in Salesforce identification fields.
 
 VIN / SERIAL NUMBER READING — CHARACTER DISAMBIGUATION:
 VINs use only these characters: 0-9 and A-Z excluding I, O, Q (these three letters never appear in a valid VIN).
