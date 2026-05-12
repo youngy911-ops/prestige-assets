@@ -233,8 +233,8 @@ describe('marine schema — AI extraction integration', () => {
     const { getAIExtractableFields } = await import('@/lib/schema-registry')
     const schema = buildExtractionSchema('marine')
     const aiFields = getAIExtractableFields('marine')
-    // marine has 19 aiExtractable fields (fuel_type added in Phase 26)
-    expect(aiFields.length).toBe(19)
+    // marine has 21 aiExtractable fields (draft + fuel_tank_capacity added in Phase 26)
+    expect(aiFields.length).toBe(21)
     const testObj: Record<string, unknown> = {}
     for (const key of aiFields) {
       testObj[key] = { value: null, confidence: null }

@@ -92,7 +92,8 @@ export const marineSchema: AssetSchema = {
     },
     {
       key: 'fuel_tank_capacity', label: 'Fuel Tank Capacity', sfOrder: 13, inputType: 'text',
-      aiExtractable: false,
+      aiExtractable: true,
+      aiHint: 'Fuel cap label on deck, console gauge label, or hull compliance plate. Format "XL" e.g. "220L". Common locations: fuel filler cap on deck (often labelled with capacity), console instrument cluster (fuel gauge may show tank size), or compliance/builder\'s plate. Estimate from make/model/year knowledge if not visible.',
       required: false,
     },
     {
@@ -109,12 +110,13 @@ export const marineSchema: AssetSchema = {
     {
       key: 'beam', label: 'Beam', sfOrder: 16, inputType: 'text',
       aiExtractable: true,
-      aiHint: 'Compliance plate or infer from hull profile photo. Beam = maximum width. Format: number + unit (e.g. 2.1m, 2100mm). Estimate from profile if make/model known (lookup typical beam).',
+      aiHint: 'Hull compliance plate (transom plate or builder\'s plate) — the plate shows LOA, beam, draft, and persons capacity. Beam = maximum hull width. Format "Xm" e.g. "2.4m". Compliance plate is typically riveted to the transom (upper starboard) or inside the cabin. Estimate from hull profile photo or make/model knowledge if plate not visible.',
       required: false,
     },
     {
       key: 'draft', label: 'Draft', sfOrder: 17, inputType: 'text',
-      aiExtractable: false,
+      aiExtractable: true,
+      aiHint: 'Hull compliance plate (transom plate or builder\'s plate) — depth of hull below waterline. Format "Xm" e.g. "0.45m". Compliance plate is typically riveted to the transom (upper starboard) or inside the cabin. Estimate from make/model knowledge if plate not visible.',
       required: false,
     },
     {

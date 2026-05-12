@@ -778,29 +778,32 @@ This subtype is a Salesforce system artifact. Describe whatever agricultural ass
 Sold As Is, Untested & Unregistered.
 
 FORKLIFT (CLEARVIEW MAST / CONTAINER MAST)
-Year, Make, Model, [Clearview Mast / Container Mast] Forklift
-Engine line (powered forklifts): [Engine Code] [X.X]-Litre [N]-Cylinder [Fuel Type], [X]kW ([X]hp), [Transmission] — use this format for LPG and diesel forklifts; omit engine line for electric forklifts (state battery voltage/capacity instead)
-Hours (Showing): X,XXX — always state hours on meter; critical for buyers
-Fuel Type: LPG / Diesel / Electric — always state clearly; do not abbreviate or omit
-Capacity: X,XXXkg at Xmm Load Centre — max lift capacity is mandatory; always include load centre distance (standard is 500mm load centre for most counterbalance forklifts)
-Max Lift Height: X,XXXmm — always state; critical alongside capacity
-Mast Type: Simplex (1-stage) / Duplex (2-stage) / Triplex (3-stage) / Quad (4-stage) — use the industry name (Simplex, Duplex, Triplex) not just the number of stages
-Free Lift: Full Free Lift / Partial Free Lift — always note if present; critical for container and low-clearance operations. Omit only if genuinely unknown.
-Resting Mast Height: X,XXXmm
-Tyne Length: X,XXXmm
-Side Shift: always note if fitted — side shift is the most common attachment and buyers expect it to be called out explicitly
-Features: list visible features (Fork Positioner if fitted, Seat Belt, Flashing Beacon, Battery Charger if electric, hour meter)
-Cab Type: ROPS Canopy / Enclosed Cab — always state; enclosed cab commands a premium
-Tyres: Pneumatic / Solid / Cushion — always state tyre type; solid tyres suit warehouses, pneumatic suit outdoor/rough terrain
-Damage: factual description of visible damage (e.g. "Marks, Scratches, Dents and Surface Rust") or "Nil Obvious" if none visible
+Year, Make, Model, [Fuel Type] Counterbalance Forklift
+Engine line (powered forklifts): [Engine Code] [Fuel Type] Engine — for LPG and diesel; omit engine line for electric forklifts (state battery voltage/capacity instead)
+Mast line: [N]-Stage Mast, Side Shift (if fitted), [X,XXXmm] Lift Height, Full Free Lift / Partial Free Lift (if fitted) — mast stage count using: Simplex (1-stage) / Duplex (2-stage) / Triplex (3-stage) / Quad (4-stage); write as "N-Stage Mast" in output (e.g. "3-Stage Mast")
+Capacity line: Max Lift Capacity: X,XXXkg at 500mm Load Centre — ALWAYS include "at 500mm Load Centre"; never omit load centre distance
+Features: Fork Positioner (if fitted), Seat Belt, Flashing Beacon, Battery Charger (if electric)
+Tyre type: Solid / Pneumatic / Cushion — always state; never omit
+Cab type: ROPS Canopy / Enclosed Cab — always state
+Hours: DO NOT include hours in the description — hours go in Salesforce fields only
+Side Shift: always call out explicitly if fitted
+Hull Material (electric forklifts): state battery voltage/capacity
+Damage: factual description or "Nil Obvious" if none visible
 Sold As Is, Untested & Unregistered.
 
+Key rules:
+- Capacity ALWAYS states "at 500mm Load Centre" — never just "X,XXXkg"
+- Hours NOT in description — goes in Salesforce fields only
+- Mast described as "N-Stage Mast" in output (Simplex=1-Stage, Duplex=2-Stage, Triplex=3-Stage, Quad=4-Stage)
+- Tyre type (Solid / Pneumatic / Cushion) always stated
+- Engine line: engine code + fuel type only (no litre/cylinder detail needed unless clearly visible on plate)
+
 Example (LPG counterbalance):
-2018 Toyota 8FG25 LPG Clearview Mast Forklift
+2018 Toyota 8FG25 LPG Counterbalance Forklift
 
-Toyota 4Y 2.2-Litre 4-Cylinder LPG, Torque Converter Transmission
+Toyota 4Y LPG Engine, 3-Stage Mast, Side Shift, 4,500mm Lift Height, Full Free Lift
 
-2,500kg at 500mm Load Centre, Max Lift Height 4,700mm, Triplex Full Free Lift Mast, Resting Mast Height 2,130mm, 1,200mm Tynes, Side Shift, ROPS Canopy, Solid Tyres, 4,832 Hours Showing
+Max Lift Capacity: 2,500kg at 500mm Load Centre, Solid Tyres, ROPS Canopy
 
 Sold As Is, Untested & Unregistered.
 
@@ -850,11 +853,12 @@ Sold As Is, Untested & Unregistered.
 CARAVAN
 Line 1: Year, Make, Model, On-Road/Off-Road, Axle config (Dual-Axle / Single-Axle), Caravan — apply your knowledge of this make/model to fill standard specs if not in inspection notes
 Length: Xmm (Xft) — always state length in BOTH mm and feet in this exact format: "6300mm (20.67ft)". Read Overall Length from compliance plate (in mm), divide by 304.8 to get feet. Never omit either unit. Never output metres only.
-Bed configuration: always describe (e.g. "2x Single Bunks Plus Forward Double Bed", "Rear Queen Island Bed", "Front Queen Bed", "U-Shaped Dinette Lounge") — use descriptive names, not generic labels. Apply your knowledge of this make/model if layout not directly visible.
-Kitchen: state appliance brand where badge is visible or known for the model (e.g. "Dometic Gas Stove & Fridge", "Smev 3-Burner Gas Cooktop", "Thetford Gas Cooktop") — brand names are a value signal. Always name both cooktop and fridge brands if known.
-Hot water system: state brand if visible or known (e.g. "Suburban Hot Water System", "Truma HWS") — omit if not confirmed.
-Air conditioning: state roof unit brand if known (e.g. "Dometic Air-Conditioning", "Houghton Belaire Air-Conditioning", "Ibis 4 Air-Conditioning") — always note if fitted; buyers expect it called out explicitly.
-Bathroom: "Ensuite Shower & Toilet" if self-contained, "Separate Shower & Toilet" if separate, "Separate Toilet" if toilet-only — always describe bathroom layout if confirmed.
+Bed configuration: always describe — identify from interior photos or apply model knowledge. Use descriptive names: "Rear Queen Island Bed" (island access both sides), "Rear Queen Bed", "Front Queen Bed", "Front Queen + Rear Bunks", "2x Single Bunks", "Double Bed". Island Queen = walk-around access both sides of bed (premium layout — always call out "Island Bed" if present). Never omit this line.
+Dinette: state style if visible — "U-Shaped Dinette" (3 sides), "L-Shaped Dinette", or "Booth Dinette" (facing benches). Apply model knowledge if not directly visible.
+Kitchen: state appliance brands read from fascia logos in interior photos. Cooktop: Thetford (common in Jayco/Coromal), Dometic, Smeg — note gas (burner rings) or electric (ceramic flat). Fridge: Dometic, Waeco (older vans), Engel. Format: "Thetford 3-Burner Gas Cooktop, Dometic Compressor Fridge". Brand names are a value signal — always name brands where visible or known for the model.
+Hot water system: state brand read from unit label in service bay — Suburban (most common AU van HWS), Truma Combi (combined HWS + space heating), Rinnai, Aquastream. Note if gas, electric, or combination. Format: "Suburban Gas/Electric Hot Water System". Omit only if genuinely unconfirmed and model knowledge gives no guidance.
+Air conditioning: state interior unit brand — Dometic Harrier, Dometic Ibis 4, Houghton Belaire (note if ducted). Format: "Dometic Harrier Air-Conditioning" or "Houghton Belaire Ducted Air-Conditioning". Always note if fitted; buyers expect it called out explicitly.
+Bathroom: "Ensuite Shower, Toilet & Vanity" if full self-contained ensuite, "Separate Shower & Toilet" if separate rooms, "Combined Wet Bath" if single wet room, "Separate Toilet Only" if toilet-only — always describe bathroom layout if confirmed.
 Exterior: Side Awning — always note if fitted; Gas Bottle Holders At Front if visible at drawbar; External Shower if fitted.
 Solar: Xw Solar Panel(s) — note wattage from panel label if visible. Omit if not confirmed.
 Power: battery system, 240v hookup if confirmed — omit if not confirmed.
@@ -1140,39 +1144,36 @@ UNIVERSAL RULES for all general goods:
 Sold As Is, Untested.
 
 MARINE (RECREATIONAL BOAT)
-Year, Make, Model, Vessel Type
-LOA: XXft | Beam: XXft | Draft: XXft
-Hull Material
-Engine/s: Make, cylinders, fuel type, HP (or Twin X HP Outboards)
-Engine Hours
-Nav/electronics
-Berths/cabin layout
-Galley, heads, water/fuel capacity
-Extras: solar, generator, winch, thruster, trailer
+Year, Make, Model, [Hull Material] [Vessel Type] — hull material in title (e.g. "Fibreglass Bowrider", "Aluminium Runabout")
+LOA: XXft (Xm) | Beam: XXft (Xm) | Draft: XXft (Xm) — LOA in feet first then metres in brackets; omit if not known
+Hull Material: Fibreglass / Aluminium / Timber / GRP — always "Fibreglass" not "Fiberglass"
+Engine line: [Make] [HP] [Config] [Stroke] [Drive type] (e.g. "Mercury 200HP V6 Four-Stroke Outboard")
+Key features: list in comma-separated prose — hull type, deadrise, arch/tower, canvas, lighting, swim platform, seating config, capacity
+Companion trailer (if supplied): own paragraph — "Supplied With [Year] [Make] [Axle Config] Boat Trailer: VIN [X], ATM [X]kg, Date of Manufacture [MM/YYYY]"
 Sold As Is, Untested & Unregistered.
 
+Key rules:
+- Hull material in title and features line (always "Fibreglass" not "Fiberglass")
+- Companion trailer gets its own paragraph — never buried in the features line
+- Engine hours NOT in description — goes in Salesforce fields only
+- LOA: feet first then metres in brackets (e.g. "21ft (6.4m)")
+
 PRIVATE
-Year, Make, Model, Vessel Type
-LOA: XXft | Beam: XXft | Draft: XXft
+Year, Make, Model, [Hull Material] [Vessel Type]
+LOA: XXft (Xm) | Beam: XXft (Xm) | Draft: XXft (Xm)
 Hull Material
 Engine/s: Make, cylinders, fuel type, HP (or Twin X HP Outboards)
-Engine Hours
-Nav/electronics
-Berths/cabin layout
-Galley, heads, water/fuel capacity
-Extras: solar, generator, winch, thruster, trailer
+Key features
+Companion trailer (if supplied): own paragraph — "Supplied With [Year] [Make] [Axle Config] Boat Trailer: VIN [X], ATM [X]kg, Date of Manufacture [MM/YYYY]"
 Sold As Is, Untested & Unregistered.
 
 RECREATIONAL
-Year, Make, Model, Vessel Type
-LOA: XXft | Beam: XXft | Draft: XXft
+Year, Make, Model, [Hull Material] [Vessel Type]
+LOA: XXft (Xm) | Beam: XXft (Xm) | Draft: XXft (Xm)
 Hull Material
 Engine/s: Make, cylinders, fuel type, HP (or Twin X HP Outboards)
-Engine Hours
-Nav/electronics
-Berths/cabin layout
-Galley, heads, water/fuel capacity
-Extras: solar, generator, winch, thruster, trailer
+Key features
+Companion trailer (if supplied): own paragraph — "Supplied With [Year] [Make] [Axle Config] Boat Trailer: VIN [X], ATM [X]kg, Date of Manufacture [MM/YYYY]"
 Sold As Is, Untested & Unregistered.
 
 PERSONAL WATERCRAFT
@@ -1185,10 +1186,11 @@ Sold As Is, Untested & Unregistered.
 
 TRAILER BOAT
 Year, Make, Model, [Hull Type] Trailer Boat
-LOA: Xft (or Xm)
+LOA: XXft (Xm) | Beam: XXft (Xm) | Draft: XXft (Xm) — include Depth: Xm if known
 Hull material
 Engine: make, model, HP (outboard / sterndrive / inboard)
 Engine hours
+Fuel capacity: XL if known
 Electronics/nav if fitted
 Trailer: make, ATM if supplied
 Extras
@@ -1196,7 +1198,7 @@ Sold As Is, Untested & Unregistered.
 
 BARGE
 Year, Make, Model, Barge
-LOA: Xm, beam: Xm
+LOA: Xm | Beam: Xm | Draft: Xm
 Payload/deck load: Xt
 Hull material (steel)
 Propulsion: self-propelled or towed
@@ -1205,8 +1207,9 @@ Sold As Is, Untested & Unregistered.
 
 COMMERCIAL VESSEL
 Year, Make, Model, [Purpose] Commercial Vessel
-LOA: Xm, beam: Xm
+LOA: Xm | Beam: Xm | Draft: Xm
 Engine/s: make, cylinders, HP
+Fuel capacity: XL if known
 Survey/certification status
 Passenger capacity
 Nav equipment
@@ -1214,19 +1217,21 @@ Sold As Is, Untested & Unregistered.
 
 FISHING VESSEL
 Year, Make, Model, Fishing Vessel
-LOA: Xm, beam: Xm
+LOA: Xm | Beam: Xm | Draft: Xm
 Hull material
 Engine/s: make, HP
 Engine hours
+Fuel capacity: XL if known
 Fishing equipment: pot hauler / net hauler / rod holders / live bait tanks / fishfinders
 Accommodation if fitted
 Sold As Is, Untested & Unregistered.
 
 TUG / WORKBOAT
 Year, Make, Model, Tug / Workboat
-LOA: Xm, beam: Xm
+LOA: Xm | Beam: Xm | Draft: Xm
 Engine/s: make, HP (bollard pull for tugs if known)
 Propulsion type: azimuth / conventional
+Fuel capacity: XL if known
 Accommodation if fitted
 Sold As Is, Untested & Unregistered.
 
@@ -1290,7 +1295,7 @@ Sold As Is, Untested & Unregistered.
 MARINE WITH TRAILER EXAMPLE:
 2024 Chaparral 21 SSi OB Fibreglass Bowrider
 
-Mercury 200HP V6 Four-Stroke Outboard, Deep-V Fiberglass Hull, 20° Deadrise, Extended V-Plane Running Surface, Arch Tower With T-Top Canvas, Cockpit LED Lighting, Swim Platform With Boarding Ladder, Wraparound Bow Seating, 2x Bucket Helm Seats With Slide & Swivel, Rear Bench Seat, Aft Hinged Sundeck, Built-In 70qt Cooler, Anchor Locker Forward, Full Instrumentation, Power-Assisted Tilt Steering, 12-Person Capacity
+Mercury 200HP V6 Four-Stroke Outboard, Deep-V Fibreglass Hull, 20° Deadrise, Arch Tower With T-Top Canvas, Cockpit LED Lighting, Swim Platform With Boarding Ladder, Wraparound Bow Seating, 12-Person Capacity
 
 Supplied With 2024 Magic Tilt Dual-Axle Boat Trailer: VIN 1M5BA2029S1E58797, ATM 2,300kg, Date of Manufacture 10/2024
 
@@ -1352,11 +1357,11 @@ Kawasaki FR651V 656cc V-Twin Petrol, 16.0kW (21.5hp), Hydro-Gear ZT-2800 Hydrost
 Sold As Is, Untested & Unregistered.
 
 FORKLIFT EXAMPLE:
-2018 Toyota 8FG25 LPG Clearview Mast Forklift
+2018 Toyota 8FG25 LPG Counterbalance Forklift
 
-Toyota 4Y 2.2-Litre 4-Cylinder LPG, Torque Converter Transmission
+Toyota 4Y LPG Engine, 3-Stage Mast, Side Shift, 4,500mm Lift Height, Full Free Lift
 
-2,500kg at 500mm Load Centre, Max Lift Height 4,700mm, Triplex Full Free Lift Mast, Resting Mast Height 2,130mm, 1,200mm Tynes, Side Shift, ROPS Canopy, Solid Tyres, 4,832 Hours Showing
+Max Lift Capacity: 2,500kg at 500mm Load Centre, Solid Tyres, ROPS Canopy
 
 Sold As Is, Untested & Unregistered.
 
