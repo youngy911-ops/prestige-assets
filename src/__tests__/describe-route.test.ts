@@ -526,8 +526,8 @@ describe('DESCRIPTION_SYSTEM_PROMPT — marine templates', () => {
     const callArgs = mockGenerateText.mock.calls[0][0]
     const systemContent: string = callArgs.messages[0].content
     expect(systemContent).toContain('MARINE')
-    expect(systemContent).toContain('LOA: XXft | Beam: XXft | Draft: XXft')
-    expect(systemContent).toContain('Hull Material')
+    expect(systemContent).toContain('LOA: XXft (Xm) | Beam: XXft (Xm) | Draft: XXft (Xm)')
+    expect(systemContent).toContain('Hull material')
   })
 
   it('contains PERSONAL WATERCRAFT section as a distinct named block', async () => {

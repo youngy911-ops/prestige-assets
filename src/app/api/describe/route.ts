@@ -1146,7 +1146,7 @@ Sold As Is, Untested.
 MARINE (RECREATIONAL BOAT)
 Year, Make, Model, [Hull Material] [Vessel Type] — hull material in title (e.g. "Fibreglass Bowrider", "Aluminium Runabout")
 LOA: XXft (Xm) | Beam: XXft (Xm) | Draft: XXft (Xm) — LOA in feet first then metres in brackets; omit if not known
-Hull Material: Fibreglass / Aluminium / Timber / GRP — always "Fibreglass" not "Fiberglass"
+Hull material: Fibreglass / Aluminium / Timber / GRP — always "Fibreglass" not "Fiberglass"
 Engine line: [Make] [HP] [Config] [Stroke] [Drive type] (e.g. "Mercury 200HP V6 Four-Stroke Outboard")
 Key features: list in comma-separated prose — hull type, deadrise, arch/tower, canvas, lighting, swim platform, seating config, capacity
 Companion trailer (if supplied): own paragraph — "Supplied With [Year] [Make] [Axle Config] Boat Trailer: VIN [X], ATM [X]kg, Date of Manufacture [MM/YYYY]"
