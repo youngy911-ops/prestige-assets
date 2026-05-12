@@ -38,7 +38,7 @@ Step 1 — Identify plates and read them in this priority order:
 - BUILD PLATE: contains Make, Model, Serial/PIN/VIN, Year of Manufacture, GVM, GCM, ATM, NW (Nett Weight), Tare. On trailers: typically bolted to the drawbar, A-frame, or front headboard — check those locations first
 - COMPLIANCE PLATE: contains Compliance Date (format MM/YYYY), Tare (kg), ADR compliance numbers
 - INSTRUMENT CLUSTER: contains Odometer (km) and Hourmeter (hours) — only extract if digits are clearly legible; do NOT guess
-- REGISTRATION PLATE: contains Registration Number
+- REGISTRATION PLATE: contains Registration Number — on vehicles, scan front and rear exterior photos for the physical rego plate; Australian plates are rectangular with alphanumeric characters, e.g. "ABC-123" (NSW), "123-ABC" (QLD), "ABC-12A" (VIC); read exactly as shown including any hyphens or spaces
 - ENGINE BADGE or VALVE COVER: may show Engine Manufacturer and Engine Series/Model
 - WEIGHT RATING PLATE (cab card): GVM, GCM, axle load ratings
 - VIN PLATE (stamped on chassis rail): 17-character VIN number
@@ -112,7 +112,7 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
 - FORKLIFTS: infer max_lift_capacity, max_lift_height, fuel_type, engine_manufacturer, engine_model
 - AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission
 - MARINE: infer hull_material from visual (fibreglass/aluminium most common), motor_type from photo (outboard vs inboard), number_of_engines from visible motors, steering_type from helm setup
-- VEHICLES: infer engine_type, fuel_type, transmission, drive_type from make/model/year knowledge. Read VIN from door jamb plate or windscreen base. Read registration from plates. Read odometer from instrument cluster. Identify body type, colour, and extras from photos.
+- VEHICLES: infer engine_type, fuel_type, transmission, drive_type from make/model/year knowledge. Read VIN from door jamb plate (driver or passenger side) or windscreen base — 17-character alphanumeric, often stamped or on an adhesive label. Read rego plate number from exterior photos showing the front or rear plate — Australian state plates are rectangular, alphanumeric; read exactly as shown (e.g. "ABC-123", "T123-AB"). Read odometer from instrument cluster — extract exact digits only, return null if any digit is unclear. Identify body type from exterior shape. Identify colour from exterior paint including finish qualifier (Metallic, Pearl, Matte) where distinguishable — e.g. "Pearl White", "Metallic Silver", "Graphite". For extras, actively scan interior photos for: alloy wheels, sunroof, leather seats, heated seats, reverse camera, parking sensors, Apple CarPlay/Android Auto (visible on infotainment screen or dash), wireless charging pad, premium audio (Bose/JBL/Harman badges), blind-spot monitoring, adaptive cruise control. Scan exterior photos for: tow bar, bull bar, nudge bar, canopy/tray top, side steps/running boards, roof rack, snorkel, winch, aftermarket wheels, spot lights, UHF antenna.
 - GENERAL GOODS — VISUAL IDENTIFICATION: For general goods, identify the item from the photo even when no data plate is present. Visual identification rules:
     - Read brand names/logos printed directly on the item body (e.g. 'DeWalt' in yellow/black, 'Makita' in teal, 'Hilti' in red, 'Milwaukee' in red/black, 'Bosch' in blue/green, 'Ryobi' in green)
     - Read model numbers embossed or printed on housings, trigger guards, gearboxes (e.g. 'DCD796', 'GA9020', '2804-20')
