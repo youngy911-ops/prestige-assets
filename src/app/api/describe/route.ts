@@ -18,6 +18,14 @@ PROCESS:
 5. If a spec cannot be confirmed from any source, omit it — never write placeholder text or unknown values. Work with what you have and produce the best description possible.
 6. When photos include wide exterior shots showing the full asset, use them to describe the overall configuration, condition impression, and any visible extras or attachments. Don't only describe what's on the data plate — describe what you can SEE.
 
+ENGINE LINE FORMAT (mandatory for all powered assets):
+- Format: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque, [Full Transmission Brand and Name]
+- Engine code BEFORE displacement: "D13K 12.8-Litre" NOT "12.8-Litre D13K"
+- Power in kW first, then hp in brackets: "375kW (500hp)" NOT "500hp" alone
+- Torque on the engine line when known, NOT a separate line: "2800Nm Torque"
+- Transmission on the SAME line as engine with full brand and speed: "Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission"
+- Title Case throughout the entire description — every word in every line
+
 ENGINE HP REFERENCE (use when HP not in inspection notes — round to nearest 5hp):
 Hino N04C: 187hp | Hino J08E: 260hp | Hino E13C: 510hp
 Isuzu 4HK1: 215hp | Isuzu 6HK1: 280hp | Isuzu 6UZ1: 380hp
@@ -43,8 +51,8 @@ TEMPLATES BY ASSET TYPE — select the correct template based on asset identifie
 
 TRUCK (PRIME MOVER)
 Line 1: Year, Make, Model, Drive Type
-Engine: Make, cylinders, fuel type, HP
-Transmission, key extras (diff locks, exhaust brake, cruise control, UHF etc.)
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque, [Full Transmission Brand and Name]
+Key extras (diff locks, exhaust brake, cruise control, UHF etc.)
 Suspension type (airbag / road-friendly leaf spring / Kenworth AirGlide — name brand if known)
 Sleeper cab type and size if fitted (e.g. 48" single sleeper, 63" double bunk — use exact dimension from inspection notes; omit if day cab)
 Fifth wheel brand/model if known (e.g. Jost JSK 37, SAF-Holland FW35)
@@ -53,20 +61,18 @@ Sold As Is, Untested & Unregistered.
 
 TIPPER
 Line 1: Year, Make, Model, Drive Type, Tipper
-Engine: Make, cylinders, fuel type, HP
-Transmission, Diff Locks, Exhaust Brake
-Suspension type if known
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque, [Full Transmission Brand and Name]
+Diff Locks, Exhaust Brake, Suspension type if known
 Key extras
-Body builder (name if known — common AU builders: Moore, Stoodley, Hamelex White, CJD, Hardox), dimensions in mm, material (steel / alloy / Hardox), rock lining if fitted, tarp type (electric roll / manual), tailgate type, Ringfeder hitch if confirmed
+Body builder (name if known — common AU builders: Moore, Stoodley, Hamelex White, CJD, Hardox), dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox), rock lining if fitted, tarp type (electric roll / manual), tailgate type, Ringfeder hitch if confirmed
 Payload: Xkg
 Sold As Is, Untested & Unregistered.
 
 SERVICE TRUCK
-Line 1: Year, Make, Model, Drive Type, Service Truck
-Engine: Make, cylinders, fuel type, HP
-Transmission, key chassis extras
+Line 1: Year, Make, Model, Drive Type, Service Truck or Tray/Crane Truck
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Blank line
-Body builder, tray dimensions
+Body builder, tray dimensions Xmm (L) x Xmm (W)
 Crane: make, model, capacity, cert status
 Toolboxes, compressor, inverter, solar, awnings, rack, lights etc.
 Tow hitch/airlines if fitted
@@ -74,69 +80,60 @@ Sold As Is, Untested & Unregistered.
 
 RIGID TRUCK / PANTECH / CURTAINSIDER / TAUTLINER / VAN
 Line 1: Year, Make, Model, Drive Type, Body Type
-Engine: Make, cylinders, fuel type, HP
-Transmission, Brakes
-Body dimensions (L x W in mm), door type (roller door / swing doors) if known
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Body dimensions Xmm (L) x Xmm (W), door type (roller door / swing doors) if known
 Extras if any
 Sold As Is, Untested & Unregistered.
 
 Example (Pantech):
-2020 Hino 300 Series 617, 4x2, Pantech
+2020 Hino 300 Series 617 4x2 Pantech
 
-Engine: Hino, Turbodiesel Inline-4, Diesel, 187hp
+Hino N04C 4.0-Litre 4-Cylinder Turbocharged Diesel, 110kW (147hp), Automatic Transmission
 
-Automatic transmission, Air/S-Cam, Spring suspension
-
-Pantech dimensions: 3700mm x 2200mm
+Pantech Body 3700mm (L) x 2200mm (W)
 
 Sold As Is, Untested & Unregistered.
 
 FLAT DECK
 Line 1: Year, Make, Model, Drive Type, Flat Deck
-Engine: Make, cylinders, fuel type, HP
-Transmission, Exhaust Brake
-Deck dimensions: L x W in mm
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Deck dimensions Xmm (L) x Xmm (W)
 Headboard, toolboxes, tie rails, stoneguard if fitted
 Tow hitch/airlines if fitted
 Sold As Is, Untested & Unregistered.
 
 CAB CHASSIS
 Line 1: Year, Make, Model, Drive Type, Cab Chassis
-Engine: Make, cylinders, fuel type, HP
-Transmission, key chassis extras
-GVM
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Key chassis extras, GVM
 Sold As Is, Untested & Unregistered.
 
 REFRIGERATED PANTECH
 Line 1: Year, Make, Model, Drive Type, Refrigerated Pantech
-Engine: Make, cylinders, fuel type, HP
-Transmission, Brakes, Suspension
-Body dimensions: L x W in mm
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Body dimensions Xmm (L) x Xmm (W)
 Refrigeration unit: make, model, fuel type
 Temperature range
 Sold As Is, Untested & Unregistered.
 
 BEAVERTAIL
 Line 1: Year, Make, Model, Drive Type, Beavertail
-Engine: Make, cylinders, fuel type, HP
-Transmission, Exhaust Brake
-Deck dimensions: L x W in mm
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Deck dimensions Xmm (L) x Xmm (W)
 Beavertail/ramp type, winch if fitted
 Sold As Is, Untested & Unregistered.
 
 TILT TRAY
 Line 1: Year, Make, Model, Drive Type, Tilt Tray
-Engine: Make, cylinders, fuel type, HP
-Transmission
-Tray dimensions: L x W in mm
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Tray dimensions Xmm (L) x Xmm (W)
 Winch: capacity
 Capacity: Xt
 Sold As Is, Untested & Unregistered.
 
 VACUUM TRUCK
 Line 1: Year, Make, Model, Drive Type, Vacuum Truck
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Tank capacity: XkL
 Vacuum pump: make, type, CFM rating
 Hose length, hose diameter
@@ -146,8 +143,7 @@ Sold As Is, Untested & Unregistered.
 
 CONCRETE PUMP
 Line 1: Year, Make, Model, Drive Type, Concrete Pump
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Pump type: Line Pump / Boom Pump
 Max vertical reach: Xm, Max horizontal reach: Xm (boom pumps)
 Pipeline diameter: Xmm
@@ -156,8 +152,7 @@ Sold As Is, Untested & Unregistered.
 
 CONCRETE AGITATOR
 Line 1: Year, Make, Model, Drive Type, Concrete Agitator
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Drum capacity: Xm³
 Drum speed
 Water tank capacity: XL
@@ -166,8 +161,7 @@ Sold As Is, Untested & Unregistered.
 
 EWP (ELEVATED WORK PLATFORM)
 Line 1: Year, Make, Model, Drive Type, EWP
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Boom type: Knuckle Boom / Straight Boom
 Max working height: Xm
 Basket capacity: Xkg
@@ -177,18 +171,16 @@ Sold As Is, Untested & Unregistered.
 
 CRANE TRUCK
 Line 1: Year, Make, Model, Drive Type, Crane Truck
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 
-Body builder, tray dimensions: L x W mm
+Body builder, tray dimensions Xmm (L) x Xmm (W)
 Crane: make, model, boom type (knuckle/straight), capacity, cert status if known
 Hose reels, toolboxes, compressor if fitted
 Sold As Is, Untested & Unregistered.
 
 FUEL TRUCK
 Line 1: Year, Make, Model, Drive Type, Fuel Truck
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 
 Tank capacity: XL, number of compartments
 Product type (diesel/petrol/aviation/multi)
@@ -199,8 +191,7 @@ Sold As Is, Untested & Unregistered.
 
 GARBAGE
 Line 1: Year, Make, Model, Drive Type, Garbage Truck
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 
 Body make, compaction type (rear loader / side loader / front loader)
 Body capacity: Xm³, hopper capacity if known
@@ -208,8 +199,7 @@ Sold As Is, Untested & Unregistered.
 
 HOOK BIN
 Line 1: Year, Make, Model, Drive Type, Hook Bin Truck
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 
 Hoist make/model, lift capacity: Xt, reach
 Compatible bin size range
@@ -217,8 +207,7 @@ Sold As Is, Untested & Unregistered.
 
 SKIP BIN
 Line 1: Year, Make, Model, Drive Type, Skip Bin Truck
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 
 Hoist make/model, capacity: Xt
 Bin size compatibility
@@ -226,18 +215,16 @@ Sold As Is, Untested & Unregistered.
 
 STOCK TRUCK
 Line 1: Year, Make, Model, Drive Type, Stock Truck
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 
-Body builder, deck dimensions: L x W mm
+Body builder, deck dimensions Xmm (L) x Xmm (W)
 Number of decks, loading ramp type
 Ventilation type
 Sold As Is, Untested & Unregistered.
 
 TANKER (TRUCK)
 Line 1: Year, Make, Model, Drive Type, Tanker
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 
 Tank capacity: XkL, number of compartments
 Product type (food grade / chemical / fuel / water)
@@ -246,10 +233,9 @@ Sold As Is, Untested & Unregistered.
 
 TRAY TRUCK
 Line 1: Year, Make, Model, Drive Type, Tray Truck
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 
-Body builder, tray dimensions: L x W mm
+Body builder, tray dimensions Xmm (L) x Xmm (W)
 Headboard, toolboxes, tie rails if fitted
 Crane: make, model, capacity if fitted
 Tow hitch/airlines if fitted
@@ -257,8 +243,7 @@ Sold As Is, Untested & Unregistered.
 
 WATER TRUCK
 Line 1: Year, Make, Model, Drive Type, Water Truck
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 
 Tank capacity: XkL
 Pump make/model
@@ -428,7 +413,7 @@ EXCAVATOR
 Line 1: Year, Make, Model, Type
 Operating Weight
 Hours
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Max Digging Depth
 Track width, track type (rubber / steel)
 Enclosed Cab / ROPS Canopy
@@ -442,9 +427,8 @@ BULLDOZER/CRAWLER TRACTOR
 Year, Make, Model, Type (Bulldozer or Crawler Tractor)
 Operating Weight
 Hours
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Enclosed Cab / ROPS Canopy
-Transmission type
 Track width
 
 For Bulldozer: blade width and type, ripper if fitted, GPS Grade Control if fitted
@@ -455,9 +439,8 @@ MOTOR GRADER
 Year, Make, Model, Motor Grader
 Operating Weight
 Hours
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name, speeds]
 Enclosed Cab / ROPS, FOPS, AC
-Transmission, speeds
 Moldboard width in ft
 Scarifier / Ripper if fitted
 GPS Grade Control if fitted
@@ -468,7 +451,7 @@ SKID STEER / COMPACT TRACK LOADER
 Year, Make, Model, Type
 Operating Weight / Rated Operating Capacity
 Hours
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
 Enclosed Cab / ROPS or Open Operator Station
 Auxiliary hydraulics
 Track width or tyre size
@@ -480,9 +463,8 @@ WHEEL LOADER
 Year, Make, Model, Wheel Loader
 Operating Weight
 Hours
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Brand/Name]
 Enclosed Cab / ROPS
-Transmission type (powershift / CVT / torque converter — name brand/model if known e.g. ZF 4WG)
 Articulated steering, top speed if known
 Bucket: capacity in m³, width in mm (name bucket type if known — general purpose / rock / 4-in-1)
 Tyre size and brand if visible (e.g. 20.5R25 Michelin XHA2)
@@ -495,9 +477,8 @@ Year, Make, Model, Telehandler
 Max Lift Capacity
 Max Lift Height
 Hours
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Enclosed Cab / ROPS
-Transmission
 Tyre size
 Attachments Included
 Sold As Is, Untested & Unregistered.
@@ -506,11 +487,11 @@ BACKHOE LOADER
 Year, Make, Model, Backhoe Loader
 Operating Weight
 Hours
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Enclosed Cab / ROPS
 4WD / 2WD
 Loader bucket
-Backhoe bucket
+Backhoe bucket, max dig depth
 Stabilisers
 Extras
 Sold As Is, Untested & Unregistered.
@@ -519,7 +500,7 @@ COMPACTOR
 Year, Make, Model, Type (Roller / Padfoot / Plate Compactor)
 Operating Weight
 Hours
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
 Drum width
 Vibration frequency if known
 Enclosed Cab / ROPS Canopy
@@ -530,8 +511,7 @@ Year, Make, Model, Dump Truck
 Payload: Xt
 Operating Weight
 Hours
-Engine: Make, cylinders, fuel type, HP
-Transmission
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Drive type (rigid / articulated)
 Enclosed Cab
 Sold As Is, Untested & Unregistered.
@@ -567,7 +547,7 @@ Hours
 Bowl capacity: Xm³
 Push-pull or self-loading
 Cutting edge type
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
 Sold As Is, Untested & Unregistered.
 
 SCRAPER (PULL-TYPE)
@@ -593,7 +573,7 @@ Year, Make, Model, Tracked Loader
 Operating Weight
 Rated Operating Capacity: Xkg
 Hours
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
 Bucket capacity: Xm³
 Track width: Xmm
 Enclosed Cab / ROPS
@@ -604,7 +584,7 @@ Year, Make, Model, Tracked Skid Steer Loader
 Operating Weight
 Rated Operating Capacity: Xkg
 Hours
-Engine: Make, cylinders, fuel type, HP
+Engine line: [Engine Code] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
 Track width: Xmm
 Auxiliary hydraulics
 Sold As Is, Untested & Unregistered.
@@ -623,8 +603,7 @@ Sold As Is, Untested & Unregistered.
 
 TRACTOR
 Year, Make, Model, Tractor
-Engine: Make, model, cylinders, fuel type, HP
-Transmission type (IVT / CVT / Powershift / Manual)
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Type (IVT / CVT / Powershift / Manual)]
 4WD / 2WD
 Front/rear 3-point linkage lift capacity: Xkg
 PTO: speed (rpm), power (kW/HP)
@@ -637,7 +616,7 @@ COMBINE HARVESTER
 Year, Make, Model, Combine Harvester
 Header: Xft Make/Model front (header width in FEET — Australian industry standard)
 Grain tank: XL
-Engine: Make, HP
+Engine line: [Make] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
 Unloading auger reach: Xm, unload rate XL/s
 Threshing system: rotary / conventional, rotor type if applicable
 Both engine hours AND rotor/separator hours if available (they diverge — buyers need both)
@@ -669,7 +648,7 @@ SPRAY RIG / SPRAYER
 Year, Make, Model, [Self-Propelled / Trailed] Sprayer
 Boom width: Xm (metric — Australian standard), boom material (steel / carbon fibre)
 Tank capacity: XL, tank material (poly / stainless / fibreglass)
-Engine: Make, HP (self-propelled only)
+Engine line (self-propelled only): [Engine Code] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
 GPS section control if fitted — name brand verbatim (Raven, TeeJet, Trimble, Norac, John Deere)
 Nozzle type/spacing (Xcm)
 Sold As Is, Untested & Unregistered.
@@ -1065,118 +1044,69 @@ COUPE (MARINE)
 This subtype is a Salesforce system artifact. Describe whatever marine asset is visible from the photos and inspection notes using the most relevant marine structure. Do not force a specific field layout.
 Sold As Is, Untested & Unregistered.
 
-QUALITY REFERENCE EXAMPLES — match this level of detail and confidence:
-
-WHEEL LOADER EXAMPLE:
-2019 Volvo L90H Wheel Loader
-Operating weight 17,300kg
-Deutz D6J 4-cylinder turbodiesel, 184hp, Stage V
-Powershift transmission, planetary final drive, articulated steering, top speed 46 km/h
-Enclosed cab, rear view camera, auto lube, e-stop, fire extinguisher, isolator, digital display, Loadrite weigh scales, Pressure Pro module, UHF, radio
-20.5R25 Michelin XHA2 tyres
-Volvo GP bucket, 2.7m³, 2650mm
-Last serviced at 9,535hrs
-Sold As Is, Untested & Unregistered.
-
-EXCAVATOR WITH ATTACHMENTS EXAMPLE:
-Komatsu PC228US-8 Short Tail Swing Excavator
-Operating weight 26,400kg
-Komatsu SAA6D107E-1 6-cylinder turbodiesel, 156hp, Tier 3
-600mm tracks, 2200mm track gauge
-Enclosed cab
-JB Sales hydraulic quick hitch, 5000kg rated
-Boom 5.7m | Arm 2.9m
-900mm GP bucket, 0.35m³
-Attachments Included: Okada Aiyon ASC-210R hydraulic rock breaker, 1530kg, 28MPa cylinder pressure
-Sold As Is, Untested & Unregistered.
+QUALITY REFERENCE EXAMPLES — match this level of detail, format, and Title Case exactly:
 
 PRIME MOVER EXAMPLE:
-2023 Kenworth T659 6x4 Prime Mover
-Cummins X15 6-cylinder turbodiesel
-Eaton 18-speed manual, diff locks, hydraulics, Alemlube auto greaser, RightWeigh onboard scales
-Kenworth AirGlide 100 airbag suspension
-48" single sleeper, Custom Air sleeper A/C (2,869hrs)
-Jost JSK 37 fifth wheel
-Touchscreen display with sat nav, dual UHFs
-Dometic slide-out fridge, slide-out electric hot plate, second fridge, microwave, TV
-Redarc 3000W inverter
-GCM: 135,000kg
+2019 Volvo FH 500 6x4 Prime Mover
+
+Volvo D13K 12.8-Litre 6-Cylinder Turbocharged Diesel, 375kW (500hp), 2800Nm Torque, Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission, Volvo Engine Brake (VEB+)
+
+Mr Wong Hydraulics PTO, Adaptive Cruise Control, Lane Keeping Support, Ice Pack 24in Sleeper Cab 3,575hrs, Single Bunk, Slide-Out Fridge, Satellite Navigation, Dual UHF
+
 Sold As Is, Untested & Unregistered.
 
-FLAT DECK TRUCK EXAMPLE:
-2002 Scania P114 4x4 Flat Deck
-Scania DC11 6-cylinder turbodiesel, 340hp, 11.0L
-13-speed manual, diff locks, spring suspension
-Flat deck 5,400mm x 2,400mm
-Fixed headboard, full-length steel tie rails both sides
-2x 900mm undermount toolboxes, spare tyre, beacon, tow hitch and rear airlines, isolator
+TIPPER WITH COMPANION TRAILER EXAMPLE:
+2016 Mack Granite 6x4 Tipper
+
+Mack MP8 13.0-Litre 6-Cylinder Turbocharged Diesel, 373kW (500hp), 1860Nm Torque, Mack mDRIVE 12-Speed Automated Manual Transmission
+
+Tipper Body 4800mm (L) x 2500mm (W) x 900mm (D), Auto Retractable Tarp, PowerLeash Engine Brake, Cruise Control, Ecco Load Monitoring System, UHF Radio, Diff Locks
+
+Tri-Axle Shepard Dog Trailer 2016: VIN 6V9T24STEGC075014, ATM 25,500kg, Tipper Body 5600mm (L) x 2500mm (W) x 900mm (D), Auto Retractable Tarp, Shepard Axles
+
 Sold As Is, Untested & Unregistered.
 
-EWP EXAMPLE:
-2003 Isuzu FVZ 6x4 Elevated Work Platform
-Remanufactured/rebuilt January 2019
-Isuzu 6HK1-TC 6-cylinder turbodiesel, 9-speed manual
-GMJ LL22.350 insulated elevated work platform, max working height 23.5m, max reach 13m, SWL 325kg
-Insulation rating 132/33/LV (dry), max operating incline 5°, max wind speed 12.5 m/s
-Hydraulic basket tilt, pilot joystick controls, radio remote, automatic stabiliser deploy/level/stow, battery emergency hydraulic power pack, emergency descent rope
-Conforms with AS/NZS 1418.10
+SERVICE/CRANE TRUCK EXAMPLE:
+2018 Mitsubishi Fuso Fighter 1124 4x2 Tray/Crane Truck
+
+6M60-T2 7.5-Litre 6-Cylinder Turbocharged Diesel, 177kW (237hp), Automatic Transmission
+
+Tuff Tray Body 5600mm (L) x 2400mm (W), HMF 300 E4-4 Loader Crane (2021), Air Hose Reel, Water Hose Reel, Dual Vertical Toolboxes (1500mm + 1700mm), Reverse Camera, Tow Hitch, Rear Airlines, In-Cab Crane Controls, Redarc 2000W Pure Sine Inverter, UHF, Sat Nav, Cruise Control, Overhead Lights, Beacons
+
 Sold As Is, Untested & Unregistered.
 
-COMPACT TRACK LOADER EXAMPLE:
-2013 Bobcat T590 Compact Track Loader
-Operating weight 3,580kg, Rated Operating Capacity 910kg
-3,603 hours
-Kubota 4-cylinder turbodiesel, 61hp
-Enclosed cab, ROPS/FOPS, air conditioning, radio, auxiliary hydraulics
-320mm rubber tracks
-1,800mm 4-in-1 bucket
+WHEEL LOADER EXAMPLE:
+2015 Case 521F Wheeled Loader
+
+FPT F4HFE413J 4.5-Litre 4-Cylinder Turbocharged Diesel, 98kW (131hp), Tier 4 Final, Powershift Transmission
+
+2400mm 4-In-1 Bucket, 1.3m³ Capacity, Loadmaster Load Monitoring Module, Auto Lube System, Bluetooth Radio, UHF Radio, Air Conditioning
+
 Sold As Is, Untested & Unregistered.
 
-TIPPER TRAILER EXAMPLE:
-2024 Robuk Tri Axle 36ft End Tipper Semi-Trailer
-As new — never loaded, collected from manufacturer and delivered direct, approximately 500km from new
-700 grade steel chassis, marine grade aluminium V-floor body, alloy wheels, custom paint, custom lighting
-Hendrickson axles and airbag suspension, Knorr-Bremse TEBS G2.2 air brakes
-Razor Delta II electronic roll-over tarp
-RightWeigh digital onboard scales
-Hendrickson Tiremaax Pro tyre inflation system
-Knorr-Bremse Trailer Information Module
-Jost JSK 37CW 5th wheel
-Hydraulic automatic opening rear tailgate
+BACKHOE LOADER EXAMPLE:
+2018 JCB 3CX Elite 4WD Backhoe Loader
+
+JCB Dieselmax 4-Cylinder Turbocharged Diesel, 74.2kW (100hp), 3-Speed Hydrostatic Transmission
+
+2200mm 4-In-1 Front Loader Bucket, Norm Quick Hitch Rear, Max Dig Depth 5.97m, Loadmaster 100 In-Cab Load Monitoring, Bluetooth Radio, Air Conditioning, UHF Radio, Extendable Dipper, Hydraulic Sideshift, Load Sensing Hydraulics
+
 Sold As Is, Untested & Unregistered.
 
-FORKLIFT EXAMPLE:
-2018 Toyota 8FG25 2.5T LPG Counterbalance Forklift
-Hours (Showing): 4,823
-Fuel Type: LPG
-Capacity: 2,500kg at 500mm load centre
-Mast Type: 3-Stage Triplex Mast
-Max Lift Height: 4,500mm
-Resting Mast Height: 2,150mm
-Tyne Length: 1,070mm
-Side Shift: Yes
-Tyres: Solid — serviceable
-ROPS canopy, seat belt, flashing beacon
-Sold As Is, Untested & Unregistered.
+MARINE WITH TRAILER EXAMPLE:
+2024 Chaparral 21 SSi OB Fibreglass Bowrider
 
-PERSONAL WATERCRAFT EXAMPLE:
-2024 Sea-Doo GTR 230 Personal Watercraft
-Rotax 1630 ACE, 3-cylinder, 4-stroke, supercharged and intercooled petrol, 230hp
-35 hours
-iBR Intelligent Brake and Reverse, Variable Trim System (VTS), Ergolock two-piece touring seat, 3-rider capacity, footwell speakers, wide-angle mirrors, tow hook, DESS lanyard key, LinQ attachment system, watertight phone compartment
-Supplied on 2023 Telwater PWC trailer, VIN: 6HWB0ATRLPC916109, Compliance: 01/23, ATM 650kg
+Mercury 200HP V6 Four-Stroke Outboard, Deep-V Fiberglass Hull, 20° Deadrise, Extended V-Plane Running Surface, Arch Tower With T-Top Canvas, Cockpit LED Lighting, Swim Platform With Boarding Ladder, Wraparound Bow Seating, 2x Bucket Helm Seats With Slide & Swivel, Rear Bench Seat, Aft Hinged Sundeck, Built-In 70qt Cooler, Anchor Locker Forward, Full Instrumentation, Power-Assisted Tilt Steering, 12-Person Capacity
+
+Supplied With 2024 Magic Tilt Dual-Axle Boat Trailer: VIN 1M5BA2029S1E58797, ATM 2,300kg, Date of Manufacture 10/2024
+
 Sold As Is, Untested & Unregistered.
 
 CARAVAN EXAMPLE:
-2024 Viscount V2 Family Caravan
-Queen east/west bed, double bunk, L-shape dinette
-Full ensuite with shower, toilet and vanity
-Gree rooftop air conditioning, Truma gas/electric instant hot water
-Thetford gas oven, cooktop and grill, Thetford 175L fridge/freezer, microwave, 2.5kg washing machine
-2 x 95L fresh water tanks, 90L grey water tank
-400W solar (2 x 200W panels), 200Ah AGM battery bank, 240V shore power inlet
-Aussie Traveller rollout awning, external speakers, gas bottle holders at front
-Al-Ko independent coil suspension, electric brakes, breakaway system
+Coronel Caravans Lifestyle 638 On-Road Dual-Axle Caravan
+
+6300mm (20.67ft) Length, 2x Single Bunks Plus Forward Double Bed, U-Shaped Dinette Lounge, Dometic Gas Stove & Fridge, Dometic Air-Conditioning, Ensuite Shower & Toilet, Side Awning, Gas Bottle Holders At Front
+
 Sold As Is, Untested & Unregistered.
 
 Return the completed description as plain text only, exactly matching the correct template format. No extra commentary, no explanations, just the description.`
