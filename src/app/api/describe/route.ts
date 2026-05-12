@@ -918,7 +918,6 @@ Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below.
 Line 1: Year Make Model Variant Drive Type Body Type
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Full Transmission Name]
 Key extras, comma separated, Title Case — omit if none confirmed or visible
-Odometer: XX,XXXkm (own line, only if known)
 Sold As Is, Untested & Unregistered.
 For SUVs: if a tow bar is fitted, always mention it — towing capacity is a key purchase driver. Mention roof racks or roof rails if visible.
 
@@ -946,7 +945,6 @@ Priority extras to mention if confirmed or visible (include every one that appli
 - Leather seats (if confirmed or clearly visible)
 - Apple CarPlay / Android Auto (mention only if confirmed — relevant to buyers in a work context)
 
-If odometer is known, it goes on its OWN LINE formatted exactly as "Odometer: XX,XXXkm" — NOT as a sentence, NOT inline.
 If major damage or heavy wear is noted (accident damage, heavy rust, significant body damage), include a brief factual condition impression on the extras line.
 Do NOT list minor wear, stone chips, small dents, or standard comfort features (A/C, power windows, reverse camera).
 
@@ -959,14 +957,11 @@ Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW (
 (blank line)
 Key extras, comma separated, Title Case — omit this block entirely if no significant extras are known or visible
 (blank line)
-Odometer: XX,XXXkm — only if known; own line, not a sentence
-(blank line)
 Sold As Is, Untested & Unregistered.
 
 Rules:
 - Engine code BEFORE displacement: "2GD-FTV 2.8-Litre" NOT "2.8-Litre 2GD-FTV"
 - Power always kW first then hp in brackets: "150kW (201hp)"
-- Odometer formatted as "Odometer: 87,432km" — commas in number, no space before km, no full stop
 - Only mention extras/mods if they are significant and add real value. Do NOT list standard features like A/C, power windows, central locking
 - Do NOT include damage unless major (heavy rust, accident damage, significant structural damage). Minor wear is captured in damage notes separately
 - Do NOT use dot points
@@ -979,8 +974,6 @@ Example (ute with accessories — most common Slattery type):
 
 Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, Reverse Camera, Apple CarPlay, Leather Seats, 18" Alloy Wheels, UHF Radio
 
-Odometer: 87,432km
-
 Sold As Is, Untested & Unregistered.
 
 Example (damage vehicle — sedan):
@@ -990,16 +983,12 @@ LS3 6.2-Litre V8 Petrol, 317kW (425hp), 6-Speed Manual Transmission
 
 Brembo Brakes, Sports Suspension, 19" Alloy Wheels, Leather Sports Seats, Sunroof, Apple CarPlay
 
-Odometer: 62,100km
-
 Sold As Is, Untested & Unregistered.
 
 Example (standard sedan/hatch, no extras):
 2019 Toyota Corolla Ascent Sport FWD Hatchback
 
 2ZR-FAE 2.0-Litre 4-Cylinder Petrol, 125kW (168hp), CVT Automatic Transmission
-
-Odometer: 43,800km
 
 Sold As Is, Untested & Unregistered.
 
@@ -1009,8 +998,6 @@ Example (4WD SUV with tow bar):
 1VD-FTV 3.3-Litre V6 Twin-Turbocharged Diesel, 227kW (305hp), 10-Speed Automatic Transmission
 
 Tow Bar, Roof Rails
-
-Odometer: 34,200km
 
 Sold As Is, Untested & Unregistered.
 
@@ -1394,8 +1381,6 @@ UTE EXAMPLE:
 
 Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, Reverse Camera, Apple CarPlay, Leather Seats, 18" Alloy Wheels, UHF Radio
 
-Odometer: 87,432km
-
 Sold As Is, Untested & Unregistered.
 
 SEDAN (DAMAGE) EXAMPLE:
@@ -1404,8 +1389,6 @@ SEDAN (DAMAGE) EXAMPLE:
 LS3 6.2-Litre V8 Petrol, 317kW (425hp), 6-Speed Manual Transmission
 
 Brembo Brakes, Sports Suspension, 19" Alloy Wheels, Leather Sports Seats, Sunroof, Apple CarPlay
-
-Odometer: 62,100km
 
 Sold As Is, Untested & Unregistered.
 
