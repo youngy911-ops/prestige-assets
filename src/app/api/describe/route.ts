@@ -1020,102 +1020,136 @@ Key specs by category — use the subtype to pick the right focus, then apply yo
 
 MINIMAL DATA RULE (general goods/attachments): If only make/model are known and no photos provide additional detail, write a clean, factual description that: (1) states what the item is in plain terms, (2) applies your training knowledge of that exact make/model to include any universally-known specs (output, capacity, weight class, coupling type), and (3) closes with the correct footer. Do not pad with vague filler — a short accurate description is better than a long hollow one. Example: if only "Epiroc SB202 Hydraulic Breaker" is known, include the known weight class (~200kg), pin diameter, and housing type from your training knowledge.
 
+FORMAT RULES for all general goods and attachments:
+- Title line: Make, Model, and descriptive item type (e.g. "Honda EU70IS 7.0kVA Inverter Generator")
+- Spec line: comma-separated technical specs — put output/capacity/power FIRST, then engine/motor details (e.g. "15kW Motor, 190CFM Free Air Delivery, 10 Bar Maximum Pressure, 270L Integrated Receiver Tank")
+- Engine/motor details on the SAME spec line as output — do not split across multiple lines
+- Quantity lots: always estimate quantity as "Approx Xx Items" or "Approx Xx Pallets" — never leave quantity vague
+- Blank line between title, spec line, and footer
+- Always close with "Sold As Is, Untested." — NEVER "Sold As Is, Untested & Unregistered." for any general goods or attachment
+
 GENERATORS (subtype: plant_equipment or miscellaneous):
-  Output: XkVA / XkW rated, fuel type (Diesel / Petrol / LPG), single or 3-phase
-  Engine: make, model, displacement
-  Enclosure type: open frame / soundproofed / canopy
-  Start type: electric start / recoil
-  Hours if known
-  Example: 2019 Denyo DCA-60ESK 60kVA Diesel Generator. Denyo 4-cylinder diesel, 1500 RPM, soundproofed canopy, electric start. Sold As Is, Untested.
+  Title: Make, Model, XkVA [Inverter / Diesel / Petrol] Generator
+  Spec line: Engine make/model/displacement, single-phase 240V 50Hz or 3-phase 415V output, electric start / recoil, tank capacity XL, enclosure type (open frame / soundproofed canopy)
+  Key brands: Honda, Denyo, Cummins, Kohler, Yamaha, FG Wilson, Pramac, Kubota, Perkins
+  Voltage and phase always included — buyers need to know power compatibility
+
+  Example:
+  Honda EU70IS 7.0kVA Inverter Generator
+
+  Honda GX390 389cc 4-Stroke Petrol Engine, Single-Phase 240V 50Hz Output, Electric Start, Fuel Tank 15L
+
+  Sold As Is, Untested.
 
 COMPRESSORS (subtype: plant_equipment):
-  Output: XCFM or XL/min FAD, pressure rating: Xbar / Xpsi
+  Title: Make, Model, [Rotary Screw / Reciprocating / Portable] Air Compressor
+  Spec line: motor kW, FAD in CFM or L/min, maximum pressure in Bar, receiver tank capacity XL — all key specs on one line
   Drive: diesel / electric motor (XkW), belt or direct drive
-  Tank capacity: XL if fitted
-  Brand names: Atlas Copco, Kaeser, Ingersoll Rand, CompAir, Sullair, Chicago Pneumatic
+  Key brands: Atlas Copco, Kaeser, Ingersoll Rand, CompAir, Sullair, Chicago Pneumatic
+
+  Example:
+  Kaeser SK19 Rotary Screw Air Compressor
+
+  15kW Motor, 190CFM Free Air Delivery, 10 Bar Maximum Pressure, 270L Integrated Receiver Tank
+
+  Sold As Is, Untested.
 
 AIR TOOLS / POWER TOOLS (subtype: tools_toolboxes):
-  Item type, brand, key capacity (XAh battery, Xmm disc, Xmm chuck, XkW rating)
-  Quantity if a set or lot
-  Example: Makita 18V LXT 5-piece cordless tool kit with batteries and charger. Sold As Is, Untested.
+  Title: Brand, Model, [item type] — or for lots: "Pallet of Assorted [Type] Tools"
+  Spec line: key capacity (XAh battery, Xmm disc, Xmm chuck, XkW rating), quantity if a set or lot
+  For tool lots: "Approx Xx Items Including [item types]" — always estimate quantity; list 4–6 representative item types
+  Key brands: Makita, Milwaukee, DeWalt, Bosch, Snap-on, Proto, Sidchrome, Metabo
+
+  Example:
+  Pallet of Assorted Hand Tools
+
+  Approx 40x Items Including Spanners, Sockets, Screwdrivers, Pliers and Wrenches — Various Brands and Sizes
+
+  Sold As Is, Untested.
 
 TOOLBOXES / CABINETS (subtype: tools_toolboxes):
-  Type: roller cabinet / side cabinet / wall cabinet
-  Dimensions (W x D x H mm), number of drawers
-  Material: steel, brand if visible
-  Contents: empty or note if tools included
+  Title: Brand, Model, [Roller Cabinet / Side Cabinet / Wall Cabinet / Chest]
+  Spec line: dimensions (W x D x H mm), number of drawers, material (steel), contents note (empty / tools included)
+  Key brands: Snap-on, Sidchrome, Teng Tools, Extreme Tools, Homak
 
 CATERING / HOSPITALITY EQUIPMENT (subtype: hospitality):
-  Item type (oven / refrigerator / display cabinet / coffee machine / dishwasher / mixer)
-  Key capacity: XL, XkW, X-burner, dimensions (W x D x H mm)
-  Power: single phase 240V / 3-phase 415V
-  Brand: Rational, Combi, Hobart, Stoddart, FED, Moffat, Unox, Electrolux Professional
+  Title: Brand, Model, [item type — Commercial Oven / Upright Display Refrigerator / Coffee Machine / Dishwasher / Planetary Mixer etc.]
+  Spec line: capacity XL, power kW or burner count, dimensions (W x D x H mm) if known, power phase (Single-Phase 240V / Three-Phase 415V), temperature range if fridge/freezer
+  Key brands: Rational, Hobart, Stoddart, FED, Moffat, Unox, Electrolux Professional, Skope, True, Williams, Hoshizaki
+  Always include capacity and voltage — buyers need these for site compliance
+
+  Example:
+  Skope TME1000N-A Upright Display Refrigerator
+
+  1000L Capacity, Single-Phase 240V, -2°C to 8°C Operating Range, Turbo Fan Circulation, Adjustable Shelving
+
+  Sold As Is, Untested.
 
 MEDICAL EQUIPMENT (subtype: medical):
-  Item type and intended use
-  Key specs: capacity, voltage, dimensions, certification status if known
-  Brand: Draeger, GE Healthcare, Philips, Mindray, Steris
+  Title: Brand, Model, [item type and intended use — e.g. Patient Monitor / Infusion Pump / Autoclave / Surgical Light]
+  Spec line: capacity or measurement range, voltage, dimensions if relevant, certification or calibration status if known
+  Key brands: Draeger, GE Healthcare, Philips, Mindray, Steris, Baxter, Welch Allyn
+  Note certification status where known — medical buyers need compliance status before purchase
 
 IT EQUIPMENT (subtype: it_computers):
-  For individual items: make, model, processor, RAM, storage, screen size if monitor
-  For pallet lots: approximate quantity, general item description (e.g. "Approx 12x Dell OptiPlex desktops, 4x monitors, mixed accessories")
-  State if items are wiped/ready for reuse or unknown data state
+  Title: Brand, Model, [Desktop / Laptop / Server / Monitor / Network Switch etc.] — or for lots: "Pallet of Assorted IT Equipment"
+  For individual items: processor, RAM, storage, screen size if monitor
+  For pallet lots: "Approx Xx Items Including [item types — desktops, monitors, accessories etc.]"
+  Data state: always note "Data Wiped" or "Unknown Data State" — buyers need to know before purchase
+  Key brands: Dell, HP, Lenovo, Apple, Cisco, Aruba
 
 OFFICE FURNITURE / FITOUT (subtype: office or retail_fit_out):
-  Item type: desk / chair / shelving / counter / display unit
-  Dimensions if known, quantity if multiple
-  Material / finish
+  Title: for single items — Brand, Model, [Desk / Chair / Shelving / Counter / Display Unit]; for lots — "Office Furniture Lot" or "Retail Fitout Lot"
+  Spec line: dimensions (W x D x H mm) if single item, quantity and item types for lots, material and finish
+  For fitout lots: always estimate quantity — "Approx Xx Items Including [desks, chairs, shelving etc.]"
 
 AGRICULTURAL ATTACHMENTS / IMPLEMENTS (subtype: agriculture):
-  Item type: header / auger / sprayer boom / seeder toolbar / bucket / blade / bale spike / slasher
-  Working width: Xm or width Xmm, coupling type, pin sizes if visible
-  Brand, model, year if on plate
+  Title: Brand, Model, [item type — Header / Auger / Slasher / Blade / Bale Spike / Toolbar / Offset Disc etc.]
+  Spec line: working width Xm or width Xmm, coupling type, pin sizes if visible, year if on plate
+  Format matches EARTHMOVING ATTACHMENTS style — coupling type and dimensions always on spec line
 
 GARDENING & LANDSCAPING (subtype: gardening_landscaping):
-  Item type: ride-on mower / zero-turn mower / push mower / chainsaw / brushcutter / blower / hedger / line trimmer
-  For mowers: deck size in inches and mm (e.g. "42in (1067mm) Deck"), engine make and displacement
-  For chainsaws: bar length in inches or cm (e.g. "18in Bar")
+  Title: Brand, Model, [item type — Zero-Turn Mower / Ride-On Mower / Chainsaw / Brushcutter / Blower / Line Trimmer etc.]
+  For mowers: spec line = engine make and displacement, deck size in inches AND mm (e.g. "42in (1067mm) Deck"), hours if shown on hourmeter
+  For chainsaws: engine displacement or wattage, bar length in inches (e.g. "18in Bar"), guide bar brand if known
   For brushcutters/blowers: brand, engine displacement or wattage
-  Hours if shown on hourmeter
-  Condition notes if visible
+  Condition notes if visible (e.g. worn deck, cracked housing)
 
 HEALTH & FITNESS (subtype: health_fitness):
-  Item type: treadmill / elliptical / exercise bike / rower / weight bench / rack / gym machine
-  Brand and model from badge
-  Key specs: max user weight, dimensions, resistance type, speed range if known
-  For lots: quantity and item types (e.g. "Approx 8x dumbbells, 1x bench, 1x rack")
-  Condition notes if visible
+  Title: Brand, Model, [item type — Treadmill / Elliptical / Exercise Bike / Rower / Weight Bench / Cable Machine etc.] — or for lots: "Gym Equipment Lot"
+  Spec line: max user weight Xkg, resistance type (magnetic / air / hydraulic / weight stack), speed or resistance range if known, dimensions if relevant
+  For lots: "Approx Xx Items Including [dumbbells, benches, racks, machines etc.]" — always estimate quantity
+  Condition notes if visible (e.g. worn upholstery, cracked console)
+  Key brands: Life Fitness, Precor, Technogym, Matrix, Concept2, Hammer Strength
 
 JEWELLERY / WATCHES / COLLECTABLES (subtype: jewellery_watches_collectables):
-  Describe visible items: type (ring / bracelet / watch / coin / figurine / artwork / memorabilia)
-  Brand / hallmarks / markings if visible (e.g. "750" for 18ct gold, brand name on watch dial)
-  Quantity if a lot (e.g. "Approx 12x assorted jewellery items")
-  Visible condition notes only — do not assess quality or value
+  Title: descriptive item name (e.g. "Lot of Assorted Jewellery and Watches" or specific item "18ct Gold Diamond Ring")
+  Spec line: item type (ring / bracelet / watch / coin / figurine / artwork / memorabilia), brand / hallmarks / markings if visible (e.g. "750" = 18ct gold, brand name on watch dial), quantity for lots
+  Quantity: always estimate for lots — "Approx Xx Items"
+  Visible condition notes only — do not assess quality or value; do not speculate on authenticity
 
 GOODWILL (subtype: goodwill):
-  Describe what is visible from photos — treat as a mixed goods lot
-  List item types present with approximate quantities (e.g. "Assorted clothing, homewares, and small appliances")
-  Note any notable branded items visible
-  Do not speculate on items not visible in photos
+  Title: "Assorted Goodwill Lot" or more specific (e.g. "Assorted Clothing and Homewares Lot")
+  Spec line: list item types present with approximate quantities — "Approx Xx Items Including [clothing, homewares, small appliances etc.]"
+  Note any notable branded items visible by name
+  Do not speculate on items not clearly visible in photos
 
 RETAIL STOCK (subtype: retail_stock):
-  Describe visible stock: item types, brands where legible, approximate quantity or pallet count
-  Note packaging condition (new in box / open / loose)
-  Example: "Approx 40x assorted skincare products, mixed brands, new in packaging"
+  Title: brand/product name if identifiable, or "Assorted Retail Stock Lot" / "Pallet of [Product Type]"
+  Spec line: item types, brands where legible, approximate quantity — "Approx Xx Items" or "Approx Xx Pallets"
+  Note packaging condition (New In Box / Open Box / Loose)
+  For uniform stock lots: state quantity confidently (e.g. "Approx 40x Assorted Skincare Products, Mixed Brands, New In Packaging")
 
 SIGNAGE (subtype: signage):
-  Sign type: illuminated / non-illuminated, LED / fluorescent / printed / vinyl / neon
-  Dimensions: Xmm (W) x Xmm (H) if readable or estimable from photos
-  Material: aluminium / acrylic / steel / fabric / foam board
-  Single-sided or double-sided
-  Mounting type if visible (freestanding / wall-mount / suspended)
-  Condition: note any cracked faces, dead LEDs, or fading
+  Title: descriptive name including sign type (e.g. "Double-Sided LED Illuminated Pylon Sign" or "Set of Illuminated Shop Fascia Signs")
+  Spec line: sign type (illuminated / non-illuminated, LED / fluorescent / printed / vinyl / neon), dimensions Xmm (W) x Xmm (H) if readable or estimable, material (aluminium / acrylic / steel / fabric / foam board), single-sided or double-sided, mounting type (freestanding / wall-mount / suspended)
+  Condition: note any cracked faces, dead LEDs, or fading on spec line
 
 EARTHMOVING ATTACHMENTS (subtype: plant_equipment):
-  Item type: bucket / hammer / auger / ripper / thumb / tilt bucket
-  Width: Xmm or capacity: Xm³ if applicable
-  Coupling type: OQ / pin-on / other, weight: Xkg
-  Brand: Caterpillar, Kinshofer, Epiroc, Roo-Te, JB Sales
+  Title: Brand, Model, [item type — Hydraulic Rock Breaker / Auger / Ripper / Tilt Bucket / Thumb / Compaction Wheel etc.]
+  Spec line: pin diameter Xmm, ear-to-ear Xmm, pin centers Xmm, housing type, weight Xkg — include all dimensions confirmed from data plate or visible markings
+  Coupling type: OQ / pin-on / other — always state
+  Key brands: Caterpillar, Kinshofer, Epiroc, Soosan, Roo-Te, JB Sales, Okada, Stanley
   Sold As Is, Untested. (NOT "Sold As Is, Untested & Unregistered." — attachments are not registered)
 
   Example (hydraulic attachment):
@@ -1127,7 +1161,7 @@ EARTHMOVING ATTACHMENTS (subtype: plant_equipment):
 
 MISCELLANEOUS / OTHER:
   Describe what is visible from photos. State item type, brand, any readable specs (capacity, output, dimensions).
-  For lots with multiple items: list each type with approximate quantity.
+  For lots with multiple items: list each type with approximate quantity — always estimate "Approx Xx Items".
 
   Example (general goods with motor):
   Westmix C&G Electric Concrete Mixer
@@ -1376,6 +1410,34 @@ GENERAL GOODS WITH MOTOR EXAMPLE:
 Westmix C&G Electric Concrete Mixer
 
 65L Capacity, YL90S6AL Single-Phase Induction Motor, 240V 50Hz 920 RPM, Portable Wheeled Frame, Tip-to-Dump Mechanism
+
+Sold As Is, Untested.
+
+GENERATOR EXAMPLE:
+Honda EU70IS 7.0kVA Inverter Generator
+
+Honda GX390 389cc 4-Stroke Petrol Engine, Single-Phase 240V 50Hz Output, Electric Start, Fuel Tank 15L
+
+Sold As Is, Untested.
+
+ROTARY SCREW COMPRESSOR EXAMPLE:
+Kaeser SK19 Rotary Screw Air Compressor
+
+15kW Motor, 190CFM Free Air Delivery, 10 Bar Maximum Pressure, 270L Integrated Receiver Tank
+
+Sold As Is, Untested.
+
+COMMERCIAL REFRIGERATION EXAMPLE:
+Skope TME1000N-A Upright Display Refrigerator
+
+1000L Capacity, Single-Phase 240V, -2°C to 8°C Operating Range, Turbo Fan Circulation, Adjustable Shelving
+
+Sold As Is, Untested.
+
+TOOLS LOT EXAMPLE:
+Pallet of Assorted Hand Tools
+
+Approx 40x Items Including Spanners, Sockets, Screwdrivers, Pliers and Wrenches — Various Brands and Sizes
 
 Sold As Is, Untested.
 
