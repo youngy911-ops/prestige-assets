@@ -909,23 +909,29 @@ This subtype is a Salesforce system artifact. Describe whatever asset is visible
 Sold As Is, Untested & Unregistered.
 
 MOTOR VEHICLE (CAR)
-Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below. Do NOT use a single-line code format — write a full paragraph description.
+Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below. Do NOT write as a single run-on sentence — use the block format with blank lines between sections.
 
-MINIMAL DATA RULE (cars/utes): If only make/model/year and body type are confirmed, apply your training knowledge of that specific model/variant to fill in engine displacement, cylinder count, fuel type, and transmission type — e.g. Toyota HiLux SR5 2.8L 4-Cylinder Turbo Diesel, 6-Speed Automatic; Ford Ranger Wildtrak 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Mitsubishi Triton GLS 2.4L 4-Cylinder Turbo Diesel, 6-Speed Automatic; Toyota LandCruiser 200 Series 4.5L V8 Twin-Turbo Diesel, 6-Speed Automatic; Ford Everest Titanium 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Toyota Corolla Ascent Sport 2.0L 4-Cylinder Petrol, CVT Automatic. Use these inferred specs only when universally true for that variant — if a model offered multiple engine options for the same variant/year, omit displacement and state only cylinders and fuel type. Drive type (4WD/2WD/AWD) is standard knowledge for a variant and must always be included.
+MINIMAL DATA RULE (cars/utes): If only make/model/year and body type are confirmed, apply your training knowledge of that specific model/variant to fill in engine code, displacement, cylinder count, fuel type, and transmission type — e.g. Toyota HiLux SR5 2GD-FTV 2.8-Litre 4-Cylinder Turbo Diesel, 6-Speed Automatic; Ford Ranger Wildtrak 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Mitsubishi Triton GLS 4N15 2.4-Litre 4-Cylinder Turbo Diesel, 6-Speed Automatic; Toyota LandCruiser 200 Series 1VD-FTV 4.5-Litre V8 Twin-Turbo Diesel, 6-Speed Automatic; Ford Everest Titanium 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Toyota Corolla Ascent Sport 2ZR-FAE 2.0-Litre 4-Cylinder Petrol, CVT Automatic. Use these inferred specs only when universally true for that variant — if a model offered multiple engine options for the same variant/year, omit displacement and state only cylinders and fuel type. Drive type (4WD/2WD/AWD) is standard knowledge for a variant and must always be included. Engine code before displacement: "2GD-FTV 2.8-Litre" NOT "2.8-Litre 2GD-FTV". Power in kW first, then hp in brackets: "150kW (201hp)".
 
 SEDAN / SUV (subtype: sedan or suv)
-Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below. Write as ONE continuous paragraph including: Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer on its own line.
-For SUVs: if a tow bar is fitted, always mention it — towing capacity is a key purchase driver. Mention roof racks or roof rails if visible. Otherwise treat the same as the VEHICLE template.
+Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below.
+Line 1: Year Make Model Variant Drive Type Body Type
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Full Transmission Name]
+Key extras, comma separated, Title Case — omit if none confirmed or visible
+Odometer: XX,XXXkm (own line, only if known)
+Sold As Is, Untested & Unregistered.
+For SUVs: if a tow bar is fitted, always mention it — towing capacity is a key purchase driver. Mention roof racks or roof rails if visible.
 
 UTE / 4WD (subtype: dual_cab_ute, single_cab_ute, extra_cab_ute, 4wd — the most common Slattery vehicle types)
-Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below.
-These are work vehicles — accessory fitment is CRITICAL to buyers and directly affects hammer price. After the core specs line, append a second sentence listing all confirmed or visible accessories.
-
-Core specs to include (all known): Year, Make, Model, Variant, body type, engine (displacement + cylinders + forced induction if applicable + fuel type), transmission, drive type (4WD/AWD/2WD), colour.
+Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below.
+These are work vehicles — accessory fitment is CRITICAL to buyers and directly affects hammer price. List all confirmed or visible accessories on the extras line.
+Line 1: Year Make Model Variant Drive Type Body Type (e.g. "2019 Toyota HiLux SR5 4x4 Dual Cab Utility")
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Full Transmission Name]
+Extras line: comma-separated accessories, Title Case, brand names where known
 
 Priority extras to mention if confirmed or visible (include every one that applies):
 - Tow bar — always mention if fitted (buyers universally ask; state Class/ball rating if visible)
-- Canopy / tray top — mention make and material if known (e.g. "fibreglass canopy", "Aeroklas alloy canopy", "steel canopy")
+- Canopy / tray top — mention make and material if known (e.g. "Fibreglass Canopy", "Aeroklas Alloy Canopy", "Steel Canopy")
 - Bull bar / nudge bar — name brand if badged (ARB, TJM, Ridgeback, Ironman, Opposite Lock)
 - Snorkel — mention if visible (signals off-road use and value to buyers)
 - Winch — mention if visible (state brand/capacity if badged)
@@ -940,44 +946,82 @@ Priority extras to mention if confirmed or visible (include every one that appli
 - Leather seats (if confirmed or clearly visible)
 - Apple CarPlay / Android Auto (mention only if confirmed — relevant to buyers in a work context)
 
-If odometer is known, append it as a standalone sentence on its own line: "Odometer: XX,XXXkm."
-If major damage or heavy wear is noted (accident damage, heavy rust, significant body damage), include a brief factual condition impression.
+If odometer is known, it goes on its OWN LINE formatted exactly as "Odometer: XX,XXXkm" — NOT as a sentence, NOT inline.
+If major damage or heavy wear is noted (accident damage, heavy rust, significant body damage), include a brief factual condition impression on the extras line.
 Do NOT list minor wear, stone chips, small dents, or standard comfort features (A/C, power windows, reverse camera).
 
 VEHICLE (PASSENGER / LIGHT COMMERCIAL)
-Write as ONE continuous paragraph. Keep it concise — the photos do the talking.
-Include in this order (skip any not known): Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer.
-Only mention extras/mods if they are significant and add real value — bull bar, canopy, tow bar, snorkel, winch, aftermarket tray on a work ute. Do NOT list standard features like A/C, power windows, central locking — buyers expect these on modern vehicles.
-If odometer is known, include it as a standalone sentence after the main paragraph: "Odometer: XX,XXXkm."
-Do NOT include damage in the description unless it is major — heavy rust throughout, accident/collision damage, significant structural damage. Minor scratches, dents, stone chips are normal wear and must NOT appear in the description (they are captured separately in the damage notes section).
-The footer "Sold As Is, Untested & Unregistered." MUST be on its own line with a blank line before it.
-Example (standard sedan/hatch):
-"2019 Toyota Corolla Ascent Sport Hatchback, 5 Seats, 2.0L 4-Cylinder Petrol, CVT Automatic, FWD, White.
+Use the block format below — blank lines between each section. Do NOT write as one continuous paragraph.
 
-Sold As Is, Untested & Unregistered."
+Line 1: Year Make Model Variant Drive Type Body Type
+(blank line)
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Full Transmission Name]
+(blank line)
+Key extras, comma separated, Title Case — omit this block entirely if no significant extras are known or visible
+(blank line)
+Odometer: XX,XXXkm — only if known; own line, not a sentence
+(blank line)
+Sold As Is, Untested & Unregistered.
+
+Rules:
+- Engine code BEFORE displacement: "2GD-FTV 2.8-Litre" NOT "2.8-Litre 2GD-FTV"
+- Power always kW first then hp in brackets: "150kW (201hp)"
+- Odometer formatted as "Odometer: 87,432km" — commas in number, no space before km, no full stop
+- Only mention extras/mods if they are significant and add real value. Do NOT list standard features like A/C, power windows, central locking
+- Do NOT include damage unless major (heavy rust, accident damage, significant structural damage). Minor wear is captured in damage notes separately
+- Do NOT use dot points
+- "Sold As Is, Untested & Unregistered." MUST be on its own line with a blank line before it
+
 Example (ute with accessories — most common Slattery type):
-"2021 Ford Ranger Wildtrak Dual Cab Ute, 5 Seats, 2.0L 4-Cylinder Bi-Turbo Diesel, 10 Speed Automatic, 4WD, Conquer Grey. Fitted with ARB steel bull bar, fibreglass canopy, tow bar, roof rack, and snorkel.
+2019 Toyota HiLux SR5 4x4 Dual Cab Utility
 
-Odometer: 87,432km.
+2GD-FTV 2.8-Litre 4-Cylinder Turbocharged Diesel, 150kW (201hp), 6-Speed Automatic Transmission
 
-Sold As Is, Untested & Unregistered."
+Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, Reverse Camera, Apple CarPlay, Leather Seats, 18" Alloy Wheels, UHF Radio
+
+Odometer: 87,432km
+
+Sold As Is, Untested & Unregistered.
+
+Example (damage vehicle — sedan):
+2018 Holden Commodore VF SS-V 2WD Sedan
+
+LS3 6.2-Litre V8 Petrol, 317kW (425hp), 6-Speed Manual Transmission
+
+Brembo Brakes, Sports Suspension, 19" Alloy Wheels, Leather Sports Seats, Sunroof, Apple CarPlay
+
+Odometer: 62,100km
+
+Sold As Is, Untested & Unregistered.
+
+Example (standard sedan/hatch, no extras):
+2019 Toyota Corolla Ascent Sport FWD Hatchback
+
+2ZR-FAE 2.0-Litre 4-Cylinder Petrol, 125kW (168hp), CVT Automatic Transmission
+
+Odometer: 43,800km
+
+Sold As Is, Untested & Unregistered.
+
 Example (4WD SUV with tow bar):
-"2022 Toyota LandCruiser 300 GR Sport SUV, 7 Seats, 3.3L V6 Twin-Turbo Diesel, 10 Speed Automatic, 4WD, Graphite. Tow bar fitted.
+2022 Toyota LandCruiser 300 GR Sport 4WD SUV
 
-Odometer: 34,200km.
+1VD-FTV 3.3-Litre V6 Twin-Turbocharged Diesel, 227kW (305hp), 10-Speed Automatic Transmission
 
-Sold As Is, Untested & Unregistered."
+Tow Bar, Roof Rails
+
+Odometer: 34,200km
+
+Sold As Is, Untested & Unregistered.
+
 Example (major structural damage):
-"2008 Ford Ranger XL Dual Cab Ute, 5 Seats, 3.0L 4-Cylinder Turbo Diesel, 5 Speed Manual, 4WD, White. Heavy rust to chassis and body panels, previous accident damage to front end.
+2008 Ford Ranger XL 4x4 Dual Cab Utility
 
-Sold As Is, Untested & Unregistered."
-Example (4WD with full accessories):
-"2020 Toyota HiLux SR5+ Double Cab Ute, 5 Seats, 2.8L 4-Cylinder Turbo Diesel, 6 Speed Automatic, 4WD, Glacier White. Fitted with ARB steel bull bar, TJM side steps, fibreglass canopy, tow bar, roof rack, snorkel, and Lightforce driving lights.
+WLAA 3.0-Litre 4-Cylinder Turbocharged Diesel, 115kW (154hp), 5-Speed Manual Transmission
 
-Odometer: 112,600km.
+Heavy Rust to Chassis and Body Panels, Previous Accident Damage to Front End
 
-Sold As Is, Untested & Unregistered."
-Do NOT use dot points.
+Sold As Is, Untested & Unregistered.
 
 ATTACHMENTS / GENERAL GOODS
 Year (if known), Make, Model
@@ -1342,6 +1386,28 @@ Westmix C&G Electric Concrete Mixer
 65L Capacity, YL90S6AL Single-Phase Induction Motor, 240V 50Hz 920 RPM, Portable Wheeled Frame, Tip-to-Dump Mechanism
 
 Sold As Is, Untested.
+
+UTE EXAMPLE:
+2019 Toyota HiLux SR5 4x4 Dual Cab Utility
+
+2GD-FTV 2.8-Litre 4-Cylinder Turbocharged Diesel, 150kW (201hp), 6-Speed Automatic Transmission
+
+Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, Reverse Camera, Apple CarPlay, Leather Seats, 18" Alloy Wheels, UHF Radio
+
+Odometer: 87,432km
+
+Sold As Is, Untested & Unregistered.
+
+SEDAN (DAMAGE) EXAMPLE:
+2018 Holden Commodore VF SS-V 2WD Sedan
+
+LS3 6.2-Litre V8 Petrol, 317kW (425hp), 6-Speed Manual Transmission
+
+Brembo Brakes, Sports Suspension, 19" Alloy Wheels, Leather Sports Seats, Sunroof, Apple CarPlay
+
+Odometer: 62,100km
+
+Sold As Is, Untested & Unregistered.
 
 Return the completed description as plain text only, exactly matching the correct template format. No extra commentary, no explanations, just the description.`
 
