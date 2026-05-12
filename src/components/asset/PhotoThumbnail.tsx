@@ -39,7 +39,7 @@ export const PhotoThumbnail = forwardRef<HTMLDivElement, PhotoThumbnailProps>(
           src={signedUrl}
           alt=""
           role="presentation"
-          loading="lazy"
+          loading={isCover ? 'eager' : 'lazy'}
           className="w-full h-full object-cover"
           draggable={false}
         />

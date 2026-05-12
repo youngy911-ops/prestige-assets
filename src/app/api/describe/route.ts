@@ -1564,6 +1564,7 @@ export async function POST(req: NextRequest) {
     signedUrls = (signedUrlData ?? [])
       .map(r => r.signedUrl)
       .filter((url): url is string => !!url)
+      .slice(0, 8) // Cap at 8 images — beyond this, additional images add latency without improving quality
   }
 
   // 6. Call GPT-4o — plain text output (NOT Output.object — that is for structured extraction only)
