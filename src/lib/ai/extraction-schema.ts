@@ -103,6 +103,7 @@ READING HOURMETERS:
   - Trucks with cranes or EWPs: secondary instrument panel or console
 - If hourmeter shows "Hrs", "H", or "Hours" beside the number — extract just the numeric value
 - If the display shows decimal hours (e.g. 1234.5), include the decimal
+- If the hourmeter photo appears to be rotated or upside-down, attempt to read it by mentally rotating the image. Digital displays often remain readable when rotated — the digits 0, 1, 2, 5, 6, 8, 9 are usually identifiable in any orientation. Note: upside-down 6 reads as 9, upside-down 9 reads as 6, upside-down 1 reads as 1. If still uncertain after correcting for rotation, return null.
 
 Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year are identified):
 - TRUCKS: infer engine_manufacturer, engine_series, engine_size, fuel_type, gearbox_make, transmission, drive_type, suspension, axle_configuration, brakes, GVM, GCM, fifth_wheel (prime movers only — infer brand from make if not visible in photos), torque (peak engine torque — format "X Nm @ Y rpm", e.g. Cummins X15 = 2,780 Nm @ 1,400 rpm, PACCAR MX-13 = 2,400 Nm @ 1,200 rpm, Volvo D13 = 2,550 Nm @ 1,050 rpm, Mack MP8 = 2,034 Nm, Detroit DD15 = 2,576 Nm @ 1,100 rpm)
