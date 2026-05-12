@@ -188,10 +188,10 @@ CONDITION RATINGS — select the closest match for each field:
 - carpet_condition (floor carpets and mats): Excellent = clean, no wear; Good = minor wear or marks; Fair = stained or worn through in places; Poor = heavily soiled, torn, or missing sections
 
 EXTERIOR DAMAGE INSPECTION — scan every photo for:
-- Dents: look for uneven reflections, shadow lines, or panel distortion. Note location and approximate size.
+- Dents: look for uneven reflections, shadow lines, or panel distortion. Note location and approximate size. Check reflections on panels carefully — uneven reflections indicate dents even when the dent is subtle.
 - Hail damage: multiple small uniform shallow dents across roof, bonnet, and boot lid — describe as "Hail damage to roof/bonnet/boot".
 - Scratches: look for linear marks on paint surface. "Light scratches" = surface only. "Deep scratches" = through paint to primer/metal.
-- Stone chips: clusters of small paint chips, common on bonnet/bumper.
+- Stone chips: clusters of small paint chips, common on bonnet/bumper. Stone chips on the bonnet leading edge are extremely common — always check this area.
 - Cracked/chipped windscreen: look for star cracks, bullseyes, or chips. Also check for scratched glass or wiper damage (arc-shaped scratches from worn wiper blades).
 - Broken/cracked lights: tail lights, headlights, indicators, fog lights.
 - Missing parts: mirrors, trim pieces, badges, mud flaps, wheel covers.
@@ -200,6 +200,9 @@ EXTERIOR DAMAGE INSPECTION — scan every photo for:
 - Rust: bubbling paint, orange/brown discolouration, holes in panels. Check wheel arches, door bottoms, sills, tailgate.
 - Tow bar damage: bent, scraped, or misaligned.
 - Canopy/tray damage: dents, scratches, cracked windows on canopies.
+- Door edges and sills: check for parking scrapes — these are extremely common and easy to miss.
+- For utes: check tray floor, tray sides, and rear step for damage — these areas take heavy use and are frequently damaged.
+- Tyres: check both sidewall condition AND tread depth if visible — note cracking, bulging, or uneven wear on sidewalls separately from tread depth assessment.
 
 INTERIOR DAMAGE — from cabin photos (only note actual damage, not general wear):
 - Torn/ripped seats, cracked dashboard, broken controls, water damage, missing parts.
