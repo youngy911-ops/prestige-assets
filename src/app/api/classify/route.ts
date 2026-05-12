@@ -64,13 +64,17 @@ Return the exact key values (snake_case) from the list above.
 IMPORTANT: You MUST always return an asset_type. Even if the photo is blurry, dark, or only shows a partial view, make your best guess. Use every visual cue available — shape, colour, tyres, cab style, attachments, tracks, mast, tray, body type. Never refuse to classify.
 
 VISUAL IDENTIFICATION CUES:
-- Tracks + boom arm = earthmoving (excavator most common)
+- Tracks + offset boom arm (swings side to side) = earthmoving excavator — NOT bulldozer (bulldozer has a straight blade bolted to the front, no articulating boom)
 - Yellow body + bucket/blade = earthmoving
-- Mast + forks at front = forklift
-- 5th wheel coupling on tray = truck (prime_mover)
-- Hydraulic tipping body = truck (tipper) or trailer (tipper_trailer)
-- 4-door tray with towbar = vehicle (dual_cab_ute)
-- Enclosed box body on rigid chassis = truck (pantech)
+- Mast + forks fixed at front, no telescopic boom = forklift — NOT telehandler (telehandler has a single extending arm that tilts up like a crane)
+- Telescopic boom extending forward from cab = earthmoving (telehandler), NOT forklift
+- 5th wheel coupling plate on tray (large circular coupling behind cab) = truck (prime_mover) — no body, just the tractor unit
+- Hydraulic tipping body with visible rams = truck (tipper) if it has a cab; trailer (tipper) if no cab
+- Knuckle boom crane or service body with tool drawers = truck (service_truck)
+- 4-door cab + open tray/tub at rear + towbar = vehicle (dual_cab_ute)
+- Raised ride height + wagon/SUV body, no tray = vehicle (suv or 4wd)
+- Standard 4-door saloon body = vehicle (sedan); compact 3/5-door = vehicle (hatchback)
+- Enclosed box body on rigid chassis with cab = truck (pantech)
 - Long trailer, curtains on sides = trailer (curtainsider)
 - Boat hull on trailer = marine (trailer_boat)
 - Drawbar + living quarters = caravan
@@ -85,11 +89,11 @@ VISUAL IDENTIFICATION CUES:
 - general_goods is ONLY for individual items: tools, small machinery, furniture, equipment lots — never for trailers, trucks, or vehicles
 
 SUBTYPE HINTS:
-- vehicle: dual_cab_ute (4-door tray/ute), single_cab_ute (2-door tray), suv (raised, wagon-like), sedan (standard 4-door car), hatchback (compact car, short rear), van (transit/sprinter/hiace cargo), bus, 4wd (large SUV with visible lift or off-road tyres)
-- truck: tipper (hydraulic tipping body, rams visible), tray_truck (flat steel tray), pantech (enclosed box body), prime_mover (semi tractor, 5th wheel plate on tray, no body), cab_chassis (bare chassis, no body fitted), service_truck (knuckle boom crane or service body with drawers), refrigerated_pantech (white insulated box body)
-- trailer: flat_deck (bare flat deck, no sides), curtainsider (side curtains), pantech (enclosed box body on trailer), low_loader (dropped/stepped deck for machinery), skel (skeletal frame for containers), dog (tag trailer with drawbar and rear axle group), stock (slatted livestock crate sides), side_tipper (hydraulic side-tipping body), tipper (rear-tipping body on trailer)
-- earthmoving: excavator (tracks + cab + boom arm), bulldozer (blade at front + tracks), wheel_loader (large articulated machine, bucket at front, full-size cab — NOT compact), skid_steer (compact, 4 wheels, turns by wheel speed not steering), motor_grader (long blade underneath), dump_truck (large rigid haul truck with tipping body), compactor (drum roller), telehandler (telescopic boom forklift)
-- forklift: clearview_mast (standard counterbalance forklift), container_mast (very tall mast 4m+), walkie_stacker (pedestrian stacker), electric_pallet_jack (ride-on or walk-behind pallet jack)
+- vehicle: dual_cab_ute (4-door cab + open tray/tub), single_cab_ute (2-door cab + tray), suv (raised wagon-like body, no tray), sedan (standard 4-door car), hatchback (compact car, short rear), van (transit/sprinter/hiace cargo), bus, 4wd (large SUV with visible lift or aggressive off-road tyres)
+- truck: tipper (hydraulic tipping body, rams visible), tray_truck (flat steel tray), pantech (enclosed box body), prime_mover (semi tractor unit, 5th wheel coupling plate on tray, no cargo body), cab_chassis (bare chassis, no body fitted), service_truck (knuckle boom crane or service body with drawers), refrigerated_pantech (white insulated box body)
+- trailer: flat_deck (bare flat deck, no sides), curtainsider (side curtains that pull open), pantech (enclosed box body on trailer), low_loader (dropped/stepped deck for machinery), skel (skeletal frame for containers), dog (tag trailer with drawbar and rear axle group), stock (slatted livestock crate sides), side_tipper (hydraulic side-tipping body), tipper (rear-tipping body on trailer)
+- earthmoving: excavator (tracks + cab + offset boom arm that swings — NOT a front blade), bulldozer (blade bolted straight to front + tracks, no articulating boom), wheel_loader (large articulated machine, bucket at front, full-size cab — NOT compact), skid_steer (compact, 4 wheels, turns by wheel speed not steering), motor_grader (long blade underneath), dump_truck (large rigid haul truck with tipping body), compactor (drum roller), telehandler (telescopic boom that extends and tilts — NOT a fixed mast)
+- forklift: clearview_mast (standard counterbalance forklift, fixed vertical mast + forks), container_mast (very tall mast 4m+), walkie_stacker (pedestrian stacker), electric_pallet_jack (ride-on or walk-behind pallet jack)
 - agriculture: tractor (cab + large rear tyres), combine_harvester (large header at front), spray_rig (boom arms extending from sides), baler (intake + discharge chute at rear), air_seeder (large tank + distribution tubes)
 - marine: trailer_boat (boat hull on road trailer), personal_watercraft (jet ski), barge (flat-bottom work vessel), commercial_vessel (larger work or passenger boat)
 - caravan: caravan (tow-behind living quarters), camper_trailer (fold-out tent trailer), motorhome (self-propelled living vehicle)
