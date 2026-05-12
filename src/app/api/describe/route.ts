@@ -59,6 +59,8 @@ Fifth wheel brand/model if known (e.g. Jost JSK 37, SAF-Holland FW35)
 GCM if 100,000kg or above
 Sold As Is, Untested & Unregistered.
 
+MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Volvo FH with D-series suffix → Volvo D13K 12.8-Litre 6-Cylinder; Kenworth T610 → PACCAR MX-13 12.9-Litre 6-Cylinder; Kenworth T409/T659 → Cummins ISX15 15.0-Litre 6-Cylinder; Mack Trident/Granite → Mack MP8 13.0-Litre 6-Cylinder; Western Star 4964 → Detroit DD15 14.8-Litre 6-Cylinder; Mercedes Actros → OM471 12.8-Litre 6-Cylinder; DAF XF → MX-13 12.9-Litre 6-Cylinder. For transmission, apply the standard pairing for that model (e.g. Volvo FH → Volvo I-Shift 12-Speed AMT; Kenworth → Eaton Fuller 18-Speed or PACCAR TX-12 AMT depending on era). If the spec varies by order/option, omit it rather than guess — but the engine family and displacement are universally known for these models and must be included. Use the ENGINE HP REFERENCE table above to fill the hp figure when not supplied.
+
 TIPPER
 Line 1: Year, Make, Model, Drive Type, Tipper
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque, [Full Transmission Brand and Name]
@@ -267,6 +269,8 @@ Stoneguard if fitted
 Pin sizes: 50mm / 90mm kingpin — always state; critical for compatibility
 Sold As Is, Untested & Unregistered.
 
+MINIMAL DATA RULE (trailers): If only make/year and ATM are confirmed and no axle config, suspension, or deck dims are in the confirmed fields, apply your training knowledge to infer what you reliably know for that make/model — e.g. a Vawdrey flat deck from pre-2010 will almost certainly be leaf spring suspension; a MaxiTrans or Barker from 2015+ is likely airbag. State axle config as "Tri-Axle" or "Tandem-Axle" only if you can confirm from photos or model knowledge for that specific unit; otherwise describe only what is confirmed. ATM/GTM must always appear when known. Never fabricate deck dimensions — omit if not confirmed.
+
 CURTAINSIDER TRAILER
 Line 1: Year, Make, Model, Curtainsider Trailer. Axle config.
 Deck dimensions: L x W mm
@@ -447,6 +451,8 @@ Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW (
 Max Digging Depth
 Track width, track type (rubber / steel)
 Enclosed Cab / ROPS Canopy
+
+MINIMAL DATA RULE (excavators): If only make/model/year/hours are known, apply your training knowledge of that specific model to fill in operating weight, engine, and standard bucket capacity — e.g. Caterpillar 320 → 20t class, Cat C4.4 ACERT 4-Cylinder, 0.9m³ bucket; Caterpillar 330 → 30t class, Cat C7.1 6-Cylinder; Komatsu PC200 → 20t class, SAA4D107E 4-Cylinder; Komatsu PC300 → 30t class, SAA6D114E 6-Cylinder; Hitachi ZX200 → 20t class, Isuzu 4HK1 4-Cylinder; Hitachi ZX350 → 35t class, Isuzu 6HK1 6-Cylinder; Volvo EC220 → 22t class, Volvo D6E 6-Cylinder; John Deere 210G → 21t class, John Deere PowerTech 4-Cylinder. Include all specs that are universally true for the identified model; omit specs that vary by configuration. Always include operating weight and engine even when not in confirmed fields — these are the primary value indicators for earthmoving buyers.
 Quick hitch brand/model and rating if fitted (e.g. Steelwrist, Wedgelock, JB Sales)
 Dozer Blade: Xmm | Boom: Xm | Arm: Xm
 Main bucket: capacity in m³ and width in mm, tooth count if visible
@@ -843,15 +849,16 @@ Sold As Is, Untested & Unregistered.
 
 CARAVAN
 Line 1: Year, Make, Model, On-Road/Off-Road, Axle config (Dual-Axle / Single-Axle), Caravan — apply your knowledge of this make/model to fill standard specs if not in inspection notes
-Length: Xmm (Xft) — always state length in both mm and feet; use "6300mm (20.67ft)" format matching Slattery examples
-Bed configuration: always describe (e.g. "2x Single Bunks Plus Forward Double Bed", "Rear Queen Island Bed", "U-Shaped Dinette Lounge") — use descriptive names, not generic labels
-Kitchen: state appliance brand where badge is visible or known for the model (e.g. "Dometic Gas Stove & Fridge", "Smev 3-Burner Gas Cooktop") — brand names are a value signal
-Air conditioning: state brand if known (e.g. "Dometic Air-Conditioning", "Houghton Belaire") — always note if fitted
-Bathroom: "Ensuite Shower & Toilet" if self-contained — always note if ensuite layout confirmed
-Exterior: Side Awning — always note if fitted; Gas Bottle Holders At Front/Rear if visible
-Chassis/running gear: Al-Ko/Cruisemaster independent coil suspension or leaf spring, electric brakes (make if visible)
-Power: solar panels (Xw), batteries, 240v hookup if confirmed — omit if not confirmed
-Water: Xlt fresh water tank if confirmed — omit if not confirmed
+Length: Xmm (Xft) — always state length in BOTH mm and feet in this exact format: "6300mm (20.67ft)". Read Overall Length from compliance plate (in mm), divide by 304.8 to get feet. Never omit either unit. Never output metres only.
+Bed configuration: always describe (e.g. "2x Single Bunks Plus Forward Double Bed", "Rear Queen Island Bed", "Front Queen Bed", "U-Shaped Dinette Lounge") — use descriptive names, not generic labels. Apply your knowledge of this make/model if layout not directly visible.
+Kitchen: state appliance brand where badge is visible or known for the model (e.g. "Dometic Gas Stove & Fridge", "Smev 3-Burner Gas Cooktop", "Thetford Gas Cooktop") — brand names are a value signal. Always name both cooktop and fridge brands if known.
+Hot water system: state brand if visible or known (e.g. "Suburban Hot Water System", "Truma HWS") — omit if not confirmed.
+Air conditioning: state roof unit brand if known (e.g. "Dometic Air-Conditioning", "Houghton Belaire Air-Conditioning", "Ibis 4 Air-Conditioning") — always note if fitted; buyers expect it called out explicitly.
+Bathroom: "Ensuite Shower & Toilet" if self-contained, "Separate Shower & Toilet" if separate, "Separate Toilet" if toilet-only — always describe bathroom layout if confirmed.
+Exterior: Side Awning — always note if fitted; Gas Bottle Holders At Front if visible at drawbar; External Shower if fitted.
+Solar: Xw Solar Panel(s) — note wattage from panel label if visible. Omit if not confirmed.
+Power: battery system, 240v hookup if confirmed — omit if not confirmed.
+Water: Xlt fresh water tank if confirmed — omit if not confirmed.
 Sold As Is, Untested & Unregistered.
 
 Example:
@@ -903,6 +910,8 @@ Sold As Is, Untested & Unregistered.
 
 MOTOR VEHICLE (CAR)
 Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below. Do NOT use a single-line code format — write a full paragraph description.
+
+MINIMAL DATA RULE (cars/utes): If only make/model/year and body type are confirmed, apply your training knowledge of that specific model/variant to fill in engine displacement, cylinder count, fuel type, and transmission type — e.g. Toyota HiLux SR5 2.8L 4-Cylinder Turbo Diesel, 6-Speed Automatic; Ford Ranger Wildtrak 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Mitsubishi Triton GLS 2.4L 4-Cylinder Turbo Diesel, 6-Speed Automatic; Toyota LandCruiser 200 Series 4.5L V8 Twin-Turbo Diesel, 6-Speed Automatic; Ford Everest Titanium 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Toyota Corolla Ascent Sport 2.0L 4-Cylinder Petrol, CVT Automatic. Use these inferred specs only when universally true for that variant — if a model offered multiple engine options for the same variant/year, omit displacement and state only cylinders and fuel type. Drive type (4WD/2WD/AWD) is standard knowledge for a variant and must always be included.
 
 SEDAN / SUV (subtype: sedan or suv)
 Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) paragraph template below. Write as ONE continuous paragraph including: Year, Make, Model, Variant, body type, number of seats, engine (displacement + cylinders + fuel type), transmission, drive type, colour. Close with the footer on its own line.
@@ -972,7 +981,9 @@ Do NOT use dot points.
 
 ATTACHMENTS / GENERAL GOODS
 Year (if known), Make, Model
-Key specs by category — use the subtype to pick the right focus, then apply your training knowledge of that exact make/model:
+Key specs by category — use the subtype to pick the right focus, then apply your training knowledge of that exact make/model.
+
+MINIMAL DATA RULE (general goods/attachments): If only make/model are known and no photos provide additional detail, write a clean, factual description that: (1) states what the item is in plain terms, (2) applies your training knowledge of that exact make/model to include any universally-known specs (output, capacity, weight class, coupling type), and (3) closes with the correct footer. Do not pad with vague filler — a short accurate description is better than a long hollow one. Example: if only "Epiroc SB202 Hydraulic Breaker" is known, include the known weight class (~200kg), pin diameter, and housing type from your training knowledge.
 
 GENERATORS (subtype: plant_equipment or miscellaneous):
   Output: XkVA / XkW rated, fuel type (Diesel / Petrol / LPG), single or 3-phase

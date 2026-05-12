@@ -42,7 +42,7 @@ Step 1 — Identify plates and read them in this priority order:
 - ENGINE BADGE or VALVE COVER: may show Engine Manufacturer and Engine Series/Model
 - WEIGHT RATING PLATE (cab card): GVM, GCM, axle load ratings
 - VIN PLATE (stamped on chassis rail): 17-character VIN number
-- FORKLIFT DATA PLATE: contains Max Lift Capacity, Max Lift Height, rated load
+- FORKLIFT DATA PLATE: bolted to the lower mast column (driver's side, facing the operator) or riveted to the underside of the overhead guard. Contains: Make, Model, Serial Number, Year of Manufacture, Max Lift Capacity (rated load in kg at 500mm load centre), Max Lift Height (mm), Tilt (degrees F°/B°), Unladen Weight (kg). Check BOTH the mast column AND the overhead guard — some machines have plates in both locations. Serial number may be labelled "Serial No", "S/N", or "Machine No".
 
 READING BUILD PLATES / COMPLIANCE PLATES:
 - Build plates are metal or adhesive labels riveted or stuck to the chassis, door jamb, engine bay firewall, or cab interior
@@ -97,7 +97,16 @@ READING HOURMETERS:
 - Common formats: XXXX.X or XXXXX — extract the exact number shown, digits only (no "hrs", "h", or "hours" suffix)
 - Common locations by machine type:
   - Excavators: left-side monitor panel inside cab (often a dedicated LCD gauge cluster)
-  - Forklifts: overhead guard panel or dashboard display (labelled "HRS" or clock icon)
+  - Forklifts: instrument display varies by brand:
+      * Toyota 8-series (8FG/8FD/8FBE): multi-function LCD display on the dashboard column in front of the operator — hours shown as "HRS" or clock symbol, typically a large numeric readout centre-screen
+      * Toyota 7-series (older): analog hourmeter gauge on the dashboard or overhead guard, round dial with mechanical digits
+      * Crown (SC/FC/C-5): colour LCD display on the overhead guard or dashboard — hours on the main screen alongside battery state of charge
+      * Linde (H-series/E-series): digital display integrated into the steering column head — hours labelled "Betriebsstunden" or "h" on the screen
+      * Hyster/Yale: LCD instrument panel on the dashboard column — hours shown as a numeric value with "hrs" label
+      * Jungheinrich: small LCD display on the overhead guard cross-member — hours visible on main screen
+      * Komatsu: analog or digital instrument panel on dashboard — hours on dedicated gauge or screen
+      * Nissan/UniCarriers: analog hourmeter on dashboard, round gauge labelled "HOURS"
+      If key is OFF, the display may be blank — look for photos taken with ignition on
   - Tractors/agricultural: cab instrument cluster (may be combined with engine hours)
   - Generators/compressors: front panel label or digital meter (often an adhesive or surface-mount gauge)
   - Trucks with cranes or EWPs: secondary instrument panel or console
@@ -114,8 +123,36 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
   4. AXLE CONFIG — count axle lines from side exterior photos. One axle group of 3 lines = Tri-Axle (most common semi). Two close axles = Tandem. Four axles = Quad-Axle. For dog trailers count the REAR axle group only.
   5. ATM and TARE — read from plate first. If plate not clear, estimate: Tri-axle semi → ATM 42500, Tare 7500–9500 (curtainsider), 8500–11000 (tipper), 6000–8000 (flat deck). Tandem semi → ATM 28000–34000. Dog tandem → ATM 22000–28000. Use medium confidence for estimates.
 - EARTHMOVING: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission (include brand where known — Cat own powershift, Komatsu PCSS, Komatsu HST, Volvo PT1851/PT1901, Doosan powershift), emissions_tier (Tier 4 Final = post-2014 models; confirm from engine bay sticker if visible), operating_weight (stored in tare field), capacity (GP bucket capacity in m³ for excavators — e.g. Cat 320 = 0.9m³, Cat 330 = 1.2m³, Cat 349 = 2.1m³, Komatsu PC200 = 0.8m³, PC300 = 1.4m³, Hitachi ZX200 = 0.8m³, ZX330 = 1.4m³; bucket capacity in m³ for wheel loaders), track_type (infer from undercarriage/exterior photos or machine class: excavators and dozers >8t = "Steel", mini excavators ≤8t and CTLs = "Rubber"; null for wheeled machines), and torque_rpm (peak torque at rated RPM — format "X Nm @ Y rpm", e.g. Cat 320 = 1,450 Nm @ 1,400 rpm, Komatsu PC200 = 1,068 Nm @ 1,500 rpm, Cat 966 loader = 1,457 Nm). Operating weight examples: Cat 320 = 20,800kg, Cat 330 = 30,600kg, Komatsu PC200 = 20,100kg, Komatsu PC300 = 30,000kg; wheel loaders: Cat 950 = 18,500kg, Cat 966 = 24,000kg
-- FORKLIFTS: infer max_lift_capacity, max_lift_height, fuel_type, engine_manufacturer, engine_model
+- FORKLIFTS: Use Make + Model + Year to infer the following fields when not directly readable from the data plate:
+  - max_lift_capacity: decode from model number (last 2 digits × 100kg). Toyota 8FG25→2500kg, 8FD30→3000kg, 8FBE18→1800kg; Linde H25→2500kg, H50→5000kg; Komatsu FG25→2500kg; Hyster H2.5FT→2500kg, H3.5FT→3500kg, H5.0FT→5000kg; Yale GDP30→3000kg; Crown SC6040→2000kg, FC5200→2000kg; Jungheinrich EFG320→2000kg, EFG425→2500kg.
+  - max_lift_height: if not on data plate, infer from mast type. Simplex/Monomast→3000mm; Duplex standard→4500mm; Triplex standard→6000mm; Triplex high→7000mm. Reach trucks→up to 12000mm.
+  - mast_type: infer from visible stage count in photos (2=Duplex, 3=Triplex, 4=Quad) OR from model suffix if present (e.g. Toyota 8FG25 with no suffix=Duplex standard; "H" suffix=Triplex high; Linde H25 standard=Duplex). State as: Simplex, Duplex, Triplex, or Quad.
+  - fuel_type: model prefix decode — Toyota FBE/FB/8FB=Electric, FG/8FG=LPG, FD/8FD=Diesel; Linde E-series=Electric, H-series=Diesel or LPG; Komatsu FB=Electric, FG=LPG, FD=Diesel; Crown SC/FC/ESR/RR=Electric; Jungheinrich EFG/ETR=Electric; Hyster J-series=Electric, H-series=LPG or Diesel; Yale ERP=Electric, GLP=LPG, GDP=Diesel. Visual cues override model: visible LPG cylinder on rear counterweight bracket=LPG; charging port or exposed battery=Electric; exhaust stack + no cylinder=Diesel.
+  - engine_manufacturer: Toyota LPG→Toyota (4Y); Toyota Diesel→Toyota (1DZ/2Z); Linde Diesel→Deutz or Perkins; Komatsu LPG→Nissan K25; Hyster/Yale LPG→Mazda FE; Hyster/Yale Diesel→Yanmar or Kubota; Nissan FD→Nissan (TD27); TCM FG→Nissan K21; Electric forklifts→"Electric Motor".
+  - engine_model: Toyota 8FG (LPG)→4Y; Toyota 7FG (LPG)→4Y; Toyota 8FD (Diesel)→1DZ-II; Toyota 7FD (Diesel)→1DZ; Linde H25D→Deutz BF4M2012; Linde H50D→Perkins 1104C; Komatsu FG25→Nissan K25; Hyster H2.5FT LPG→Mazda FE; Yale GDP30→Yanmar 4TNV98; Nissan FD25→TD27; TCM FG25→Nissan K21. Electric forklifts→null.
+  - truck_weight (unladen weight): Toyota 2.5T LPG≈3900kg, Toyota 3.0T LPG≈4200kg, Toyota 3.5T LPG≈4400kg, Linde H25≈3500kg, Linde H50≈5800kg, Hyster H2.5FT≈4000kg. Infer at medium confidence only.
+  - stages: count mast rail sections in photos — 2=Duplex, 3=Triplex, 4=Quad. If not visible, infer from mast_type.
+  - type: Counterbalance (standard forklift with rear counterweight), Reach Truck (narrow-aisle, extended chassis), Order Picker (platform rises with forks), Pallet Stacker (walkie/pedestrian), Electric Pallet Jack (walk-behind, no mast elevation), Telehandler (extendable boom).
+  - attachments / side shift: actively inspect the carriage (the horizontal beam the forks hang from) for a side shift fork frame — a sliding steel frame with hydraulic cylinder(s) that allows the entire fork assembly to move left/right. Side shift is VERY common on counterbalance forklifts — if you can see a sliding frame or extra hydraulic cylinder at the carriage, confirm side shift present. Other attachments to look for: fork positioner (forks spread apart by hydraulics), paper roll clamp, bale clamp, rotator, push-pull attachment.
+  - tilt_degrees: standard tilt for counterbalance forklifts is 6°F/5°B (Toyota) or 5°F/5°B (Linde/Hyster). Infer at medium confidence if not on plate.
 - AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission
+- CARAVANS: once Make + Model + Year are identified, infer or extract the following:
+  - trailer_length: read "Overall Length" from the compliance plate or body compliance sticker (typically in mm). Divide mm by 304.8, round to 2 decimal places, output as "XX.XXft" (e.g. 6300mm → "20.67ft"). Common AU lengths: 4877mm=16ft, 5182mm=17ft, 5486mm=18ft, 5791mm=19ft, 6096mm=20ft, 6401mm=21ft, 6706mm=22ft, 7010mm=23ft. Never output in metres — always feet.
+  - atm: read from compliance plate "ATM" field in kg. Only extract if directly visible — never estimate.
+  - compliance_date: read "Date of Manufacture" or "DOM" from compliance plate (format MM/YYYY). Compliance plate is typically inside a storage cupboard near the entry door, inside the front boot, or on the drawbar A-frame.
+  - suspension: Al-Ko Independent Coil is the most common Australian caravan suspension system — infer at medium confidence if not visible and model is consistent with it. Cruisemaster is common on off-road vans. Leaf spring is older or entry-level. Only use "high" confidence if visible in undercarriage photos.
+  - brakes: Electric Brakes are mandatory on Australian-registered caravans over 750kg ATM — infer "Electric Brakes" at medium confidence if not stated. Disc Brakes are a premium upgrade — only note if confirmed visible or known for that model.
+  - extras: actively scan ALL photos for the following and name brands where readable:
+    - Air conditioning: look for roof-mounted unit. Read brand from unit housing: Dometic (most common — distinctive white rectangular unit), Houghton Belaire, Ibis 4, Truma Aventa. Always note brand if readable.
+    - Solar panels: scan roof photos for flat dark panels. Read wattage from panel label or MPPT controller display (e.g. "200W"). Note quantity if multiple panels (e.g. "2x 200W Solar Panels").
+    - Hot water system: check storage bay or external service hatch for unit housing. Read brand: Suburban (most common AU van HWS), Truma, Rinnai, Aquastream. Note if gas/electric/combination.
+    - Side awning: visible as rolled tube along the upper side wall or deployed. Note brand if readable (Dometic, Carefree, Coast).
+    - Gas bottle holders: typically at the front A-frame. Note position (front/rear) if visible.
+    - Annexe: canvas or fabric room attached to side — note if visible or stored.
+    - Generator: standalone unit in external bay or mounted to chassis — note brand/model if readable.
+    - External shower: tap/hose fitting on rear or side wall.
+    - Slide-out sections: wall section that extends outward — always note if visible; significant value add.
+  - Never infer or fabricate serial, VIN, ATM, tare, or odometer — only extract these if directly visible on a plate.
 - MARINE: infer hull_material from visual (fibreglass/aluminium most common), motor_type from photo (outboard vs inboard), number_of_engines from visible motors, steering_type from helm setup
 - VEHICLES: infer engine_type, fuel_type, transmission, drive_type from make/model/year knowledge. Read VIN from door jamb plate (driver or passenger side) or windscreen base — 17-character alphanumeric, often stamped or on an adhesive label. Read rego plate number from exterior photos showing the front or rear plate — Australian state plates are rectangular, alphanumeric; read exactly as shown (e.g. "ABC-123", "T123-AB"). Read odometer from instrument cluster — extract exact digits only, return null if any digit is unclear. Identify body type from exterior shape. Identify colour from exterior paint including finish qualifier (Metallic, Pearl, Matte) where distinguishable — e.g. "Pearl White", "Metallic Silver", "Graphite". For extras, actively scan interior photos for: alloy wheels, sunroof, leather seats, heated seats, reverse camera, parking sensors, Apple CarPlay/Android Auto (visible on infotainment screen or dash), wireless charging pad, premium audio (Bose/JBL/Harman badges), blind-spot monitoring, adaptive cruise control. Scan exterior photos for: tow bar, bull bar, nudge bar, canopy/tray top, side steps/running boards, roof rack, snorkel, winch, aftermarket wheels, spot lights, UHF antenna.
 - GENERAL GOODS — VISUAL IDENTIFICATION: For general goods, identify the item from the photo even when no data plate is present. Visual identification rules:
