@@ -5,7 +5,7 @@
  * Processes a File before upload:
  * 1. Reads EXIF orientation with exifr.rotation()
  * 2. If rotation needed, redraws onto canvas to bake pixels correctly (strips EXIF)
- * 3. Compresses to max 1600px longest side at 0.88 quality (JPEG output)
+ * 3. Compresses to max 1400px longest side at 0.82 quality (JPEG output)
  *
  * Falls back gracefully at every step — if EXIF read or canvas rotation fails,
  * skips that step and proceeds with compression only. Never throws.
@@ -52,10 +52,10 @@ export async function processImageForUpload(file: File): Promise<File> {
   try {
     const imageCompression = (await import('browser-image-compression')).default
     return await imageCompression(sourceFile, {
-      maxWidthOrHeight: 1600,
+      maxWidthOrHeight: 1400,
       useWebWorker: true,
       fileType: 'image/jpeg',
-      initialQuality: 0.88,
+      initialQuality: 0.82,
     })
   } catch {
     // Compression failed — return uncompressed (better to upload large than not upload)
