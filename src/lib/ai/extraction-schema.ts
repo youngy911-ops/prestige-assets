@@ -113,7 +113,19 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
 - AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission
 - MARINE: infer hull_material from visual (fibreglass/aluminium most common), motor_type from photo (outboard vs inboard), number_of_engines from visible motors, steering_type from helm setup
 - VEHICLES: infer engine_type, fuel_type, transmission, drive_type from make/model/year knowledge. Read VIN from door jamb plate or windscreen base. Read registration from plates. Read odometer from instrument cluster. Identify body type, colour, and extras from photos.
-- GENERAL GOODS: read make/model/serial from any visible data plate, badge, or label. For single items (generators, compressors, pumps), extract brand and model from the unit badge. For mixed lots (pallets of tools, equipment bundles), use extras to list all visible items with quantities where countable (e.g. "Approx 20x assorted hand tools, 3x power tools, 1x toolbox"). Return null for make/model/year if no plate is visible rather than guessing.
+- GENERAL GOODS: read make/model/serial from any visible data plate, badge, or label. Apply subcategory-specific extraction:
+    - plant_equipment: generators — read kVA rating and phase from badge or data plate; compressors — read CFM/L-min and bar/psi from plate; pumps, welders, light towers, concrete mixers — read make/model from badge or data plate, capture rated output (kW, CFM, bar, litres)
+    - tools_toolboxes: read brand from tool body or handle; count items in a lot (e.g. "approx 15x hand tools"); for toolboxes read make and dimensions if visible on a label
+    - hospitality: commercial kitchen equipment — read make/model from badge; note capacity in litres and phase (240V single / 415V 3-phase); coffee machines, refrigeration units — read make/model from front panel badge
+    - agriculture: attachments (buckets, blades, bale spikes, slashers) — note pin sizes and working width in mm from any visible stamping or label
+    - gardening_landscaping: mowers — read make/model from badge, note deck size in inches or mm; chainsaws — note bar length; brushcutters, blowers — read brand from body
+    - it_computers: read brand/model from front bezel or sticker; screen size from label; spec sticker (RAM, CPU, storage) if visible
+    - medical: read make/model from badge; note any certification or service labels visible
+    - office: furniture lots — count and describe (quantity + type in extras); individual equipment — read brand/model from badge
+    - retail_fit_out: shelving — note dimensions if label visible; display units, counters — describe type and approximate dimensions
+    - signage: note dimensions, material, and whether illuminated or not
+    - miscellaneous / goodwill / retail_stock / jewellery_watches_collectables / other / health_fitness: describe visible contents in extras, estimate quantity, call out notable branded items
+    - For mixed lots: use extras to list all visible items with quantities (e.g. "Approx 20x assorted hand tools, 3x power tools, 1x toolbox"). Return null for make/model/year if no plate is visible rather than guessing.
 
 Step 3 — DAMAGE & CONDITION ASSESSMENT (especially for VEHICLES):
 Carefully examine ALL photos for visible damage and condition issues. This is critical for auction cataloguing.

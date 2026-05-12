@@ -1021,9 +1021,49 @@ OFFICE FURNITURE / FITOUT (subtype: office or retail_fit_out):
   Material / finish
 
 AGRICULTURAL ATTACHMENTS / IMPLEMENTS (subtype: agriculture):
-  Item type: header / auger / sprayer boom / seeder toolbar
-  Working width: Xm, coupling type
+  Item type: header / auger / sprayer boom / seeder toolbar / bucket / blade / bale spike / slasher
+  Working width: Xm or width Xmm, coupling type, pin sizes if visible
   Brand, model, year if on plate
+
+GARDENING & LANDSCAPING (subtype: gardening_landscaping):
+  Item type: ride-on mower / zero-turn mower / push mower / chainsaw / brushcutter / blower / hedger / line trimmer
+  For mowers: deck size in inches and mm (e.g. "42in (1067mm) Deck"), engine make and displacement
+  For chainsaws: bar length in inches or cm (e.g. "18in Bar")
+  For brushcutters/blowers: brand, engine displacement or wattage
+  Hours if shown on hourmeter
+  Condition notes if visible
+
+HEALTH & FITNESS (subtype: health_fitness):
+  Item type: treadmill / elliptical / exercise bike / rower / weight bench / rack / gym machine
+  Brand and model from badge
+  Key specs: max user weight, dimensions, resistance type, speed range if known
+  For lots: quantity and item types (e.g. "Approx 8x dumbbells, 1x bench, 1x rack")
+  Condition notes if visible
+
+JEWELLERY / WATCHES / COLLECTABLES (subtype: jewellery_watches_collectables):
+  Describe visible items: type (ring / bracelet / watch / coin / figurine / artwork / memorabilia)
+  Brand / hallmarks / markings if visible (e.g. "750" for 18ct gold, brand name on watch dial)
+  Quantity if a lot (e.g. "Approx 12x assorted jewellery items")
+  Visible condition notes only — do not assess quality or value
+
+GOODWILL (subtype: goodwill):
+  Describe what is visible from photos — treat as a mixed goods lot
+  List item types present with approximate quantities (e.g. "Assorted clothing, homewares, and small appliances")
+  Note any notable branded items visible
+  Do not speculate on items not visible in photos
+
+RETAIL STOCK (subtype: retail_stock):
+  Describe visible stock: item types, brands where legible, approximate quantity or pallet count
+  Note packaging condition (new in box / open / loose)
+  Example: "Approx 40x assorted skincare products, mixed brands, new in packaging"
+
+SIGNAGE (subtype: signage):
+  Sign type: illuminated / non-illuminated, LED / fluorescent / printed / vinyl / neon
+  Dimensions: Xmm (W) x Xmm (H) if readable or estimable from photos
+  Material: aluminium / acrylic / steel / fabric / foam board
+  Single-sided or double-sided
+  Mounting type if visible (freestanding / wall-mount / suspended)
+  Condition: note any cracked faces, dead LEDs, or fading
 
 EARTHMOVING ATTACHMENTS (subtype: plant_equipment):
   Item type: bucket / hammer / auger / ripper / thumb / tilt bucket
