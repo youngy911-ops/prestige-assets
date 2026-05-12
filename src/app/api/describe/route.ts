@@ -381,10 +381,40 @@ Connection type
 Sold As Is, Untested & Unregistered.
 
 PLANT TRAILER
-Line 1: Year, Make, Model, Plant Trailer. Axle config.
-Deck dimensions: L x W mm
-Ramp type, payload: Xt
-Winch if fitted, tie-down points
+Line 1: Year, Make, Model, Plant Trailer. Axle config, GTM
+Deck dimensions: Xmm (L) x Xmm (W) — state deck material (checker plate / steel / alloy) if known; include "Pressed Checker Plate" or "Steel Deck" verbatim from notes
+Payload: Xt GTM (mandatory — always on the specs line, not a separate line)
+Hitch type: always state (Pintle Ring Hitch / 50mm Ball / Ringfeder / Tridem Hitch — buyers need hitch compatibility)
+Axle brand if known (Fuerma, Dexter, Hendrickson, SAF-Holland)
+Ramp type: Fold-Down Mesh Ramps / Hydraulic Ramps / Swing-Up Ramps — always state ramp configuration
+Extras: spare tyre holder(s), stabiliser legs, toolboxes, mounting cage, winch — note position (chassis-mounted, LHS vertical, undermount)
+Sold As Is, Untested & Unregistered.
+
+Example:
+Ross Allen Trucks Payload 10T Plant Trailer
+
+Dual-Axle Tandem, 10,000kg GTM, 6200mm (L) x 2450mm (W) Pressed Checker Plate Deck With Tapered Front & Side Rails, Pintle Ring Hitch, Rear Stabiliser Legs, Fold-Down Mesh Ramps With Extra Set Included, Dual Spare Tyre Holders, LHS Vertical Mounting Cage, Chassis-Mounted Toolbox, Fuerma Axles
+
+Sold As Is, Untested & Unregistered.
+
+DROP DECK SEMI-TRAILER
+Line 1: Make, Model, Drop Deck Semi-Trailer (include overall length and ATM/GTM in title if known)
+Overall length: XXft — always state overall length for drop decks; buyers need this for permit assessment
+Top deck length: Xmm, bottom deck length: Xmm — always state both deck lengths separately
+ATM/GTM: always on the specs line; state both if known
+Hitch type: K Hitch / Ring Feeder / Pintle — always state; include axle config (Tri-Axle, Tandem)
+Ramp type: Hydraulic Rear Ramp / Mechanical Fold-Down Ramps / Swing Ramps — always describe
+Container pins: always note if fitted (buyers running containers need to know)
+Toolboxes: note quantity, position (undermount / side-mounted), and size if known
+Brake valve brand: Wabco / Haldex / Knorr-Bremse — note if visible on valve body
+Water tank if fitted: Undermount Water Tank
+Sold As Is, Untested & Unregistered.
+
+Example:
+Anda ST3 Drop Deck Semi-Trailer
+
+44ft Overall Length (Top Deck 3900mm, Bottom Deck 9500mm), 45,000kg ATM, 20,000kg GTM, K Hitch Tri-Axle, Hydraulic Rear Ramp, Container Pins, 4x Undermount Toolboxes, Undermount Water Tank, Wabco Brake Valve
+
 Sold As Is, Untested & Unregistered.
 
 WALKING FLOOR TRAILER
@@ -602,21 +632,30 @@ This subtype is a Salesforce system artifact. Describe whatever earthmoving asse
 Sold As Is, Untested & Unregistered.
 
 TRACTOR
-Year, Make, Model, Tractor
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Type (IVT / CVT / Powershift / Manual)]
-4WD / 2WD
-Front/rear 3-point linkage lift capacity: Xkg
-PTO: speed (rpm), power (kW/HP)
+Year, Make, Model, [4WD Compact Utility / Row Crop / Utility] Tractor (with any implement names in the title if fitted, e.g. "With Cutting Disc & Flail Mower")
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Full Transmission Name e.g. 3-Range Hydrostatic Transmission / 16-Speed Powershift / CVT]
+Attachments/implements: list each by make and model if known (e.g. cutting disc, flail mower with VIN/serial if on plate, weight if known)
+Rear 3-point linkage, PTO: always note if fitted
 Remotes: X
 Front loader: make, capacity if fitted
 Front tyre: XXX/XX RXX, rear tyre: XXX/XX RXX
+Tyre type (Industrial / Agricultural) if visible
+Sold As Is, Untested & Unregistered.
+
+Example (compact tractor with implements):
+2020 Kubota B3150SUHD 4WD Compact Utility Tractor With Cutting Disc & Flail Mower
+
+Kubota V1505 1.5-Litre 4-Cylinder Diesel, 22.8kW (31hp), 3-Range Hydrostatic Transmission
+
+Great Western Manufacturing Left-Side Cutting Disc, Rear Weedermann B-869192 Flail Mower (Typ Whisper Twister, VIN 21446030004201016, 2020, 205kg), Rear 3-Point Linkage, PTO, Industrial Tyres
+
 Sold As Is, Untested & Unregistered.
 
 COMBINE HARVESTER
 Year, Make, Model, Combine Harvester
 Header: Xft Make/Model front (header width in FEET — Australian industry standard)
 Grain tank: XL
-Engine line: [Make] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name if applicable]
 Unloading auger reach: Xm, unload rate XL/s
 Threshing system: rotary / conventional, rotor type if applicable
 Both engine hours AND rotor/separator hours if available (they diverge — buyers need both)
@@ -648,7 +687,7 @@ SPRAY RIG / SPRAYER
 Year, Make, Model, [Self-Propelled / Trailed] Sprayer
 Boom width: Xm (metric — Australian standard), boom material (steel / carbon fibre)
 Tank capacity: XL, tank material (poly / stainless / fibreglass)
-Engine line (self-propelled only): [Engine Code] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
+Engine line (self-propelled only): [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 GPS section control if fitted — name brand verbatim (Raven, TeeJet, Trimble, Norac, John Deere)
 Nozzle type/spacing (Xcm)
 Sold As Is, Untested & Unregistered.
@@ -661,7 +700,43 @@ Pickup width: Xm
 Output: X bales/hr if known
 Sold As Is, Untested & Unregistered.
 
-MOWER / CONDITIONER
+RIDE-ON MOWER / ZERO-TURN MOWER
+Year, Make, Model, [Zero-Turn / Ride-On] Mower
+Engine line:
+  - Diesel: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged Diesel, [X]kW ([X]hp), [Emission Rating e.g. Tier 4 Final if known], [Transmission Brand and Name]
+  - Petrol (large engine): [Engine Code] [X.X]-Litre [N]-Cylinder Petrol, [X]kW ([X]hp), [Transmission Brand and Name]
+  - Petrol (small/V-twin): [Engine Code] [XXXcc] [V-Twin / Single-Cylinder] Petrol, [X]kW ([X]hp), [Transmission Brand and Name e.g. Hydro-Gear ZT-2800 Hydrostatic Transmission]
+Deck: [X]in ([X]mm) [blade count]-Blade [fabricated steel / stamped steel / mulching] Deck, discharge type (side / rear / mulch)
+Deck lift type (foot-operated / electric)
+Seat type (suspension / high-back / bolstered)
+Key extras (armrests, mowing speed if known)
+Sold As Is, Untested & Unregistered.
+
+Key rules for mowers:
+- Deck size in BOTH imperial and metric: "72in (1829mm)"
+- Engine displacement in cc for small petrol engines: "Kawasaki FR651V 656cc V-Twin Petrol"
+- Transmission brand always included: "Hydro-Gear ZT-2800 Hydrostatic Transmission" or "Kanzaki Hydrostatic Transmission"
+- Emission rating (Tier 4 Final) on engine line for diesel mowers
+
+Example (diesel zero-turn):
+2021 John Deere Z997R Diesel Zero-Turn Mower
+
+Yanmar 3TNV88C 1.64-Litre 3-Cylinder Turbocharged Diesel, 27.5kW (37.4hp), Tier 4 Final, Kanzaki Hydrostatic Transmission
+
+72in (1829mm) 7-Iron PRO Side-Discharge Deck, Live Independent PTO, ComfortGlide Suspension Seat
+
+Sold As Is, Untested & Unregistered.
+
+Example (petrol zero-turn):
+Hustler Raptor XD 42-Inch Zero-Turn Ride-On Mower
+
+Kawasaki FR651V 656cc V-Twin Petrol, 16.0kW (21.5hp), Hydro-Gear ZT-2800 Hydrostatic Transmission
+
+42in (1067mm) 2-Blade Fabricated Steel Deck, Foot-Operated Deck Lift, Bolstered High-Back Seat With Armrests, 7.5mph Mowing Speed
+
+Sold As Is, Untested & Unregistered.
+
+MOWER / CONDITIONER (AGRICULTURAL)
 Year, Make, Model, [Disc / Drum / Cutter Bar] Mower-Conditioner
 Cutting width: Xm
 Conditioner type: roller / impeller / flail
@@ -757,29 +832,42 @@ Describe the forklift or materials handling equipment visible using the most rel
 Sold As Is, Untested & Unregistered.
 
 CARAVAN
-Line 1: Year, Make, Model — apply your knowledge of this make/model to fill standard specs if not in inspection notes
-Body type / layout (e.g. Pop-Top, Full-Height, Slide-Out, Bunk Van, Family), length in feet
-Bed configuration: island queen / rear bunks / front U-dinette (describe what is visible or known for this model)
-Bathroom: separate shower, toilet, vanity — note ensuite layout if relevant
-Kitchen: 3-burner/4-burner cooktop (gas/electric), 3-way fridge or compressor fridge (size if known), microwave, sink, splashback
-Air conditioning: roof-mounted reverse cycle unit (make if badge visible e.g. Houghton, Ibis, Dometic)
-Power: solar panels (Xw if visible), deep-cycle batteries, 240v hookup, inverter if fitted
-Water: Xlt fresh water tank, Xlt grey water tank, instant gas hot water system or electric HWS
-Exterior: roll-out/slide-out awning, external shower, TV aerial/satellite dish, spare wheel(s), rear bumper bar, storage hatches, roof rack
-Chassis/running gear: Al-Ko/Cruisemaster independent coil suspension or leaf spring, electric brakes (make if visible), alloy/steel wheels, tyre size
+Line 1: Year, Make, Model, On-Road/Off-Road, Axle config (Dual-Axle / Single-Axle), Caravan — apply your knowledge of this make/model to fill standard specs if not in inspection notes
+Length: Xmm (Xft) — always state length in both mm and feet; use "6300mm (20.67ft)" format matching Slattery examples
+Bed configuration: always describe (e.g. "2x Single Bunks Plus Forward Double Bed", "Rear Queen Island Bed", "U-Shaped Dinette Lounge") — use descriptive names, not generic labels
+Kitchen: state appliance brand where badge is visible or known for the model (e.g. "Dometic Gas Stove & Fridge", "Smev 3-Burner Gas Cooktop") — brand names are a value signal
+Air conditioning: state brand if known (e.g. "Dometic Air-Conditioning", "Houghton Belaire") — always note if fitted
+Bathroom: "Ensuite Shower & Toilet" if self-contained — always note if ensuite layout confirmed
+Exterior: Side Awning — always note if fitted; Gas Bottle Holders At Front/Rear if visible
+Chassis/running gear: Al-Ko/Cruisemaster independent coil suspension or leaf spring, electric brakes (make if visible)
+Power: solar panels (Xw), batteries, 240v hookup if confirmed — omit if not confirmed
+Water: Xlt fresh water tank if confirmed — omit if not confirmed
+Sold As Is, Untested & Unregistered.
+
+Example:
+Coronel Caravans Lifestyle 638 On-Road Dual-Axle Caravan
+
+6300mm (20.67ft) Length, 2x Single Bunks Plus Forward Double Bed, U-Shaped Dinette Lounge, Dometic Gas Stove & Fridge, Dometic Air-Conditioning, Ensuite Shower & Toilet, Side Awning, Gas Bottle Holders At Front
+
 Sold As Is, Untested & Unregistered.
 
 CAMPER TRAILER
-Line 1: Year, Make, Model — apply your knowledge of this make/model for standard specs
-Body type: hard floor / soft floor / hybrid / pop-top
-Main bed: queen island bed or front queen fold-out, additional bunk/inner tent sleeping
-Ensuite or toilet/shower tent if fitted; vanity
-Kitchen: internal kitchen or external swing-out kitchen, X-burner cooktop (gas), Xlt fridge/freezer (compressor or 3-way, make if known)
-Air conditioning if fitted
-Power: Xw solar panels, Xlt lithium/AGM battery bank, 240v outlet
-Water: Xlt front tank, Xlt rear tank, grey water tank, 12v pump
-Awning(s): roll-out main awning, annex if fitted
-Chassis: independent trailing arm suspension, electric/override disc brakes, DO35 or equivalent hitch
+Line 1: Year, Make, Model, On-Road/Off-Road, Camper Trailer — apply your knowledge of this make/model for standard specs
+Body type: Canvas Fold-Out Tent / Hard Floor / Soft Floor / Hybrid / Pop-Top — use descriptive terms; "Canvas Fold-Out Tent With PVC Cover" if visible
+Roof Rack: note if fitted (e.g. "Roof Rack With Roller Bar") — always call out roof rack; buyers use for gear storage
+Storage: Aluminium Checker Plate Side Toolbox / Poly Side Box / Underbody Toolbox — note material and position
+Water: Undermount Water Tank / Xlt tank — always note if fitted; state brand if known
+Power: PowerPack / Xw solar panel / Xah battery bank / 12v outlets — state brand if badged (e.g. "PowerPack 12V Battery System With Dual USB & Accessory Ports")
+Tailgate/access: Side Mesh Drop-Down Tailgate / Rear Ramp — describe if visible
+Jockey Wheel: always note if fitted
+Spare tyre: always note position (e.g. "Spare Tyre Mounted Rear")
+Sold As Is, Untested & Unregistered.
+
+Example:
+2011 Customline Deluxe On Road Camper Trailer
+
+Canvas Fold-Out Tent With PVC Cover, Roof Rack With Roller Bar, Aluminium Checker Plate Side Toolbox, Undermount Water Tank, PowerPack 12V Battery System With Dual USB & Accessory Ports, Side Mesh Drop-Down Tailgate, Jockey Wheel, Spare Tyre Mounted Rear
+
 Sold As Is, Untested & Unregistered.
 
 MOTORHOME
@@ -1106,6 +1194,33 @@ CARAVAN EXAMPLE:
 Coronel Caravans Lifestyle 638 On-Road Dual-Axle Caravan
 
 6300mm (20.67ft) Length, 2x Single Bunks Plus Forward Double Bed, U-Shaped Dinette Lounge, Dometic Gas Stove & Fridge, Dometic Air-Conditioning, Ensuite Shower & Toilet, Side Awning, Gas Bottle Holders At Front
+
+Sold As Is, Untested & Unregistered.
+
+COMPACT TRACTOR EXAMPLE:
+2020 Kubota B3150SUHD 4WD Compact Utility Tractor With Cutting Disc & Flail Mower
+
+Kubota V1505 1.5-Litre 4-Cylinder Diesel, 22.8kW (31hp), 3-Range Hydrostatic Transmission
+
+Great Western Manufacturing Left-Side Cutting Disc, Rear Weedermann B-869192 Flail Mower (Typ Whisper Twister, VIN 21446030004201016, 2020, 205kg), Rear 3-Point Linkage, PTO, Industrial Tyres
+
+Sold As Is, Untested & Unregistered.
+
+DIESEL ZERO-TURN MOWER EXAMPLE:
+John Deere Z997R Diesel Zero-Turn Mower
+
+Yanmar 3TNV88C 1.64-Litre 3-Cylinder Turbocharged Diesel, 27.5kW (37.4hp), Tier 4 Final, Kanzaki Hydrostatic Transmission
+
+72in (1829mm) 7-Iron PRO Side-Discharge Deck, Live Independent PTO, ComfortGlide Suspension Seat
+
+Sold As Is, Untested & Unregistered.
+
+PETROL ZERO-TURN MOWER EXAMPLE:
+Hustler Raptor XD 42-Inch Zero-Turn Ride-On Mower
+
+Kawasaki FR651V 656cc V-Twin Petrol, 16.0kW (21.5hp), Hydro-Gear ZT-2800 Hydrostatic Transmission
+
+42in (1067mm) 2-Blade Fabricated Steel Deck, Foot-Operated Deck Lift, Bolstered High-Back Seat With Armrests, 7.5mph Mowing Speed
 
 Sold As Is, Untested & Unregistered.
 
