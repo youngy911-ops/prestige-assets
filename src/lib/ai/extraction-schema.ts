@@ -113,6 +113,13 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
 - AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission
 - MARINE: infer hull_material from visual (fibreglass/aluminium most common), motor_type from photo (outboard vs inboard), number_of_engines from visible motors, steering_type from helm setup
 - VEHICLES: infer engine_type, fuel_type, transmission, drive_type from make/model/year knowledge. Read VIN from door jamb plate or windscreen base. Read registration from plates. Read odometer from instrument cluster. Identify body type, colour, and extras from photos.
+- GENERAL GOODS — VISUAL IDENTIFICATION: For general goods, identify the item from the photo even when no data plate is present. Visual identification rules:
+    - Read brand names/logos printed directly on the item body (e.g. 'DeWalt' in yellow/black, 'Makita' in teal, 'Hilti' in red, 'Milwaukee' in red/black, 'Bosch' in blue/green, 'Ryobi' in green)
+    - Read model numbers embossed or printed on housings, trigger guards, gearboxes (e.g. 'DCD796', 'GA9020', '2804-20')
+    - Identify item type from shape/silhouette: drill = cylindrical tool with chuck, grinder = disc tool with guard, ladder = aluminium/fibreglass frame with rungs, scaffolding = tubular steel frame
+    - For hand tools without visible text: identify by shape (spanner, socket set, hammer, level) and estimate size/type
+    - For lots with multiple items: count clearly visible items and describe each type (e.g. 'Approx 8x assorted hand tools including spanners, socket set and hammer')
+    - Return what you can see — never return null for make/model/extras if the item is clearly identifiable by brand colour or logo alone
 - GENERAL GOODS: read make/model/serial from any visible data plate, badge, or label. Apply subcategory-specific extraction:
     - plant_equipment: generators — read kVA rating and phase from badge or data plate; compressors — read CFM/L-min and bar/psi from plate; pumps, welders, light towers, concrete mixers — read make/model from badge or data plate, capture rated output (kW, CFM, bar, litres)
     - tools_toolboxes: read brand from tool body or handle; count items in a lot (e.g. "approx 15x hand tools"); for toolboxes read make and dimensions if visible on a label
@@ -165,7 +172,7 @@ DAMAGE FIELD FORMAT:
   Tail Light RHS - Cracked lens
 - Be specific about location (driver/passenger, front/rear, LHS/RHS)
 - If NO damage is visible in any photo, return null for both fields
-- GENERAL GOODS: read make/model/serial from build plate or data label. DOM from compliance plate if present. Many items (attachments, hand tools) have no build plate — return null for missing fields rather than inferring.
+- GENERAL GOODS: read make/model/serial from build plate or data label. DOM from compliance plate if present. Many items (attachments, hand tools) have no build plate — use visual identification (brand colour, logo, embossed text on body) before returning null. See GENERAL GOODS — VISUAL IDENTIFICATION rules above.
 
 EXTRAS AND ATTACHMENTS — scan every photo, not just the compliance plate:
 - Do not focus only on the build plate. Look at every photo including wide shots, rear shots, interior shots, and photos of equipment stored with the asset.
