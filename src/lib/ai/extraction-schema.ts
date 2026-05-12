@@ -169,6 +169,34 @@ EXTERIOR PHOTO SCANNING — on every wide or full exterior shot, actively scan t
 - TRAILERS: check tarp systems (rolled back or fitted), load restraint gear visible on deck or headboard, toolboxes on headboard or chassis, spare tyres, ramps folded under the deck, reefer unit on refrigerated trailers
 Do not skip this scan because another photo shows a close-up of the data plate — each photo type reveals different information and all must be examined.
 
+TYRE SIDEWALL READING — when tyre sidewalls are visible in exterior or wheel photos:
+- Read the size marking stamped on the sidewall (e.g. "295/80R22.5", "11R22.5", "385/65R22.5", "265/70R17") — this is the most reliable source for tyre size
+- Read the tyre brand moulded on the sidewall (e.g. Bridgestone, Michelin, Continental, Goodyear, Yokohama, Toyo, Hankook)
+- This data is especially valuable for trucks and trailers where steer, drive, and trailer tyre specs differ — note position if distinguishable (steer vs drive vs trailer axle)
+- Add tyre size and brand to extras if not already captured in a dedicated tyre field
+
+ENGINE BAY LABELS — when engine compartment photos are included, look for:
+- Engine model badge on the rocker cover or valve cover (e.g. "X15" or "ISX15" on Cummins, "MX-13" on PACCAR, "DD15" on Detroit, "D13" on Volvo) — use this to confirm or correct the engine series field
+- Emissions compliance sticker (e.g. "Tier 4 Final", "Euro 6", "ADR 80/03") — extract to emissions_tier if available
+- Alternator brand badge if visible (e.g. Leece-Neville, Prestolite, Bosch)
+- Oil or coolant filter brand if legible — note in extras if notable (e.g. "Fleetguard filters fitted")
+- Any aftermarket performance or fuel-system components (e.g. cold air intake, aftermarket intercooler)
+
+CAB INTERIOR — DASHBOARD DETAILS — when interior photos show the dashboard:
+- GPS/navigation unit: note if present and brand if readable (e.g. Trimble, Garmin, factory integrated screen, PeopleNet, Navman)
+- UHF CB radio: note if visible; read model if legible (e.g. GME TX3520, Uniden UH950)
+- Additional gauges or monitoring systems: e.g. EGT gauge, tyre pressure monitoring display, load scale readout, engine monitoring panel
+- Air conditioning controls: note factory A/C vs aftermarket (e.g. Webasto, Thermo King cab unit)
+- Add all visible cab accessories to extras
+
+UNDERCARRIAGE PHOTOS — EARTHMOVING — when undercarriage or track photos are visible:
+- Track type: rubber tracks vs steel tracks (pad-and-link)
+- Track pad width: read if marked on pad, or estimate against known component sizes (e.g. sprocket tooth width)
+- Sprocket and idler condition: worn (teeth heavily rounded or cracked) vs good (sharp profile, minimal wear)
+- Roller condition: note flat spots, leaking seals, or excessive wear on any visible rollers
+- Undercarriage wear indicators: some machines have wear marks moulded into components — note percentage remaining if visible
+- Add undercarriage condition summary to extras (e.g. "Steel tracks, 60% undercarriage remaining, sprockets serviceable")
+
 Rules:
 - If a field value is not visible AND cannot be reasonably inferred from the identified vehicle, return null
 - Do NOT fabricate specific serial numbers, VINs, or odometer readings — only infer standard manufacturer specs
