@@ -668,13 +668,13 @@ Sold As Is, Untested & Unregistered.
 
 COMBINE HARVESTER
 Year, Make, Model, Combine Harvester
-Header: Xft Make/Model front (header width in FEET — Australian industry standard)
-Grain tank: XL
+Header: [X]ft [Make/Model] front (header width ALWAYS in feet — Australian industry standard; e.g. "36ft MacDon FD75 FlexDraper front"); state "Header included" or "Header not included — sold separately" — buyers pay a significant premium for machines sold with header
+Grain tank: [X]L; unload rate: [X]L/min (a primary buying decision for large operations — always include if known)
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name if applicable]
-Unloading auger reach: Xm, unload rate XL/s
+Unloading auger reach: Xm
 Threshing system: rotary / conventional, rotor type if applicable
-Both engine hours AND rotor/separator hours if available (they diverge — buyers need both)
-Yield mapping/monitor if fitted (brand named: AFS Pro, Harvest Monitor, Ag Leader)
+Hours: state BOTH engine hours AND rotor/separator hours — they diverge significantly over a machine's life and buyers need both (e.g. "4,820 Engine Hours, 3,100 Rotor Hours")
+Yield mapping/monitor if fitted (brand named: AFS Pro 700, Harvest Monitor, Ag Leader InCommand)
 GPS auto-steer if fitted (StarFire, Trimble, Topcon — named verbatim)
 Sold As Is, Untested & Unregistered.
 
@@ -700,19 +700,20 @@ Sold As Is, Untested & Unregistered.
 
 SPRAY RIG / SPRAYER
 Year, Make, Model, [Self-Propelled / Trailed] Sprayer
-Boom width: Xm (metric — Australian standard), boom material (steel / carbon fibre)
-Tank capacity: XL, tank material (poly / stainless / fibreglass)
+Boom width: [X]m (metric — Australian standard), boom material (steel / carbon fibre)
+Tank capacity: [X]L, tank material (poly / stainless / fibreglass)
+Pump type: centrifugal / diaphragm / piston (note brand if visible — Bertolini, Comet, Hypro)
+Nozzle spacing: [X]cm; nozzle type if labelled (flat fan / twin flat fan / air induction)
 Engine line (self-propelled only): [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-GPS section control if fitted — name brand verbatim (Raven, TeeJet, Trimble, Norac, John Deere)
-Nozzle type/spacing (Xcm)
+GPS section control if fitted — name brand and system verbatim (e.g. John Deere RowCommand, Case AIM Command, Raven Hawkeye, TeeJet 844E, Trimble Field-IQ, Norac UC5)
 Sold As Is, Untested & Unregistered.
 
 BALER
 Year, Make, Model, Baler Type (Round / Square / Large Square)
-Bale dimensions: Xm x Xm
-Tie type: twine / net / film
-Pickup width: Xm
-Output: X bales/hr if known
+Bale shape and dimensions: round baler — state bale diameter x width in mm (e.g. "1200mm diameter x 1230mm wide"); large square baler — state width x height x length in mm (e.g. "1200 x 900 x 2400mm")
+Tie type: twine / net / film (note number of twine wraps or net layers if labelled)
+Pick-up width: [X]m
+Output: [X] bales/hr if labelled
 Sold As Is, Untested & Unregistered.
 
 RIDE-ON MOWER / ZERO-TURN MOWER
@@ -728,8 +729,9 @@ Key extras (armrests, mowing speed if known)
 Sold As Is, Untested & Unregistered.
 
 Key rules for mowers:
-- Deck size in BOTH imperial and metric: "72in (1829mm)"
+- Deck size in BOTH imperial and metric: "72in (1829mm)" — always state both
 - Engine displacement in cc for small petrol engines: "Kawasaki FR651V 656cc V-Twin Petrol"
+- For diesel mowers, always include engine code and kW output (e.g. "Yanmar 3TNV88C 1.64-Litre 3-Cylinder Turbocharged Diesel, 27.5kW (37.4hp)")
 - Transmission brand always included: "Hydro-Gear ZT-2800 Hydrostatic Transmission" or "Kanzaki Hydrostatic Transmission"
 - Emission rating (Tier 4 Final) on engine line for diesel mowers
 
