@@ -496,14 +496,15 @@ Attachments Included if any
 Sold As Is, Untested & Unregistered.
 
 WHEEL LOADER
-Year, Make, Model, Wheel Loader
-Operating Weight
+Line 1: Year Make Model Wheel Loader (e.g. "2018 Caterpillar 950GC Wheel Loader")
+Operating Weight: XX,XXXkg Operating Weight
 Hours
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Brand/Name]
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), Tier 4 Final / Stage V
+Transmission: [Brand] [Model] [N]-Speed Powershift Transmission (e.g. "ZF 4WG-190 4-Speed Powershift Transmission" or "Cat CX28B Powershift Transmission")
 Enclosed Cab / ROPS
 Articulated steering, top speed if known
-Bucket: capacity in m³, width in mm (name bucket type if known — general purpose / rock / 4-in-1)
-Tyre size and brand if visible (e.g. 20.5R25 Michelin XHA2)
+Bucket: Xm³ [Type] Bucket, X,XXXmm Width (e.g. "3.0m³ General Purpose Bucket, 2,700mm Width" or "2.8m³ 4-In-1 Bucket, 2,600mm Width")
+Tyre spec if visible: XX.XRX Tyres (e.g. "20.5R25 Michelin XHA2 Tyres" or "20.5R25 Tyres")
 Extras (onboard scales, auto lube, rear hitch, forks if fitted)
 Attachments Included if any
 Sold As Is, Untested & Unregistered.
@@ -1332,12 +1333,33 @@ Tuff Tray Body 5600mm (L) x 2400mm (W), HMF 300 E4-4 Loader Crane (2021), Air Ho
 
 Sold As Is, Untested & Unregistered.
 
+EXCAVATOR EXAMPLE:
+2019 Caterpillar 320 GC Hydraulic Excavator
+
+20,200kg Operating Weight
+4,823 Hours
+Cat C4.4 ACERT 4.4-Litre 4-Cylinder Turbocharged Diesel, 103kW (138hp), Tier 4 Final
+600mm Rubber Tracks
+Enclosed Cab With Air Conditioning
+Steelwrist X18 Tilt Rotator Quick Hitch
+900mm GP Bucket, 0.9m³, 5-Tooth
+Boom: 5.7m | Arm: 2.5m
+Max Digging Depth: 6.53m
+
+Sold As Is, Untested & Unregistered.
+
 WHEEL LOADER EXAMPLE:
-2015 Case 521F Wheeled Loader
+2018 Caterpillar 950GC Wheel Loader
 
-FPT F4HFE413J 4.5-Litre 4-Cylinder Turbocharged Diesel, 98kW (131hp), Tier 4 Final, Powershift Transmission
-
-2400mm 4-In-1 Bucket, 1.3m³ Capacity, Loadmaster Load Monitoring Module, Auto Lube System, Bluetooth Radio, UHF Radio, Air Conditioning
+17,329kg Operating Weight
+3,241 Hours
+Cat C7.1 ACERT 7.1-Litre 6-Cylinder Turbocharged Diesel, 162kW (217hp), Tier 4 Final
+Cat CX28B 4-Speed Powershift Transmission
+Enclosed Cab With Air Conditioning
+Articulated Steering
+3.0m³ General Purpose Bucket, 2,700mm Width
+20.5R25 Michelin XHA2 Tyres
+Loadmaster Onboard Scales, Auto Lube System, Rear Hitch, Bluetooth Radio, UHF Radio
 
 Sold As Is, Untested & Unregistered.
 
