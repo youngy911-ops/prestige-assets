@@ -111,8 +111,8 @@ REFRIGERATED PANTECH
 Line 1: Year, Make, Model, Drive Type, Refrigerated Pantech
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Body dimensions Xmm (L) x Xmm (W)
-Refrigeration unit: make, model, fuel type
-Temperature range
+Reefer unit: make and model FIRST (e.g. Carrier Supra 850, Thermo King V-500), then fuel type (diesel/electric/multi-temp)
+Temperature range: −Xºc to +Xºc (or single-temp e.g. −18ºc)
 Sold As Is, Untested & Unregistered.
 
 BEAVERTAIL
@@ -133,11 +133,11 @@ Sold As Is, Untested & Unregistered.
 VACUUM TRUCK
 Line 1: Year, Make, Model, Drive Type, Vacuum Truck
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-Tank capacity: XkL
-Vacuum pump: make, type, CFM rating
-Hose length, hose diameter
+Tank capacity MUST appear first after engine line: XkL (e.g. 8kL, 12kL) — this is the primary buyer spec
+Vacuum pump: make, model, pump type (liquid ring / rotary lobe / centrifugal), CFM rating
+Hose: length x diameter (e.g. 30m x 100mm)
 Water tank capacity: XL
-Waste type: Wet / Dry
+Waste type: Wet / Dry / Combination
 Sold As Is, Untested & Unregistered.
 
 CONCRETE PUMP
@@ -152,20 +152,28 @@ Sold As Is, Untested & Unregistered.
 CONCRETE AGITATOR
 Line 1: Year, Make, Model, Drive Type, Concrete Agitator
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-Drum capacity: Xm³
-Drum speed
+Drum capacity MUST appear first after engine line: Xm³ (e.g. 7m³, 9m³) — this is the primary buyer spec
+Drum make/model if known, drum speed (RPM or low/high range)
 Water tank capacity: XL
-Chute type
+Chute type (fixed / swing / extending)
 Sold As Is, Untested & Unregistered.
 
 EWP (ELEVATED WORK PLATFORM)
 Line 1: Year, Make, Model, Drive Type, EWP
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-Boom type: Knuckle Boom / Straight Boom
-Max working height: Xm
-Basket capacity: Xkg
-Outriggers
-Certification status
+EWP line: [Brand] [Model] [Boom Type] EWP, [X]m Working Height, [X]kg Basket Capacity, Outriggers, [Certification status]
+  — boom type: Knuckle Boom / Straight Boom / Telescopic Boom
+  — certification status: In Current Certification / Not In Current Certification / Certification Unknown
+  — working height and basket capacity are the primary buyer specs — always lead with these
+Sold As Is, Untested & Unregistered.
+
+FORMAT EXAMPLE:
+2019 Hino 500 FM 260 4x2 EWP
+
+Hino J08E 7.7-Litre 6-Cylinder Turbocharged Diesel, 191kW (256hp), Automatic Transmission
+
+Elliott 17M Knuckle Boom EWP, 17m Working Height, 200kg Basket Capacity, Outriggers, Not In Current Certification
+
 Sold As Is, Untested & Unregistered.
 
 CRANE TRUCK
@@ -173,8 +181,11 @@ Line 1: Year, Make, Model, Drive Type, Crane Truck
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 
 Body builder, tray dimensions Xmm (L) x Xmm (W)
-Crane: make, model, boom type (knuckle/straight), capacity, cert status if known
-Hose reels, toolboxes, compressor if fitted
+Crane line: [Brand] [Model] [Boom Type] Crane (year if known), [X]t Capacity at [X]m, [Certification status]
+  — crane brand/model/capacity are the primary buyer specs — always lead with these
+  — boom type: Knuckle Boom / Straight Boom / Loader Crane
+  — certification status: In Current Certification / Not In Current Certification / Certification Unknown
+Hose reels, toolboxes, compressor, PTO details if fitted
 Sold As Is, Untested & Unregistered.
 
 FUEL TRUCK
