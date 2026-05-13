@@ -64,26 +64,22 @@ MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known a
 TIPPER
 Line 1: Year, Make, Model, Drive Type, Tipper
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque, [Full Transmission Brand and Name]
-Diff Locks, Exhaust Brake, Suspension type if known
-Key extras
-Body builder (name if known — common AU builders: Moore, Stoodley, Hamelex White, CJD, Hardox), dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox), rock lining if fitted, tarp type (electric roll / manual), tailgate type, Ringfeder hitch if confirmed
-Payload: Xkg
+Blank line
+Single body-detail line: body builder name if visible (common AU builders: Moore, Stoodley, Hamelex White, CJD), dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox), rock lining if fitted, tarp type (auto retractable / manual / pull-over), tailgate type, exhaust/engine brake brand, cruise control, load monitoring system, UHF, diff locks, Ringfeder hitch if confirmed
+Payload: Xkg if on plate
 Sold As Is, Untested & Unregistered.
 
 SERVICE TRUCK
-Line 1: Year, Make, Model, Drive Type, Service Truck or Tray/Crane Truck
+Line 1: Year, Make, Model, Drive Type, Service Truck or Tray/Crane Truck (use "Tray/Crane Truck" when a loader crane is fitted)
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Blank line
-Body builder, tray dimensions Xmm (L) x Xmm (W)
-Crane: make, model, capacity, cert status
-Toolboxes, compressor, inverter, solar, awnings, rack, lights etc.
-Tow hitch/airlines if fitted
+Single body-detail line: body builder name + tray dimensions Xmm (L) x Xmm (W), crane make/model/year if known, then all fitted items in one comma-separated run (hose reels, toolboxes with dimensions, compressor, inverter brand/wattage, solar, awnings, rack, reverse camera, tow hitch, rear airlines, UHF, sat nav, cruise control, lights, beacons)
 Sold As Is, Untested & Unregistered.
 
 RIGID TRUCK / PANTECH / CURTAINSIDER / TAUTLINER / VAN
 Line 1: Year, Make, Model, Drive Type, Body Type
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-Body dimensions Xmm (L) x Xmm (W), door type (roller door / swing doors) if known
+Body dimensions Xmm (L) x Xmm (W), door type always stated (Roller Door Rear / Swing Doors Rear / Side Door) if known — door type affects usability and is a key buyer detail
 Extras if any
 Sold As Is, Untested & Unregistered.
 
@@ -92,15 +88,16 @@ Example (Pantech):
 
 Hino N04C 4.0-Litre 4-Cylinder Turbocharged Diesel, 110kW (147hp), Automatic Transmission
 
-Pantech Body 3700mm (L) x 2200mm (W)
+Pantech Body 3700mm (L) x 2200mm (W), Roller Door Rear
 
 Sold As Is, Untested & Unregistered.
 
 FLAT DECK
 Line 1: Year, Make, Model, Drive Type, Flat Deck
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-Deck dimensions Xmm (L) x Xmm (W)
-Headboard, toolboxes, tie rails, stoneguard if fitted
+Deck dimensions Xmm (L) x Xmm (W) — metric only, no imperial
+Headboard (fixed / with roof rack / drop-down), toolboxes with dimensions if visible (e.g. "650mm Undermount Toolbox"), tie rails, stoneguard if fitted
+Tail lift: brand and SWL if fitted (e.g. "Tieman Swing-Under Tailgate Lift 600kg SWL")
 Tow hitch/airlines if fitted
 Sold As Is, Untested & Unregistered.
 
@@ -235,12 +232,23 @@ Sold As Is, Untested & Unregistered.
 
 TRAY TRUCK
 Line 1: Year, Make, Model, Drive Type, Tray Truck
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque (if known), [Full Transmission Brand and Name]
 
-Body builder, tray dimensions Xmm (L) x Xmm (W)
-Headboard, toolboxes, tie rails if fitted
+Body builder if known, tray dimensions Xmm (L) x Xmm (W) — metric only, no imperial; tray material (steel / alloy) if visible
+Headboard (fixed / with roof rack), rear tailboard if fitted
+Tail lift: brand and SWL always stated if fitted (e.g. "Tieman Swing-Under Tailgate Lift 600kg SWL", "Maxon TE-20 Tuckaway Tailgate Lift 750kg SWL")
+Toolboxes: state quantity, position (undermount / side-mounted), and dimension if visible (e.g. "1x 650mm & 1x 1000mm Undermount Toolboxes")
+Beacons, tie rails, tow hitch/airlines if fitted
 Crane: make, model, capacity if fitted
-Tow hitch/airlines if fitted
+Sold As Is, Untested & Unregistered.
+
+Example:
+2015 Hino 300 Series 616 4x2 Wide Cab Tray Truck
+
+Hino N04C-US 4.0-Litre 4-Cylinder Turbocharged Diesel, 110kW (150hp), 420Nm Torque, Aisin A860E 6-Speed Automatic Transmission
+
+4800mm (L) x 2300mm (W) Steel Tray, Tieman Swing-Under Tailgate Lift 600kg SWL, Headboard With Roof Rack, Rear Tailboard, 1x 650mm & 1x 1000mm Undermount Toolboxes, Beacons
+
 Sold As Is, Untested & Unregistered.
 
 WATER TRUCK
@@ -1329,7 +1337,7 @@ SERVICE/CRANE TRUCK EXAMPLE:
 
 6M60-T2 7.5-Litre 6-Cylinder Turbocharged Diesel, 177kW (237hp), Automatic Transmission
 
-Tuff Tray Body 5600mm (L) x 2400mm (W), HMF 300 E4-4 Loader Crane (2021), Air Hose Reel, Water Hose Reel, Dual Vertical Toolboxes (1500mm + 1700mm), Reverse Camera, Tow Hitch, Rear Airlines, In-Cab Crane Controls, Redarc 2000W Pure Sine Inverter, UHF, Sat Nav, Cruise Control, Overhead Lights, Beacons
+Tuff Tray Body 5600mm (L) x 2400mm (W), HMF 300 E4-4 Loader Crane (2021), Air Hose Reel, Water Hose Reel, Dual Vertical Toolboxes (1500mm + 1700mm), Reverse Camera, Tow Hitch, Rear Airlines, Redarc 2000W Pure Sine Inverter, UHF, Sat Nav, Cruise Control, Overhead Lights, Beacons
 
 Sold As Is, Untested & Unregistered.
 
