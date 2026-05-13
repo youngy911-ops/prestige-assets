@@ -106,7 +106,7 @@ READING HOURMETERS:
       * Jungheinrich: small LCD display on the overhead guard cross-member — hours visible on main screen
       * Komatsu: analog or digital instrument panel on dashboard — hours on dedicated gauge or screen
       * Nissan/UniCarriers: analog hourmeter on dashboard, round gauge labelled "HOURS"
-      If key is OFF, the display may be blank — look for photos taken with ignition on
+      If key is OFF, the display may be blank — if no hourmeter reading is visible because the key appears to be off, return "Key required for display" rather than null, so staff know to power on the machine and re-inspect
   - Tractors/agricultural: cab instrument cluster (may be combined with engine hours)
   - Generators/compressors: front panel label or digital meter (often an adhesive or surface-mount gauge)
   - Trucks with cranes or EWPs: secondary instrument panel or console
@@ -157,7 +157,11 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
   - type: Counterbalance (standard forklift with rear counterweight), Reach Truck (narrow-aisle, extended chassis), Order Picker (platform rises with forks), Pallet Stacker (walkie/pedestrian), Electric Pallet Jack (walk-behind, no mast elevation), Telehandler (extendable boom).
   - attachments / side shift: actively inspect the carriage (the horizontal beam the forks hang from) for a side shift fork frame — a sliding steel frame with hydraulic cylinder(s) that allows the entire fork assembly to move left/right. Side shift is VERY common on counterbalance forklifts — if you can see a sliding frame or extra hydraulic cylinder at the carriage, confirm side shift present. Other attachments to look for: fork positioner (forks spread apart by hydraulics), paper roll clamp, bale clamp, rotator, push-pull attachment.
   - tilt_degrees: standard tilt for counterbalance forklifts is 6°F/5°B (Toyota) or 5°F/5°B (Linde/Hyster). Infer at medium confidence if not on plate.
-- AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission
+- AGRICULTURE: infer engine_manufacturer, engine_model, horsepower, fuel_type, drive_type, transmission. Subtype-specific extraction:
+  - COMBINE HARVESTERS: note header width in feet (e.g. 36ft — Australian industry standard), grain tank capacity (in litres), whether the header is included or sold separately, unload rate (L/min or L/s), and both engine hours AND separator/rotor hours if available (they diverge significantly over time).
+  - SPRAY RIGS / SPRAYERS: note boom width in metres, tank capacity in litres, pump type (centrifugal / diaphragm / piston), nozzle spacing (cm), and GPS section control system if fitted — name brand verbatim (e.g. John Deere RowCommand, Case AIM Command, Raven, TeeJet, Trimble, Norac).
+  - BALERS: note bale shape (round / square / large square), bale dimensions in mm (e.g. 1200 x 1200mm for round, 1200 x 900 x 2400mm for large square), tie type (twine / net / film), and pick-up width in metres.
+  - RIDE-ON MOWERS (in agriculture context): note cutting deck size in BOTH imperial and metric (e.g. "72in (1829mm)"); for diesel mowers include the engine code and output in kW.
 - CARAVANS: once Make + Model + Year are identified, infer or extract the following:
   - trailer_length: read "Overall Length" from the compliance plate or body compliance sticker (typically in mm). Divide mm by 304.8, round to 2 decimal places, output as "XX.XXft" (e.g. 6300mm → "20.67ft"). Common AU lengths: 4877mm=16ft, 5182mm=17ft, 5486mm=18ft, 5791mm=19ft, 6096mm=20ft, 6401mm=21ft, 6706mm=22ft, 7010mm=23ft. Never output in metres — always feet.
   - atm: read from compliance plate "ATM" field in kg. Only extract if directly visible — never estimate.
