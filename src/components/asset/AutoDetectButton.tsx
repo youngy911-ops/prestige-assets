@@ -70,7 +70,9 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
             <p className="text-white font-semibold">
               {result.type_label}{result.subtype_label ? ` — ${result.subtype_label}` : ''}
             </p>
-            <p className="text-xs text-white/40 mt-0.5 capitalize">{result.confidence} confidence</p>
+            <p className={`text-xs mt-0.5 capitalize ${result.confidence === 'low' ? 'text-amber-400' : 'text-white/40'}`}>
+              {result.confidence} confidence{result.confidence === 'low' ? ' — verify below' : ''}
+            </p>
           </div>
         </div>
         <div className="flex gap-2">

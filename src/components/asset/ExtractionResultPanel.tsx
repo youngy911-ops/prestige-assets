@@ -86,7 +86,7 @@ export function ExtractionResultPanel({
       )}
 
       {/* Sticky CTA */}
-      <div className="sticky bottom-0 bg-[var(--background)] pt-3 pb-1">
+      <div className="sticky bottom-0 bg-[var(--background)]/90 backdrop-blur-xl border-t border-white/[0.06] pt-3 pb-1">
         <button
           type="button"
           onClick={() => router.push(`/assets/${assetId}/review`)}

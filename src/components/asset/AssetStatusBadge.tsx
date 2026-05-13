@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import type { AssetStatus } from '@/lib/actions/asset.actions'
 
-const BADGE_CONFIG: Record<AssetStatus, { label: string; className: string }> = {
+const BADGE_CONFIG: Record<AssetStatus, { label: string; className: string; dot?: boolean }> = {
   draft: {
     label: 'Draft',
     className: 'bg-amber-500/15 text-amber-400 border border-amber-500/20',
@@ -12,7 +12,8 @@ const BADGE_CONFIG: Record<AssetStatus, { label: string; className: string }> = 
   },
   confirmed: {
     label: 'Confirmed',
-    className: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20',
+    className: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40',
+    dot: true,
   },
 }
 
@@ -25,10 +26,11 @@ export function AssetStatusBadge({ status }: AssetStatusBadgeProps) {
   return (
     <span
       className={cn(
-        'text-[11px] font-semibold px-2.5 py-0.5 rounded-full tracking-wide',
+        'inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full tracking-wide',
         config.className
       )}
     >
+      {config.dot && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />}
       {config.label}
     </span>
   )
