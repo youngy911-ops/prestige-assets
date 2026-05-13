@@ -444,19 +444,19 @@ This subtype is a Salesforce system artifact. Describe whatever trailer is visib
 Sold As Is, Untested & Unregistered.
 
 EXCAVATOR
-Line 1: Year, Make, Model, Type
-Operating Weight
+Line 1: Year Make Model Type (e.g. "2019 Caterpillar 320 GC Hydraulic Excavator")
+Operating Weight: XX,XXXkg Operating Weight
 Hours
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), Tier 4 Final / Stage V (include emissions tier always)
+Track width and type: XXXmm Rubber Tracks or XXXmm Steel Tracks
+Enclosed Cab or ROPS Canopy
+Quick hitch if fitted: "[Brand] [Model] [Type] Quick Hitch" (e.g. "Steelwrist X20 Tilt Rotator Quick Hitch", "Wedgelock OQ80 Quick Hitch")
+Main bucket: XXXmm [Type] Bucket, X.Xm³ (e.g. "900mm GP Bucket, 0.9m³" or "1200mm Mud Bucket, 1.2m³")
+Dozer Blade: Xmm if fitted | Boom: Xm | Arm: Xm
 Max Digging Depth
-Track width, track type (rubber / steel)
-Enclosed Cab / ROPS Canopy
+Attachments Included: list each item (make, model, coupling type where known)
 
 MINIMAL DATA RULE (excavators): If only make/model/year/hours are known, apply your training knowledge of that specific model to fill in operating weight, engine, and standard bucket capacity — e.g. Caterpillar 320 → 20t class, Cat C4.4 ACERT 4-Cylinder, 0.9m³ bucket; Caterpillar 330 → 30t class, Cat C7.1 6-Cylinder; Komatsu PC200 → 20t class, SAA4D107E 4-Cylinder; Komatsu PC300 → 30t class, SAA6D114E 6-Cylinder; Hitachi ZX200 → 20t class, Isuzu 4HK1 4-Cylinder; Hitachi ZX350 → 35t class, Isuzu 6HK1 6-Cylinder; Volvo EC220 → 22t class, Volvo D6E 6-Cylinder; John Deere 210G → 21t class, John Deere PowerTech 4-Cylinder. Include all specs that are universally true for the identified model; omit specs that vary by configuration. Always include operating weight and engine even when not in confirmed fields — these are the primary value indicators for earthmoving buyers.
-Quick hitch brand/model and rating if fitted (e.g. Steelwrist, Wedgelock, JB Sales)
-Dozer Blade: Xmm | Boom: Xm | Arm: Xm
-Main bucket: capacity in m³ and width in mm, tooth count if visible
-Attachments Included: list each item (make, model, coupling type where known)
 Sold As Is, Untested & Unregistered.
 
 BULLDOZER/CRAWLER TRACTOR
