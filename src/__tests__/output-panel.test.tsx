@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen, fireEvent, act } from '@testing-library/react'
 import { FieldsBlock } from '@/components/asset/FieldsBlock'
 import { DescriptionBlock } from '@/components/asset/DescriptionBlock'
+import { conditionBadgeClass, parseDamageLine } from '@/components/asset/OutputPanel'
 
 // Mock server actions — server actions use 'use server' + server-only which can't run in jsdom
 vi.mock('@/lib/actions/asset.actions', () => ({
@@ -84,5 +85,74 @@ describe('DescriptionBlock', () => {
   it('renders a "Regenerate" button', () => {
     render(<DescriptionBlock descriptionText={SAMPLE_DESC} onRegenerate={noop} isRegenerating={false} />)
     expect(screen.getByRole('button', { name: /regenerate/i })).toBeTruthy()
+  })
+})
+
+describe('conditionBadgeClass', () => {
+  it('returns emerald classes for Excellent', () => {
+    expect(conditionBadgeClass('Excellent')).toContain('emerald')
+  })
+
+  it('returns teal classes for Good', () => {
+    expect(conditionBadgeClass('Good')).toContain('teal')
+  })
+
+  it('returns amber classes for Fair', () => {
+    expect(conditionBadgeClass('Fair')).toContain('amber')
+  })
+
+  it('returns red classes for Poor', () => {
+    expect(conditionBadgeClass('Poor')).toContain('red')
+  })
+
+  it('returns emerald classes for Nil (rust)', () => {
+    expect(conditionBadgeClass('Nil')).toContain('emerald')
+  })
+
+  it('returns teal classes for Surface (rust)', () => {
+    expect(conditionBadgeClass('Surface')).toContain('teal')
+  })
+
+  it('returns amber classes for Minor (rust)', () => {
+    expect(conditionBadgeClass('Minor')).toContain('amber')
+  })
+
+  it('returns red classes for Major (rust)', () => {
+    expect(conditionBadgeClass('Major')).toContain('red')
+  })
+
+  it('is case-insensitive', () => {
+    expect(conditionBadgeClass('EXCELLENT')).toContain('emerald')
+    expect(conditionBadgeClass('poor')).toContain('red')
+  })
+
+  it('returns fallback classes for unknown value', () => {
+    expect(conditionBadgeClass('Unknown')).toContain('white/10')
+  })
+})
+
+describe('parseDamageLine', () => {
+  it('splits panel and description on " - "', () => {
+    const result = parseDamageLine('Driver Rear Door - Dent approx 150mm')
+    expect(result.panel).toBe('Driver Rear Door')
+    expect(result.desc).toBe('Dent approx 150mm')
+  })
+
+  it('returns full line as panel when no " - " separator', () => {
+    const result = parseDamageLine('Front Bumper')
+    expect(result.panel).toBe('Front Bumper')
+    expect(result.desc).toBe('')
+  })
+
+  it('handles description containing " - " without splitting incorrectly', () => {
+    const result = parseDamageLine('Windscreen - Stone chip - lower LHS')
+    expect(result.panel).toBe('Windscreen')
+    expect(result.desc).toBe('Stone chip - lower LHS')
+  })
+
+  it('trims whitespace from panel and description', () => {
+    const result = parseDamageLine('  Bonnet  -  Stone chips along leading edge  ')
+    expect(result.panel).toBe('Bonnet')
+    expect(result.desc).toBe('Stone chips along leading edge')
   })
 })

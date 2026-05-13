@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thursday Director Meeting — Quick Script</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: #f6f7f9;
+  color: #1a1a1a;
+  padding: 32px 0 80px;
+}
+.page { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: #888; margin-bottom: 36px; }
+
+.block {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.07);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.block-header {
+  padding: 12px 20px;
+  background: #0f1c3f;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.step-num {
+  background: #2a6ef5;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.block-title { font-size: 14px; font-weight: 700; color: #fff; }
+.block-time { font-size: 12px; color: #7eb3ff; margin-left: auto; }
+
+.block-body { padding: 16px 20px; }
+.say {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+.say:last-child { margin-bottom: 0; }
+
+.note {
+  background: #fffbea;
+  border-left: 3px solid #f5a623;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: #7a5a00;
+  margin: 10px 20px;
+  border-radius: 0 4px 4px 0;
+}
+
+.qa-section {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.07);
+  overflow: hidden;
+  margin-top: 32px;
+}
+.qa-header {
+  padding: 14px 20px;
+  background: #1a3a6b;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+.qa-item { padding: 14px 20px; border-bottom: 1px solid #f0f0f0; }
+.qa-item:last-child { border-bottom: none; }
+.qa-q { font-size: 14px; font-weight: 700; color: #0f1c3f; margin-bottom: 6px; }
+.qa-a { font-size: 14px; line-height: 1.6; color: #444; }
+
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 12px 0;
+}
+.num-box {
+  background: #f0f4ff;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+}
+.num-box .n { font-size: 22px; font-weight: 800; color: #2a6ef5; }
+.num-box .l { font-size: 11px; color: #666; margin-top: 3px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Thursday — Director Meeting</h1>
+<p class="subtitle">Keep on phone. Glance only — don't read word for word.</p>
+
+<!-- STEP 1 -->
+<div class="block">
+  <div class="block-header">
+    <div class="step-num">1</div>
+    <div class="block-title">Opening</div>
+    <div class="block-time">30 sec</div>
+  </div>
+  <div class="block-body">
+    <p class="say">"Thanks for the time. I'll show you how it works rather than talk about it — easier to explain once you've seen it."</p>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="block">
+  <div class="block-header">
+    <div class="step-num">2</div>
+    <div class="block-title">The Problem (brief)</div>
+    <div class="block-time">1 min</div>
+  </div>
+  <div class="block-body">
+    <p class="say">"Right now a book-in takes 12 to 15 minutes per asset — most of that is researching specs and typing into Salesforce, not the actual inspection. Multiply that across a full sale and it's a significant chunk of time every week."</p>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="block">
+  <div class="block-header">
+    <div class="step-num">3</div>
+    <div class="block-title">Demo</div>
+    <div class="block-time">10–15 min</div>
+  </div>
+  <div class="note">⚡ Show pre-loaded asset first — then do a live one</div>
+  <div class="block-body">
+    <p class="say">"This is what it looks like when it's done — all the Salesforce fields extracted, description written and ready to copy."</p>
+    <p class="say">[Show pre-loaded asset — scroll through fields and description]</p>
+    <p class="say">"Now let me show you how fast it happens. I'll photograph an asset here and run it now."</p>
+    <p class="say">[Upload photos — wait — show extraction results]</p>
+    <p class="say">"That took about two minutes. Manually that's 12 to 15."</p>
+  </div>
+  <div class="note">🔁 If live demo fails — show the pre-loaded one and say "I've got a completed one here to show you"</div>
+</div>
+
+<!-- STEP 4 -->
+<div class="block">
+  <div class="block-header">
+    <div class="step-num">4</div>
+    <div class="block-title">The Numbers</div>
+    <div class="block-time">1 min</div>
+  </div>
+  <div class="block-body">
+    <div class="numbers">
+      <div class="num-box"><div class="n">~900hrs</div><div class="l">freed per year at 100 assets/week</div></div>
+      <div class="num-box"><div class="n">$865/yr</div><div class="l">total running cost</div></div>
+      <div class="num-box"><div class="n">41×</div><div class="l">return on run cost</div></div>
+    </div>
+    <p class="say">"About 900 hours freed up a year at 100 assets a week. Running cost is under $900 all in. The more staff using it, the better the return."</p>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="block">
+  <div class="block-header">
+    <div class="step-num">5</div>
+    <div class="block-title">The Ask</div>
+    <div class="block-time">1 min</div>
+  </div>
+  <div class="block-body">
+    <p class="say">"The one thing that takes it further is Salesforce API access — so the copy-paste step disappears entirely and it writes directly. IT's involvement is minimal, a small setup task on their end. All the actual build is on me."</p>
+    <p class="say">"Can we make that happen?"</p>
+  </div>
+  <div class="note">✅ Stop talking. Wait for them to respond first.</div>
+</div>
+
+<!-- Q&A -->
+<div class="qa-section">
+  <div class="qa-header">Questions They Might Ask</div>
+
+  <div class="qa-item">
+    <div class="qa-q">"How long did this take to build?"</div>
+    <div class="qa-a">About two weeks in my own time outside work hours. It's live now at assetbookintool.com.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What if the AI gets something wrong?"</div>
+    <div class="qa-a">There's a review step — nothing goes into Salesforce until a person confirms it. More reliable than manual entry where a typo never gets flagged.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What does IT need to do?"</div>
+    <div class="qa-a">Set up a sandbox environment — a test copy of Salesforce — and send me a pair of credentials. Probably 30 minutes of their time. Everything else is on me.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Where does the data go?"</div>
+    <div class="qa-a">Everything stays in Australia — photos and data are hosted in Sydney. Not locked to one AI provider either.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"How much does it cost to run?"</div>
+    <div class="qa-a">Under $900 a year all in — AI fees, hosting, domain. At 100 assets a week that's about $2-5 a week in AI costs.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What asset types does it handle?"</div>
+    <div class="qa-a">Nine categories — trucks, trailers, earthmoving, agriculture, forklifts, marine, caravans, vehicles with damage detection, and general goods.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What if you leave Slattery?"</div>
+    <div class="qa-a">That's part of what the pilot covers. If it proves value it gets formalised — documented and handed over. Today it's a proof of concept.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What's the bigger picture?"</div>
+    <div class="qa-a">The API connection we're approving is the foundation for broader Salesforce automation — auction creation, consignor updates, settlement automation. The book-in app is the proof of concept.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Technical question you don't know</div>
+    <div class="qa-a">"Good question — I'll find out and come back to you on that."</div>
+  </div>
+
+</div>
+
+</div>
+</body>
+</html>

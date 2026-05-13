@@ -7,6 +7,28 @@ import { markAssetConfirmed } from '@/lib/actions/asset.actions'
 
 type Tone = 'standard' | 'quick'
 
+/** Colour-coded badge class for condition rating values (exported for tests) */
+export function conditionBadgeClass(value: string): string {
+  const v = value.toLowerCase()
+  if (v === 'excellent') return 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+  if (v === 'good')      return 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
+  if (v === 'fair')      return 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+  if (v === 'poor')      return 'bg-red-500/20 text-red-300 border border-red-500/30'
+  // Rust-specific values
+  if (v === 'nil')       return 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+  if (v === 'surface')   return 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
+  if (v === 'minor')     return 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+  if (v === 'major')     return 'bg-red-500/20 text-red-300 border border-red-500/30'
+  return 'bg-white/10 text-white/70 border border-white/10'
+}
+
+/** Parse a single damage_notes line ("Panel - Description") into parts (exported for tests) */
+export function parseDamageLine(line: string): { panel: string; desc: string } {
+  const dashIdx = line.indexOf(' - ')
+  if (dashIdx === -1) return { panel: line.trim(), desc: '' }
+  return { panel: line.slice(0, dashIdx).trim(), desc: line.slice(dashIdx + 3).trim() }
+}
+
 interface OutputPanelProps {
   assetId: string
   assetType: string
@@ -324,21 +346,6 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
         ].filter(f => f.value)
         if (conditionFields.length === 0) return null
 
-        // Colour-coded badge for each rating value
-        function conditionBadgeClass(value: string): string {
-          const v = value.toLowerCase()
-          if (v === 'excellent') return 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-          if (v === 'good')      return 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
-          if (v === 'fair')      return 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-          if (v === 'poor')      return 'bg-red-500/20 text-red-300 border border-red-500/30'
-          // Rust-specific values
-          if (v === 'nil')       return 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-          if (v === 'surface')   return 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
-          if (v === 'minor')     return 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-          if (v === 'major')     return 'bg-red-500/20 text-red-300 border border-red-500/30'
-          return 'bg-white/10 text-white/70 border border-white/10'
-        }
-
         return (
           <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
@@ -374,24 +381,28 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
             <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
               <AlertTriangle className={`w-4 h-4 ${hasDamage ? 'text-amber-400' : 'text-white/40'}`} />
               <span className="text-sm font-semibold text-white">Damage</span>
+              {hasDamage && (
+                <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/25">
+                  Recorded
+                </span>
+              )}
             </div>
-            <div className="px-4 py-3 flex flex-col gap-2">
+            <div className="px-4 py-3 flex flex-col gap-3">
               {damageSummary ? (
-                <p className="text-sm text-white/70">{damageSummary}</p>
+                <p className="text-sm font-medium text-white">{damageSummary}</p>
               ) : (
                 <p className="text-sm text-white/40 italic">No damage recorded</p>
               )}
-              {noteLines.length > 0 && <div className="h-1" />}
               {noteLines.length > 0 && (
-                <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] divide-y divide-white/[0.06]">
+                <div className="rounded-lg border border-amber-500/15 bg-amber-500/[0.04] divide-y divide-white/[0.06]">
                   {noteLines.map((line: string, i: number) => {
-                    const parts = line.split(' - ')
-                    const panel = parts[0]?.trim()
-                    const desc = parts.slice(1).join(' - ').trim()
+                    const { panel, desc } = parseDamageLine(line)
                     return (
-                      <div key={i} className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-3 py-2 gap-0.5 sm:gap-4">
-                        <span className="text-xs font-medium text-white">{panel}</span>
-                        {desc && <span className="text-xs text-white/60 sm:text-right">{desc}</span>}
+                      <div key={i} className="flex items-start gap-3 px-3 py-2">
+                        <span className="flex-shrink-0 text-xs font-semibold px-2 py-0.5 rounded bg-white/[0.07] text-white/80 whitespace-nowrap">
+                          {panel}
+                        </span>
+                        {desc && <span className="text-xs text-white/60 pt-0.5">{desc}</span>}
                       </div>
                     )
                   })}
