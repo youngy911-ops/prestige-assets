@@ -28,7 +28,7 @@ export function FieldsBlock({ fieldsText }: FieldsBlockProps) {
           {copied ? 'Copied!' : 'Copy'}
         </button>
       </div>
-      <pre className="text-sm whitespace-pre-wrap font-mono leading-relaxed px-4 py-3 text-white/80">{fieldsText}</pre>
+      <div className="text-sm whitespace-pre-wrap font-sans leading-relaxed px-4 py-3 text-white/80">{fieldsText}</div>
     </div>
   )
 }
