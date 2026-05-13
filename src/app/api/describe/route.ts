@@ -917,6 +917,30 @@ Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below. Do NOT writ
 
 MINIMAL DATA RULE (cars/utes): If only make/model/year and body type are confirmed, apply your training knowledge of that specific model/variant to fill in engine code, displacement, cylinder count, fuel type, and transmission type — e.g. Toyota HiLux SR5 2GD-FTV 2.8-Litre 4-Cylinder Turbo Diesel, 6-Speed Automatic; Ford Ranger Wildtrak 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Mitsubishi Triton GLS 4N15 2.4-Litre 4-Cylinder Turbo Diesel, 6-Speed Automatic; Toyota LandCruiser 200 Series 1VD-FTV 4.5-Litre V8 Twin-Turbo Diesel, 6-Speed Automatic; Ford Everest Titanium 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Toyota Corolla Ascent Sport 2ZR-FAE 2.0-Litre 4-Cylinder Petrol, CVT Automatic. Use these inferred specs only when universally true for that variant — if a model offered multiple engine options for the same variant/year, omit displacement and state only cylinders and fuel type. Drive type (4WD/2WD/AWD) is standard knowledge for a variant and must always be included. Engine code before displacement: "2GD-FTV 2.8-Litre" NOT "2.8-Litre 2GD-FTV". Power in kW first, then hp in brackets: "150kW (201hp)".
 
+MOTORCYCLE (subtype: motorcycle)
+Line 1: Year Make Model Variant (e.g. "2021 Kawasaki Versys 650 ABS")
+Engine line: [Displacement]cc [Config] [Fuel], [N]-Speed [Transmission Type] Transmission (e.g. "649cc Parallel-Twin Petrol, 6-Speed Manual Transmission")
+Key extras if fitted, comma separated, Title Case — panniers, top box, aftermarket exhaust (name brand if badged: Akrapovic, Yoshimura, Arrow, SC Project), crash bars, heated grips, GPS mount, windscreen, luggage rack, auxiliary lights — omit this line entirely if no significant extras are confirmed or visible
+Sold As Is, Untested & Unregistered.
+
+Key rules for motorcycles:
+- Read make from tank badge or steering head plate — key logos: Honda wing, Kawasaki K, Yamaha tuning forks, Suzuki S, Harley-Davidson bar-and-shield, BMW roundel, KTM orange, Ducati script, Triumph script
+- Read engine displacement from tank badge (e.g. "650" on Versys 650, "1200" on R1200GS) or steering head plate; infer from model knowledge if not visible
+- No engine code prefix for motorcycles — displacement and config only (e.g. "649cc Parallel-Twin" not "2GD-FTV 649cc")
+- Config terms: Single-Cylinder, Parallel-Twin, V-Twin, Inline-4, V4, Flat-Twin (Boxer)
+- Transmission is almost always Manual for road bikes; note Automatic or DCT if confirmed
+- Do NOT include odometer or registration in the description body
+- Do NOT list standard features (mirrors, indicators, standard seat)
+
+Example:
+2021 Kawasaki Versys 650 ABS
+
+649cc Parallel-Twin Petrol, 6-Speed Manual Transmission
+
+Panniers, Top Box, Heated Grips, Akrapovic Slip-On Exhaust, Crash Bars, GPS Mount
+
+Sold As Is, Untested & Unregistered.
+
 SEDAN / SUV (subtype: sedan or suv)
 Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below.
 Line 1: Year Make Model Variant Drive Type Body Type

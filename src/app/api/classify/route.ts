@@ -71,6 +71,7 @@ VISUAL IDENTIFICATION CUES:
 - 5th wheel coupling plate on tray (large circular coupling behind cab) = truck (prime_mover) — no body, just the tractor unit
 - Hydraulic tipping body with visible rams = truck (tipper) if it has a cab; trailer (tipper) if no cab
 - Knuckle boom crane or service body with tool drawers = truck (service_truck)
+- Two-wheeled powered vehicle with handlebar steering = vehicle (motorcycle)
 - 4-door cab + open tray/tub at rear + towbar = vehicle (dual_cab_ute)
 - Raised ride height + wagon/SUV body, no tray = vehicle (suv or 4wd)
 - Standard 4-door saloon body = vehicle (sedan); compact 3/5-door = vehicle (hatchback)
@@ -89,7 +90,7 @@ VISUAL IDENTIFICATION CUES:
 - general_goods is ONLY for individual items: tools, small machinery, furniture, equipment lots — never for trailers, trucks, or vehicles
 
 SUBTYPE HINTS:
-- vehicle: dual_cab_ute (4-door cab + open tray/tub), single_cab_ute (2-door cab + tray), suv (raised wagon-like body, no tray), sedan (standard 4-door car), hatchback (compact car, short rear), van (transit/sprinter/hiace cargo), bus, 4wd (large SUV with visible lift or aggressive off-road tyres)
+- vehicle: dual_cab_ute (4-door cab + open tray/tub), single_cab_ute (2-door cab + tray), suv (raised wagon-like body, no tray), sedan (standard 4-door car), hatchback (compact car, short rear), van (transit/sprinter/hiace cargo), bus, 4wd (large SUV with visible lift or aggressive off-road tyres), motorcycle (2-wheeled powered: road bike, sports bike, cruiser, dirt bike, scooter, moped)
 - truck: tipper (hydraulic tipping body, rams visible), tray_truck (flat steel tray), pantech (enclosed box body), prime_mover (semi tractor unit, 5th wheel coupling plate on tray, no cargo body), cab_chassis (bare chassis, no body fitted), service_truck (knuckle boom crane or service body with drawers), refrigerated_pantech (white insulated box body)
 - trailer: flat_deck (bare flat deck, no sides), curtainsider (side curtains that pull open), pantech (enclosed box body on trailer), low_loader (dropped/stepped deck for machinery), skel (skeletal frame for containers), dog (tag trailer with drawbar and rear axle group), stock (slatted livestock crate sides), side_tipper (hydraulic side-tipping body), tipper (rear-tipping body on trailer)
 - earthmoving: excavator (tracks + cab + offset boom arm that swings — NOT a front blade), bulldozer (blade bolted straight to front + tracks, no articulating boom), wheel_loader (large articulated machine, bucket at front, full-size cab — NOT compact), skid_steer (compact, 4 wheels, turns by wheel speed not steering), motor_grader (long blade underneath), dump_truck (large rigid haul truck with tipping body), compactor (drum roller), telehandler (telescopic boom that extends and tilts — NOT a fixed mast)
