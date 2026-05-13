@@ -31,6 +31,10 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
   // Track the latest description text (including user edits) for Copy All
   const currentDescRef = useRef<string>(initialDescription ?? '')
   const [allCopied, setAllCopied] = useState(false)
+  const [slowWarning, setSlowWarning] = useState(false)
+  const [showRetryButton, setShowRetryButton] = useState(false)
+  const slowTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handleDescTextChange = useCallback((text: string) => {
     currentDescRef.current = text
@@ -44,6 +48,25 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
     setTimeout(() => setAllCopied(false), 2000)
     markAssetConfirmed(assetId).catch(() => {})
   }
+
+  // Start/clear the slow-warning and retry-button timers whenever loading begins or ends
+  useEffect(() => {
+    if (descState === 'loading') {
+      setSlowWarning(false)
+      setShowRetryButton(false)
+      slowTimerRef.current = setTimeout(() => setSlowWarning(true), 20_000)
+      retryTimerRef.current = setTimeout(() => setShowRetryButton(true), 35_000)
+    } else {
+      if (slowTimerRef.current) { clearTimeout(slowTimerRef.current); slowTimerRef.current = null }
+      if (retryTimerRef.current) { clearTimeout(retryTimerRef.current); retryTimerRef.current = null }
+      setSlowWarning(false)
+      setShowRetryButton(false)
+    }
+    return () => {
+      if (slowTimerRef.current) clearTimeout(slowTimerRef.current)
+      if (retryTimerRef.current) clearTimeout(retryTimerRef.current)
+    }
+  }, [descState])
 
   // Auto-generate on mount; also silently fix stale cached descriptions
   useEffect(() => {
@@ -213,13 +236,28 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
             <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-emerald-400 animate-spin" />
           </div>
           <p className="text-sm text-white/50">Writing description…</p>
+          {slowWarning && (
+            <p className="text-sm text-amber-400/80">Taking longer than expected…</p>
+          )}
+          {showRetryButton && (
+            <button
+              type="button"
+              onClick={() => {
+                setDescState('loading')
+                generateDescription(false, tone)
+              }}
+              className="mt-1 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition-colors"
+            >
+              Try Again
+            </button>
+          )}
         </div>
       )}
 
       {descState === 'error' && (
         <div className="flex flex-col gap-3">
           <p className="text-sm text-red-400">
-            Description generation failed. You can type your description manually, or try again.
+            Description generation timed out — tap Try Again to retry.
           </p>
           <button
             type="button"

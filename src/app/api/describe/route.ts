@@ -1631,7 +1631,7 @@ export async function POST(req: NextRequest) {
 
   // 6. Call GPT-4o — plain text output (NOT Output.object — that is for structured extraction only)
   const systemPrompt = tone === 'quick' ? QUICK_DESCRIPTION_PROMPT : DESCRIPTION_SYSTEM_PROMPT
-  const abort = AbortSignal.timeout(50_000) // 50s hard cap — surfaces an error before Vercel kills it
+  const abort = AbortSignal.timeout(40_000) // 40s hard cap — surfaces an error before Vercel 60s limit kills it
   let text: string
   try {
     const result = await generateText({
