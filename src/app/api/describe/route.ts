@@ -40,7 +40,7 @@ UNIVERSAL RULES:
 - No dot points
 - Use METRIC throughout — EXCEPT these Australian industry conventions where feet/inches are standard: moldboard width (graders), combine header width, grain auger length/diameter, boat LOA (feet first then metres in brackets e.g. "22ft (6.7m)")
 - No serial numbers in description
-- No hours, odometer, or GVM in description body
+- No hours or odometer in vehicle (car/ute/sedan/SUV) descriptions. For EQUIPMENT and MACHINERY — hours are included in the description ONLY when clearly confirmed from photos or inspection notes. Never estimate or infer hours. If confirmed hours are available, include them on their own line (e.g. '3,603 Hours').
 - No marketing language
 - Blank line between each significant item or group
 - Short related items share a line separated by commas
@@ -57,7 +57,7 @@ Key extras: diff locks MUST be stated explicitly ("Diff Lock" or "No Diff Lock" 
 Suspension brand MUST always be named — never write "airbag suspension" without the brand (e.g. Hendrickson PRIMAAX, Kenworth AirGlide 200, Volvo ECAS, Freightliner AirLiner, Mercedes-Benz AIRMATIC); apply training knowledge of the model if not visible
 Fifth wheel brand/model MUST always be named — never write "fifth wheel" without the brand (e.g. Jost JSK 37, SAF-Holland FW35, Fontaine No-Slack 2; apply training knowledge of the model if not specified in fields)
 Sleeper cab type and size if fitted — list amenities present (fridge brand, microwave, inverter brand/wattage if visible; e.g. "48" Single Sleeper, Waeco Fridge, Microwave, 2000W Inverter"); omit sleeper line entirely if day cab
-GCM if 100,000kg or above
+GCM: [X]kg — only include if notably high (road train rated, typically ≥ 100,000kg) OR if the user has noted it in inspection notes. Do not include GCM for standard prime movers.
 Sold As Is, Untested & Unregistered.
 
 MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Volvo FH with D-series suffix → Volvo D13K 12.8-Litre 6-Cylinder; Kenworth T610 → PACCAR MX-13 12.9-Litre 6-Cylinder; Kenworth T409/T659 → Cummins ISX15 15.0-Litre 6-Cylinder; Mack Trident/Granite → Mack MP8 13.0-Litre 6-Cylinder; Western Star 4964 → Detroit DD15 14.8-Litre 6-Cylinder; Mercedes Actros → OM471 12.8-Litre 6-Cylinder; DAF XF → MX-13 12.9-Litre 6-Cylinder. For transmission, apply the standard pairing for that model (e.g. Volvo FH → Volvo I-Shift 12-Speed AMT; Kenworth T610 → PACCAR TX-12 12-Speed AMT; Kenworth T909/T659 → Eaton Fuller 18-Speed Manual or Eaton UltraShift Plus depending on era). For suspension, apply the standard fitment for that model (e.g. Volvo FH → Volvo ECAS Air Suspension; Kenworth T610/T909 → Hendrickson PRIMAAX Air Suspension; Western Star 4964 → Hendrickson RT Air Suspension; Mack Trident → Hendrickson PRIMAAX Air Suspension). For fifth wheel, apply the standard fitment for that model (e.g. most AU prime movers → Jost JSK 37 or SAF-Holland FW35). If the spec varies by order/option, omit it rather than guess — but the engine family, displacement, suspension brand, and fifth wheel brand are mandatory attempts for all prime movers. Use the ENGINE HP REFERENCE table above to fill the hp figure when not supplied.
@@ -67,7 +67,7 @@ Line 1: Year, Make, Model, Drive Type, Tipper
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque, [Full Transmission Brand and Name]
 Blank line
 Single body-detail line: body builder name MUST always be stated — common AU builders: Moore, Stoodley, Hamelex White, CJD, Auswide, Superior; always attempt to identify from photos (look for badge/plate on body); if not determinable write "Custom Tipper Body"; then dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox); Hardox lining MUST be called out explicitly if fitted ("Hardox Lined" or "Full Hardox Lining" — Hardox is a premium value signal); tarp brand AND type always named if tarp fitted — never write "tarp" alone (e.g. "Razor Delta II Electric Roll-Over Tarp", "Aerocover Auto-Retractable Tarp", "CoverMe Electric Tarp"); tailgate type, exhaust/engine brake brand, cruise control, load monitoring system, UHF, diff locks, Ringfeder hitch if confirmed
-Payload: Xkg if on plate
+Payload: [X]kg — include only if notably high or stated by user in inspection notes.
 Sold As Is, Untested & Unregistered.
 
 MINIMAL DATA RULE (tippers): Body builder name is a mandatory attempt — always check photos for a badge, plate, or embossed name on the tailgate or body sides before writing "Custom Tipper Body". Tarp brand is a mandatory attempt — Razor and Aerocover are the most common AU tipper tarp brands. Hardox lining must always be called out if steel body shows wear-plate construction visible in photos.
@@ -235,6 +235,15 @@ Number of decks, loading ramp type
 Ventilation type
 Sold As Is, Untested & Unregistered.
 
+BUS / COACH
+Line 1: Year, Make, Model, Bus or Coach (e.g. "2015 Toyota Coaster 51 SER Bus")
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Seating: X Passenger Seats — always state seat count; this is the primary capacity spec for bus buyers
+Accessibility: Tieman Wheelchair Lift (Xkg Capacity) if fitted — always name brand and capacity; accessibility fitment adds significant value
+Entry: Passenger Side Entry / Front Entry / Rear Entry — always state entry configuration
+Extras: A/C, tyre size, rim configuration, any visible extras
+Sold As Is, Untested & Unregistered.
+
 TANKER (TRUCK)
 Line 1: Year, Make, Model, Drive Type, Tanker
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
@@ -254,6 +263,7 @@ Tail lift: brand and SWL always stated if fitted (e.g. "Tieman Swing-Under Tailg
 Toolboxes: state quantity, position (undermount / side-mounted), and dimension if visible (e.g. "1x 650mm & 1x 1000mm Undermount Toolboxes")
 Beacons, tie rails, tow hitch/airlines if fitted
 Crane: make, model, capacity if fitted
+Payload: [X]kg — include only if notably high or stated by user in inspection notes.
 Sold As Is, Untested & Unregistered.
 
 Example:
@@ -361,6 +371,14 @@ Tailgate type: always describe (e.g. hydraulic automatic opening rear tailgate /
 Onboard scales if fitted (RightWeigh / Haltech)
 Tyre inflation system if fitted (Tiremaax / Haldex)
 Payload: Xt
+Sold As Is, Untested & Unregistered.
+
+B-DOUBLE SET / ROAD TRAIN SET
+Line 1: Year, Make, Model, [B-Double Set With Dolly / Road Train Set / Quad Set]
+Opening line: state if a Matching Set (sequential VINs), compliance dates, and rating (B-Double and Road Train Rated / B-Double Rated)
+Shared specs block: describe specs common to all trailers once — body type, body material, chassis spec, suspension, brake system, tarp, scales, accessories (grain diverter, water tank, toolbox, spare tyre etc.)
+Component list: list each trailer on its own line at the bottom with VIN, Compliance date, and ATM — e.g. "2023 Robuk Tri-Axle End Tipper — VIN: XXXXXXXXXXXXXXXXX, Compliance: 06/2023, ATM: 44,000kg"
+Rule: For B-double and road train sets, describe shared specs once then list each component with its VIN, Compliance date, and ATM on separate lines at the bottom.
 Sold As Is, Untested & Unregistered.
 
 TANKER TRAILER
@@ -828,19 +846,20 @@ Features: Fork Positioner (if fitted), Seat Belt, Flashing Beacon
 Electric forklifts: Battery Voltage (24V / 48V / 80V) on capacity line; Charger Included if charger is present; omit engine line
 Tyre type: Solid / Pneumatic / Cushion — always state; never omit
 Cab type: ROPS Canopy / Enclosed Cab — always state
-Hours: DO NOT include hours in the description — hours go in Salesforce fields only
+Hours: include hours on their own line in the description (same as operating weight for earthmoving) — e.g. "14,826 Hours" as a separate bullet line
 Side Shift: always call out explicitly if fitted
 Damage: factual description or "Nil Obvious" if none visible
-Sold As Is, Untested & Unregistered.
+Sold As Is, Untested. (no "& Unregistered" for forklifts unless road-registered)
 
 Key rules:
 - Capacity ALWAYS states "at 500mm Load Centre" — never just "X,XXXkg"
-- Hours NOT in description — goes in Salesforce fields only
+- Hours ARE included in description on their own line — not Salesforce fields only
 - Mast type written as named word: Simplex / Duplex / Triplex / Quad — never "N-Stage"
 - Tyre type (Solid / Pneumatic / Cushion) always stated
 - Cab type (ROPS Canopy / Enclosed Cab) always stated
 - Engine line: engine code + fuel type only (no litre/cylinder detail needed unless clearly visible on plate)
 - Electric: state battery voltage (24V / 48V / 80V) and note "Charger Included" if charger present
+- "Sold As Is, Untested." for forklifts — omit "& Unregistered" unless road-registered
 
 Example (LPG counterbalance):
 2018 Toyota 8FG25 LPG Counterbalance Forklift
@@ -1377,6 +1396,25 @@ Mr Wong Hydraulics PTO, Adaptive Cruise Control, Lane Keeping Support, Ice Pack 
 
 Sold As Is, Untested & Unregistered.
 
+PRIME MOVER EXAMPLE 2 (road train rated — GCM included):
+2023 Kenworth C509 6x4 Prime Mover
+
+Cummins X15 6-Cylinder Turbo Diesel
+
+Eaton 18-Speed Manual, Diff Locks, Hydraulics, Alemlube Auto Greaser, RightWeigh Onboard Scales
+
+48" Single Bonneted Sleeper, Custom Air Sleeper A/C (2,926hrs)
+
+Touchscreen Infotainment, Dual UHFs
+
+Dometic Slide-Out Fridge, Second Fridge, Microwave, TV, Electrical System
+
+2000W Pure Sine Wave Inverter
+
+GCM: 135,000kg
+
+Sold As Is, Untested & Unregistered.
+
 TIPPER WITH COMPANION TRAILER EXAMPLE:
 2016 Mack Granite 6x4 Tipper
 
@@ -1388,12 +1426,30 @@ Tri-Axle Shepard Dog Trailer 2016: VIN 6V9T24STEGC075014, ATM 25,500kg, Tipper B
 
 Sold As Is, Untested & Unregistered.
 
+TIPPER EXAMPLE:
+2014 Mitsubishi Fuso Fighter 1224 4x2 Single Cab Tipper
+
+6M60-9AT1 7.5-Litre 6-Cylinder Turbocharged Diesel, 177kW (237hp), Automatic Transmission
+
+Tipper Body 5900mm (L) x 2400mm (W) x 300mm (D), Retractable Tarp, Cruise Control
+
+Sold As Is, Untested & Unregistered.
+
 SERVICE/CRANE TRUCK EXAMPLE:
 2018 Mitsubishi Fuso Fighter 1124 4x2 Tray/Crane Truck
 
 6M60-T2 7.5-Litre 6-Cylinder Turbocharged Diesel, 177kW (237hp), Automatic Transmission
 
 Tuff Tray Body 5600mm (L) x 2400mm (W), HMF 300 E4-4 Loader Crane (2021), Air Hose Reel, Water Hose Reel, Dual Vertical Toolboxes (1500mm + 1700mm), Reverse Camera, Tow Hitch, Rear Airlines, Redarc 2000W Pure Sine Inverter, UHF, Sat Nav, Cruise Control, Overhead Lights, Beacons
+
+Sold As Is, Untested & Unregistered.
+
+TRAY TRUCK EXAMPLE:
+2015 Hino 300 Series 616 4x2 Wide Cab Tray Truck
+
+Hino N04C-US 4.0-Litre 4-Cylinder Turbocharged Diesel, 110kW (150hp), 420Nm Torque, Aisin A860E 6-Speed Automatic Transmission
+
+4800mm (L) x 2300mm (W) Steel Tray, Tieman Swing-Under Tailgate Lift 600kg SWL, Headboard With Roof Rack, Rear Tailboard, 1x 650mm & 1x 1000mm Undermount Toolboxes, Beacons
 
 Sold As Is, Untested & Unregistered.
 
@@ -1413,17 +1469,17 @@ Max Digging Depth: 6.53m
 Sold As Is, Untested & Unregistered.
 
 WHEEL LOADER EXAMPLE:
-2018 Caterpillar 950GC Wheel Loader
+2023 Volvo L120H Wheel Loader
 
-17,329kg Operating Weight
-3,241 Hours
-Cat C7.1 ACERT 7.1-Litre 6-Cylinder Turbocharged Diesel, 162kW (217hp), Tier 4 Final
-Cat CX28B 4-Speed Powershift Transmission
-Enclosed Cab With Air Conditioning
-Articulated Steering
-3.0m³ General Purpose Bucket, 2,700mm Width
-20.5R25 Michelin XHA2 Tyres
-Loadmaster Onboard Scales, Auto Lube System, Rear Hitch, Bluetooth Radio, UHF Radio
+Operating Weight 21,600kg
+
+Volvo D8J 6-Cylinder Turbodiesel, 272hp, Stage V
+
+OptiShift Powershift Transmission, 4 Forward 3 Reverse, Articulated Steering, Top Speed 40 km/h
+
+Enclosed Cab, Rear View Camera, Beacons, Driving Lights, Auto Lube, Loadrite L2180 Payload System
+
+Volvo 86308 GP Bucket, 3.6m³, 1,402kg, Bolt-On Edge
 
 Sold As Is, Untested & Unregistered.
 
@@ -1436,10 +1492,23 @@ JCB Dieselmax 4-Cylinder Turbocharged Diesel, 74.2kW (100hp), 3-Speed Hydrostati
 
 Sold As Is, Untested & Unregistered.
 
+COMPACT TRACK LOADER EXAMPLE:
+2013 Bobcat T590 Compact Track Loader
+
+3,580kg Operating Weight
+3,603 Hours
+Kubota V2607-DI-TE3B 4-Cylinder Turbo Diesel, 61HP
+Rated Operating Capacity: 910kg
+Enclosed Cab, ROPS/FOPS, Air Conditioning, Radio, Auxiliary Hydraulics
+320mm Rubber Tracks
+1,800mm 4-In-1 Bucket
+
+Sold As Is, Untested & Unregistered.
+
 MARINE WITH TRAILER EXAMPLE:
 2024 Chaparral 21 SSi OB Fibreglass Bowrider
 
-Mercury 200HP V6 Four-Stroke Outboard, Deep-V Fibreglass Hull, 20° Deadrise, Arch Tower With T-Top Canvas, Cockpit LED Lighting, Swim Platform With Boarding Ladder, Wraparound Bow Seating, 12-Person Capacity
+Mercury 200HP V6 Four-Stroke Outboard, Deep-V Fibreglass Hull, 20° Deadrise, Extended V-Plane Running Surface, Arch Tower With T-Top Canvas, Cockpit LED Lighting, Swim Platform With Boarding Ladder, Wraparound Bow Seating, 2x Bucket Helm Seats With Slide & Swivel, Rear Bench Seat, Aft Hinged Sundeck, Built-In 70qt Cooler, Anchor Locker Forward, Full Instrumentation, Power-Assisted Tilt Steering, 12-Person Capacity
 
 Supplied With 2024 Magic Tilt Dual-Axle Boat Trailer: VIN 1M5BA2029S1E58797, ATM 2,300kg, Date of Manufacture 10/2024
 
@@ -1526,25 +1595,15 @@ Kawasaki FR651V 656cc V-Twin Petrol, 16.0kW (21.5hp), Hydro-Gear ZT-2800 Hydrost
 
 Sold As Is, Untested & Unregistered.
 
-FORKLIFT EXAMPLE (LPG, bullet format):
-2007 Toyota 8FG18 Forklift
+FORKLIFT EXAMPLE:
+2004 Toyota 42-7FG25 Forklift
 
-1,800kg Lift Capacity
-3,700mm Max Lift Height
-6,813 Hours
+2,500kg Lift Capacity
+4,300mm Max Lift Height
+14,826 Hours
 LPG
-2-Stage Mast
+3-Stage Mast
 Sideshift
-OPS equipped
-
-Sold As Is, Untested.
-
-FORKLIFT EXAMPLE (LPG, prose format):
-2018 Toyota 8FG25 LPG Counterbalance Forklift
-
-Toyota 4Y LPG Engine, Duplex Mast, Side Shift, 4,500mm Lift Height, Full Free Lift
-
-Max Lift Capacity: 2,500kg at 500mm Load Centre, 3,241 Hours, Solid Tyres, ROPS Canopy
 
 Sold As Is, Untested.
 
@@ -1605,6 +1664,31 @@ SEDAN (DAMAGE) EXAMPLE:
 LS3 6.2-Litre V8 Petrol, 317kW (425hp), 6-Speed Manual Transmission
 
 Brembo Brakes, Sports Suspension, 19" Alloy Wheels, Leather Sports Seats, Sunroof, Apple CarPlay
+
+Sold As Is, Untested & Unregistered.
+
+FORKLIFT ROLL CLAMP ATTACHMENT EXAMPLE:
+Auramo RA-250N Forklift Roll Clamp Attachment
+
+250kg/800kg Rated Load Capacity, 1600mm Clamp Diameter, 765kg
+
+Sold As Is, Untested.
+
+FORKLIFT SIDESHIFT FORK POSITIONER ATTACHMENT EXAMPLE:
+Cascade 2AG-FDS-2592 Forklift Sideshift Fork Positioner Attachment
+
+2,500kg Rated Capacity at 600mm Load Centre, 570kg
+
+Sold As Is, Untested.
+
+MOTORCYCLE EXAMPLE:
+2016 Harley-Davidson FXSB Softail Breakout Cruiser
+
+Twin Cam 103, 1690cc V-Twin Petrol, 6-Speed Manual Transmission
+
+Extended Forks, Ape Hanger Bars, Aftermarket Chrome Exhaust, Custom Wheels, Aftermarket Air Filter
+
+Custom Gold Flake Paint With Flame Detail
 
 Sold As Is, Untested & Unregistered.
 
