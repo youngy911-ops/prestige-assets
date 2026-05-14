@@ -1045,7 +1045,27 @@ Sold As Is, Untested & Unregistered.
 MOTOR VEHICLE (CAR)
 Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below. Do NOT write as a single run-on sentence — use the block format with blank lines between sections.
 
-MINIMAL DATA RULE (cars/utes): If only make/model/year and body type are confirmed, apply your training knowledge of that specific model/variant to fill in engine code, displacement, cylinder count, fuel type, and transmission type — e.g. Toyota HiLux SR5 2GD-FTV 2.8-Litre 4-Cylinder Turbo Diesel, 6-Speed Automatic; Ford Ranger Wildtrak 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Mitsubishi Triton GLS 4N15 2.4-Litre 4-Cylinder Turbo Diesel, 6-Speed Automatic; Toyota LandCruiser 200 Series 1VD-FTV 4.5-Litre V8 Twin-Turbo Diesel, 6-Speed Automatic; Ford Everest Titanium 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Toyota Corolla Ascent Sport 2ZR-FAE 2.0-Litre 4-Cylinder Petrol, CVT Automatic. Use these inferred specs only when universally true for that variant — if a model offered multiple engine options for the same variant/year, omit displacement and state only cylinders and fuel type. Drive type (4WD/2WD/AWD) is standard knowledge for a variant and must always be included. Engine code before displacement: "2GD-FTV 2.8-Litre" NOT "2.8-Litre 2GD-FTV". Power in kW first, then hp in brackets: "150kW (201hp)". Always include variant/trim level on line 1 if inferrable from model or photos (SR5, Wildtrak, GLS, SV6, Titanium, Raptor, GXL, VX, Kakadu etc.) — this is one of the highest-value details for vehicle buyers and directly affects hammer price.
+MINIMAL DATA RULE (cars/utes): A short accurate description is better than a padded one. When only limited information is confirmed, write a concise description using only what is known — do NOT fill lines with inferred or speculative specs just to appear thorough. Only apply training knowledge to fill a spec when it is universally true for that exact model/variant/year. If the spec varies by order or option, omit it entirely.
+
+When engine/transmission/drive data IS confirmed or universally inferrable for the exact variant, apply it — e.g. Toyota HiLux SR5 2GD-FTV 2.8-Litre 4-Cylinder Turbo Diesel, 6-Speed Automatic; Ford Ranger Wildtrak 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Mitsubishi Triton GLS 4N15 2.4-Litre 4-Cylinder Turbo Diesel, 6-Speed Automatic; Toyota LandCruiser 200 Series 1VD-FTV 4.5-Litre V8 Twin-Turbo Diesel, 6-Speed Automatic; Ford Everest Titanium 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Toyota Corolla Ascent Sport 2ZR-FAE 2.0-Litre 4-Cylinder Petrol, CVT Automatic. Drive type (4WD/2WD/AWD) is standard knowledge for a variant and must always be included. Engine code before displacement: "2GD-FTV 2.8-Litre" NOT "2.8-Litre 2GD-FTV". Power in kW first, then hp in brackets: "150kW (201hp)". Always include variant/trim level on line 1 if inferrable from model or photos (SR5, Wildtrak, GLS, SV6, Titanium, Raptor, GXL, VX, Kakadu etc.) — this is one of the highest-value details for vehicle buyers and directly affects hammer price.
+
+QUALITY REFERENCE — real Slattery vehicle descriptions showing the correct minimal format:
+
+Minimal (only year/make/model/body/drive/key specs confirmed, engine code not available):
+2017 Toyota LandCruiser 200 GX Wagon
+
+4WD, V8 Twin-Turbo Diesel, 5-Seater, Snorkel
+
+Sold As Is, Untested & Unregistered.
+
+Medium (year/make/model/series/body plus engine/gearbox confirmed):
+2023 Ford Ranger PY Sport 4WD Dual Cab Ute
+
+Auto Diesel 2.0L 10sp 4dr 5seat
+
+Sold As Is, Untested & Unregistered.
+
+These are the quality bar. Match the brevity and accuracy — do NOT pad with inferred specs when they are not confirmed.
 
 MOTORCYCLE (subtype: motorcycle)
 Line 1: Year Make Model Variant (e.g. "2021 Kawasaki Versys 650 ABS")
