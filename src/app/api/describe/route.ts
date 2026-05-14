@@ -51,13 +51,21 @@ UNIVERSAL RULES:
 TEMPLATES BY ASSET TYPE — select the correct template based on asset identified:
 
 TRUCK (PRIME MOVER)
-Line 1: Year, Make, Model, Drive Type
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque, [Full Transmission Brand and Name]
-Key extras: diff locks MUST be stated explicitly ("Diff Lock" or "No Diff Lock" — never omit; diff lock is a critical value factor for buyers); exhaust brake, cruise control, UHF etc.
-Suspension brand MUST always be named — never write "airbag suspension" without the brand (e.g. Hendrickson PRIMAAX, Kenworth AirGlide 200, Volvo ECAS, Freightliner AirLiner, Mercedes-Benz AIRMATIC); apply training knowledge of the model if not visible
-Fifth wheel brand/model MUST always be named — never write "fifth wheel" without the brand (e.g. Jost JSK 37, SAF-Holland FW35, Fontaine No-Slack 2; apply training knowledge of the model if not specified in fields)
-Sleeper cab type and size if fitted — list amenities present (fridge brand, microwave, inverter brand/wattage if visible; e.g. "48" Single Sleeper, Waeco Fridge, Microwave, 2000W Inverter"); omit sleeper line entirely if day cab
-GCM: [X]kg — only include if notably high (road train rated, typically ≥ 100,000kg) OR if the user has noted it in inspection notes. Do not include GCM for standard prime movers.
+Line 1: Year, Make, Model, Drive Type, "Prime Mover"
+Blank line
+Engine line (own line): [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel] — include kW ([X]hp), [X]Nm Torque only when known; omit power/torque figures if not confirmed (e.g. "Cummins X15 6-Cylinder Turbo Diesel" is valid when kW not supplied); do NOT put transmission on this line
+Blank line
+Transmission + key chassis extras line (own line): Transmission name first (full brand and name — e.g. "Eaton 18-Speed Manual", "Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission"), then diff locks MUST be stated (diff lock is a critical value factor for buyers), then PTO/hydraulics, auto greaser, onboard scales, exhaust brake, cruise control — all comma-separated; suspension brand MUST always be named on this line — never write "airbag suspension" without the brand (e.g. Hendrickson PRIMAAX, Kenworth AirGlide 200, Volvo ECAS, Freightliner AirLiner, Mercedes-Benz AIRMATIC); apply training knowledge if not visible; fifth wheel brand/model MUST always be named on this line — never write "fifth wheel" without the brand (e.g. Jost JSK 37, SAF-Holland FW35, Fontaine No-Slack 2); apply training knowledge if not specified in fields
+Blank line
+Sleeper line (own line — omit entirely for day cabs): size in inches first, then brand A/C with hours in brackets (e.g. '48" Single Bonneted Sleeper, Custom Air Sleeper A/C (2,926hrs)' or '24in Sleeper Cab, [Brand] A/C ([X]hrs)'); omit this line entirely if day cab
+Blank line (only if sleeper line present)
+Electronics/cab comfort line (own line — omit if none): touchscreen infotainment, UHF radios, satellite navigation, cameras, adaptive cruise, lane keeping — comma-separated; omit if none fitted
+Blank line (only if electronics line present)
+Appliances line (own line — omit if none): fridge brand + type (e.g. "Dometic Slide-Out Fridge"), second fridge, microwave, TV, electrical system — comma-separated; omit if no appliances
+Blank line (only if appliances line present)
+Inverter line (own line — omit if not fitted): wattage and type (e.g. "2000W Pure Sine Wave Inverter"); omit if not fitted
+Blank line (only if inverter line present)
+GCM: [X]kg — only include if road train rated (≥ 135,000kg) OR explicitly noted by user in inspection notes; omit for standard prime movers
 Sold As Is, Untested & Unregistered.
 
 MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Volvo FH with D-series suffix → Volvo D13K 12.8-Litre 6-Cylinder; Kenworth T610 → PACCAR MX-13 12.9-Litre 6-Cylinder; Kenworth T409/T659 → Cummins ISX15 15.0-Litre 6-Cylinder; Mack Trident/Granite → Mack MP8 13.0-Litre 6-Cylinder; Western Star 4964 → Detroit DD15 14.8-Litre 6-Cylinder; Mercedes Actros → OM471 12.8-Litre 6-Cylinder; DAF XF → MX-13 12.9-Litre 6-Cylinder. For transmission, apply the standard pairing for that model (e.g. Volvo FH → Volvo I-Shift 12-Speed AMT; Kenworth T610 → PACCAR TX-12 12-Speed AMT; Kenworth T909/T659 → Eaton Fuller 18-Speed Manual or Eaton UltraShift Plus depending on era). For suspension, apply the standard fitment for that model (e.g. Volvo FH → Volvo ECAS Air Suspension; Kenworth T610/T909 → Hendrickson PRIMAAX Air Suspension; Western Star 4964 → Hendrickson RT Air Suspension; Mack Trident → Hendrickson PRIMAAX Air Suspension). For fifth wheel, apply the standard fitment for that model (e.g. most AU prime movers → Jost JSK 37 or SAF-Holland FW35). If the spec varies by order/option, omit it rather than guess — but the engine family, displacement, suspension brand, and fifth wheel brand are mandatory attempts for all prime movers. Use the ENGINE HP REFERENCE table above to fill the hp figure when not supplied.
@@ -499,7 +507,7 @@ EXCAVATOR
 Line 1: Year Make Model Type (e.g. "2019 Caterpillar 320 GC Hydraulic Excavator")
 Operating Weight: XX,XXXkg Operating Weight
 Hours
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), Tier 4 Final / Stage V (include emissions tier always)
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]HP), Tier 4 Final / Stage V (include emissions tier always; use HP all-caps)
 Track width and type: XXXmm Rubber Tracks or XXXmm Steel Tracks — always state both width AND material; e.g. "600mm Rubber Tracks" or "600mm Steel Tracks"
 Undercarriage condition if determinable from photos or inspection notes: Good / Fair / Worn — omit only if genuinely unassessable
 Enclosed Cab or ROPS Canopy
@@ -538,33 +546,31 @@ Extras
 Sold As Is, Untested & Unregistered.
 
 SKID STEER / COMPACT TRACK LOADER
-Year, Make, Model, Type
-Operating Weight / Rated Operating Capacity
+Line 1: Year Make Model Type (e.g. "2013 Bobcat T590 Compact Track Loader")
+Operating Weight: X,XXXkg Operating Weight
 Hours
-Engine line: [Engine Code] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
-Enclosed Cab / ROPS or Open Operator Station
-Auxiliary hydraulics
-Track width or tyre size
-Bucket
+Engine line: [Engine Code] [N]-Cylinder Turbo Diesel, [X]HP — use HP (all caps); include engine code where known (e.g. "Kubota V2607-DI-TE3B 4-Cylinder Turbo Diesel, 61HP")
+Rated Operating Capacity: Xkg — always on its own line
+Cab/ROPS/Extras: comma-separated single line (e.g. "Enclosed Cab, ROPS/FOPS, Air Conditioning, Radio, Auxiliary Hydraulics")
+Track width and type (e.g. "320mm Rubber Tracks") or tyre size for wheeled skid steer
+Bucket: X,XXXmm [Type] Bucket (e.g. "1,800mm 4-In-1 Bucket")
 Attachments Included if any
+Last Serviced at Xhrs — include only if service history is known
 Sold As Is, Untested & Unregistered.
 
 WHEEL LOADER
-Line 1: Year Make Model Wheel Loader (e.g. "2018 Caterpillar 950GC Wheel Loader")
-Operating Weight: XX,XXXkg Operating Weight
-Hours
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), Tier 4 Final / Stage V
-Transmission: [Brand] [Model] [N]-Speed Powershift Transmission — transmission brand MUST always be named; never write "Powershift Transmission" without the brand (e.g. "ZF 4WG-190 4-Speed Powershift Transmission", "Cat CX28B Powershift Transmission", "Komatsu CLSS 4-Speed Powershift Transmission")
-Enclosed Cab / ROPS
-Articulated steering, top speed if known
-Bucket: Xm³ [Type] Bucket, X,XXXmm Width — always state BOTH capacity in m³ AND width in mm (e.g. "3.0m³ General Purpose Bucket, 2,700mm Width" or "2.8m³ 4-In-1 Bucket, 2,600mm Width")
-Tyre spec: always attempt to name brand if visible on sidewall — common brands include Michelin, Bridgestone, Goodyear, Galaxy, Alliance (e.g. "20.5R25 Michelin XHA2 Tyres", "20.5R25 Bridgestone VSNT Tyres", or "20.5R25 Tyres" if brand not determinable)
-Loading scale / weighing system if fitted: name brand where known (e.g. "Loadmaster Onboard Scales", "Payload Pro Onboard Scales") — omit if not fitted
-Extras (auto lube system with brand if known, rear hitch, forks if fitted)
-Attachments Included if any
+Line 1: Year Make Model Wheel Loader (e.g. "2019 Volvo L90H Wheel Loader")
+Operating Weight: XX,XXXkg Operating Weight — on its own line, no blank line before hours
+Hours — confirmed hours only; omit line if unknown
+Engine line: [Engine Code] [N]-Cylinder Turbodiesel, [X]hp, [Emissions Tier] — use HP (all caps); include engine code and cylinder count; emissions tier (Stage V / Tier 4 Final) always included (e.g. "Deutz D6J 4-Cylinder Turbodiesel, 184hp, Stage V Emissions")
+Transmission line: [Transmission Type], [Planetary Final Drive if applicable], Articulated Steering, Top Speed [X] km/h — all on one comma-separated line (e.g. "Powershift Transmission, Planetary Final Drive, Articulated Steering, Top Speed 46 km/h")
+Cab/Extras: comma-separated single line — Enclosed Cab first, then safety items (Rear View Camera, Auto Lube, E-Stop, Fire Extinguisher, Isolator), then electronics (Digital Display, UHF, Radio), then payload systems (e.g. "Loadrite Weigh Scales, Pressure Pro Module") (e.g. "Enclosed Cab, Rear View Camera, Auto Lube, E-Stop, Fire Extinguisher, Isolator, Digital Display, Loadrite Weigh Scales, Pressure Pro Module, UHF, Radio")
+Bucket: [Brand] Bucket, [Width]mm — brand + width; state bucket type if known (e.g. "AHE Bucket, 2650mm" or "3.0m³ GP Bucket, 2,700mm") — always include width in mm
+Tyre spec: always attempt to name brand if visible on sidewall — common brands include Michelin, Bridgestone, Goodyear, Galaxy, Alliance (e.g. "20.5R25 Michelin XHA2 Tyres", "20.5R25 Bridgestone VSNT Tyres", or "20.5R25 Tyres" if brand not determinable) — omit if tyres not determinable
+Last Serviced at Xhrs — include only if service history is known (e.g. "Last Serviced at 9,535hrs")
 Sold As Is, Untested & Unregistered.
 
-MINIMAL DATA RULE (wheel loaders): If only make/model/year/hours are known, apply your training knowledge to fill in transmission brand and model, standard bucket capacity and width, and tyre size — e.g. Caterpillar 950GC → Cat CX28B Powershift Transmission, 3.0m³ GP Bucket 2,700mm Width, 20.5R25 Tyres; Caterpillar 966 → Cat CX31 Powershift Transmission; Komatsu WA380 → Komatsu CLSS 4-Speed Powershift Transmission, 2.5m³ GP Bucket; Volvo L120 → Volvo 4-Speed Powershift Transmission with ZF internals; Liebherr L556 → ZF 4-Speed Powershift Transmission. Transmission brand is a mandatory attempt even from training knowledge — never omit it.
+MINIMAL DATA RULE (wheel loaders): If only make/model/year/hours are known, apply your training knowledge to fill in transmission type, standard bucket width, and tyre size — e.g. Caterpillar 950GC → Powershift Transmission, Planetary Final Drive, Articulated Steering, 2,700mm GP Bucket, 20.5R25 Tyres; Caterpillar 966 → Powershift Transmission, Planetary Final Drive; Komatsu WA380 → Powershift Transmission, Planetary Final Drive, 2,500mm GP Bucket; Volvo L90H → Powershift Transmission, Planetary Final Drive, Articulated Steering, Top Speed 46 km/h; Volvo L120H → Powershift Transmission, Articulated Steering, Top Speed 40 km/h. Transmission brand line is mandatory even from training knowledge — never omit it. HP (all caps) is always used, never kW alone for wheel loaders.
 
 TELEHANDLER
 Year, Make, Model, Telehandler
@@ -674,13 +680,15 @@ Enclosed Cab / ROPS
 Sold As Is, Untested & Unregistered.
 
 TRACKED SKID STEER LOADER
-Year, Make, Model, Tracked Skid Steer Loader
-Operating Weight
-Rated Operating Capacity: Xkg
+Line 1: Year Make Model Tracked Skid Steer Loader
+Operating Weight: X,XXXkg Operating Weight
 Hours
-Engine line: [Engine Code] [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp)
-Track width: Xmm
-Auxiliary hydraulics
+Engine line: [Engine Code] [N]-Cylinder Turbo Diesel, [X]HP — use HP (all caps); include engine code where known
+Rated Operating Capacity: Xkg — always on its own line
+Cab/ROPS/Extras: comma-separated single line (e.g. "Enclosed Cab, ROPS/FOPS, Air Conditioning, Radio, Auxiliary Hydraulics")
+Track width and type: Xmm Rubber Tracks (e.g. "320mm Rubber Tracks")
+Bucket: X,XXXmm [Type] Bucket if fitted
+Last Serviced at Xhrs — include only if service history is known
 Sold As Is, Untested & Unregistered.
 
 WASHING
@@ -1458,7 +1466,7 @@ EXCAVATOR EXAMPLE:
 
 20,200kg Operating Weight
 4,823 Hours
-Cat C4.4 ACERT 4.4-Litre 4-Cylinder Turbocharged Diesel, 103kW (138hp), Tier 4 Final
+Cat C4.4 ACERT 4.4-Litre 4-Cylinder Turbocharged Diesel, 103kW (138HP), Tier 4 Final
 600mm Rubber Tracks
 Enclosed Cab With Air Conditioning
 Steelwrist X18 Tilt Rotator Quick Hitch
@@ -1469,17 +1477,19 @@ Max Digging Depth: 6.53m
 Sold As Is, Untested & Unregistered.
 
 WHEEL LOADER EXAMPLE:
-2023 Volvo L120H Wheel Loader
+2019 Volvo L90H Wheel Loader
 
-Operating Weight 21,600kg
+Operating Weight 17,300kg
 
-Volvo D8J 6-Cylinder Turbodiesel, 272hp, Stage V
+Deutz D6J 4-Cylinder Turbodiesel, 184HP, Stage V Emissions
 
-OptiShift Powershift Transmission, 4 Forward 3 Reverse, Articulated Steering, Top Speed 40 km/h
+Powershift Transmission, Planetary Final Drive, Articulated Steering, Top Speed 46 km/h
 
-Enclosed Cab, Rear View Camera, Beacons, Driving Lights, Auto Lube, Loadrite L2180 Payload System
+Enclosed Cab, Rear View Camera, Auto Lube, E-Stop, Fire Extinguisher, Isolator, Digital Display, Loadrite Weigh Scales, Pressure Pro Module, UHF, Radio
 
-Volvo 86308 GP Bucket, 3.6m³, 1,402kg, Bolt-On Edge
+AHE Bucket, 2650mm
+
+Last Serviced at 9,535hrs
 
 Sold As Is, Untested & Unregistered.
 
