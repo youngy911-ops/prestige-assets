@@ -222,6 +222,47 @@ Single body-detail line: body builder name + tray dimensions Xmm (L) x Xmm (W), 
   — accessories in order: hose reels, toolboxes with dimensions, compressor, inverter brand/wattage, reverse camera, tow hitch, rear airlines, in-cab crane controls, UHF, sat nav, cruise control, overhead lights, beacons
 Sold As Is, Untested & Unregistered.
 
+FIRE TRUCK / PUMP TRUCK
+Line 1: Year, Make, Model, Drive Type, Fire Truck or Fire/Pump Truck (use "Fire/Pump Truck" when a dedicated pump engine is fitted)
+Engine line: [Engine Code] [N]-Cylinder [Turbocharged] [Fuel], [X]HP, [N]-Speed [Manual/Automatic], [Cab Type]
+Blank line
+Body line: [Body Builder] Firefighting Body, [X] Pump Hours (if known) — body builder name always leads
+Pump engine line (if dedicated pump engine fitted): [Brand] [Model] [N]-Cylinder [Fuel] Pump Engine, [X]HP — own line, always
+Tank line: [X]L Water Tank — tank capacity on its own line; this is the primary buyer spec
+Pump equipment line: Pump Pressure and Compound Gauges, [Foam System Brand and Model] ([Class Rating], [Delivery modes]) — foam system class rating always stated
+Hose/delivery line: [N]x Hose Reels, Multiple Delivery and Suction Inlets, Hydrant Fill (list all hose/inlet fittings together)
+Hose brand and type: [Brand] Lay-Flat Hose, [Monitor Brand] Monitor Frames, Fire Extinguishers — named brands always called out
+Storage line: Roller Shutter Lockers, Under-Mount Toolboxes [Driver / Passenger Side] — locker/toolbox configuration on own line
+Lighting and electronics: Overhead Work Lights, Ladder Rack With Ladder, Roof-Mounted Beacon Bar, Reverse Camera, [GPS Brand] GPS, Battery Isolator, Diff Locks, Cruise Control, [Recovery Points]
+Sold As Is, Untested & Unregistered.
+
+  RULES:
+  — Pump hours are the fire body equivalent of engine hours — always state if known; omit if unknown
+  — Dedicated pump engine always gets its own line: brand + model + cylinders + HP
+  — Foam system class rating (Class A / Class B / Class A/B) always stated when known; single/dual delivery noted
+  — Tank capacity is the primary buyer spec — always leads after pump engine line
+  — Body builder name leads the body line (e.g. Fraser, Varley, Rosenbauer, Custom)
+  — Named hose brands (Angus, Firechief, etc.) and monitor brands (Fraser, etc.) always called out when visible
+  — All storage on one line: roller shutters, under-mount toolboxes with side (driver/passenger) if visible
+  — All electronics/lights/safety on one line: beacon bar type (roof-mounted / light bar), GPS brand, battery isolator, diff locks, recovery points
+
+QUALITY REFERENCE EXAMPLE:
+2014 Isuzu FTS 800 4x4 Fire/Pump Truck
+
+Isuzu 6HK1 6-Cylinder Turbo Diesel, 235HP
+6-Speed Manual, Dual Cab
+
+Fraser Firefighting Body, 19 Pump Hours
+Deutz BF04L2011 4-Cylinder Dedicated Pump Engine, 74HP
+6,000L Water Tank
+Pump Pressure and Compound Gauges, Fraser Smart Foam System (Class A/B, Single and Dual Delivery)
+2x Hose Reels, Multiple Delivery and Suction Inlets, Hydrant Fill
+Angus/Firechief Lay-Flat Hose, Fraser Monitor Frames, Fire Extinguishers
+Roller Shutter Lockers, Under-Mount Toolboxes Driver and Passenger Side
+Overhead Work Lights, Ladder Rack With Ladder, Roof-Mounted Beacon Bar, Reverse Camera, EROAD GPS, Battery Isolator, Diff Locks, Cruise Control, Front Recovery Tow Point
+
+Sold As Is, Untested & Unregistered.
+
 FUEL TRUCK
 Line 1: Year, Make, Model, Drive Type, Fuel Truck
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
