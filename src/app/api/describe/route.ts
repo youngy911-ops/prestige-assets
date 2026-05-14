@@ -1398,9 +1398,13 @@ QUALITY REFERENCE EXAMPLES — match this level of detail, format, and Title Cas
 PRIME MOVER EXAMPLE:
 2019 Volvo FH 500 6x4 Prime Mover
 
-Volvo D13K 12.8-Litre 6-Cylinder Turbocharged Diesel, 375kW (500hp), 2800Nm Torque, Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission, Volvo Engine Brake (VEB+)
+Volvo D13K 12.8-Litre 6-Cylinder Turbocharged Diesel, 375kW (500hp), 2800Nm Torque
 
-Mr Wong Hydraulics PTO, Adaptive Cruise Control, Lane Keeping Support, Ice Pack 24in Sleeper Cab 3,575hrs, Single Bunk, Slide-Out Fridge, Satellite Navigation, Dual UHF
+Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission, Volvo Engine Brake (VEB+), Mr Wong Hydraulics PTO, Adaptive Cruise Control, Lane Keeping Support, Hendrickson ECAS Air Suspension, Jost JSK 37 Fifth Wheel
+
+Ice Pack 24in Sleeper Cab, 3,575hrs
+
+Single Bunk, Slide-Out Fridge, Satellite Navigation, Dual UHF
 
 Sold As Is, Untested & Unregistered.
 
