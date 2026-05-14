@@ -78,6 +78,7 @@ READING ALL NUMERIC FIELDS FROM PLATES (GVM, GCM, ATM, Tare, Year, Model numbers
 - Common character confusions on stamped/embossed metal plates: 1 vs 7, 3 vs 8, 6 vs 0, 5 vs 6
 - GVM/GCM/ATM are always whole integers in kg — e.g. 23000, 68000, 42500
 - Year of Manufacture is always a 4-digit year — if you read 2 digits (e.g. "96") it is 1996
+- YEAR FIELD — IMPORTANT: Year is one of the most reliably present fields on build plates — if the plate is legible, the year should almost always be extractable. Look for it under any of these labels: "Year of Manufacture", "Y.O.M.", "DOM" (Date of Manufacture), "Build Date", "Date of Manufacture", or just "YEAR". On compliance plates it appears in MM/YYYY format — extract only the 4-digit year portion (e.g. "03/2018" → "2018"). On some older plates it appears as a 2-digit year (e.g. "96") — always convert to 4-digit (1996). Never return null for year if the plate is clearly visible and legible.
 - Model numbers often contain both letters and digits — read exactly as printed including hyphens and spaces
 - If a numeric field is partially obscured, return null rather than guess the missing digits
 
@@ -112,6 +113,8 @@ READING HOURMETERS:
   - Trucks with cranes or EWPs: secondary instrument panel or console
 - If hourmeter shows "Hrs", "H", or "Hours" beside the number — extract just the numeric value
 - If the display shows decimal hours (e.g. 1234.5), include the decimal
+- DECIMAL POINT READING — IMPORTANT: On digital displays, the decimal point or separator between whole hours and tenths is sometimes displayed as a smaller digit, a dot, or a separator line. If you see 4 large digits followed by a smaller digit or dot and one more digit, the format is XXXX.X — the separator is a decimal point, NOT a digit. Return "1234.5" NOT "12345".
+- Common mistake: reading "1 2 3 4 5" as five digits when the display actually shows "1234" (large) + separator + "5" (small). The small digit after the separator is tenths of an hour — it must be placed after a decimal point, not appended as a fifth whole digit.
 - If the hourmeter photo appears to be rotated or upside-down, attempt to read it by mentally rotating the image. Digital displays often remain readable when rotated — the digits 0, 1, 2, 5, 6, 8, 9 are usually identifiable in any orientation. Note: upside-down 6 reads as 9, upside-down 9 reads as 6, upside-down 1 reads as 1. If still uncertain after correcting for rotation, return null.
 
 Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year are identified):
@@ -145,6 +148,10 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
   - Year pre-2006 = "Tier 2" (also called Stage II)
   - Post-2019 machines may also carry Stage V — note if engine bay sticker confirms it.
   - If the exact year is unknown but the model series suffix is clear (e.g. Cat 320F, Komatsu PC200-10, Hitachi ZX200-5), apply the Tier 4 Final rule at medium confidence.
+  EARTHMOVING year inference — when the build plate year is unreadable or absent:
+  - If the model series suffix confirms Tier 4 Final era (e.g. Cat 320F/320GC, Komatsu PC200-10/PC200-11, Hitachi ZX200-5/ZX200-6, Volvo EC220E, Kobelco SK200-10), infer year as "2014" or later at medium confidence — the machine is at minimum post-2014 (Tier 4 era).
+  - Use the model series suffix to narrow the range where possible: Komatsu -8 series = approx 2007–2013; Komatsu -10 series = approx 2014–2018; Komatsu -11 series = 2019+. Cat D-series = approx 2009–2014; Cat E/F/GC-series = 2015+. Hitachi ZX-3 = approx 2006–2010; ZX-5 = 2011–2015; ZX-6/ZX-7 = 2016+.
+  - Output the midpoint year of the inferred range at low confidence if no other year evidence is available (e.g. Komatsu PC200-8 with no plate → "2010", confidence "low").
 - FORKLIFTS: Use Make + Model + Year to infer the following fields when not directly readable from the data plate:
   - max_lift_capacity: decode from model number (last 2 digits × 100kg). Toyota 8FG25→2500kg, 8FD30→3000kg, 8FBE18→1800kg; Linde H25→2500kg, H50→5000kg; Komatsu FG25→2500kg; Hyster H2.5FT→2500kg, H3.5FT→3500kg, H5.0FT→5000kg; Yale GDP30→3000kg; Crown SC6040→2000kg, FC5200→2000kg; Jungheinrich EFG320→2000kg, EFG425→2500kg.
   - max_lift_height: if not on data plate, infer from mast type. Simplex/Monomast→3000mm; Duplex standard→4500mm; Triplex standard→6000mm; Triplex high→7000mm. Reach trucks→up to 12000mm.
@@ -297,13 +304,46 @@ DAMAGE FIELD FORMAT:
 - If NO damage is visible in any photo, return null for both fields
 - GENERAL GOODS: read make/model/serial from build plate or data label. DOM from compliance plate if present. Many items (attachments, hand tools) have no build plate — use visual identification (brand colour, logo, embossed text on body) before returning null. See GENERAL GOODS — VISUAL IDENTIFICATION rules above.
 
-EXTRAS AND ATTACHMENTS — scan every photo, not just the compliance plate:
-- Do not focus only on the build plate. Look at every photo including wide shots, rear shots, interior shots, and photos of equipment stored with the asset.
-- Extras are often only visible in full-width exterior photos — a toolbox on the headboard, a tarp system rolled back, ramps folded under the deck, a crane stowed on the body.
-- For trucks: check for bull bars, spotlights, toolboxes, tail lifts, cranes, EWPs, tarp systems, curtains, beacon lights, sun visors, extra fuel tanks, cab features.
-- For trailers: check for toolboxes, tarp systems, load restraints, chains/ratchets, spare tyres, ramps, reefer units, mezzanine floors, stanchions, dropsides, hydraulic gear.
-- For earthmoving and agriculture: check for all attachments stored beside or on the machine — buckets, blades, rippers, forks, headers, implements.
-- If you can see it in any photo, include it. Do not leave extras blank if items are visible.
+EXTRAS AND ATTACHMENTS — mandatory scan of ALL photos:
+
+BEFORE looking at any build plate, scan every wide exterior photo for:
+
+TRUCKS:
+- Bull bar or nudge bar at front (note material: steel/alloy, brand if badge visible: ARB, Ironman 4x4, TJM, MCC)
+- Spotlights or driving lights (Hella, Narva, Vision X) mounted on bull bar or roof
+- Sun visor (external roof-mounted cab visor)
+- External toolboxes: count, position (side/under/crossbed), approximate size in mm
+- Tail lift at rear (brand: Palfinger, Cargolift, Zepro, Tieman — note SWL if readable)
+- Crane or knuckle boom on tray (brand: Hiab, Fassi, Palfinger, HMF)
+- Tarp system over tray or tipper body
+- UHF antenna (chrome whip, usually on cab roof or bull bar)
+- Exhaust stack position and count
+- Fuel tanks: count and approximate size
+
+TRAILERS:
+- Toolboxes: headboard-mounted, side-mounted — count and position
+- Tarp system: roll-over, pull-over, Conestoga
+- Load restraints: chains/ratchets/straps visible on deck or headboard
+- Spare tyre: mounted on headboard, side rail, or underneath
+- Ramps: fold-down permanent or removable
+- Mezzanine/mezz decks visible inside curtainsider or pantech
+
+EARTHMOVING:
+- Extra buckets or attachments stored alongside the machine
+- Hydraulic hammer if mounted or stored nearby
+- Quick hitch on the stick end (adds visible length, has locking mechanism)
+- Ripper on dozer rear
+- GPS grade control display visible through cab window (Trimble, Leica, Cat GRADE)
+
+VEHICLES/UTES:
+- Canopy/tray top: brand badge if visible (Truckman, Aeroklas)
+- Bull bar at front
+- Side steps
+- Roof rack
+- Snorkel on right side of engine bay
+- Tow bar at rear (note if visible)
+
+Confidence for visually-confirmed extras = 'high'. Do not return null for extras if items are clearly visible in ANY photo.
 
 EXTERIOR PHOTO SCANNING — on every wide or full exterior shot, actively scan the entire visible surface before moving on:
 - ALL ASSETS: scan for body modifications, aftermarket additions, decals or badges that identify body builders or spec packages, visible damage or wear, tyre condition, glass and light condition, any mounted equipment (light bars, UHF antennas, cameras, beacons, mirrors, steps, rails)
