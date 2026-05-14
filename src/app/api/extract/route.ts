@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
   const signedUrls = (signedUrlData ?? [])
     .map(r => r.signedUrl)
     .filter((url): url is string => !!url)
-    .slice(0, 8)
+    .slice(0, 12)
 
   // 6. Build extraction schema + prompts
   const assetType = asset.asset_type as AssetType
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
     return Response.json({ success: true, extraction_result: {} })
   }
 
-  const systemPrompt = buildSystemPrompt(asset.asset_type, asset.asset_subtype ?? '')
+  const systemPrompt = buildSystemPrompt(asset.asset_type, asset.asset_subtype ?? '', signedUrls.length)
 
   const structuredFields = parseStructuredFields(asset.inspection_notes)
 
