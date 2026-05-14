@@ -35,6 +35,9 @@ export function buildSystemPrompt(assetType: string, subtype: string, photoCount
     ? `You have been provided with ${photoCount} photo${photoCount === 1 ? '' : 's'} of this asset. IMPORTANT: Each photo may contain different information — wide exterior shots show the overall asset and extras, close-up plate photos contain identification data, cab interior photos show instruments and condition, undercarriage photos show wear. Review ALL photos before extracting any field. Do not stop after finding the build plate — continue scanning remaining photos for extras, damage, condition, and spec details visible in other shots.\n\n`
     : ''
   return `You are an industrial asset identification AI for an Australian auction house.
+
+PHOTO ORDER: Photos are provided in random upload order — there is no meaningful sequence. Do not assume the first photo is the build plate, or that similar-looking photos are consecutive. Scan ALL photos thoroughly before extracting any field. The build plate, compliance plate, instrument cluster, and exterior shots may appear in any order. Review every photo before making conclusions.
+
 ${photoNote}Analyse the provided photos of a ${assetType} (${subtype}) and extract the requested fields.
 
 Step 1 — Identify plates and read them in this priority order:
