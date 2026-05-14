@@ -1302,11 +1302,10 @@ Sold As Is, Untested & Unregistered.
 
 PERSONAL WATERCRAFT
 Year, Make, Model, Personal Watercraft
-Engine: make, model, cylinders, stroke, forced induction if applicable, HP
-Hours
+Engine line: [Make] [Model] [N]-Cylinder [Stroke] [Supercharged/Turbocharged if applicable] [Fuel], [X]hp, [X] Hours — include hours on the engine line
 Key tech features (iBR, VTS, seating, capacity, sound system, mirrors, accessories — include verbatim from inspection notes)
-Trailer details if supplied: make, ATM
-Sold As Is, Untested & Unregistered.
+Trailer: if supplied, own paragraph — "Supplied On [Year] [Make] PWC Trailer: VIN [X], ATM [X]kg"
+Sold As Is, Untested.
 
 TRAILER BOAT
 Year, Make, Model, [Hull Type] Trailer Boat
@@ -1446,6 +1445,17 @@ Supplied With 2024 Magic Tilt Dual-Axle Boat Trailer: VIN 1M5BA2029S1E58797, ATM
 
 Sold As Is, Untested & Unregistered.
 
+PERSONAL WATERCRAFT EXAMPLE:
+2024 Sea-Doo GTR 230 Personal Watercraft
+
+Rotax 1630 ACE 3-Cylinder 4-Stroke Supercharged and Intercooled Petrol, 230hp, 35 Hours
+
+iBR Intelligent Brake and Reverse, Variable Trim System (VTS), Ergolock Two-Piece Touring Seat, 3-Rider Capacity, Wide-Angle Mirrors, Tow Hook, RF D.E.S.S. Key, LinQ Attachment System, Watertight Phone Compartment
+
+Supplied On 2023 Telwater PWC Trailer: VIN 6HWB0ATRLPC916109, ATM 650kg
+
+Sold As Is, Untested.
+
 CARAVAN EXAMPLE:
 Coronel Caravans Lifestyle 638 On-Road Dual-Axle Caravan
 
@@ -1483,6 +1493,21 @@ Great Western Manufacturing Left-Side Cutting Disc, Rear Weedermann B-869192 Fla
 
 Sold As Is, Untested & Unregistered.
 
+SUGARCANE HARVESTER EXAMPLE:
+Cameco 3510 Sugarcane Harvester
+
+John Deere 6068 6-Cylinder Turbodiesel
+
+Hydrostatic Transmission, Hydraulic Articulated Steering
+
+Enclosed Cab, A/C, JVC Radio
+
+Crop Dividers, Knock-Down Rollers, Base Cutter, Chopper, Primary and Secondary Extractor Fans, Elevator Discharge Conveyor, Topper
+
+Engine Hours: 5,051.8hrs, Machine Hours: 8,684.4hrs
+
+Sold As Is, Untested & Unregistered.
+
 DIESEL ZERO-TURN MOWER EXAMPLE:
 John Deere Z997R Diesel Zero-Turn Mower
 
@@ -1501,14 +1526,27 @@ Kawasaki FR651V 656cc V-Twin Petrol, 16.0kW (21.5hp), Hydro-Gear ZT-2800 Hydrost
 
 Sold As Is, Untested & Unregistered.
 
-FORKLIFT EXAMPLE:
+FORKLIFT EXAMPLE (LPG, bullet format):
+2007 Toyota 8FG18 Forklift
+
+1,800kg Lift Capacity
+3,700mm Max Lift Height
+6,813 Hours
+LPG
+2-Stage Mast
+Sideshift
+OPS equipped
+
+Sold As Is, Untested.
+
+FORKLIFT EXAMPLE (LPG, prose format):
 2018 Toyota 8FG25 LPG Counterbalance Forklift
 
-Toyota 4Y LPG Engine, 3-Stage Mast, Side Shift, 4,500mm Lift Height, Full Free Lift
+Toyota 4Y LPG Engine, Duplex Mast, Side Shift, 4,500mm Lift Height, Full Free Lift
 
-Max Lift Capacity: 2,500kg at 500mm Load Centre, Solid Tyres, ROPS Canopy
+Max Lift Capacity: 2,500kg at 500mm Load Centre, 3,241 Hours, Solid Tyres, ROPS Canopy
 
-Sold As Is, Untested & Unregistered.
+Sold As Is, Untested.
 
 HYDRAULIC ATTACHMENT EXAMPLE:
 Soosan SB40II Silenced Hydraulic Rock Breaker
