@@ -124,7 +124,22 @@ READING HOURMETERS:
 - If the hourmeter photo appears to be rotated or upside-down, attempt to read it by mentally rotating the image. Digital displays often remain readable when rotated — the digits 0, 1, 2, 5, 6, 8, 9 are usually identifiable in any orientation. Note: upside-down 6 reads as 9, upside-down 9 reads as 6, upside-down 1 reads as 1. If still uncertain after correcting for rotation, return null.
 
 Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year are identified):
-- TRUCKS: infer engine_manufacturer, engine_series, engine_size, fuel_type, gearbox_make, transmission, drive_type, suspension, axle_configuration, brakes, GVM, GCM, fifth_wheel (prime movers only — infer brand from make if not visible in photos; AU standard fitments by make: Kenworth→Jost JSK 37 [standard], SAF-Holland FW35 [optional]; Volvo→Jost JSK 37 or SAF-Holland; Mack→Jost JSK 37 or SAF-Holland FW35; Scania→Jost JSK 37; Mercedes Actros→Jost JSK 37; Freightliner→Fontaine or Jost; Western Star→Jost or Fontaine), torque (peak engine torque — digits only in Nm, e.g. Cummins X15 = 2780, PACCAR MX-13 = 2400, Volvo D13 = 2550, Mack MP8 = 2508, Detroit DD15 = 2576). SUSPENSION TYPE FOR TRUCKS: Suspension type is visible from exterior photos — airbag suspension has visible rubber air bags at each axle (large cylindrical rubber bladders), leaf spring suspension has visible stacked steel leaf packs. For Kenworth, Volvo, Scania prime movers post-2005: default to airbag if not clearly visible as leaf spring. Isuzu/Hino rigid trucks: mostly leaf spring unless air-ride badge visible.
+- TRUCKS: infer engine_manufacturer, engine_series, engine_size, fuel_type, gearbox_make, transmission, drive_type, suspension, axle_configuration, brakes, GVM, GCM, fifth_wheel (prime movers only — infer brand from make if not visible in photos; AU standard fitments by make: Kenworth→Jost JSK 37 [standard], SAF-Holland FW35 [optional]; Volvo→Jost JSK 37 or SAF-Holland; Mack→Jost JSK 37 or SAF-Holland FW35; Scania→Jost JSK 37; Mercedes Actros→Jost JSK 37; Freightliner→Fontaine or Jost; Western Star→Jost or Fontaine), torque (peak engine torque — digits only in Nm, e.g. Cummins X15 = 2780, PACCAR MX-13 = 2400, Volvo D13 = 2550, Mack MP8 = 2508, Detroit DD15 = 2576).
+  RIGID TRUCK ENGINE INFERENCE by make/model:
+  HINO 300 Series: 616/617→N04C-TI 4.0L 4-cyl 110kW (148hp); 717→N04C-TQ 4.0L 4-cyl 129kW (173hp); 816→N04C-UN 4.0L 4-cyl 147kW (197hp)
+  HINO 500 FC/FD: FC1124/1126→J08E 8.0L 6-cyl 191kW (256hp); FD1124→J08E 8.0L 6-cyl 191kW (256hp); FG1J→J08E 8.0L 6-cyl 206kW (276hp)
+  ISUZU NPR/NPS: NPR 65-155→4HK1 5.2L 4-cyl 110kW (147hp); NQR 87-190→4HK1 5.2L 4-cyl 140kW (188hp)
+  ISUZU FRR/FSR/FTR: FRR 107-210→6HK1 7.8L 6-cyl 156kW (209hp); FSR 140-260→6HK1 7.8L 6-cyl 206kW (276hp)
+  FUSO Canter: 515→4P10 3.0L 4-cyl 96kW (129hp); 615→4P10 3.0L 4-cyl 96kW (129hp); 918→4P10 3.0L 4-cyl 128kW (172hp)
+  FUSO Fighter: 1024→6M60 7.5L 6-cyl 177kW (237hp); 1124→6M60 7.5L 6-cyl 177kW (237hp); 1224→6M60 7.5L 6-cyl 177kW (237hp)
+  UD Condor MK/PK: MK11→GH7 7.0L 6-cyl 184kW (247hp); PKC8→GH7TB 7.0L 6-cyl 206kW (280hp)
+  TRANSMISSION defaults by make:
+  Hino 300: Aisin automatic (most) or 6-speed manual
+  Hino 500: Allison automatic (most common AU spec) or 6-speed manual
+  Isuzu NPR/NQR: Aisin 6-speed automatic
+  Fuso Canter: Duonic AMT or 6-speed manual; newer Canters = DUONIC
+  Fuso Fighter: 6-speed Duonic AMT
+  SUSPENSION TYPE FOR TRUCKS: Suspension type is visible from exterior photos — airbag suspension has visible rubber air bags at each axle (large cylindrical rubber bladders), leaf spring suspension has visible stacked steel leaf packs. For Kenworth, Volvo, Scania prime movers post-2005: default to airbag if not clearly visible as leaf spring. Isuzu/Hino rigid trucks: mostly leaf spring unless air-ride badge visible.
   TRUCK FEATURE DETECTION — actively scan dashboard and cab interior photos for the following:
   - Diff lock / axle lock: look for a dashboard button, switch, or rocker labelled "DIFF LOCK", "AXLE LOCK", "INTER-AXLE LOCK", or similar; also look for a yellow or orange indicator light showing the diff lock is engaged. If not visible in photos but the truck is a 6x4 prime mover manufactured post-2010, infer diff lock as fitted at medium confidence and note in extras (e.g. "Diff lock (standard on 6x4 prime movers post-2010)").
   - Exhaust brake: look for a dashboard switch or toggle labelled "ENGINE BRAKE", "JAKE BRAKE", "EXHAUST BRAKE", or "COMPRESSION BRAKE". If not visible in photos but make is Kenworth, Mack, Volvo, Scania, or Mercedes Actros, infer exhaust brake as standard fitment at medium confidence and note in extras (e.g. "Exhaust brake (standard on Kenworth prime movers)").
@@ -173,7 +188,18 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
   - Dozer blade type: for crawler dozers, identify the blade shape from the front exterior photo. Straight blade (S-blade) = flat rectangular plate, no curve, cuts and pushes material straight ahead. PAT blade (Power Angle and Tilt) = flat blade with hydraulic cylinders visible on each side allowing the blade to angle left/right and tilt — identifiable by the external angling cylinders. U-blade = wide curved blade with high side wings forming a U-shape, designed to carry large volumes of loose material — identifiable by the upswept side panels. Semi-U blade = narrower curved blade between S and U. Note blade type in extras.
   - Counterweight configuration: on excavators, scan the rear of the house (upperstructure) for the counterweight shape. Standard counterweight = rounded or flat block that does not extend significantly beyond the rear of the house. Extended/heavy counterweight = a larger block that protrudes well beyond the tail of the machine, often fitted to machines used for long-reach work or heavy lifting. Note in extras if an extended counterweight is visible (e.g. "Extended counterweight fitted").
   - Central lubrication system: look for a grease pump box or automatic lubrication unit mounted on the cab exterior, main frame, or engine bay bulkhead. Auto-lube systems have a cylindrical or rectangular grease reservoir with a pump unit and distribution lines running to pin joints. If visible, note brand if readable (Lincoln, Beka-Max, Graco, SKF) and note in extras (e.g. "Auto-lube system fitted — Lincoln brand").
-- FORKLIFTS: Use Make + Model + Year to infer the following fields when not directly readable from the data plate:
+- FORKLIFTS: Use Make + Model + Year to infer the following fields when not directly readable from the data plate.
+  DATA PLATE LOCATIONS BY BRAND — check these specific spots first before scanning the whole mast:
+  - Toyota: data plate is on the LEFT-SIDE mast column at operator eye level (facing the operator). Contains model, serial number, year of manufacture, rated capacity at load centre, and unladen weight.
+  - Crown: data plate is on the underside of the overhead guard, or on the mast cross-member. Check the overhead guard first.
+  - Linde: data plate is on the RIGHT SIDE of the mast frame, typically mid-mast height.
+  - Hyster / Yale: data plate is on the mast column on the driver side (left column facing the operator), similar height to Toyota.
+  HOURS WHEN KEY IS OFF: If the key is off and the instrument display is blank, return "Key required for display" for the hours field — do NOT return null. Staff need this signal to power on the machine and re-inspect.
+  TYRE TYPE — identify from close exterior shots of the tyres:
+  - Solid (press-on): no air valve visible on the rim, flat tread profile, hard rubber compound — tyres appear chunky and uniform in cross-section with no sidewall flex.
+  - Pneumatic: air valve visible on the rim, rounded sidewall profile, tread pattern similar to a vehicle tyre — tyres show visible sidewall curve.
+  - Cushion: only on indoor forklifts, flat solid rubber bonded directly to the rim with no tread pattern, smooth or near-smooth surface, smaller diameter than pneumatic.
+  Infer fields:
   - max_lift_capacity: decode from model number (last 2 digits × 100kg). Toyota 8FG25→2500kg, 8FD30→3000kg, 8FBE18→1800kg; Linde H25→2500kg, H50→5000kg; Komatsu FG25→2500kg; Hyster H2.5FT→2500kg, H3.5FT→3500kg, H5.0FT→5000kg; Yale GDP30→3000kg; Crown SC6040→2000kg, FC5200→2000kg; Jungheinrich EFG320→2000kg, EFG425→2500kg.
   - max_lift_height: if not on data plate, infer from mast type. Simplex/Monomast→3000mm; Duplex standard→4500mm; Triplex standard→6000mm; Triplex high→7000mm. Reach trucks→up to 12000mm.
   - mast_type: infer from visible stage count in photos (2=Duplex, 3=Triplex, 4=Quad) OR from model suffix if present (e.g. Toyota 8FG25 with no suffix=Duplex standard; "H" suffix=Triplex high; Linde H25 standard=Duplex). State as: Simplex, Duplex, Triplex, or Quad.
@@ -290,24 +316,40 @@ Step 3 — DAMAGE & CONDITION ASSESSMENT (especially for VEHICLES):
 Carefully examine ALL photos for visible damage and condition issues. This is critical for auction cataloguing.
 
 CONDITION RATINGS — select the closest match for each field:
-- body_condition (overall exterior panels): Excellent = no dents, no visible damage; Good = minor stone chips or light scratches only; Fair = dents or moderate scratches; Poor = significant panel damage or heavy dents
-- paint_condition (paint surface quality): Excellent = no chips or scratches, uniform gloss; Good = minor stone chips or hairline scratches; Fair = clear coat fading, deeper scratches, or multiple chips; Poor = significant paint loss, primer showing, or oxidation
-- tyre_condition (tread and sidewalls across all tyres): Excellent = new or near-new, deep tread; Good = plenty of tread remaining, no sidewall damage; Fair = worn but serviceable, approaching wear indicators; Poor = bald, cracked sidewalls, or damaged
+- body_condition (overall exterior panels): Excellent = no dents, no visible damage; Good = stone chips to bonnet, minor door ding — no panel dents; Fair = 1–2 dents 50–150mm, scratches through paint; Poor = significant panel damage or heavy dents
+- paint_condition (paint surface quality): Excellent = no chips or scratches, uniform gloss; Good = minor stone chips bonnet, no clear coat failure; Fair = clear coat fading, deeper scratches, or multiple chips; Poor = significant paint loss, primer showing, or oxidation
+- tyre_condition (tread and sidewalls across all tyres): Excellent = new or near-new, deep tread; Good = >4mm tread, no sidewall damage; Fair = worn but serviceable, approaching wear indicators; Poor = bald, cracked sidewalls, or damaged
 - rust_condition (rust and corrosion): Nil = no rust visible anywhere; Surface = minor surface rust spots, no paint bubbling; Minor = rust through paint in some areas, wheel arches or sills affected; Major = rust holes, structural rust, or widespread corrosion
 - seat_condition (driver and passenger seats): Excellent = like new, no wear; Good = minor wear or light marks; Fair = visible wear, fading, or light stains; Poor = torn, ripped, heavily stained, or foam showing
 - carpet_condition (floor carpets and mats): Excellent = clean, no wear; Good = minor wear or marks; Fair = stained or worn through in places; Poor = heavily soiled, torn, or missing sections
+
+PANEL-BY-PANEL SCANNING — for EVERY exterior photo, systematically scan these areas in order:
+(1) Front bumper and grille — stone chips, cracks, scrapes
+(2) Bonnet leading edge — stone chips are almost universal on used vehicles; always check
+(3) Driver front door — door ding height (approx 600–900mm from ground)
+(4) Passenger front door — same height band as driver side
+(5) Driver rear door — common for parking dings
+(6) Passenger rear door — common for parking dings
+(7) Front guards/fenders — stone chips, scrapes near wheel arch
+(8) Rear quarters — scrapes, dents, previous repair evidence (panel gap changes)
+(9) Rear bumper — reversing scrapes very common; check full width
+(10) Roof — hail damage pattern (multiple small uniform shallow dents)
+(11) All glass — chips, cracks, arc scratches from worn wiper blades
+(12) Mirrors — missing, cracked lenses, scuff marks on housings
+(13) Wheels — kerb rash on alloys (silver/bare metal scrapes on outer rim edge)
 
 EXTERIOR DAMAGE INSPECTION — scan every photo for:
 - Dents: look for uneven reflections, shadow lines, or panel distortion. Note location and approximate size. Check reflections on panels carefully — uneven reflections indicate dents even when the dent is subtle.
 - Hail damage: multiple small uniform shallow dents across roof, bonnet, and boot lid — describe as "Hail damage to roof/bonnet/boot".
 - Scratches: look for linear marks on paint surface. "Light scratches" = surface only. "Deep scratches" = through paint to primer/metal.
 - Stone chips: clusters of small paint chips, common on bonnet/bumper. Stone chips on the bonnet leading edge are extremely common — always check this area.
+- Alloy wheels: look for kerb rash — silver/bare metal scrapes on the outer rim edge where the wheel has been rolled against a kerb. Note which wheels are affected (driver/passenger, front/rear). Kerb rash is very common on used vehicles and should always be checked.
 - Cracked/chipped windscreen: look for star cracks, bullseyes, or chips. Also check for scratched glass or wiper damage (arc-shaped scratches from worn wiper blades).
 - Broken/cracked lights: tail lights, headlights, indicators, fog lights.
 - Missing parts: mirrors, trim pieces, badges, mud flaps, wheel covers.
 - Bumper damage: cracks, scrapes, misalignment, hanging sections.
 - Panel gaps: uneven gaps between panels suggest prior collision repair.
-- Rust: bubbling paint, orange/brown discolouration, holes in panels. Check wheel arches, door bottoms, sills, tailgate.
+- Rust: bubbling paint, orange/brown discolouration, holes in panels. Common rust locations: wheel arch lips (bubbling paint), door bottom edges, sill panels under doors, tailgate bottom edge, roof gutters on older vehicles. Check all these locations on every vehicle.
 - Tow bar damage: bent, scraped, or misaligned.
 - Canopy/tray damage: dents, scratches, cracked windows on canopies.
 - Door edges and sills: check for parking scrapes — these are extremely common and easy to miss.
