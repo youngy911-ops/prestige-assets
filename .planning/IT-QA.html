@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Q&A — Wednesday Director Meeting</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: #f6f7f9;
+  color: #1a1a1a;
+  padding: 32px 0 80px;
+}
+.page { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: #888; margin-bottom: 36px; }
+
+.section {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.07);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.section-header {
+  padding: 13px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.auth { background: #0f1c3f; }
+.data { background: #1a3a6b; }
+.maint { background: #1a4a2b; }
+.risk { background: #4a1a1a; }
+.process { background: #3a2a1a; }
+
+.qa-item { padding: 16px 20px; border-bottom: 1px solid #f0f0f0; }
+.qa-item:last-child { border-bottom: none; }
+.qa-q { font-size: 14px; font-weight: 700; color: #0f1c3f; margin-bottom: 8px; }
+.qa-a { font-size: 14px; line-height: 1.65; color: #333; }
+.qa-a strong { color: #0f1c3f; }
+
+.tip {
+  background: #fffbea;
+  border-left: 3px solid #f5a623;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #7a5a00;
+  margin: 12px 20px;
+  border-radius: 0 4px 4px 0;
+}
+
+.simple {
+  background: #f0f7ff;
+  border-left: 3px solid #2a6ef5;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #1a3a6b;
+  margin: 8px 0 0 0;
+  border-radius: 0 4px 4px 0;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>IT Q&A — Wednesday Meeting</h1>
+<p class="subtitle">Questions IT will ask. Know the answers cold.</p>
+
+<!-- AUTH & ACCESS -->
+<div class="section">
+  <div class="section-header auth">Authentication &amp; Access</div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What kind of access does this need to Salesforce?"</div>
+    <div class="qa-a">Read and write access to the Asset object and a few custom auction objects. Each user logs in with their own Salesforce credentials — the app never uses a shared service account. Every action is tied to the person who did it, so the audit trail works exactly the same as normal Salesforce use.
+    <div class="simple">Simple version: "It works through each user's own Salesforce login. Nothing bypasses the normal permission system."</div></div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What is OAuth 2.0 Web Server Flow?"</div>
+    <div class="qa-a">It's the same login method used when you click "Sign in with Google" on a website. The user clicks "Connect to Salesforce", they're taken to the Salesforce login page, they log in, Salesforce sends a secure token back to the app. The app never sees the user's password — Salesforce handles all of that.
+    <div class="simple">Simple version: "It's the standard Salesforce login process. Same as logging into any connected app."</div></div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What is an External Client App?"</div>
+    <div class="qa-a">Salesforce's term for a third-party app connection. IT creates it in a few clicks in Salesforce Setup — it generates a Consumer Key and Consumer Secret (two codes), they send me those codes, and the connection works. It's their standard process for any new integration. Estimated time: about 30 minutes for IT.
+    <div class="simple">Simple version: "A configuration IT creates in Salesforce Setup. About 30 minutes of work on their end."</div></div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What OAuth scopes are needed?"</div>
+    <div class="qa-a">Three: <strong>api</strong> (access to Salesforce REST API), <strong>refresh_token</strong> (so users don't have to log in every hour), and <strong>openid</strong> (to identify which user is logged in). These are the minimum required — no admin scopes, no ability to modify org settings.
+    <div class="simple">Simple version: "Standard API access for the logged-in user only. No admin permissions."</div></div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What Salesforce objects does it write to?"</div>
+    <div class="qa-a">The Salesforce standard Asset object, and when needed the associated custom auction objects (spo_AssociatedAsset__c, spo_Auction__c). Read access on Account. All writes are scoped to the logged-in user's permissions — if a user doesn't have permission to edit an object in Salesforce normally, the app can't do it either.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What happens if someone leaves and their account is deactivated?"</div>
+    <div class="qa-a">Their Salesforce session is automatically revoked when the account is deactivated. The app uses Salesforce's own authentication — if Salesforce says the user is gone, the app can't connect on their behalf. No separate offboarding needed.</div>
+  </div>
+</div>
+
+<!-- DATA & SECURITY -->
+<div class="section">
+  <div class="section-header data">Data &amp; Security</div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Where is the data stored?"</div>
+    <div class="qa-a">Photos and extracted data are stored in Supabase, hosted in <strong>Sydney (ap-southeast-2)</strong>. Salesforce records stay in Salesforce's Australian instance (AUS72). Nothing is stored offshore. The AI call goes to OpenAI's API but we can enable AU data residency — images processed and stored at-rest in Australia.
+    <div class="simple">Simple version: "Everything stays in Australia."</div></div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Is our data being used to train the AI?"</div>
+    <div class="qa-a">No. We use OpenAI's API (the paid business version), not the free ChatGPT product. Under OpenAI's API terms, inputs and outputs are not used to train their models. Data is retained for up to 30 days for abuse monitoring only, then deleted. We can also sign a Data Processing Addendum if required.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What encryption is used?"</div>
+    <div class="qa-a">All traffic is HTTPS/TLS 1.2+. The OAuth client secret is stored server-side in encrypted environment variables — never exposed to the browser. Access tokens are stored encrypted. Supabase has Row Level Security (RLS) so users can only see their own data.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Can I see the code?"</div>
+    <div class="qa-a">Yes. Happy to walk IT through any part of it. The codebase is on GitHub and I can grant read access for a security review if needed. Nothing is obfuscated.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What happens to photos after upload?"</div>
+    <div class="qa-a">Photos are stored in Supabase Storage (Sydney) against the user's account. They're only accessible to the user who uploaded them via Row Level Security. They're not public, not shared, and not sent to any third party except the OpenAI extraction call.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Is OpenAI SOC 2 / ISO 27001 certified?"</div>
+    <div class="qa-a">Yes. OpenAI holds SOC 2 Type II certification. If required, we can also sign a DPA (Data Processing Addendum) for additional compliance coverage. Zero Data Retention agreements are available through enterprise contracts if needed.
+    <div class="simple">Simple version: "Yes. And we can sign a formal data agreement if required."</div></div>
+  </div>
+</div>
+
+<!-- MAINTENANCE & SUPPORT -->
+<div class="section">
+  <div class="section-header maint">Maintenance &amp; Support</div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Who maintains this if something breaks?"</div>
+    <div class="qa-a">Me currently. If the pilot proves value, the intention is to formalise it — document it properly and either hand it to IT or bring in a developer. The pilot review is specifically to make that decision. Right now it's a proof of concept; after the pilot we decide how to support it properly.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What's the uptime / SLA?"</div>
+    <div class="qa-a">We rely on Vercel (99.99% uptime SLA) for the app and Supabase (99.9%) for the database. Both are enterprise-grade platforms used by thousands of companies. There's no custom infrastructure to manage — if Vercel or Supabase has an outage, their support handles it.
+    <div class="simple">Simple version: "Hosted on reliable cloud platforms with good uptime — same infrastructure many large companies use."</div></div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What does IT actually need to do ongoing?"</div>
+    <div class="qa-a">Very little. After the initial sandbox setup (one-time, ~30 min), ongoing IT involvement is just: user provisioning (adding new users to a Salesforce Permission Set), and approving production rollout after the pilot. No server management, no code deployment, no on-call.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What about Salesforce API limits?"</div>
+    <div class="qa-a">Slattery's current API usage is about 63,000 requests per day out of a 45.6 million limit — that's 0.14% of capacity. This app adds roughly 10 API calls per book-in. At 100 assets a week, that's about 1,000 calls per week — completely trivial. No risk of hitting limits.</div>
+  </div>
+</div>
+
+<!-- RISK -->
+<div class="section">
+  <div class="section-header risk">Risk Questions</div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What if the AI writes wrong data into Salesforce?"</div>
+    <div class="qa-a">There's a mandatory review step — nothing writes to Salesforce until a human confirms it. The user sees exactly what the AI extracted, can edit any field, and then explicitly saves. It cannot write automatically without a person approving it first.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What if the connection is compromised?"</div>
+    <div class="qa-a">Token rotation is in place — access tokens expire and are refreshed. If a token is ever suspected compromised, IT can revoke the External Client App in Salesforce Setup with one click and all sessions immediately stop. Same process as revoking any connected app.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Is production Salesforce at risk during the pilot?"</div>
+    <div class="qa-a">No. The entire pilot runs in a sandbox — a complete copy of the production org used for testing. Production isn't touched at all until after the pilot review and explicit sign-off from IT and management.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What's the fallback if the app goes down?"</div>
+    <div class="qa-a">Staff fall back to the current manual process. The app doesn't replace Salesforce — it's an input tool. If it's unavailable, book-ins happen the same way they do today. No data is locked in the app; everything is in Salesforce as normal.</div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="section">
+  <div class="section-header process">Process Questions</div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What do we need from IT to get started?"</div>
+    <div class="qa-a">
+      1. Access to a Salesforce <strong>sandbox</strong><br>
+      2. Create an <strong>External Client App</strong> in the sandbox with OAuth enabled<br>
+      3. Send me the <strong>Consumer Key and Consumer Secret</strong><br>
+      4. Activate my Salesforce user in the sandbox<br>
+      That's it. Estimated time: 30 minutes. Everything else is on me.
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What's the callback URL?"</div>
+    <div class="qa-a">https://assetbookintool.com/api/auth/salesforce/callback — I'll provide this in writing after the meeting so IT has it ready.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What's the timeline?"</div>
+    <div class="qa-a">Once IT provides the sandbox credentials: integration built and tested in 1-2 weeks, small pilot with a handful of users in week 3-4, pilot review and rollout decision in week 4-5. Total from today to production decision: about 5 weeks.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Technical question you don't know</div>
+    <div class="qa-a">"Good question — let me get back to you on that in writing. Can I send you the details after the meeting?"</div>
+  </div>
+</div>
+
+<div class="tip">💬 IT's job is to assess risk. Most of their questions are really "who's accountable if this breaks?" The answer is always: "The pilot is sandboxed, nothing touches production, and we review before any rollout. There's no risk to IT during the pilot."</div>
+
+</div>
+</body>
+</html>
