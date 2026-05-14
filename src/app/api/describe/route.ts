@@ -53,22 +53,24 @@ TEMPLATES BY ASSET TYPE — select the correct template based on asset identifie
 TRUCK (PRIME MOVER)
 Line 1: Year, Make, Model, Drive Type
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque, [Full Transmission Brand and Name]
-Key extras (diff locks, exhaust brake, cruise control, UHF etc.)
-Suspension type (airbag / road-friendly leaf spring / Kenworth AirGlide — name brand if known)
-Sleeper cab type and size if fitted (e.g. 48" single sleeper, 63" double bunk — use exact dimension from inspection notes; omit if day cab)
-Fifth wheel brand/model if known (e.g. Jost JSK 37, SAF-Holland FW35)
+Key extras: diff locks MUST be stated explicitly ("Diff Lock" or "No Diff Lock" — never omit; diff lock is a critical value factor for buyers); exhaust brake, cruise control, UHF etc.
+Suspension brand MUST always be named — never write "airbag suspension" without the brand (e.g. Hendrickson PRIMAAX, Kenworth AirGlide 200, Volvo ECAS, Freightliner AirLiner, Mercedes-Benz AIRMATIC); apply training knowledge of the model if not visible
+Fifth wheel brand/model MUST always be named — never write "fifth wheel" without the brand (e.g. Jost JSK 37, SAF-Holland FW35, Fontaine No-Slack 2; apply training knowledge of the model if not specified in fields)
+Sleeper cab type and size if fitted — list amenities present (fridge brand, microwave, inverter brand/wattage if visible; e.g. "48" Single Sleeper, Waeco Fridge, Microwave, 2000W Inverter"); omit sleeper line entirely if day cab
 GCM if 100,000kg or above
 Sold As Is, Untested & Unregistered.
 
-MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Volvo FH with D-series suffix → Volvo D13K 12.8-Litre 6-Cylinder; Kenworth T610 → PACCAR MX-13 12.9-Litre 6-Cylinder; Kenworth T409/T659 → Cummins ISX15 15.0-Litre 6-Cylinder; Mack Trident/Granite → Mack MP8 13.0-Litre 6-Cylinder; Western Star 4964 → Detroit DD15 14.8-Litre 6-Cylinder; Mercedes Actros → OM471 12.8-Litre 6-Cylinder; DAF XF → MX-13 12.9-Litre 6-Cylinder. For transmission, apply the standard pairing for that model (e.g. Volvo FH → Volvo I-Shift 12-Speed AMT; Kenworth → Eaton Fuller 18-Speed or PACCAR TX-12 AMT depending on era). If the spec varies by order/option, omit it rather than guess — but the engine family and displacement are universally known for these models and must be included. Use the ENGINE HP REFERENCE table above to fill the hp figure when not supplied.
+MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Volvo FH with D-series suffix → Volvo D13K 12.8-Litre 6-Cylinder; Kenworth T610 → PACCAR MX-13 12.9-Litre 6-Cylinder; Kenworth T409/T659 → Cummins ISX15 15.0-Litre 6-Cylinder; Mack Trident/Granite → Mack MP8 13.0-Litre 6-Cylinder; Western Star 4964 → Detroit DD15 14.8-Litre 6-Cylinder; Mercedes Actros → OM471 12.8-Litre 6-Cylinder; DAF XF → MX-13 12.9-Litre 6-Cylinder. For transmission, apply the standard pairing for that model (e.g. Volvo FH → Volvo I-Shift 12-Speed AMT; Kenworth T610 → PACCAR TX-12 12-Speed AMT; Kenworth T909/T659 → Eaton Fuller 18-Speed Manual or Eaton UltraShift Plus depending on era). For suspension, apply the standard fitment for that model (e.g. Volvo FH → Volvo ECAS Air Suspension; Kenworth T610/T909 → Hendrickson PRIMAAX Air Suspension; Western Star 4964 → Hendrickson RT Air Suspension; Mack Trident → Hendrickson PRIMAAX Air Suspension). For fifth wheel, apply the standard fitment for that model (e.g. most AU prime movers → Jost JSK 37 or SAF-Holland FW35). If the spec varies by order/option, omit it rather than guess — but the engine family, displacement, suspension brand, and fifth wheel brand are mandatory attempts for all prime movers. Use the ENGINE HP REFERENCE table above to fill the hp figure when not supplied.
 
 TIPPER
 Line 1: Year, Make, Model, Drive Type, Tipper
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque, [Full Transmission Brand and Name]
 Blank line
-Single body-detail line: body builder name if visible (common AU builders: Moore, Stoodley, Hamelex White, CJD), dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox), rock lining if fitted, tarp type (auto retractable / manual / pull-over), tailgate type, exhaust/engine brake brand, cruise control, load monitoring system, UHF, diff locks, Ringfeder hitch if confirmed
+Single body-detail line: body builder name MUST always be stated — common AU builders: Moore, Stoodley, Hamelex White, CJD, Auswide, Superior; always attempt to identify from photos (look for badge/plate on body); if not determinable write "Custom Tipper Body"; then dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox); Hardox lining MUST be called out explicitly if fitted ("Hardox Lined" or "Full Hardox Lining" — Hardox is a premium value signal); tarp brand AND type always named if tarp fitted — never write "tarp" alone (e.g. "Razor Delta II Electric Roll-Over Tarp", "Aerocover Auto-Retractable Tarp", "CoverMe Electric Tarp"); tailgate type, exhaust/engine brake brand, cruise control, load monitoring system, UHF, diff locks, Ringfeder hitch if confirmed
 Payload: Xkg if on plate
 Sold As Is, Untested & Unregistered.
+
+MINIMAL DATA RULE (tippers): Body builder name is a mandatory attempt — always check photos for a badge, plate, or embossed name on the tailgate or body sides before writing "Custom Tipper Body". Tarp brand is a mandatory attempt — Razor and Aerocover are the most common AU tipper tarp brands. Hardox lining must always be called out if steel body shows wear-plate construction visible in photos.
 
 SERVICE TRUCK
 Line 1: Year, Make, Model, Drive Type, Service Truck or Tray/Crane Truck (use "Tray/Crane Truck" when a loader crane is fitted)
@@ -522,14 +524,17 @@ Line 1: Year Make Model Wheel Loader (e.g. "2018 Caterpillar 950GC Wheel Loader"
 Operating Weight: XX,XXXkg Operating Weight
 Hours
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), Tier 4 Final / Stage V
-Transmission: [Brand] [Model] [N]-Speed Powershift Transmission (e.g. "ZF 4WG-190 4-Speed Powershift Transmission" or "Cat CX28B Powershift Transmission")
+Transmission: [Brand] [Model] [N]-Speed Powershift Transmission — transmission brand MUST always be named; never write "Powershift Transmission" without the brand (e.g. "ZF 4WG-190 4-Speed Powershift Transmission", "Cat CX28B Powershift Transmission", "Komatsu CLSS 4-Speed Powershift Transmission")
 Enclosed Cab / ROPS
 Articulated steering, top speed if known
-Bucket: Xm³ [Type] Bucket, X,XXXmm Width (e.g. "3.0m³ General Purpose Bucket, 2,700mm Width" or "2.8m³ 4-In-1 Bucket, 2,600mm Width")
-Tyre spec if visible: XX.XRX Tyres (e.g. "20.5R25 Michelin XHA2 Tyres" or "20.5R25 Tyres")
-Extras (onboard scales, auto lube, rear hitch, forks if fitted)
+Bucket: Xm³ [Type] Bucket, X,XXXmm Width — always state BOTH capacity in m³ AND width in mm (e.g. "3.0m³ General Purpose Bucket, 2,700mm Width" or "2.8m³ 4-In-1 Bucket, 2,600mm Width")
+Tyre spec: always attempt to name brand if visible on sidewall — common brands include Michelin, Bridgestone, Goodyear, Galaxy, Alliance (e.g. "20.5R25 Michelin XHA2 Tyres", "20.5R25 Bridgestone VSNT Tyres", or "20.5R25 Tyres" if brand not determinable)
+Loading scale / weighing system if fitted: name brand where known (e.g. "Loadmaster Onboard Scales", "Payload Pro Onboard Scales") — omit if not fitted
+Extras (auto lube system with brand if known, rear hitch, forks if fitted)
 Attachments Included if any
 Sold As Is, Untested & Unregistered.
+
+MINIMAL DATA RULE (wheel loaders): If only make/model/year/hours are known, apply your training knowledge to fill in transmission brand and model, standard bucket capacity and width, and tyre size — e.g. Caterpillar 950GC → Cat CX28B Powershift Transmission, 3.0m³ GP Bucket 2,700mm Width, 20.5R25 Tyres; Caterpillar 966 → Cat CX31 Powershift Transmission; Komatsu WA380 → Komatsu CLSS 4-Speed Powershift Transmission, 2.5m³ GP Bucket; Volvo L120 → Volvo 4-Speed Powershift Transmission with ZF internals; Liebherr L556 → ZF 4-Speed Powershift Transmission. Transmission brand is a mandatory attempt even from training knowledge — never omit it.
 
 TELEHANDLER
 Year, Make, Model, Telehandler
@@ -968,8 +973,10 @@ Sold As Is, Untested & Unregistered.
 
 SEDAN / SUV (subtype: sedan or suv)
 Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below.
-Line 1: Year Make Model Variant Drive Type Body Type
+Line 1: Year Make Model Variant Drive Type Body Type — variant/trim level (GLS, SV6, Titanium, VX, ST-Line, GR Sport etc.) is a major value signal and must always appear on line 1 if inferrable from model, badge, or photos.
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Full Transmission Name]
+Drive type explicit (4WD/AWD/2WD/FWD/RWD) — always state; buyers filter by this.
+Safety tech if confirmed or inferrable for the variant: BSM (Blind Spot Monitoring), AEB (Autonomous Emergency Braking), LDW (Lane Departure Warning), ACC (Adaptive Cruise Control) — name each system present. Apply model knowledge: e.g. Ford Escape Titanium includes AEB, BSM, ACC as standard; Toyota RAV4 GXL includes BSM standard from 2019+.
 Key extras, comma separated, Title Case — omit if none confirmed or visible
 Sold As Is, Untested & Unregistered.
 For SUVs: if a tow bar is fitted, always mention it — towing capacity is a key purchase driver. Mention roof racks or roof rails if visible.
@@ -977,8 +984,11 @@ For SUVs: if a tow bar is fitted, always mention it — towing capacity is a key
 UTE / 4WD (subtype: dual_cab_ute, single_cab_ute, extra_cab_ute, 4wd — the most common Slattery vehicle types)
 Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below.
 These are work vehicles — accessory fitment is CRITICAL to buyers and directly affects hammer price. List all confirmed or visible accessories on the extras line.
-Line 1: Year Make Model Variant Drive Type Body Type (e.g. "2019 Toyota HiLux SR5 4x4 Dual Cab Utility")
+Line 1: Year Make Model Variant Drive Type Body Type (e.g. "2019 Toyota HiLux SR5 4x4 Dual Cab Utility") — variant/trim (SR5, Wildtrak, GLS, Raptor, GXL, Rugged X etc.) is one of the highest-value details and must always appear on line 1 if inferrable.
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Full Transmission Name]
+Drive type explicit (4WD/4x4/AWD/2WD) — always state; this is a primary buyer filter.
+Towing capacity for utes if inferrable from model/variant — include as a spec after the engine line (e.g. "3,500kg Towing Capacity"). Apply model knowledge: HiLux SR5/Rogue/Rugged X → 3,500kg; Ranger Wildtrak/Raptor → 3,500kg; Colorado LTZ/Z71 → 3,500kg; Triton GLS → 3,100kg; D-Max LS-U/X-Terrain → 3,500kg. Omit if the model/variant does not have a universally-known towing rating.
+Safety tech if confirmed or inferrable for the variant: BSM (Blind Spot Monitoring), AEB (Autonomous Emergency Braking), LDW (Lane Departure Warning), ACC (Adaptive Cruise Control) — list each present. Apply model knowledge: HiLux SR5 from 2018+ includes AEB, LDW, ACC standard; Ranger Wildtrak from 2019+ includes BSM, AEB, ACC.
 Extras line: comma-separated accessories, Title Case, brand names where known
 
 Priority extras to mention if confirmed or visible (include every one that applies):
@@ -987,11 +997,11 @@ Priority extras to mention if confirmed or visible (include every one that appli
 - Bull bar / nudge bar — name brand if badged (ARB, TJM, Ridgeback, Ironman, Opposite Lock)
 - Snorkel — mention if visible (signals off-road use and value to buyers)
 - Winch — mention if visible (state brand/capacity if badged)
-- Roof rack / roof basket / Rhino Rack / Thule
+- Roof rack / roof basket — name brand if badged (Rhino Rack, Thule, ARB)
 - Side steps / rock sliders
 - UHF radio / CB (visible aerial or handset)
-- Aftermarket steel or alloy tray (with approx dimensions if known)
-- Suspension lift kit
+- Aftermarket steel or alloy tray (with approx dimensions if known); for work trays note liner, tie-down rails, canopy brand
+- Suspension lift kit — name brand if badged (Old Man Emu, Dobinsons, Ironman, Tough Dog)
 - Driving lights / spotlights (Lightforce, IPF, ARB, Hella — name if badged)
 - Tonneau cover / roller lid / hard lid (brand if badged e.g. Mountain Top, Ute-Lid, Roll-N-Lock)
 - Alloy wheels (aftermarket or upgraded — note if distinctly non-standard)
