@@ -78,6 +78,9 @@ VISUAL IDENTIFICATION CUES:
 - Enclosed box body on rigid chassis with cab = truck (pantech)
 - Long trailer, curtains on sides = trailer (curtainsider)
 - Boat hull on trailer = marine (trailer_boat)
+- Small aluminium or fibreglass boat on trailer (tinny, runabout, dinghy) = marine (trailer_boat)
+- Jet ski / personal watercraft without boat hull = marine (personal_watercraft)
+- Sailboat or yacht with mast = marine (commercial_vessel or trailer_boat)
 - Drawbar + living quarters = caravan
 - Large tyres + open operator station + boom = agriculture (tractor or telehandler)
 - Orange/red warning lights on roof = likely service_truck or emergency vehicle
