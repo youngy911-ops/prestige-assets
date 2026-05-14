@@ -72,9 +72,13 @@ MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known a
 
 TIPPER
 Line 1: Year, Make, Model, Drive Type, Tipper
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque, [Full Transmission Brand and Name]
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+  — engine code comes FIRST before displacement (e.g. "6M60-9AT1 7.5-Litre" not "7.5-Litre 6M60-9AT1")
+  — kW AND hp always both stated: "177kW (237hp)" — never kW only or hp only
+  — Nm Torque: include only when known for heavy/prime mover class tippers; omit for medium rigids if not in confirmed fields
+  — Transmission: "Automatic Transmission" is acceptable when brand/model unknown; full brand+model preferred when known
 Blank line
-Single body-detail line: body builder name MUST always be stated — common AU builders: Moore, Stoodley, Hamelex White, CJD, Auswide, Superior; always attempt to identify from photos (look for badge/plate on body); if not determinable write "Custom Tipper Body"; then dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox); Hardox lining MUST be called out explicitly if fitted ("Hardox Lined" or "Full Hardox Lining" — Hardox is a premium value signal); tarp brand AND type always named if tarp fitted — never write "tarp" alone (e.g. "Razor Delta II Electric Roll-Over Tarp", "Aerocover Auto-Retractable Tarp", "CoverMe Electric Tarp"); tailgate type, exhaust/engine brake brand, cruise control, load monitoring system, UHF, diff locks, Ringfeder hitch if confirmed
+Single body-detail line: body builder name MUST always be stated — common AU builders: Moore, Stoodley, Hamelex White, CJD, Auswide, Superior; always attempt to identify from photos (look for badge/plate on body); if not determinable write "Custom Tipper Body"; then dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox); Hardox lining MUST be called out explicitly if fitted ("Hardox Lined" or "Full Hardox Lining" — Hardox is a premium value signal); tarp brand AND type always named if tarp fitted — never write "tarp" alone (e.g. "Razor Delta II Electric Roll-Over Tarp", "Aerocover Auto-Retractable Tarp", "CoverMe Electric Tarp"); tailgate type, exhaust/engine brake brand, cruise control, load monitoring system, UHF, diff locks, Ringfeder hitch if confirmed; ALL extras in one comma-separated run on this single line — never use separate lines for individual accessories
 Payload: [X]kg — include only if notably high or stated by user in inspection notes.
 Sold As Is, Untested & Unregistered.
 
@@ -83,8 +87,11 @@ MINIMAL DATA RULE (tippers): Body builder name is a mandatory attempt — always
 SERVICE TRUCK
 Line 1: Year, Make, Model, Drive Type, Service Truck or Tray/Crane Truck (use "Tray/Crane Truck" when a loader crane is fitted)
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+  — engine code comes FIRST before displacement (e.g. "6M60-T2 7.5-Litre" not "7.5-Litre 6M60-T2")
+  — kW AND hp always both stated: "177kW (237hp)" — never kW only or hp only
+  — engine + transmission on ONE line, no separate lines
 Blank line
-Single body-detail line: body builder name + tray dimensions Xmm (L) x Xmm (W), crane make/model/year if known, then all fitted items in one comma-separated run (hose reels, toolboxes with dimensions, compressor, inverter brand/wattage, solar, awnings, rack, reverse camera, tow hitch, rear airlines, UHF, sat nav, cruise control, lights, beacons)
+Single body-detail line: body builder name + tray dimensions Xmm (L) x Xmm (W), crane make/model + year in brackets (e.g. "HMF 300 E4-4 Loader Crane (2021)") if fitted, then ALL fitted items in one comma-separated run — never separate lines for individual accessories (air hose reel, water hose reel, toolboxes with dimensions, compressor, inverter brand/wattage, solar, awnings, rack, reverse camera, tow hitch, rear airlines, in-cab crane controls, UHF, sat nav, cruise control, overhead lights, beacons)
 Sold As Is, Untested & Unregistered.
 
 RIGID TRUCK / PANTECH / CURTAINSIDER / TAUTLINER / VAN
@@ -105,11 +112,26 @@ Sold As Is, Untested & Unregistered.
 
 FLAT DECK
 Line 1: Year, Make, Model, Drive Type, Flat Deck
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-Deck dimensions Xmm (L) x Xmm (W) — metric only, no imperial
+Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]HP), [Transmission Name, including drive config e.g. Twin Steer]
+Deck dimensions Xmm (L) x Xmm (W) — metric only, no imperial; deck material if known (steel / alloy)
+Hydraulic Ramps — always note if fitted; state ramp type (hydraulic / fold-down / swing-up)
 Headboard (fixed / with roof rack / drop-down), toolboxes with dimensions if visible (e.g. "650mm Undermount Toolbox"), tie rails, stoneguard if fitted
+Winch: brand and type if fitted (e.g. "Sherpa 4x4 Winch")
 Tail lift: brand and SWL if fitted (e.g. "Tieman Swing-Under Tailgate Lift 600kg SWL")
 Tow hitch/airlines if fitted
+Payload: XX,XXXkg — include on its own line when notably high (e.g. above 15,000kg) or stated by user
+Sold As Is, Untested & Unregistered.
+
+Example (heavy flat deck with ramps):
+2002 Iveco ACCO K2350 8x4 Flat Deck
+
+Cummins ISL 6-Cylinder Turbo Diesel, 280HP
+Allison Automatic, Twin Steer
+
+6,900mm x 2,500mm Flat Deck, Hydraulic Ramps
+Sherpa 4x4 Winch
+Payload: 19,780kg
+
 Sold As Is, Untested & Unregistered.
 
 CAB CHASSIS
@@ -188,15 +210,16 @@ Elliott 17M Knuckle Boom EWP, 17m Working Height, 200kg Basket Capacity, Outrigg
 Sold As Is, Untested & Unregistered.
 
 CRANE TRUCK
-Line 1: Year, Make, Model, Drive Type, Crane Truck
+Line 1: Year, Make, Model, Drive Type, Tray/Crane Truck (always use "Tray/Crane Truck" as the body type)
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-
-Body builder, tray dimensions Xmm (L) x Xmm (W)
-Crane line: [Brand] [Model] [Boom Type] Crane (year if known), [X]t Capacity at [X]m, [Certification status]
-  — crane brand/model/capacity are the primary buyer specs — always lead with these
-  — boom type: Knuckle Boom / Straight Boom / Loader Crane
-  — certification status: In Current Certification / Not In Current Certification / Certification Unknown
-Hose reels, toolboxes, compressor, PTO details if fitted
+  — engine code comes FIRST before displacement (e.g. "6M60-T2 7.5-Litre")
+  — kW AND hp always both stated: "177kW (237hp)"
+Blank line
+Single body-detail line: body builder name + tray dimensions Xmm (L) x Xmm (W), crane brand/model + year in brackets (e.g. "HMF 300 E4-4 Loader Crane (2021)"), then ALL fitted items in one comma-separated run — NEVER split into separate body/crane/accessories lines
+  — crane brand/model are the primary buyer specs — always state these immediately after body dimensions
+  — boom type: Knuckle Boom / Straight Boom / Loader Crane (use whichever applies)
+  — certification status (In Current Certification / Not In Current Certification / Certification Unknown): include if known
+  — accessories in order: hose reels, toolboxes with dimensions, compressor, inverter brand/wattage, reverse camera, tow hitch, rear airlines, in-cab crane controls, UHF, sat nav, cruise control, overhead lights, beacons
 Sold As Is, Untested & Unregistered.
 
 FUEL TRUCK
@@ -303,9 +326,10 @@ Body builder brand — always name the Australian builder if identifiable from b
 ATM prominently stated: "XX,XXXkg ATM" — always include when known; this is the headline spec for trailer buyers.
 Deck dimensions: L x W mm
 Deck material: steel / alloy — always state if visible or known; alloy decks command a premium
-Suspension brand where inferrable: Hendrickson, BPW, SAF-Holland, Fuwa — name if visible on axle tag or from model knowledge.
-Brake system: Air Drum / Air Disc / EBS — always state if known; buyers care about brake spec for compliance and maintenance cost.
-Payload: Xt, tare if known
+Suspension brand — always name if visible or inferrable: Hendrickson Airbag (premium — always call out "Airbag"), BPW, SAF-Holland, Fuwa, leaf spring
+Brake system: always state brand and type — Knorr-Bremse TEBS, Haldex EBS, Air Drum, Air Disc — buyers care about brake spec for compliance and maintenance cost
+Ramps: always note if fitted; state type (Hydraulic Ramps / Fold-Down Ramps / Swing Ramps) — ramps add significant value for loading plant equipment
+Payload: XX,XXXkg — include on its own line when notably high or confirmed
 Headboard: always note if fitted and describe (fixed / removable / drop-down)
 Toolboxes: note quantity and position (e.g. "2x underdeck toolboxes") if fitted
 Tie rails: note full-length or partial, material if known
@@ -372,21 +396,39 @@ TIPPER TRAILER
 Line 1: Year, Make, Model, Tipper Trailer. Axle config.
 Body builder: always name if known (e.g. Robuk, MaxiTrans, Vawdrey, Lusty EMS, Hamelex White) — body builder is a key value signal
 Body capacity: Xm³, body material (marine grade alloy / Hardox steel / Bisalloy), floor type (V-floor / flat)
-Axle brand, suspension type (airbag is premium — always note)
-Brake system (Knorr-Bremse TEBS / Haldex)
-Tarp system: brand AND type — always name brand if known (e.g. "Razor Delta II electric roll-over tarp", "CoverMe electric tarp"); omit only if no tarp fitted
+Chassis grade if known (e.g. 700 Grade Steel Chassis) — state grade verbatim from inspection notes when available
+Suspension brand and type — always name brand: Hendrickson Airbag, BPW, SAF-Holland (airbag is premium — always call out "Airbag Suspension")
+Brake system: always state brand — Knorr-Bremse TEBS, Haldex EBS (e.g. "Knorr-Bremse TEBS Air Brakes")
+Tarp system: brand AND type — always name brand if known (e.g. "Razor Electric Roll-Over Tarp", "CoverMe Electric Tarp"); omit only if no tarp fitted
 Tailgate type: always describe (e.g. hydraulic automatic opening rear tailgate / manual drop tailgate / barn doors) — tailgate type affects usability and value
-Onboard scales if fitted (RightWeigh / Haltech)
+Wheels: name brand if premium (e.g. "Alcoa Alloy Wheels") — Alcoa alloy wheels are a significant value signal
+Onboard scales if fitted: always name brand (RightWeigh, Haltech)
 Tyre inflation system if fitted (Tiremaax / Haldex)
 Payload: Xt
 Sold As Is, Untested & Unregistered.
 
 B-DOUBLE SET / ROAD TRAIN SET
 Line 1: Year, Make, Model, [B-Double Set With Dolly / Road Train Set / Quad Set]
-Opening line: state if a Matching Set (sequential VINs), compliance dates, and rating (B-Double and Road Train Rated / B-Double Rated)
-Shared specs block: describe specs common to all trailers once — body type, body material, chassis spec, suspension, brake system, tarp, scales, accessories (grain diverter, water tank, toolbox, spare tyre etc.)
-Component list: list each trailer on its own line at the bottom with VIN, Compliance date, and ATM — e.g. "2023 Robuk Tri-Axle End Tipper — VIN: XXXXXXXXXXXXXXXXX, Compliance: 06/2023, ATM: 44,000kg"
+Opening line: state if a Matching Set (sequential VINs), manufacture date, and rating (B-Double and Road Train Rated / B-Double Rated)
+Shared specs block: describe specs common to all trailers once — body type and size, body material, chassis spec (grade), suspension brand and type, brake system brand, tarp brand and type, scales, accessories (grain diverter, water tank, toolbox, spare tyre etc.)
+Component list: list each trailer on its own line at the bottom with VIN, Compliance date, and ATM — e.g. "2023 Robuk Tri-Axle End Tipper — VIN: 6K9R0ATRAPA604419, Compliance: 06/2023, ATM: 44,000kg"
 Rule: For B-double and road train sets, describe shared specs once then list each component with its VIN, Compliance date, and ATM on separate lines at the bottom.
+Sold As Is, Untested & Unregistered.
+
+Example (B-double tipper set):
+2023 Robuk Tri-Axle B-Double Set With Dolly
+
+Matching Set — Sequential VINs, Manufactured Jun-23, B-Double and Road Train Rated
+
+33ft and 36ft Aluminium End Tippers
+700 Grade Steel Chassis, V-Floor Body, Alcoa Alloy Wheels
+Hendrickson Airbag Suspension, Knorr-Bremse TEBS Air Brakes
+Razor Electric Roll-Over Tarp
+RightWeigh Onboard Scales
+
+2023 Robuk Tri-Axle End Tipper — VIN: 6K9R0ATRAPA604419, Compliance: 06/2023, ATM: 44,000kg
+2023 Robuk Tri-Axle Dolly — VIN: 6K9RBKD0LPA604418, Compliance: 06/2023, ATM: 23,500kg
+
 Sold As Is, Untested & Unregistered.
 
 TANKER TRAILER
