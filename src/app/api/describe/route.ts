@@ -281,8 +281,12 @@ Sold As Is, Untested & Unregistered.
 
 FLAT DECK TRAILER
 Line 1: Year, Make, Model, Flat Deck Trailer. Axle config.
+Body builder brand — always name the Australian builder if identifiable from badge, compliance plate, or photos (Vawdrey, Krueger, MaxiTrans/Freighter, Barker, Moore, Stoodley, Drake, Lusty EMS, Hamelex White) — builder brand is a primary value signal for trailer buyers.
+ATM prominently stated: "XX,XXXkg ATM" — always include when known; this is the headline spec for trailer buyers.
 Deck dimensions: L x W mm
 Deck material: steel / alloy — always state if visible or known; alloy decks command a premium
+Suspension brand where inferrable: Hendrickson, BPW, SAF-Holland, Fuwa — name if visible on axle tag or from model knowledge.
+Brake system: Air Drum / Air Disc / EBS — always state if known; buyers care about brake spec for compliance and maintenance cost.
 Payload: Xt, tare if known
 Headboard: always note if fitted and describe (fixed / removable / drop-down)
 Toolboxes: note quantity and position (e.g. "2x underdeck toolboxes") if fitted
@@ -291,13 +295,17 @@ Stoneguard if fitted
 Pin sizes: 50mm / 90mm kingpin — always state; critical for compatibility
 Sold As Is, Untested & Unregistered.
 
-MINIMAL DATA RULE (trailers): If only make/year and ATM are confirmed and no axle config, suspension, or deck dims are in the confirmed fields, apply your training knowledge to infer what you reliably know for that make/model — e.g. a Vawdrey flat deck from pre-2010 will almost certainly be leaf spring suspension; a MaxiTrans or Barker from 2015+ is likely airbag. State axle config as "Tri-Axle" or "Tandem-Axle" only if you can confirm from photos or model knowledge for that specific unit; otherwise describe only what is confirmed. ATM/GTM must always appear when known. Never fabricate deck dimensions — omit if not confirmed.
+MINIMAL DATA RULE (trailers): If only make/year and ATM are confirmed and no axle config, suspension, or deck dims are in the confirmed fields, apply your training knowledge to infer what you reliably know for that make/model — e.g. a Vawdrey flat deck from pre-2010 will almost certainly be leaf spring suspension; a MaxiTrans or Barker from 2015+ is likely airbag. State axle config as "Tri-Axle" or "Tandem-Axle" only if you can confirm from photos or model knowledge for that specific unit; otherwise describe only what is confirmed. ATM/GTM must always appear when known. Never fabricate deck dimensions — omit if not confirmed. Body builder brand (Vawdrey, Krueger, MaxiTrans/Freighter, Barker, Moore, Stoodley, Drake) must always be named when identifiable — apply model knowledge if badge is not directly readable in photos.
 
 CURTAINSIDER TRAILER
 Line 1: Year, Make, Model, Curtainsider Trailer. Axle config.
+Body builder brand — always name the Australian builder if identifiable (Vawdrey, Krueger, MaxiTrans/Freighter, Barker, Moore, Stoodley) — builder brand is a key value signal.
+ATM prominently stated: "XX,XXXkg ATM" — always include when known.
 Deck dimensions: L x W mm
 Number of curtain side posts, roof type
-Curtain brand if known (e.g. Tautliner, Mitchells, Kerrafront), curtain condition (new / good / worn / damaged) — always state condition; worn curtains are a known cost for buyers
+Curtain brand if known (XL Catlin, Trans-pac, Tautliner, Mitchells, Kerrafront) — name brand always; curtain condition (new / good / worn / damaged) — always state condition; worn curtains are a known cost for buyers
+Suspension brand where inferrable: Hendrickson, BPW, SAF-Holland — name if visible on axle tag or from model knowledge.
+Brake system: Air Drum / Air Disc / EBS (Knorr-Bremse TEBS / Haldex) — buyers care about brake spec.
 Tracking system: always note if fitted (e.g. top and bottom curtain tracking rail) — critical for load restraint compliance
 Strapping rails: note if fitted (e.g. full-length strapping rails both sides) — buyers need to know load restraint capability
 Load restraint system: E-track / strapping rails / load bars — describe what is visible
@@ -305,7 +313,11 @@ Sold As Is, Untested & Unregistered.
 
 PANTECH TRAILER
 Line 1: Year, Make, Model, Pantech Trailer. Axle config.
+Body builder brand — always name the Australian builder if identifiable (Vawdrey, Krueger, MaxiTrans/Freighter, Barker, Moore, Stoodley) — builder brand is a key value signal.
+ATM prominently stated: "XX,XXXkg ATM" — always include when known.
 Internal dimensions: L x W x H mm
+Suspension brand where inferrable: Hendrickson, BPW, SAF-Holland.
+Brake system: Air Drum / Air Disc / EBS — always state if known.
 Door type (roller door / swing doors)
 Floor type
 Sold As Is, Untested & Unregistered.
@@ -810,30 +822,41 @@ Sold As Is, Untested & Unregistered.
 FORKLIFT (CLEARVIEW MAST / CONTAINER MAST)
 Year, Make, Model, [Fuel Type] Counterbalance Forklift
 Engine line (powered forklifts): [Engine Code] [Fuel Type] Engine — for LPG and diesel; omit engine line for electric forklifts (state battery voltage/capacity instead)
-Mast line: [N]-Stage Mast, Side Shift (if fitted), [X,XXXmm] Lift Height, Full Free Lift / Partial Free Lift (if fitted) — mast stage count using: Simplex (1-stage) / Duplex (2-stage) / Triplex (3-stage) / Quad (4-stage); write as "N-Stage Mast" in output (e.g. "3-Stage Mast")
+Mast line: [Mast Type] Mast, Side Shift (if fitted), [X,XXXmm] Lift Height, Full Free Lift / Partial Free Lift (if fitted) — name the mast type: Simplex (1-stage) / Duplex (2-stage) / Triplex (3-stage) / Quad (4-stage); always write the named type (e.g. "Duplex Mast", "Triplex Mast") — never write "N-Stage Mast"
 Capacity line: Max Lift Capacity: X,XXXkg at 500mm Load Centre — ALWAYS include "at 500mm Load Centre"; never omit load centre distance
-Features: Fork Positioner (if fitted), Seat Belt, Flashing Beacon, Battery Charger (if electric)
+Features: Fork Positioner (if fitted), Seat Belt, Flashing Beacon
+Electric forklifts: Battery Voltage (24V / 48V / 80V) on capacity line; Charger Included if charger is present; omit engine line
 Tyre type: Solid / Pneumatic / Cushion — always state; never omit
 Cab type: ROPS Canopy / Enclosed Cab — always state
 Hours: DO NOT include hours in the description — hours go in Salesforce fields only
 Side Shift: always call out explicitly if fitted
-Hull Material (electric forklifts): state battery voltage/capacity
 Damage: factual description or "Nil Obvious" if none visible
 Sold As Is, Untested & Unregistered.
 
 Key rules:
 - Capacity ALWAYS states "at 500mm Load Centre" — never just "X,XXXkg"
 - Hours NOT in description — goes in Salesforce fields only
-- Mast described as "N-Stage Mast" in output (Simplex=1-Stage, Duplex=2-Stage, Triplex=3-Stage, Quad=4-Stage)
+- Mast type written as named word: Simplex / Duplex / Triplex / Quad — never "N-Stage"
 - Tyre type (Solid / Pneumatic / Cushion) always stated
+- Cab type (ROPS Canopy / Enclosed Cab) always stated
 - Engine line: engine code + fuel type only (no litre/cylinder detail needed unless clearly visible on plate)
+- Electric: state battery voltage (24V / 48V / 80V) and note "Charger Included" if charger present
 
 Example (LPG counterbalance):
 2018 Toyota 8FG25 LPG Counterbalance Forklift
 
-Toyota 4Y LPG Engine, 3-Stage Mast, Side Shift, 4,500mm Lift Height, Full Free Lift
+Toyota 4Y LPG Engine, Duplex Mast, Side Shift, 4,500mm Lift Height, Full Free Lift
 
 Max Lift Capacity: 2,500kg at 500mm Load Centre, Solid Tyres, ROPS Canopy
+
+Sold As Is, Untested & Unregistered.
+
+Example (Electric counterbalance):
+2020 Linde E25 Electric Counterbalance Forklift
+
+Triplex Mast, Side Shift, 5,500mm Lift Height, Full Free Lift
+
+Max Lift Capacity: 2,500kg at 500mm Load Centre, 80V Battery, Charger Included, Solid Tyres, Enclosed Cab
 
 Sold As Is, Untested & Unregistered.
 
@@ -882,23 +905,31 @@ Sold As Is, Untested & Unregistered.
 
 CARAVAN
 Line 1: Year, Make, Model, On-Road/Off-Road, Axle config (Dual-Axle / Single-Axle), Caravan — apply your knowledge of this make/model to fill standard specs if not in inspection notes
-Length: Xmm (Xft) — always state length in BOTH mm and feet in this exact format: "6300mm (20.67ft)". Read Overall Length from compliance plate (in mm), divide by 304.8 to get feet. Never omit either unit. Never output metres only.
+Length: X,XXXmm (Xft) — always state length in BOTH mm and feet in this exact format: "6,300mm (20.67ft)". Read Overall Length from compliance plate (in mm), divide by 304.8 to get feet. Always use comma as thousands separator in mm value. Never omit either unit. Never output metres only.
 Bed configuration: always describe — identify from interior photos or apply model knowledge. Use descriptive names: "Rear Queen Island Bed" (island access both sides), "Rear Queen Bed", "Front Queen Bed", "Front Queen + Rear Bunks", "2x Single Bunks", "Double Bed". Island Queen = walk-around access both sides of bed (premium layout — always call out "Island Bed" if present). Never omit this line.
 Dinette: state style if visible — "U-Shaped Dinette" (3 sides), "L-Shaped Dinette", or "Booth Dinette" (facing benches). Apply model knowledge if not directly visible.
 Kitchen: state appliance brands read from fascia logos in interior photos. Cooktop: Thetford (common in Jayco/Coromal), Dometic, Smeg — note gas (burner rings) or electric (ceramic flat). Fridge: Dometic, Waeco (older vans), Engel. Format: "Thetford 3-Burner Gas Cooktop, Dometic Compressor Fridge". Brand names are a value signal — always name brands where visible or known for the model.
 Hot water system: state brand read from unit label in service bay — Suburban (most common AU van HWS), Truma Combi (combined HWS + space heating), Rinnai, Aquastream. Note if gas, electric, or combination. Format: "Suburban Gas/Electric Hot Water System". Omit only if genuinely unconfirmed and model knowledge gives no guidance.
 Air conditioning: state interior unit brand — Dometic Harrier, Dometic Ibis 4, Houghton Belaire (note if ducted). Format: "Dometic Harrier Air-Conditioning" or "Houghton Belaire Ducted Air-Conditioning". Always note if fitted; buyers expect it called out explicitly.
-Bathroom: "Ensuite Shower, Toilet & Vanity" if full self-contained ensuite, "Separate Shower & Toilet" if separate rooms, "Combined Wet Bath" if single wet room, "Separate Toilet Only" if toilet-only — always describe bathroom layout if confirmed.
-Exterior: Side Awning — always note if fitted; Gas Bottle Holders At Front if visible at drawbar; External Shower if fitted.
-Solar: Xw Solar Panel(s) — note wattage from panel label if visible. Omit if not confirmed.
+Bathroom: always state layout — "Ensuite Shower, Toilet & Vanity" if full self-contained ensuite, "Separate Shower & Toilet" if separate rooms, "Combined Wet Bath" if single wet room, "Separate Toilet Only" if toilet-only. Never omit bathroom layout.
+Exterior: Side Awning — always note brand if readable (Dometic, Carefree, Fiamma) and note if fitted; Gas Bottle Holders At Front if visible at drawbar; External Shower if fitted.
+Solar: XXXw Solar Panel(s) — note wattage from panel label if visible. Omit if not confirmed.
 Power: battery system, 240v hookup if confirmed — omit if not confirmed.
 Water: Xlt fresh water tank if confirmed — omit if not confirmed.
 Sold As Is, Untested & Unregistered.
 
+Key rules:
+- Length always in format "X,XXXmm (XX.XXft)" — comma in mm value, both units mandatory
+- Bed configuration never omitted — always stated
+- Bathroom never omitted — always stated
+- Appliance brands always named where visible or known (Dometic fridge, Dometic air con, Suburban HWS)
+- Solar wattage always stated if visible on panel label
+- Awning brand always stated if readable (Dometic, Carefree, Fiamma)
+
 Example:
 Coronel Caravans Lifestyle 638 On-Road Dual-Axle Caravan
 
-6300mm (20.67ft) Length, 2x Single Bunks Plus Forward Double Bed, U-Shaped Dinette Lounge, Dometic Gas Stove & Fridge, Dometic Air-Conditioning, Ensuite Shower & Toilet, Side Awning, Gas Bottle Holders At Front
+6,300mm (20.67ft) Length, 2x Single Bunks Plus Forward Double Bed, U-Shaped Dinette Lounge, Thetford 3-Burner Gas Cooktop, Dometic Compressor Fridge, Dometic Harrier Air-Conditioning, Suburban Gas/Electric Hot Water System, Ensuite Shower, Toilet & Vanity, Dometic Side Awning, 200w Solar Panel, Gas Bottle Holders At Front
 
 Sold As Is, Untested & Unregistered.
 
