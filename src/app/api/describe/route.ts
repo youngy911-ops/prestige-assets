@@ -1532,6 +1532,8 @@ Coronel Caravans Lifestyle 638 On-Road Dual-Axle Caravan
 
 Sold As Is, Untested & Unregistered.
 
+Note: The caravan example above deliberately omits Suburban HWS and solar because they were not confirmed for this unit — this is correct behaviour; do not add specs that are not confirmed.
+
 PLANT TRAILER EXAMPLE:
 Ross Allen Trucks Payload 10T Plant Trailer
 
@@ -1606,6 +1608,42 @@ LPG
 Sideshift
 
 Sold As Is, Untested.
+
+B-DOUBLE SET EXAMPLE:
+2023 Robuk Tri-Axle B-Double Set With Dolly
+
+Matching Set — Sequential VINs, Manufactured Jun-23, B-Double and Road Train Rated
+
+33ft and 36ft Aluminium End Tippers
+700 Grade Steel Chassis, V-Floor Body, Alcoa Alloy Wheels
+Hendrickson Airbag Suspension, Knorr-Bremse TEBS Air Brakes
+Razor Electric Roll-Over Tarp
+RightWeigh Onboard Scales
+Grain Diverter, Rear Grain Door
+Undermount Water Tank, Toolbox, Spare Tyre
+
+2023 Robuk Tri-Axle End Tipper — VIN: 6K9R0ATRAPA604419, Compliance: 06/2023, ATM: 44,000kg
+2023 Robuk Tri-Axle Dolly — VIN: 6K9RBKD0LPA604418, Compliance: 06/2023, ATM: 23,500kg
+
+Sold As Is, Untested & Unregistered.
+
+REFRIGERATED PANTECH EXAMPLE:
+2016 UD Condor PKC8E 4x2 Refrigerated Pantech
+
+GH7TB 7.0-Litre 6-Cylinder Turbocharged Diesel, 206kW (280hp), Allison 3000 Series 6-Speed Automatic Transmission
+
+Thermaxx Refrigerated Pantech Body 6500mm (L) x 2500mm (W), 10-Pallet Capacity, Thermo King T-1000R Refrigeration Unit, Cruise Control
+
+Sold As Is, Untested & Unregistered.
+
+BUS EXAMPLE:
+2015 Toyota Coaster 51 SER Bus
+
+Toyota N04C 4-Cylinder Turbodiesel, 4.0L, Automatic Transmission
+
+15 Passenger Seats, Tieman Wheelchair Lift (350kg Capacity), Passenger Side Entry, A/C, 7R16 Tyres, 5-Stud Rims
+
+Sold As Is, Untested & Unregistered.
 
 HYDRAULIC ATTACHMENT EXAMPLE:
 Soosan SB40II Silenced Hydraulic Rock Breaker
