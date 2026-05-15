@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
@@ -45,6 +45,10 @@ export function InspectionNotesSection({
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const notesRef = useRef<string>(extractFreeformNotes(initialNotes))
   const structuredValuesRef = useRef<Record<string, string>>(parseStructuredFields(initialNotes))
+
+  const [aiInput, setAiInput] = useState('')
+  const [aiSending, setAiSending] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 
   const priorityFields = getInspectionPriorityFields(assetType)
 
@@ -93,6 +97,30 @@ export function InspectionNotesSection({
     notesRef.current = value
     scheduleAutosave()
   }
+
+  const handleAiSubmit = useCallback(async () => {
+    const msg = aiInput.trim()
+    if (!msg || aiSending) return
+    setAiSending(true)
+    try {
+      const res = await fetch('/api/ai-notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ assetId, message: msg, assetType }),
+      })
+      if (!res.ok) throw new Error('AI notes failed')
+      const data = await res.json()
+      // Update the textarea display with the updated notes from the server
+      const newFreeform = extractFreeformNotes(data.notes)
+      notesRef.current = newFreeform
+      if (textareaRef.current) textareaRef.current.value = newFreeform
+      setAiInput('')
+    } catch {
+      // silently fail — user can type notes manually
+    } finally {
+      setAiSending(false)
+    }
+  }, [aiInput, aiSending, assetId, assetType])
 
   return (
     <Card className="bg-[var(--card)] border-white/10">
@@ -145,11 +173,32 @@ export function InspectionNotesSection({
           </Label>
           <textarea
             id="other-notes"
+            ref={textareaRef}
             className="w-full min-h-[80px] rounded-md border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 resize-y"
-            placeholder="Condition, damage, service history, keys, any other details…"
+            placeholder="e.g. Bull bar, tow bar, alloy wheels, roof rack, canopy, snorkel, UHF, damage details, service history…"
             defaultValue={notesRef.current}
             onChange={(e) => handleNotesChange(e.target.value)}
           />
+        </div>
+
+        {/* Ask AI input */}
+        <div className="flex gap-2 pt-1">
+          <input
+            type="text"
+            value={aiInput}
+            onChange={(e) => setAiInput(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAiSubmit() } }}
+            placeholder="Tell the AI about this asset…"
+            className="flex-1 h-8 rounded-md border border-white/10 bg-white/5 px-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-emerald-500/40"
+          />
+          <button
+            type="button"
+            onClick={handleAiSubmit}
+            disabled={aiSending || !aiInput.trim()}
+            className="h-8 px-3 rounded-md text-xs text-white/60 hover:text-white border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          >
+            {aiSending ? '…' : '→'}
+          </button>
         </div>
       </CardContent>
     </Card>
