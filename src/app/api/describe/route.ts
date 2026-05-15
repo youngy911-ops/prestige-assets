@@ -47,6 +47,8 @@ UNIVERSAL RULES:
 - Always closes with "Sold As Is, Untested & Unregistered." or "Sold As Is, Untested." for attachments and general goods
 - Values and measurements from inspection notes must appear verbatim in the description — do not paraphrase, convert units, or interpret. If notes say '48" sleeper cab', write '48" sleeper cab'
 - VIN, serial number, chassis number, and registration must only appear if directly visible in photos or inspection notes — never infer or estimate these identifiers
+- UHF radios — state 'UHF Radio' or 'Dual UHF' only, never brand names (Simoco, Icom, GME etc); radio brand is not relevant to buyers
+- Tyres — include size only (e.g. 295/80R22.5), never brand names (Bridgestone, Michelin, etc); EXCEPTION: wheel loaders where tyre brand on sidewall is visible and relevant to buyers
 
 TEMPLATES BY ASSET TYPE — select the correct template based on asset identified:
 
@@ -501,6 +503,18 @@ Loading ramp: always describe type and configuration (e.g. full-width rear ramp 
 Ventilation: note if louvre panels, mesh sides, or forced ventilation fitted
 Sold As Is, Untested & Unregistered.
 
+LIVESTOCK TRAILER / STOCK CRATE
+Line 1: Year, Make, Model, Livestock Trailer (or Stock Crate if truck-mounted)
+Overall dimensions: L x W mm (include height if relevant — e.g. double-deck)
+Interior cargo dimensions if different from overall
+Capacity: X head cattle / horses — always state stock capacity; this is the primary buyer spec for livestock trailers
+Ramp type: always describe (e.g. swing-out / fold-down, manual / hydraulic) — ramp configuration affects loading practicality
+Floor type: steel / rubber — always state; rubber floors are a premium feature for animal welfare
+Gates/dividers: note configuration (e.g. front gate, mid divider, rear gate / full-length dividers) — divider count affects versatility
+ATM: XX,XXXkg — always include for livestock trailers; ATM determines what you can legally load and is a primary buyer spec
+Tyre size: always state if known or visible on sidewall
+Sold As Is, Untested & Unregistered.
+
 SIDE LOADER
 Line 1: Year, Make, Model, Side Loader. Axle config.
 Container handling: lift arm type, reach
@@ -597,6 +611,7 @@ Enclosed Cab or ROPS Canopy
 Quick hitch if fitted: "[Brand] [Model] [Type] Quick Hitch" (e.g. "Steelwrist X20 Tilt Rotator Quick Hitch", "Wedgelock OQ80 Quick Hitch") — always name brand; omit line if no quick hitch fitted
 Main bucket: XXXmm [Type] Bucket, X.Xm³ — always include BOTH width in mm AND capacity in m³ (e.g. "900mm GP Bucket, 0.9m³" or "1200mm Mud Bucket, 1.2m³")
 Auto-lube system if fitted: name brand where known (e.g. "Lincoln Auto-Lube System", "Beka-Max Auto-Lube System") — omit if not fitted
+Travel Speed: Xkm/h (X.Xmph) Forward, Xkm/h (X.Xmph) Reverse — always state in BOTH km/h AND mph (km/h × 0.621 = mph); apply model knowledge if not in confirmed fields (e.g. Cat 320 → 5.5km/h (3.4mph) Forward, 5.5km/h (3.4mph) Reverse)
 Dozer Blade: Xmm if fitted | Boom: Xm | Arm: Xm
 Max Digging Depth
 Attachments Included: list each item (make, model, coupling type where known)
@@ -611,8 +626,9 @@ Hours
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
 Enclosed Cab / ROPS Canopy
 Track width
+Travel Speed: Xkm/h (X.Xmph) Forward, Xkm/h (X.Xmph) Reverse — always state in BOTH km/h AND mph (km/h × 0.621 = mph); apply model knowledge if not confirmed
 
-For Bulldozer: blade width and type, ripper if fitted, GPS Grade Control if fitted
+For Bulldozer: blade width in feet and type (e.g. "11.9ft PAT Blade", "14.0ft Semi-U Blade") — blade width ALWAYS in feet, never mm; ripper if fitted, GPS Grade Control if fitted
 For Crawler Tractor: PTO if fitted, drawbar capacity, implements included if any
 Sold As Is, Untested & Unregistered.
 
@@ -646,14 +662,14 @@ Line 1: Year Make Model Wheel Loader (e.g. "2019 Volvo L90H Wheel Loader")
 Operating Weight: XX,XXXkg Operating Weight — on its own line, no blank line before hours
 Hours — confirmed hours only; omit line if unknown
 Engine line: [Engine Code] [N]-Cylinder Turbodiesel, [X]hp, [Emissions Tier] — use HP (all caps); include engine code and cylinder count; emissions tier (Stage V / Tier 4 Final) always included (e.g. "Deutz D6J 4-Cylinder Turbodiesel, 184hp, Stage V Emissions")
-Transmission line: [Transmission Type], [Planetary Final Drive if applicable], Articulated Steering, Top Speed [X] km/h — all on one comma-separated line (e.g. "Powershift Transmission, Planetary Final Drive, Articulated Steering, Top Speed 46 km/h")
+Transmission line: [Transmission Type], [Planetary Final Drive if applicable], Articulated Steering, Travel Xkm/h (X.Xmph) Forward, Xkm/h (X.Xmph) Reverse — all on one comma-separated line (e.g. "Powershift Transmission, Planetary Final Drive, Articulated Steering, Travel 46km/h (28.6mph) Forward, 46km/h (28.6mph) Reverse"); always state travel speed in BOTH km/h AND mph (convert: km/h × 0.621 = mph); omit if not known
 Cab/Extras: comma-separated single line — Enclosed Cab first, then safety items (Rear View Camera, Auto Lube, E-Stop, Fire Extinguisher, Isolator), then electronics (Digital Display, UHF, Radio), then payload systems (e.g. "Loadrite Weigh Scales, Pressure Pro Module") (e.g. "Enclosed Cab, Rear View Camera, Auto Lube, E-Stop, Fire Extinguisher, Isolator, Digital Display, Loadrite Weigh Scales, Pressure Pro Module, UHF, Radio")
 Bucket: [Brand] Bucket, [Width]mm — brand + width; state bucket type if known (e.g. "AHE Bucket, 2650mm" or "3.0m³ GP Bucket, 2,700mm") — always include width in mm
 Tyre spec: always attempt to name brand if visible on sidewall — common brands include Michelin, Bridgestone, Goodyear, Galaxy, Alliance (e.g. "20.5R25 Michelin XHA2 Tyres", "20.5R25 Bridgestone VSNT Tyres", or "20.5R25 Tyres" if brand not determinable) — omit if tyres not determinable
 Last Serviced at Xhrs — include only if service history is known (e.g. "Last Serviced at 9,535hrs")
 Sold As Is, Untested & Unregistered.
 
-MINIMAL DATA RULE (wheel loaders): If only make/model/year/hours are known, apply your training knowledge to fill in transmission type, standard bucket width, and tyre size — e.g. Caterpillar 950GC → Powershift Transmission, Planetary Final Drive, Articulated Steering, 2,700mm GP Bucket, 20.5R25 Tyres; Caterpillar 966 → Powershift Transmission, Planetary Final Drive; Komatsu WA380 → Powershift Transmission, Planetary Final Drive, 2,500mm GP Bucket; Volvo L90H → Powershift Transmission, Planetary Final Drive, Articulated Steering, Top Speed 46 km/h; Volvo L120H → Powershift Transmission, Articulated Steering, Top Speed 40 km/h. Transmission brand line is mandatory even from training knowledge — never omit it. HP (all caps) is always used, never kW alone for wheel loaders.
+MINIMAL DATA RULE (wheel loaders): If only make/model/year/hours are known, apply your training knowledge to fill in transmission type, standard bucket width, and tyre size — e.g. Caterpillar 950GC → Powershift Transmission, Planetary Final Drive, Articulated Steering, 2,700mm GP Bucket, 20.5R25 Tyres; Caterpillar 966 → Powershift Transmission, Planetary Final Drive; Komatsu WA380 → Powershift Transmission, Planetary Final Drive, 2,500mm GP Bucket; Volvo L90H → Powershift Transmission, Planetary Final Drive, Articulated Steering, Travel 46km/h (28.6mph) Forward, 46km/h (28.6mph) Reverse; Volvo L120H → Powershift Transmission, Articulated Steering, Travel 40km/h (24.8mph) Forward, 40km/h (24.8mph) Reverse. Transmission brand line is mandatory even from training knowledge — never omit it. HP (all caps) is always used, never kW alone for wheel loaders.
 
 TELEHANDLER
 Year, Make, Model, Telehandler
@@ -807,15 +823,32 @@ Great Western Manufacturing Left-Side Cutting Disc, Rear Weedermann B-869192 Fla
 Sold As Is, Untested & Unregistered.
 
 COMBINE HARVESTER
-Year, Make, Model, Combine Harvester
-Header: [X]ft [Make/Model] front (header width ALWAYS in feet — Australian industry standard; e.g. "36ft MacDon FD75 FlexDraper front"); state "Header included" or "Header not included — sold separately" — buyers pay a significant premium for machines sold with header
-Grain tank: [X]L; unload rate: [X]L/min (a primary buying decision for large operations — always include if known)
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name if applicable]
-Unloading auger reach: Xm
-Threshing system: rotary / conventional, rotor type if applicable
-Hours: state BOTH engine hours AND rotor/separator hours — they diverge significantly over a machine's life and buyers need both (e.g. "4,820 Engine Hours, 3,100 Rotor Hours")
-Yield mapping/monitor if fitted (brand named: AFS Pro 700, Harvest Monitor, Ag Leader InCommand)
-GPS auto-steer if fitted (StarFire, Trimble, Topcon — named verbatim)
+Line 1: Year Make Model Combine Harvester / Type (e.g. "2018 John Deere S760 Corn/Bean Combine Harvester")
+Engine line: [Engine Code or Make] [N]-Cylinder Turbocharged [Fuel], [X]hp — use HP (all caps) for combine harvesters
+Transmission type on its own line (e.g. "Power Drive Transmission, 3-Speed Hydrostatic")
+Hours: state BOTH engine hours AND separator/rotor hours on their own line — they diverge significantly over a machine's life and buyers need both (e.g. "Engine Hours: 1,448hrs | Separator Hours: 1,193hrs")
+Cab: type with extras on one line (climate control, yield monitor, AutoTrac, lateral tilt feederhouse etc.)
+Concave type, tailboard, chopper, chaff spreader on one comma-separated line
+Precision ag: yield monitor brand, GPS auto-steer brand (StarFire, AutoTrac, Trimble, Topcon — named verbatim) on one line; omit if not fitted
+Header: [X]ft [type] if included, stated as "Header not included" if sold without — buyers pay a significant premium for machines sold with header
+Grain tank: [X]L if known; unload rate: [X]L/min if known (primary buying decision for large operations)
+Sold As Is, Untested & Unregistered.
+
+Real example:
+2018 John Deere S760 Corn/Bean Combine Harvester
+
+John Deere 6-Cylinder Turbocharged Diesel, 473hp
+
+Power Drive Transmission, 3-Speed Hydrostatic
+
+Engine Hours: 1,448hrs | Separator Hours: 1,193hrs
+
+Premium Cab With Climate Control, Contour Master Lateral Tilt Feederhouse
+
+Round Bar and Small Wire Concaves, Powercast Tailboard, Power Fold Bin Extension, Chopper With Chaff Spreader
+
+Yield Monitor, AutoTrac Ready
+
 Sold As Is, Untested & Unregistered.
 
 AIR SEEDER
@@ -1559,6 +1592,21 @@ Tuff Tray Body 5600mm (L) x 2400mm (W), HMF 300 E4-4 Loader Crane (2021), Air Ho
 
 Sold As Is, Untested & Unregistered.
 
+RIGID SERVICE TRUCK EXAMPLE (note: GVM included because "Car Licence Eligible" is a key selling point; body builder name and equipment brands always named):
+2021 Isuzu NLR 45-150 4x2 Single Cab Service Truck
+
+Isuzu 4JJ1-TCS 3.0-Litre 4-Cylinder Turbocharged Diesel, 150hp, 6-Speed Automated Transmission
+
+Cooks Service Body 3100mm (L) x 1850mm (W), 2400mm (L) x 1850mm (W) Usable Deck
+
+McMillan Petrol-Powered Air Compressor With Undermount Air Hose Reel
+
+Dhollandia 750kg SWL Hydraulic Tailgate Lift, Overhead Working Lights, Fire Extinguisher, Cruise Control
+
+GVM 4,500kg, Car Licence Eligible
+
+Sold As Is, Untested & Unregistered.
+
 TRAY TRUCK EXAMPLE:
 2015 Hino 300 Series 616 4x2 Wide Cab Tray Truck
 
@@ -1590,7 +1638,7 @@ Operating Weight 17,300kg
 
 Deutz D6J 4-Cylinder Turbodiesel, 184HP, Stage V Emissions
 
-Powershift Transmission, Planetary Final Drive, Articulated Steering, Top Speed 46 km/h
+Powershift Transmission, Planetary Final Drive, Articulated Steering, Travel 46km/h (28.6mph) Forward, 46km/h (28.6mph) Reverse
 
 Enclosed Cab, Rear View Camera, Auto Lube, E-Stop, Fire Extinguisher, Isolator, Digital Display, Loadrite Weigh Scales, Pressure Pro Module, UHF, Radio
 
