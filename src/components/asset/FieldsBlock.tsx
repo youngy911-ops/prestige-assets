@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Copy, Check } from 'lucide-react'
+import { Copy, Check, ClipboardList } from 'lucide-react'
 
 interface FieldsBlockProps {
   fieldsText: string
@@ -16,13 +16,27 @@ export function FieldsBlock({ fieldsText }: FieldsBlockProps) {
   }
 
   return (
-    <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
+    <div className={`rounded-xl border overflow-hidden transition-all duration-300 ${
+      copied
+        ? 'border-emerald-500/50 bg-emerald-950/30 shadow-[0_0_0_1px_rgba(16,185,129,0.15)]'
+        : 'border-white/[0.08] bg-white/[0.04]'
+    }`}>
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
-        <span className="text-sm font-semibold text-white">Salesforce Fields</span>
+        <div className="flex items-center gap-2.5">
+          <ClipboardList className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+          <div>
+            <span className="text-sm font-semibold text-white">Salesforce Fields</span>
+            <span className="ml-2 text-[11px] font-medium text-emerald-400/70 uppercase tracking-wide">ready to paste</span>
+          </div>
+        </div>
         <button
           type="button"
           onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg transition-colors font-medium"
+          className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all duration-200 font-medium ${
+            copied
+              ? 'bg-emerald-500 text-white scale-95'
+              : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+          }`}
         >
           {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
           {copied ? 'Copied!' : 'Copy'}

@@ -244,15 +244,32 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
         </div>
       )}
 
+      {/* Stats strip — key extraction numbers at a glance */}
+      <div className="flex items-center justify-between rounded-xl border border-white/[0.07] bg-white/[0.03] px-4 py-3">
+        <div className="flex items-center gap-1.5">
+          <Sparkles className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
+          <span className="text-sm font-semibold text-white tabular-nums">{stats.fieldCount}</span>
+          <span className="text-xs text-white/40">fields extracted</span>
+        </div>
+        <div className="w-px h-4 bg-white/[0.08]" />
+        <span className={`text-xs font-medium ${stats.confidenceColor}`}>{stats.confidenceLabel}</span>
+        <div className="w-px h-4 bg-white/[0.08]" />
+        <span className="text-xs font-medium text-emerald-400">Ready to paste</span>
+      </div>
+
       {/* Copy All — one-click copy of fields + description for Salesforce */}
       {descState === 'ready' && (
         <button
           type="button"
           onClick={handleCopyAll}
-          className="w-full h-11 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm flex items-center justify-center gap-2"
+          className={`w-full h-12 rounded-xl text-white font-semibold text-sm flex items-center justify-center gap-2.5 transition-all duration-200 ${
+            allCopied
+              ? 'bg-emerald-500 scale-[0.98] shadow-[0_0_20px_rgba(16,185,129,0.35)]'
+              : 'bg-emerald-600 hover:bg-emerald-500 hover:shadow-[0_0_16px_rgba(16,185,129,0.2)]'
+          }`}
         >
-          {allCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          {allCopied ? 'Copied!' : 'Copy All to Clipboard'}
+          {allCopied ? <Check className="h-5 w-5" /> : <Copy className="h-4 w-4" />}
+          {allCopied ? 'Copied to Clipboard!' : 'Copy All to Clipboard'}
         </button>
       )}
 

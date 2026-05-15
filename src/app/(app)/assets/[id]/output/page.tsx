@@ -91,6 +91,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
         fieldsText={fieldsText}
         initialDescription={(asset.description as string | null) ?? null}
         photoUrls={photoUrls}
+        extractionResult={asset.extraction_result as Record<string, { value: string | null; confidence: 'high' | 'medium' | 'low' | null }> | null}
       />
 
       {/* QR Code + actions */}
