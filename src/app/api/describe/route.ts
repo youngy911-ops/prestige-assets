@@ -543,7 +543,7 @@ Sold As Is, Untested & Unregistered.
 
 PLANT TRAILER
 Line 1: Year, Make, Model, Plant Trailer. Axle config, GTM
-Deck dimensions: Xmm (L) x Xmm (W) — state deck material (checker plate / steel / alloy) if known; include "Pressed Checker Plate" or "Steel Deck" verbatim from notes
+Deck dimensions: use Xft L x Xft W (imperial) for smaller plant trailers (up to ~20ft); use Xmm (L) x Xmm (W) (metric) for heavy equipment trailers — follow the convention used on the compliance plate or in auction notes; state deck height in feet if relevant (e.g. low-loader deck height). State deck material (checker plate / steel / alloy) if known; include "Pressed Checker Plate" or "Steel Deck" verbatim from notes.
 Payload: Xt GTM (mandatory — always on the specs line, not a separate line)
 Hitch type: always state (Pintle Ring Hitch / 50mm Ball / Ringfeder / Tridem Hitch — buyers need hitch compatibility)
 Axle brand if known (Fuerma, Dexter, Hendrickson, SAF-Holland)
@@ -606,14 +606,17 @@ Operating Weight: XX,XXXkg Operating Weight
 Hours
 Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]HP), Tier 4 Final / Stage V (include emissions tier always; use HP all-caps)
 Track width and type: XXXmm Rubber Tracks or XXXmm Steel Tracks — always state both width AND material; e.g. "600mm Rubber Tracks" or "600mm Steel Tracks"
-Undercarriage condition if determinable from photos or inspection notes: Good / Fair / Worn — omit only if genuinely unassessable
+Undercarriage condition if determinable from photos or inspection notes: "Undercarriage: XX% Remaining" or "New Undercarriage" or "Undercarriage: Good / Fair / Worn" — always attempt from photos; omit only if genuinely unassessable
 Enclosed Cab or ROPS Canopy
 Quick hitch if fitted: "[Brand] [Model] [Type] Quick Hitch" (e.g. "Steelwrist X20 Tilt Rotator Quick Hitch", "Wedgelock OQ80 Quick Hitch") — always name brand; omit line if no quick hitch fitted
 Main bucket: XXXmm [Type] Bucket, X.Xm³ — always include BOTH width in mm AND capacity in m³ (e.g. "900mm GP Bucket, 0.9m³" or "1200mm Mud Bucket, 1.2m³")
+Thumb attachment if fitted: "Hydraulic Thumb" on its own line immediately after bucket — omit if not fitted
+Blade if fitted (on undercarriage): "Backfill Blade" or "Grader Blade" on its own line — omit if not fitted
 Auto-lube system if fitted: name brand where known (e.g. "Lincoln Auto-Lube System", "Beka-Max Auto-Lube System") — omit if not fitted
 Travel Speed: Xkm/h (X.Xmph) Forward, Xkm/h (X.Xmph) Reverse — always state in BOTH km/h AND mph (km/h × 0.621 = mph); apply model knowledge if not in confirmed fields (e.g. Cat 320 → 5.5km/h (3.4mph) Forward, 5.5km/h (3.4mph) Reverse)
-Dozer Blade: Xmm if fitted | Boom: Xm | Arm: Xm
-Max Digging Depth
+Boom and arm: "X.Xm Boom, X.Xm Arm" — on its own line; apply model knowledge if not confirmed
+X.Xm Max Reach — on its own line; apply model knowledge if not confirmed (e.g. Cat 320 → 9.5m Max Reach; Cat 330 → 10.8m Max Reach; Komatsu PC200 → 9.7m Max Reach; Hitachi ZX200 → 9.5m Max Reach)
+X.Xm Max Dig Depth — on its own line; apply model knowledge if not confirmed (e.g. Cat 320 → 6.5m Max Dig Depth; Cat 330 → 7.2m Max Dig Depth; Komatsu PC200 → 6.6m Max Dig Depth; Hitachi ZX200 → 6.5m Max Dig Depth)
 Attachments Included: list each item (make, model, coupling type where known)
 
 MINIMAL DATA RULE (excavators): If only make/model/year/hours are known, apply your training knowledge of that specific model to fill in operating weight, engine code + kW + hp + emissions tier, track width and type, and standard bucket size and capacity — e.g. Caterpillar 320 → 20t class, Cat C4.4 ACERT 4-Cylinder 97kW (130hp) Tier 4 Final, 600mm Steel Tracks, 0.9m³ GP Bucket; Caterpillar 330 → 30t class, Cat C7.1 6-Cylinder 170kW (228hp) Tier 4 Final; Komatsu PC200 → 20t class, SAA4D107E 4-Cylinder 110kW (148hp) Tier 4 Final, 600mm Steel Tracks, 0.8m³ bucket; Komatsu PC300 → 30t class, SAA6D114E 6-Cylinder 168kW (225hp) Tier 4 Final; Hitachi ZX200 → 20t class, Isuzu 4HK1 4-Cylinder 110kW (148hp) Tier 4 Final; Hitachi ZX350 → 35t class, Isuzu 6HK1 6-Cylinder 184kW (247hp) Tier 4 Final; Volvo EC220 → 22t class, Volvo D6E 6-Cylinder 122kW (163hp) Tier 4 Final; John Deere 210G → 21t class, John Deere PowerTech PSS 4-Cylinder 103kW (138hp) Tier 4 Final. Include all specs that are universally true for the identified model; omit specs that vary by configuration. Always include operating weight, engine code + kW + hp + emissions tier, and track width + type even when not in confirmed fields — these are the primary value indicators for earthmoving buyers. Always attempt to state undercarriage condition from photos. Always attempt to identify quick hitch brand from photos. Always attempt to identify auto-lube brand from photos or model-standard fitment.
@@ -628,7 +631,7 @@ Enclosed Cab / ROPS Canopy
 Track width
 Travel Speed: Xkm/h (X.Xmph) Forward, Xkm/h (X.Xmph) Reverse — always state in BOTH km/h AND mph (km/h × 0.621 = mph); apply model knowledge if not confirmed
 
-For Bulldozer: blade width in feet and type (e.g. "11.9ft PAT Blade", "14.0ft Semi-U Blade") — blade width ALWAYS in feet, never mm; ripper if fitted, GPS Grade Control if fitted
+For Bulldozer: blade width in feet and type (e.g. "11.9ft PAT Blade", "14.0ft Semi-U Blade") — blade width ALWAYS in feet, never mm; ripper type on its own line if fitted ("Single Shank Ripper" or "Multi Shank Ripper" — never just "Ripper"); GPS Grade Control on its own line if fitted or confirmed from photos
 For Crawler Tractor: PTO if fitted, drawbar capacity, implements included if any
 Sold As Is, Untested & Unregistered.
 
@@ -662,14 +665,16 @@ Line 1: Year Make Model Wheel Loader (e.g. "2019 Volvo L90H Wheel Loader")
 Operating Weight: XX,XXXkg Operating Weight — on its own line, no blank line before hours
 Hours — confirmed hours only; omit line if unknown
 Engine line: [Engine Code] [N]-Cylinder Turbodiesel, [X]hp, [Emissions Tier] — use HP (all caps); include engine code and cylinder count; emissions tier (Stage V / Tier 4 Final) always included (e.g. "Deutz D6J 4-Cylinder Turbodiesel, 184hp, Stage V Emissions")
-Transmission line: [Transmission Type], [Planetary Final Drive if applicable], Articulated Steering, Travel Xkm/h (X.Xmph) Forward, Xkm/h (X.Xmph) Reverse — all on one comma-separated line (e.g. "Powershift Transmission, Planetary Final Drive, Articulated Steering, Travel 46km/h (28.6mph) Forward, 46km/h (28.6mph) Reverse"); always state travel speed in BOTH km/h AND mph (convert: km/h × 0.621 = mph); omit if not known
+Transmission line: [Transmission Type], [X Forward X Reverse if known], [Planetary Final Drive if applicable], Articulated Steering, Travel Xkm/h (X.Xmph) Forward, Xkm/h (X.Xmph) Reverse — all on one comma-separated line (e.g. "Power Shift Transmission, 6 Forward 6 Reverse, Planetary Final Drive, Articulated Steering, Travel 40km/h (24.9mph) Forward, 35km/h (21.8mph) Reverse"); always state travel speed in BOTH km/h AND mph (convert: km/h × 0.621 = mph); include gear counts when known from confirmed data or model knowledge (e.g. Cat 980H → 6 Forward 6 Reverse; Komatsu WA500 → 4 Forward 4 Reverse); omit if not known
+Turning radius if known or determinable: "X.Xm Turning Radius" on its own line — useful for tight-site buyers; apply model knowledge if not confirmed; omit if not determinable
+Load Sensing Hydraulics if fitted: "Load Sensing Hydraulics" on its own line — buyers pay premium; include if confirmed from data sheet, spec plate, or model-standard fitment
 Cab/Extras: comma-separated single line — Enclosed Cab first, then safety items (Rear View Camera, Auto Lube, E-Stop, Fire Extinguisher, Isolator), then electronics (Digital Display, UHF, Radio), then payload systems (e.g. "Loadrite Weigh Scales, Pressure Pro Module") (e.g. "Enclosed Cab, Rear View Camera, Auto Lube, E-Stop, Fire Extinguisher, Isolator, Digital Display, Loadrite Weigh Scales, Pressure Pro Module, UHF, Radio")
-Bucket: [Brand] Bucket, [Width]mm — brand + width; state bucket type if known (e.g. "AHE Bucket, 2650mm" or "3.0m³ GP Bucket, 2,700mm") — always include width in mm
+Bucket: [Brand] Bucket, [Width]mm — brand + width; state bucket type and capacity if known (e.g. "AHE Bucket, 2650mm" or "3.2m³ GP Bucket, 2,700mm") — always include width in mm
 Tyre spec: always attempt to name brand if visible on sidewall — common brands include Michelin, Bridgestone, Goodyear, Galaxy, Alliance (e.g. "20.5R25 Michelin XHA2 Tyres", "20.5R25 Bridgestone VSNT Tyres", or "20.5R25 Tyres" if brand not determinable) — omit if tyres not determinable
 Last Serviced at Xhrs — include only if service history is known (e.g. "Last Serviced at 9,535hrs")
 Sold As Is, Untested & Unregistered.
 
-MINIMAL DATA RULE (wheel loaders): If only make/model/year/hours are known, apply your training knowledge to fill in transmission type, standard bucket width, and tyre size — e.g. Caterpillar 950GC → Powershift Transmission, Planetary Final Drive, Articulated Steering, 2,700mm GP Bucket, 20.5R25 Tyres; Caterpillar 966 → Powershift Transmission, Planetary Final Drive; Komatsu WA380 → Powershift Transmission, Planetary Final Drive, 2,500mm GP Bucket; Volvo L90H → Powershift Transmission, Planetary Final Drive, Articulated Steering, Travel 46km/h (28.6mph) Forward, 46km/h (28.6mph) Reverse; Volvo L120H → Powershift Transmission, Articulated Steering, Travel 40km/h (24.8mph) Forward, 40km/h (24.8mph) Reverse. Transmission brand line is mandatory even from training knowledge — never omit it. HP (all caps) is always used, never kW alone for wheel loaders.
+MINIMAL DATA RULE (wheel loaders): If only make/model/year/hours are known, apply your training knowledge to fill in transmission type, gear counts, standard bucket width and capacity, and tyre size — e.g. Caterpillar 950GC → Power Shift Transmission, 4 Forward 4 Reverse, Planetary Final Drive, Articulated Steering, 2,700mm GP Bucket, 20.5R25 Tyres; Caterpillar 966 → Power Shift Transmission, Planetary Final Drive; Caterpillar 980H → Power Shift Transmission, 6 Forward 6 Reverse, Planetary Final Drive, 3.2m³ Bucket; Komatsu WA380 → Power Shift Transmission, Planetary Final Drive, 2,500mm GP Bucket; Volvo L90H → Power Shift Transmission, Planetary Final Drive, Articulated Steering, Travel 46km/h (28.6mph) Forward, 46km/h (28.6mph) Reverse; Volvo L120H → Power Shift Transmission, Articulated Steering, Travel 40km/h (24.8mph) Forward, 40km/h (24.8mph) Reverse. Transmission brand line is mandatory even from training knowledge — never omit it. HP (all caps) is always used, never kW alone for wheel loaders.
 
 TELEHANDLER
 Year, Make, Model, Telehandler
@@ -882,12 +887,65 @@ GPS section control if fitted — name brand and system verbatim (e.g. John Deer
 Sold As Is, Untested & Unregistered.
 
 BALER
-Year, Make, Model, Baler Type (Round / Square / Large Square)
-Bale shape and dimensions: round baler — state bale diameter x width in mm (e.g. "1200mm diameter x 1230mm wide"); large square baler — state width x height x length in mm (e.g. "1200 x 900 x 2400mm")
-Tie type: twine / net / film (note number of twine wraps or net layers if labelled)
+Year Make Model Baler (Round / Square / Large Square)
+Bale dimensions: round — Xft x Xft (diameter x width in imperial as displayed on machine); large square — Xft W x Xft H x Xft L
+Ejection type: Hydraulic Eject / Manual Eject / Tailgate
+PTO: XXX rpm (540 / 1000 / 540/1000rpm dual speed)
+Tie type: twine / net wrap / film — note both if dual capable; include number of twine wraps or net layers if labelled
 Pick-up width: [X]m
-Output: [X] bales/hr if labelled
+Thrower attachment if fitted — always call out explicitly as it adds significant value
+Serial: always include on its own line when visible
+Hours if known
 Sold As Is, Untested & Unregistered.
+
+Key rules for balers:
+- Bale dimensions in IMPERIAL (feet and inches) — this is how operators describe bales in Australia (e.g. "4'8\" x 5'6\" Bale", not mm)
+- Always call out Thrower Attachment if fitted — it is a primary value-add feature
+- PTO speed always stated — 540, 1000, or dual 540/1000rpm
+- Serial number always included when visible
+
+Example (round baler):
+2012 John Deere 847 Round Baler
+
+4'8" x 5'6" Bale, Hydraulic Eject, Tailgate
+
+PTO 540/1000rpm, Thrower Attachment Included
+
+2,150 Operating Hours
+
+Serial: H09846XX75123
+
+Sold As Is, Untested & Unregistered.
+
+GRAIN CART / CHASER BIN
+Year Make Model Grain Cart
+Capacity: X bushels / X tonnes — state both units; bushels is the primary buyer spec
+Auger: Xin diameter, hydraulic shut-off / manual shut-off gate — always state both diameter and shut-off type
+PTO: XXXX rpm (1000rpm is standard for large grain carts)
+Sight glass: Yes / No — always state; aids level monitoring in the paddock
+Tyre size — always state; large grain carts use specialist tyres that are a secondary market concern
+Additional features if fitted: grain diverter, multiple compartments, onboard scales, hydraulic spout
+Harvest Hours if known (grain carts accumulate hours differently to tractors — always state if known)
+Serial: always include on its own line when visible
+Sold As Is, Untested.
+
+Key rules for grain carts:
+- Capacity in BOTH bushels AND tonnes — bushels is the buyer's primary reference; include tonnes conversion for clarity
+- Auger diameter in inches — Australian grain industry convention (never metric for auger diameter)
+- PTO speed always stated — 1000rpm is near-universal for large grain carts
+- Sight glass always called out — it is a practical feature buyers look for
+- "Sold As Is, Untested." (no "& Unregistered" — grain carts are not road-registered)
+
+Example:
+2018 A&L GCP650 Grain Cart
+
+650 Bushel Capacity, 12" Hydraulic Auger, Hydraulic Shut-Off Gate, Sight Glass, Single Compartment, 1000 PTO
+
+28L-26 Tyres
+
+1,200 Harvest Hours
+
+Sold As Is, Untested.
 
 RIDE-ON MOWER / ZERO-TURN MOWER
 Year, Make, Model, [Zero-Turn / Ride-On] Mower
