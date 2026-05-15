@@ -1,7 +1,5 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 
 export async function saveDescription(
   assetId: string,
@@ -22,7 +20,7 @@ export async function saveReview(
   assetId: string,
   fields: Record<string, string>,
   checklistState: Record<string, string>
-): Promise<{ error: string } | void> {
+): Promise<{ error: string; redirectTo?: never } | { redirectTo: string; error?: never }> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'Not authenticated' }
@@ -40,6 +38,7 @@ export async function saveReview(
 
   if (error) return { error: error.message }
 
-  revalidatePath(`/assets/${assetId}/review`)
-  redirect(`/assets/${assetId}/output`)
+  // Return the destination URL — the client navigates immediately (optimistic),
+  // so no revalidatePath needed and no server-side redirect blocking the response.
+  return { redirectTo: `/assets/${assetId}/output` }
 }

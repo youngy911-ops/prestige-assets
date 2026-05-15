@@ -1,12 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { saveReview } from '@/lib/actions/review.actions'
 
 // Mock Supabase
-const mockUpdate = vi.fn()
-const mockEqId = vi.fn()
-const mockEqUserId = vi.fn()
-const mockRevalidatePath = vi.fn()
-
 vi.mock('@/lib/supabase/server', () => ({
   createClient: vi.fn().mockResolvedValue({
     auth: {
@@ -19,17 +14,6 @@ vi.mock('@/lib/supabase/server', () => ({
         }),
       }),
     }),
-  }),
-}))
-
-vi.mock('next/cache', () => ({
-  revalidatePath: vi.fn(),
-}))
-
-// redirect throws internally in Next.js — we mock it to throw so we can detect it
-vi.mock('next/navigation', () => ({
-  redirect: vi.fn().mockImplementation((url: string) => {
-    throw new Error(`REDIRECT:${url}`)
   }),
 }))
 
@@ -88,10 +72,9 @@ describe('saveReview', () => {
     expect(result).toEqual({ error: 'DB error' })
   })
 
-  it('redirects to output on success', async () => {
-    // Default mock returns { error: null }
-    await expect(
-      saveReview('asset-1', { make: 'MACK' }, { vin: 'unknown' })
-    ).rejects.toThrow('REDIRECT:/assets/asset-1/output')
+  it('returns redirectTo on success', async () => {
+    // Default mock returns { error: null } — action should return the destination URL
+    const result = await saveReview('asset-1', { make: 'MACK' }, { vin: 'unknown' })
+    expect(result).toEqual({ redirectTo: '/assets/asset-1/output' })
   })
 })

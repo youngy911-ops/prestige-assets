@@ -1,5 +1,6 @@
 'use client'
 import { useState, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Separator } from '@/components/ui/separator'
@@ -33,6 +34,7 @@ export function ReviewPageClient({
   inspectionNotes,
   duplicateWarning,
 }: ReviewPageClientProps) {
+  const router = useRouter()
   const fields = getFieldsSortedBySfOrder(assetType)
   const schema = buildFormSchema(fields)
 
@@ -145,19 +147,28 @@ export function ReviewPageClient({
     return state
   }
 
-  // Full validated save (called by react-hook-form handleSubmit)
-  const onSubmit = async (values: ReviewFormValues) => {
+  // Shared helper: fire saveReview, navigate optimistically, handle errors
+  const executeSave = async (values: Record<string, string>) => {
     setSaveError(null)
     setIsSaving(true)
+    // Navigate immediately — don't wait for the server round-trip
+    router.push(`/assets/${assetId}/output`)
     const result = await saveReview(assetId, values, buildFinalChecklistState())
     if (result && 'error' in result) {
+      // Navigation already fired — push back so the user sees the error
+      router.back()
       const msg = result.error === 'Not authenticated'
         ? 'Session expired. Refresh the page and try again.'
         : 'Save failed. Check your connection and try again.'
       setSaveError(msg)
       setIsSaving(false)
     }
-    // On success, saveReview calls redirect() internally — no further action needed
+    // On success, server returned { redirectTo } and we already navigated — done.
+  }
+
+  // Full validated save (called by react-hook-form handleSubmit)
+  const onSubmit = async (values: ReviewFormValues) => {
+    await executeSave(values as Record<string, string>)
   }
 
   // Partial save — bypasses field validation, saves whatever is filled in
@@ -165,22 +176,12 @@ export function ReviewPageClient({
     if (isSaving) return  // Guard against double-tap
     if (isSaveAllowed) {
       // All required fields present — use validated submit path
-      setIsSaving(true)
-      handleSubmit(onSubmit)().catch(() => {}).finally(() => setIsSaving(false))
+      handleSubmit(onSubmit)().catch(() => {})
       return
     }
     // Partial proceed — save whatever's filled in, staff can complete later
-    setSaveError(null)
-    setIsSaving(true)
     const values = getValues() as Record<string, string>
-    const result = await saveReview(assetId, values, buildFinalChecklistState())
-    if (result && 'error' in result) {
-      const msg = result.error === 'Not authenticated'
-        ? 'Session expired. Refresh the page and try again.'
-        : 'Save failed. Check your connection and try again.'
-      setSaveError(msg)
-      setIsSaving(false)
-    }
+    await executeSave(values)
   }
 
   return (
