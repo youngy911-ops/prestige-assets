@@ -23,7 +23,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
   const [{ data: asset }, photoUrls, { data: sfConn }] = await Promise.all([
     supabase
       .from('assets')
-      .select('id, asset_type, asset_subtype, fields, description, status')
+      .select('id, asset_type, asset_subtype, fields, description, status, extraction_result')
       .eq('id', assetId)
       .single(),
     supabase
@@ -50,10 +50,19 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
 
   if (!asset) redirect('/assets/new')
 
-  // Compute fields block server-side — synchronous, always ready on page load
+  // Compute fields block server-side — fall back to extraction_result values if fields not yet saved
+  const savedFields = (asset.fields ?? {}) as Record<string, string>
+  const extractedFields = asset.extraction_result
+    ? Object.fromEntries(
+        Object.entries(asset.extraction_result as Record<string, { value: string | null }>)
+          .filter(([, v]) => v?.value != null)
+          .map(([k, v]) => [k, v.value as string])
+      )
+    : {}
+  const effectiveFields = Object.keys(savedFields).length > 0 ? savedFields : extractedFields
   const fieldsText = generateFieldsBlock(
     asset.asset_type as AssetType,
-    (asset.fields ?? {}) as Record<string, string>
+    effectiveFields
   )
 
   return (

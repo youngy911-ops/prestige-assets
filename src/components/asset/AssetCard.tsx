@@ -34,7 +34,7 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
   const make = fields?.make ?? ''
   const model = fields?.model ?? ''
   const year = fields?.year ?? ''
-  const subtitle = [make, model, year].filter(Boolean).join(' ') || null
+  const subtitle = [year, make, model].filter(Boolean).join(' ') || null
 
   async function handleDelete(e: React.MouseEvent) {
     e.preventDefault()  // Prevent Link navigation
