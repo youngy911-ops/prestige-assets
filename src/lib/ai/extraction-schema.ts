@@ -140,6 +140,7 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
   Fuso Canter: Duonic AMT or 6-speed manual; newer Canters = DUONIC
   Fuso Fighter: 6-speed Duonic AMT
   SUSPENSION TYPE FOR TRUCKS: Suspension type is visible from exterior photos — airbag suspension has visible rubber air bags at each axle (large cylindrical rubber bladders), leaf spring suspension has visible stacked steel leaf packs. For Kenworth, Volvo, Scania prime movers post-2005: default to airbag if not clearly visible as leaf spring. Isuzu/Hino rigid trucks: mostly leaf spring unless air-ride badge visible.
+  COUNCIL / GOVERNMENT ASSETS: If photos show government livery (council logos, fleet numbers, agency markings, or decals indicating government/council ownership), note: Service History = Yes (all government assets are maintained under service contracts), Master Key = Yes (government assets always have all keys). Common indicators: Local council logos, QLD TMR/RMS/VicRoads markings, QFleet/GovFleet stickers, fleet numbers (e.g. B40232 tag format), yellow asset tags.
   TRUCK FEATURE DETECTION — actively scan dashboard and cab interior photos for the following:
   - Diff lock / axle lock: look for a dashboard button, switch, or rocker labelled "DIFF LOCK", "AXLE LOCK", "INTER-AXLE LOCK", or similar; also look for a yellow or orange indicator light showing the diff lock is engaged. If not visible in photos but the truck is a 6x4 prime mover manufactured post-2010, infer diff lock as fitted at medium confidence and note in extras (e.g. "Diff lock (standard on 6x4 prime movers post-2010)").
   - Exhaust brake: look for a dashboard switch or toggle labelled "ENGINE BRAKE", "JAKE BRAKE", "EXHAUST BRAKE", or "COMPRESSION BRAKE". If not visible in photos but make is Kenworth, Mack, Volvo, Scania, or Mercedes Actros, infer exhaust brake as standard fitment at medium confidence and note in extras (e.g. "Exhaust brake (standard on Kenworth prime movers)").
@@ -257,6 +258,7 @@ Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year ar
   - HINs never contain the letters I, O, or Q (same rule as VINs).
 
 - VEHICLES: infer engine_type, fuel_type, transmission, drive_type from make/model/year knowledge. Read VIN from door jamb plate (driver or passenger side) or windscreen base — 17-character alphanumeric, often stamped or on an adhesive label. Read rego plate number from exterior photos showing the front or rear plate — Australian state plates are rectangular, alphanumeric; read exactly as shown (e.g. "ABC-123", "T123-AB"). Read odometer from instrument cluster — extract exact digits only, return null if any digit is unclear. Identify body type from exterior shape. Identify colour from exterior paint including finish qualifier (Metallic, Pearl, Matte) where distinguishable — e.g. "Pearl White", "Metallic Silver", "Graphite". For extras, actively scan interior photos for: alloy wheels, sunroof, leather seats, heated seats, reverse camera, parking sensors, Apple CarPlay/Android Auto (visible on infotainment screen or dash), wireless charging pad, premium audio (Bose/JBL/Harman badges), blind-spot monitoring, adaptive cruise control. Scan exterior photos for: tow bar, bull bar, nudge bar, canopy/tray top, side steps/running boards, roof rack, snorkel, winch, aftermarket wheels, spot lights, UHF antenna (chrome whip on roof, bull bar, or cab corner). Read brand from badge or decal — common AU aftermarket brands: bull bars (ARB, Ironman 4x4, TJM, Opposite Lock, MCC/Metal Tech), canopies (Truckman, Aeroklas, MTM, Flexiglass, Tub Tector, Max Top), snorkels (ARB, Safari Snorkel, Ironman 4x4), winches (ARB, Warn, Runva, Ironman 4x4), roof racks (Rhino Rack, Thule, Prorack), side steps (ARB, Prorack, Safari). Always name the brand in extras if readable.
+  COUNCIL / GOVERNMENT ASSETS: If photos show government livery (council logos, fleet numbers, agency markings, or decals indicating government/council ownership), note: Service History = Yes (all government assets are maintained under service contracts), Master Key = Yes (government assets always have all keys). Common indicators: Local council logos, QLD TMR/RMS/VicRoads markings, QFleet/GovFleet stickers, fleet numbers (e.g. B40232 tag format), yellow asset tags.
   VEHICLE FEATURE DETECTION — actively scan exterior photos for the following:
   - Suspension lift: look for ride height that appears higher than factory standard — a lifted vehicle will show a visible gap between the tyre top and the wheel arch liner, extended or aftermarket spring/shock components visible between the axle and chassis, and in some cases a spacer or extended upper strut mount. Common AU aftermarket lift brands: Old Man Emu (OME — yellow or black springs/shocks with "OME" stamp), Dobinsons (red or black springs with "Dobinsons" text), King Springs (blue or silver springs with "King Springs" label), Ironman 4x4 (orange shocks with "Ironman" text), Tough Dog (red springs/shocks with "Tough Dog" text). If a lift is visible and the brand is readable, note in extras (e.g. "Suspension lift — Old Man Emu kit fitted"). If lifted but brand not readable, note "Aftermarket suspension lift fitted".
   - Window tinting: windows that appear noticeably darker than standard (factory glass is typically light grey; aftermarket tint is visibly darker — dark charcoal or near-black on side and rear windows). Note in extras as "Window tinting" if clearly visible on side or rear windows.
@@ -461,6 +463,27 @@ UNDERCARRIAGE PHOTOS — EARTHMOVING — when undercarriage or track photos are 
 - Roller condition: note flat spots, leaking seals, or excessive wear on any visible rollers
 - Undercarriage wear indicators: some machines have wear marks moulded into components — note percentage remaining if visible
 - Add undercarriage condition summary to extras (e.g. "Steel tracks, 60% undercarriage remaining, sprockets serviceable")
+
+MEASUREMENT PRECISION RULES:
+- Engine displacement: always in litres to 1 decimal place (e.g. 7.0L, 12.9L) — never in cc for heavy equipment
+- Track width (earthmoving): always in mm (e.g. 1980mm, 2200mm)
+- Boom/arm length: in metres to 1 decimal place (e.g. 14.5m, 2.8m)
+- Bucket capacity: in m³ to 1 decimal place (e.g. 0.8m³, 3.2m³)
+- Body dimensions for trucks/trailers: in mm without commas (e.g. 5900mm L x 2400mm W x 300mm D)
+- Sleeper length: in inches (e.g. 48", 55", 63") — convert mm to inches (divide by 25.4) if only mm visible
+- Dozer blade width: in feet to 1 decimal place (e.g. 11.9ft, 14.0ft)
+- Travel speeds: in km/h AND mph (e.g. 5.2km/h (3.2mph)) for earthmoving; km/h only for trucks
+- Tyre size: exactly as sidewall marking (e.g. 295/80R22.5, 11R22.5, 20.5R25) — never with spaces or alterations
+- GVM/GCM/ATM: always in kg as whole numbers (e.g. 23000, 68000) — never tonnes or with commas
+
+CLOSING LINE — exact format required:
+- Registered vehicles: "Sold As Is, Untested & Unregistered."
+- Unregistered vehicles/trucks/trailers: "Sold As Is, Untested & Unregistered."
+- Attachments (hydraulic hammers, buckets, forks): "Sold As Is, Untested."
+- General goods, tools, equipment: "Sold As Is, Untested."
+- Forklifts (not road registered): "Sold As Is, Untested."
+- Marine vessels without road registration: "Sold As Is, Untested."
+NOTE: "Sold As Is, Untested & Unregistered" applies whenever a vehicle can/should be registered. "Sold As Is, Untested" for items that are never road-registered.
 
 Rules:
 - If a field value is not visible AND cannot be reasonably inferred from the identified vehicle, return null
