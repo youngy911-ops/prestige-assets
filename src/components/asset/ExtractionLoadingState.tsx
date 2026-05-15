@@ -3,6 +3,9 @@ import { useEffect, useState, useRef } from 'react'
 import { ScanLine, Search, Car, ClipboardList, FileCheck, CheckCircle2, Gauge, BookOpen, Wrench, Anchor, Tractor } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
+// Delay before showing the "continue in background" options (ms)
+const BACKGROUND_OPTIONS_DELAY = 2000
+
 const VEHICLE_STEPS: { text: string; Icon: LucideIcon }[] = [
   { text: 'Reading compliance plate…', Icon: ScanLine },
   { text: 'Identifying make and model…', Icon: Car },
@@ -62,6 +65,8 @@ const FADE_DURATION = 250
 
 interface ExtractionLoadingStateProps {
   assetType?: string
+  onNavigateToAssets?: () => void
+  onNavigateToNew?: () => void
 }
 
 function getStepsForAssetType(assetType: string | undefined) {
@@ -75,11 +80,12 @@ function getStepsForAssetType(assetType: string | undefined) {
   }
 }
 
-export function ExtractionLoadingState({ assetType }: ExtractionLoadingStateProps) {
+export function ExtractionLoadingState({ assetType, onNavigateToAssets, onNavigateToNew }: ExtractionLoadingStateProps) {
   const STEPS = getStepsForAssetType(assetType)
   const [stepIndex, setStepIndex] = useState(0)
   const [visible, setVisible] = useState(true)
   const [elapsed, setElapsed] = useState(0)
+  const [showBackgroundOptions, setShowBackgroundOptions] = useState(false)
   const startRef = useRef(Date.now())
 
   // Cycle status messages with fade
@@ -100,6 +106,12 @@ export function ExtractionLoadingState({ assetType }: ExtractionLoadingStateProp
       setElapsed(Math.floor((Date.now() - startRef.current) / 1000))
     }, 1000)
     return () => clearInterval(timer)
+  }, [])
+
+  // Show background navigation options after a short delay
+  useEffect(() => {
+    const timer = setTimeout(() => setShowBackgroundOptions(true), BACKGROUND_OPTIONS_DELAY)
+    return () => clearTimeout(timer)
   }, [])
 
   const { text: stepText, Icon: StepIcon } = STEPS[stepIndex]
@@ -184,6 +196,43 @@ export function ExtractionLoadingState({ assetType }: ExtractionLoadingStateProp
           {elapsed}s elapsed
         </p>
       </div>
+
+      {/* Continue in background options */}
+      {(onNavigateToAssets || onNavigateToNew) && (
+        <div
+          style={{
+            opacity: showBackgroundOptions ? 1 : 0,
+            transition: 'opacity 0.4s ease',
+          }}
+          className="flex flex-col items-center gap-1.5"
+          aria-hidden={!showBackgroundOptions}
+        >
+          <p className="text-xs text-white/30">Continue in background:</p>
+          <div className="flex items-center gap-1 text-xs text-white/45">
+            {onNavigateToAssets && (
+              <button
+                type="button"
+                onClick={onNavigateToAssets}
+                className="hover:text-white/70 transition-colors underline underline-offset-2"
+              >
+                Back to assets
+              </button>
+            )}
+            {onNavigateToAssets && onNavigateToNew && (
+              <span className="text-white/20">·</span>
+            )}
+            {onNavigateToNew && (
+              <button
+                type="button"
+                onClick={onNavigateToNew}
+                className="hover:text-white/70 transition-colors underline underline-offset-2"
+              >
+                Book in another asset
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

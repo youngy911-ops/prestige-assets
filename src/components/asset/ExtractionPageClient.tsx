@@ -85,7 +85,13 @@ export function ExtractionPageClient({
         />
       )}
 
-      {status === 'loading' && <ExtractionLoadingState assetType={assetType} />}
+      {status === 'loading' && (
+        <ExtractionLoadingState
+          assetType={assetType}
+          onNavigateToAssets={() => router.push('/')}
+          onNavigateToNew={() => router.push('/assets/new')}
+        />
+      )}
 
       {status === 'success' && extractionResult && (
         <ExtractionResultPanel

@@ -444,6 +444,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
                 status={asset.status}
                 updated_at={asset.updated_at}
                 thumb_url={asset.thumb_url}
+                extraction_result={asset.extraction_result}
                 animationDelay={`${i * 50}ms`}
                 onDeleted={handleAssetDeleted}
               />

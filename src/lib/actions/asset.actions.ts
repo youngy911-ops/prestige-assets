@@ -38,6 +38,7 @@ export type AssetSummary = {
   status: AssetStatus
   updated_at: string
   thumb_url: string | null
+  extraction_result: unknown | null
 }
 
 export async function getAssets(branch: string): Promise<AssetSummary[] | { error: string }> {
@@ -47,7 +48,7 @@ export async function getAssets(branch: string): Promise<AssetSummary[] | { erro
 
   const { data, error } = await supabase
     .from('assets')
-    .select('id, asset_type, asset_subtype, fields, status, updated_at')
+    .select('id, asset_type, asset_subtype, fields, status, updated_at, extraction_result')
     .eq('user_id', user.id)
     .eq('branch', branch)
     .order('updated_at', { ascending: false })
