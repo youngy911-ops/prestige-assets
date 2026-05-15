@@ -1675,34 +1675,53 @@ Hino N04C-US 4.0-Litre 4-Cylinder Turbocharged Diesel, 110kW (150hp), 420Nm Torq
 Sold As Is, Untested & Unregistered.
 
 EXCAVATOR EXAMPLE:
-2019 Caterpillar 320 GC Hydraulic Excavator
+2008 Caterpillar 320D Hydraulic Excavator
 
-20,200kg Operating Weight
-4,823 Hours
-Cat C4.4 ACERT 4.4-Litre 4-Cylinder Turbocharged Diesel, 103kW (138HP), Tier 4 Final
-600mm Rubber Tracks
-Enclosed Cab With Air Conditioning
-Steelwrist X18 Tilt Rotator Quick Hitch
-900mm GP Bucket, 0.9m³, 5-Tooth
-Boom: 5.7m | Arm: 2.5m
-Max Digging Depth: 6.53m
+32,500kg Operating Weight
+8,450 Hours
+Caterpillar C6.4 4-Cylinder Turbocharged Diesel, 123kW (165HP), Tier 3
+1,980mm Steel Tracks
+Undercarriage: 60% Remaining
+Enclosed Cab, Air Conditioning
+Wedgelock OQ80 Quick Hitch
+800mm GP Bucket, 0.8m³
+Hydraulic Thumb
+Backfill Blade
+Lincoln Auto-Lube System
+5.2km/h (3.2mph) Forward, 6.1km/h (3.8mph) Reverse
+14.5m Boom, 2.8m Arm
+9.5m Max Reach
+6.5m Max Dig Depth
 
 Sold As Is, Untested & Unregistered.
 
 WHEEL LOADER EXAMPLE:
-2019 Volvo L90H Wheel Loader
+2010 Caterpillar 980H Wheel Loader
 
-Operating Weight 17,300kg
-
-Deutz D6J 4-Cylinder Turbodiesel, 184HP, Stage V Emissions
-
-Powershift Transmission, Planetary Final Drive, Articulated Steering, Travel 46km/h (28.6mph) Forward, 46km/h (28.6mph) Reverse
-
+22,400kg Operating Weight
+8,900 Hours
+Caterpillar C9 9.0-Litre 6-Cylinder Turbocharged Diesel, 224kW (300HP), Tier 3
+Power Shift Transmission, 6 Forward 6 Reverse, Planetary Final Drive, Articulated Steering, Travel 40km/h (24.9mph) Forward, 35km/h (21.8mph) Reverse
+Load Sensing Hydraulics
 Enclosed Cab, Rear View Camera, Auto Lube, E-Stop, Fire Extinguisher, Isolator, Digital Display, Loadrite Weigh Scales, Pressure Pro Module, UHF, Radio
+3.2m³ GP Bucket, 2,700mm
+20.5R25 Tyres
 
-AHE Bucket, 2650mm
+Sold As Is, Untested & Unregistered.
 
-Last Serviced at 9,535hrs
+DOZER EXAMPLE:
+2015 Komatsu D85EX-15 Dozer
+
+37,400kg Operating Weight
+12,000 Hours
+Komatsu SAA6D140E-5 14.0-Litre 6-Cylinder Turbocharged Diesel, 406kW (544HP), Tier 4 Final
+Power Shift Transmission, 6 Forward 3 Reverse
+2,830mm Steel Tracks
+Enclosed Cab, Air Conditioning
+3.63m (11.9ft) Semi-U Blade
+Single Shank Ripper
+GPS Grade Control
+8.5km/h (5.3mph) Forward, 9.8km/h (6.1mph) Reverse
 
 Sold As Is, Untested & Unregistered.
 
