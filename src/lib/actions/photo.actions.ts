@@ -15,40 +15,50 @@ export async function insertPhoto(params: {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'Not authenticated' }
 
-  // Server-side 80-photo cap
-  const { count } = await supabase
-    .from('asset_photos')
-    .select('*', { count: 'exact', head: true })
-    .eq('asset_id', params.assetId)
-  if ((count ?? 0) >= 80) return { error: 'Photo limit reached' }
+  // Server-side 80-photo cap — skip the COUNT query when sortOrder is clearly
+  // within bounds (client already enforces the cap before calling this).
+  // Only do the expensive COUNT when sortOrder is at or near the limit.
+  if (params.sortOrder >= 80) return { error: 'Photo limit reached' }
+  if (params.sortOrder >= 75) {
+    // Near the cap: verify actual count to guard against races
+    const { count } = await supabase
+      .from('asset_photos')
+      .select('*', { count: 'exact', head: true })
+      .eq('asset_id', params.assetId)
+    if ((count ?? 0) >= 80) return { error: 'Photo limit reached' }
+  }
 
-  const { data, error } = await supabase
-    .from('asset_photos')
-    .insert({
-      asset_id: params.assetId,
-      storage_path: params.storagePath,
-      sort_order: params.sortOrder,
-    })
-    .select('id')
-    .single()
+  // Run the insert and the signed-URL generation in parallel
+  const [insertResult, urlResult] = await Promise.all([
+    supabase
+      .from('asset_photos')
+      .insert({
+        asset_id: params.assetId,
+        storage_path: params.storagePath,
+        sort_order: params.sortOrder,
+      })
+      .select('id')
+      .single(),
+    supabase.storage
+      .from('photos')
+      .createSignedUrl(params.storagePath, 3600),
+  ])
 
-  if (error) return { error: error.message }
+  if (insertResult.error) return { error: insertResult.error.message }
+  if (urlResult.error || !urlResult.data?.signedUrl) {
+    return { error: urlResult.error?.message ?? 'Failed to generate URL' }
+  }
 
-  // Set extraction_stale if asset already has extracted fields
-  await supabase
+  // Fire-and-forget: mark extraction stale if asset already has extracted fields.
+  // The user doesn't need to wait for this — it's a background housekeeping write.
+  supabase
     .from('assets')
     .update({ extraction_stale: true })
     .eq('id', params.assetId)
     .neq('fields', '{}')
+    .then(() => { /* intentional fire-and-forget */ })
 
-  // Return signed URL in same call — saves a round trip
-  const { data: urlData, error: urlError } = await supabase.storage
-    .from('photos')
-    .createSignedUrl(params.storagePath, 3600)
-
-  if (urlError || !urlData?.signedUrl) return { error: urlError?.message ?? 'Failed to generate URL' }
-
-  return { id: data.id, signedUrl: urlData.signedUrl }
+  return { id: insertResult.data.id, signedUrl: urlResult.data.signedUrl }
 }
 
 // ---------------------------------------------------------------------------

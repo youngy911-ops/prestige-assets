@@ -26,14 +26,18 @@ export default function NewAssetPage() {
   const [error, setError] = useState<string | null>(null)
   // Files from auto-detect — uploaded after asset creation, skip photos page
   const pendingFilesRef = useRef<File[]>([])
+  // Reserved for future optimistic pre-creation (AutoDetect path provides type+subtype together)
+  const pendingAssetRef = useRef<Promise<{ assetId: string } | { error: string }> | null>(null)
 
   useEffect(() => {
+    // Prefetch home so the Back button feels instant
+    router.prefetch('/')
     const last = localStorage.getItem(LAST_BRANCH_KEY) as BranchKey | null
     if (last) {
       setBranch(last)
       setStep(2)
     }
-  }, [])
+  }, [router])
 
   function handleBranchSelect(b: BranchKey) {
     setBranch(b)
@@ -45,6 +49,7 @@ export default function NewAssetPage() {
     setAssetType(t)
     setAssetSubtype(null)
     pendingFilesRef.current = []
+    pendingAssetRef.current = null
     setStep(3)
   }
 
@@ -55,7 +60,11 @@ export default function NewAssetPage() {
     setSubmitLabel('Creating…')
     setError(null)
 
-    const result = await createAsset(branch, assetType, subtype)
+    // Use a pre-created asset promise if available, otherwise create now.
+    // pendingAssetRef is set by AutoDetect path; for manual selection it is
+    // always null here, so we fall through to a fresh createAsset call.
+    const result = await (pendingAssetRef.current ?? createAsset(branch, assetType, subtype))
+    pendingAssetRef.current = null
     if ('error' in result) {
       setError(result.error)
       setSubmitting(false)

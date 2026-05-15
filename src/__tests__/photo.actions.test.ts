@@ -50,26 +50,18 @@ describe('insertPhoto', () => {
   })
 
   it('inserts photo record and returns id on success', async () => {
-    let callCount = 0
-    mockFrom.mockImplementation(() => {
-      callCount++
-      if (callCount === 1) {
-        // count query
-        return { select: () => ({ eq: () => Promise.resolve({ count: 0, error: null }) }) }
-      }
-      if (callCount === 2) {
-        // insert
-        return {
-          insert: () => ({
-            select: () => ({
-              single: () => Promise.resolve({ data: { id: 'photo-uuid-789' }, error: null }),
-            }),
-          }),
-        }
-      }
-      // extraction_stale update
-      return { update: () => ({ eq: () => ({ neq: () => Promise.resolve({ error: null }) }) }) }
-    })
+    // sortOrder 0 is well below 75 so no COUNT query is issued.
+    // insert and createSignedUrl now run in parallel via Promise.all;
+    // storage mock is already set up at the top of the file.
+    mockFrom.mockImplementation(() => ({
+      insert: () => ({
+        select: () => ({
+          single: () => Promise.resolve({ data: { id: 'photo-uuid-789' }, error: null }),
+        }),
+      }),
+      // fire-and-forget extraction_stale update
+      update: () => ({ eq: () => ({ neq: () => Promise.resolve({ error: null }) }) }),
+    }))
     const result = await insertPhoto({ assetId: 'a1', storagePath: 'u/a/f.jpg', sortOrder: 0 })
     expect(result).toEqual({ id: 'photo-uuid-789', signedUrl: 'https://example.com/signed' })
   })
