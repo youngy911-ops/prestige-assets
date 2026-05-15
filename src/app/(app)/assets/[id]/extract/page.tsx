@@ -10,33 +10,49 @@ import type { AssetType } from '@/lib/schema-registry/types'
 
 interface ExtractPageProps {
   params: Promise<{ id: string }>
-  searchParams: Promise<{ autostart?: string }>
+  searchParams: Promise<{ autostart?: string; hasPhotos?: string }>
 }
 
 export default async function ExtractPage({ params, searchParams }: ExtractPageProps) {
   const { id: assetId } = await params
-  const { autostart } = await searchParams
+  const { autostart, hasPhotos: hasPhotosParam } = await searchParams
   const autoStart = autostart === '1'
+  // When navigating from the photos page CTA, hasPhotos=1 is passed so we can
+  // skip the separate DB count query — saves one round-trip on the hot path.
+  const hasPhotosKnown = hasPhotosParam === '1'
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const [{ data: asset }, { count: photoCount }] = await Promise.all([
-    supabase
-      .from('assets')
-      .select('id, asset_type, asset_subtype, extraction_result, inspection_notes')
-      .eq('id', assetId)
-      .single(),
-    supabase
-      .from('asset_photos')
-      .select('id', { count: 'exact', head: true })
-      .eq('asset_id', assetId),
-  ])
+  const assetQuery = supabase
+    .from('assets')
+    .select('id, asset_type, asset_subtype, extraction_result, inspection_notes')
+    .eq('id', assetId)
+    .single()
+
+  let asset: Awaited<typeof assetQuery>['data']
+  let hasPhotos: boolean
+
+  if (hasPhotosKnown) {
+    // Fast path: skip the photo count query entirely
+    const { data } = await assetQuery
+    asset = data
+    hasPhotos = true
+  } else {
+    // Slow path (direct URL access): fetch asset + photo count in parallel
+    const [{ data }, { count: photoCount }] = await Promise.all([
+      assetQuery,
+      supabase
+        .from('asset_photos')
+        .select('id', { count: 'exact', head: true })
+        .eq('asset_id', assetId),
+    ])
+    asset = data
+    hasPhotos = (photoCount ?? 0) > 0
+  }
 
   if (!asset) redirect('/assets/new')
-
-  const hasPhotos = (photoCount ?? 0) > 0
 
   return (
     <div className="max-w-[480px] mx-auto px-4 pt-8 pb-[calc(env(safe-area-inset-bottom)+80px)]">

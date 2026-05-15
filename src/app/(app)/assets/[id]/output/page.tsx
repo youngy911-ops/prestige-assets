@@ -18,7 +18,9 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const [{ data: asset }, { data: photos }, { data: sfConn }] = await Promise.all([
+  // Pipeline signed URL generation: chain createSignedUrls off the photos query so it
+  // fires as soon as storage paths arrive, overlapping with the asset + sfConn queries.
+  const [{ data: asset }, photoUrls, { data: sfConn }] = await Promise.all([
     supabase
       .from('assets')
       .select('id, asset_type, asset_subtype, fields, description, status')
@@ -28,7 +30,17 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
       .from('asset_photos')
       .select('storage_path, sort_order')
       .eq('asset_id', assetId)
-      .order('sort_order', { ascending: true }),
+      .order('sort_order', { ascending: true })
+      .then(async ({ data: photos }) => {
+        const photoList = photos ?? []
+        if (photoList.length === 0) return [] as string[]
+        const { data: signedUrlData } = await supabase.storage
+          .from('photos')
+          .createSignedUrls(photoList.map(p => p.storage_path), 3600)
+        return (signedUrlData ?? [])
+          .map(r => r.signedUrl)
+          .filter((u): u is string => !!u)
+      }),
     supabase
       .from('salesforce_connections')
       .select('user_id')
@@ -37,19 +49,6 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
   ])
 
   if (!asset) redirect('/assets/new')
-
-  // Batch signed URL generation — one API call regardless of photo count
-  const photoList = photos ?? []
-  const { data: signedUrlData } = photoList.length > 0
-    ? await supabase.storage.from('photos').createSignedUrls(
-        photoList.map(p => p.storage_path),
-        3600
-      )
-    : { data: [] }
-
-  const photoUrls: string[] = (signedUrlData ?? [])
-    .map(r => r.signedUrl)
-    .filter((u): u is string => !!u)
 
   // Compute fields block server-side — synchronous, always ready on page load
   const fieldsText = generateFieldsBlock(

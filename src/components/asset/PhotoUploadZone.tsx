@@ -340,7 +340,7 @@ export function PhotoUploadZone({
         <button
           type="button"
           disabled={isUploading}
-          onClick={() => router.push(`/assets/${assetId}/extract?autostart=1`)}
+          onClick={() => router.push(`/assets/${assetId}/extract?autostart=1&hasPhotos=1`)}
           className="flex items-center justify-center gap-2 w-full h-12 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-colors disabled:opacity-40"
         >
           <Sparkles className="w-4 h-4" />
