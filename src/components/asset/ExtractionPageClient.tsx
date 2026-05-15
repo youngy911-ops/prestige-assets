@@ -38,6 +38,8 @@ export function ExtractionPageClient({
 
   const triggerExtraction = useCallback(async () => {
     setStatus('loading')
+    // Prefetch review page while extraction is running so navigation is instant on completion
+    router.prefetch(`/assets/${assetId}/review`)
     try {
       const res = await fetch('/api/extract', {
         method: 'POST',

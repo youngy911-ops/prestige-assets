@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Camera, AlertCircle, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -47,6 +47,13 @@ export function PhotoUploadZone({
   const [qualityWarnings, setQualityWarnings] = useState<Map<string, string[]>>(new Map())
   const fileInputRef = useRef<HTMLInputElement>(null)
   const supabase = createClient()
+
+  // Prefetch the extract page as soon as photos are present so the CTA tap navigates instantly
+  useEffect(() => {
+    if (showCTA && photos.length > 0) {
+      router.prefetch(`/assets/${assetId}/extract?autostart=1&hasPhotos=1`)
+    }
+  }, [assetId, showCTA, photos.length, router])
 
   const atCap = photos.length >= 80
 

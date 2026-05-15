@@ -170,6 +170,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
           <button
             type="button"
             onClick={() => setShowBookInMenu(v => !v)}
+            onMouseEnter={() => { router.prefetch('/assets/new'); router.prefetch('/assets/quick') }}
             disabled={uploadingFiles}
             className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-3 py-2 rounded-xl transition-colors disabled:opacity-60"
           >

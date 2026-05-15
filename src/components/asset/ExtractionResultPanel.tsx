@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ChevronRight, ChevronDown } from 'lucide-react'
 import { ConfidenceBadge } from '@/components/asset/ConfidenceBadge'
@@ -23,6 +23,11 @@ export function ExtractionResultPanel({
   const router = useRouter()
   const fields = getFieldsSortedBySfOrder(assetType)
   const [showNotFound, setShowNotFound] = useState(false)
+
+  // Prefetch review page as soon as extraction results are visible
+  useEffect(() => {
+    router.prefetch(`/assets/${assetId}/review`)
+  }, [assetId, router])
 
   const foundFields = fields.filter(f => extractionResult[f.key]?.value != null)
   const notFoundFields = fields.filter(f => extractionResult[f.key]?.value == null)

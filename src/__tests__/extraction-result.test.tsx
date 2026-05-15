@@ -7,8 +7,9 @@ import { render, screen, fireEvent } from '@testing-library/react'
 
 // Mock next/navigation
 const mockRouterPush = vi.fn()
+const mockRouterPrefetch = vi.fn()
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({ push: mockRouterPush }),
+  useRouter: () => ({ push: mockRouterPush, prefetch: mockRouterPrefetch }),
 }))
 
 // Mock schema registry for ExtractionResultPanel
