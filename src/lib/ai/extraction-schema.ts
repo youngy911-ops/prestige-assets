@@ -49,6 +49,7 @@ Step 1 — Identify plates and read them in this priority order:
 - WEIGHT RATING PLATE (cab card): GVM, GCM, axle load ratings
 - VIN PLATE (stamped on chassis rail): 17-character VIN number
 - FORKLIFT DATA PLATE: bolted to the lower mast column (driver's side, facing the operator) or riveted to the underside of the overhead guard. Contains: Make, Model, Serial Number, Year of Manufacture, Max Lift Capacity (rated load in kg at 500mm load centre), Max Lift Height (mm), Tilt (degrees F°/B°), Unladen Weight (kg). Check BOTH the mast column AND the overhead guard — some machines have plates in both locations. Serial number may be labelled "Serial No", "S/N", or "Machine No".
+- BODY BUILDER PLATE: bolted to the body frame (not the chassis). Contains Body Manufacturer, Body Model, Year, Serial Number, and body-specific specs (tank capacity in kL/L, drum capacity in m³, boom rating in kg/m, pump pressure in bar, basket capacity in kg). Common body builder plate locations: EWP — front outrigger frame or boom base; Vacuum truck — tank front face or side panel; Concrete agitator — mixing drum frame or chassis crossmember; Water truck — tank front face; Garbage compactor — tailgate frame or hopper side; Crane truck — crane base frame; Tipping body — front headboard or side chassis rail.
 
 READING BUILD PLATES / COMPLIANCE PLATES:
 - Build plates are metal or adhesive labels riveted or stuck to the chassis, door jamb, engine bay firewall, or cab interior
@@ -430,6 +431,13 @@ Confidence for visually-confirmed extras = 'high'. Do not return null for extras
 
 EXTERIOR PHOTO SCANNING — on every wide or full exterior shot, actively scan the entire visible surface before moving on:
 - ALL ASSETS: scan for body modifications, aftermarket additions, decals or badges that identify body builders or spec packages, visible damage or wear, tyre condition, glass and light condition, any mounted equipment (light bars, UHF antennas, cameras, beacons, mirrors, steps, rails)
+BODY BUILDER PLATES — scan for secondary plates that belong to the body (not the chassis):
+- For EWPs: look for plate on boom/mast base or outrigger frame — contains working height, basket capacity, certification dates
+- For vacuum/water/tanker trucks: look for plate on tank face — contains tank capacity in kL or litres
+- For concrete agitators: plate on drum frame — drum capacity in m³
+- For crane trucks: Hiab/Fassi/Palfinger data plate on crane base — rated capacity at reach (t/m)
+- For garbage compactors: plate on hopper/tailgate — compaction ratio, body volume in m³
+- Extract body plate data into the extras field as: '[Body Manufacturer] [Model] [Spec]'
 - TRUCKS (prime movers and rigids): scan the whole cab exterior for sun visor, spotlights, exhaust stack configuration, auxiliary fuel tank size and quantity, air deflectors, mudflaps, spray suppressors, bull bars, additional mirrors, cab-mounted toolboxes
 - EARTHMOVING: check tracks or tyres for wear patterns and condition, undercarriage and rollers for wear, any quick hitch indicators on the dipper arm, ripper presence on dozers, counterweight configuration, any attachments stored alongside or on the machine
 - VEHICLES (cars, utes, 4WDs): scan all four corners, roof, glass, all four wheels — note any aftermarket additions clearly visible (bull bar, snorkel, canopy, tow bar, winch, lift kit, aftermarket wheels)
