@@ -12,7 +12,7 @@ const BADGE_CONFIG: Record<AssetStatus, { label: string; className: string; dot?
   },
   confirmed: {
     label: 'Confirmed',
-    className: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40',
+    className: 'bg-emerald-500/25 text-emerald-300 border border-emerald-400/50 font-bold',
     dot: true,
   },
 }

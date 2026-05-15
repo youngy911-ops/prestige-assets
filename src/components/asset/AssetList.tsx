@@ -37,7 +37,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
   const [changingBranch, setChangingBranch] = useState(false)
   const [todayCount, setTodayCount] = useState<number | null>(null)
   const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'reviewed' | 'confirmed'>('all')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'extracting' | 'reviewed' | 'confirmed'>('all')
   const [sortNewest, setSortNewest] = useState(true)
   const [uploadingFiles, setUploadingFiles] = useState(false)
   const [detectNote, setDetectNote] = useState<string | null>(null)
@@ -332,18 +332,18 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       {/* Status filter chips */}
       {!changingBranch && (
         <div className="flex items-center gap-2 mb-4">
-          {(['all', 'draft', 'reviewed', 'confirmed'] as const).map(s => (
+          {(['all', 'draft', 'extracting', 'reviewed', 'confirmed'] as const).map(s => (
             <button
               key={s}
               type="button"
               onClick={() => setStatusFilter(s)}
               className={`text-xs font-medium rounded-full px-3 min-h-[36px] transition-colors ${
                 statusFilter === s
-                  ? 'bg-emerald-600 text-white'
+                  ? s === 'extracting' ? 'bg-amber-500/80 text-white' : 'bg-emerald-600 text-white'
                   : 'bg-white/[0.05] text-white/50 hover:text-white/70'
               }`}
             >
-              {s === 'all' ? 'All' : s === 'draft' ? 'Draft' : s === 'reviewed' ? 'Reviewed' : 'Confirmed'}
+              {s === 'all' ? 'All' : s === 'draft' ? 'Draft' : s === 'extracting' ? 'Extracting' : s === 'reviewed' ? 'Reviewed' : 'Confirmed'}
             </button>
           ))}
         </div>
@@ -411,7 +411,11 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       {!error && assets !== null && assets.length > 0 && (() => {
         const filtered = assets
           .filter(a => matchesSearch(a, search))
-          .filter(a => statusFilter === 'all' || a.status === statusFilter)
+          .filter(a => {
+            if (statusFilter === 'all') return true
+            if (statusFilter === 'extracting') return a.status === 'draft' && a.extraction_result === null
+            return a.status === statusFilter
+          })
           .sort((a, b) => {
             const diff = new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()
             return sortNewest ? -diff : diff
@@ -419,6 +423,8 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
         const isFiltering = statusFilter !== 'all' || search.trim() !== ''
         const countLabel = statusFilter === 'draft'
           ? `${filtered.length} draft${filtered.length !== 1 ? 's' : ''}`
+          : statusFilter === 'extracting'
+          ? `${filtered.length} extracting`
           : statusFilter === 'reviewed'
           ? `${filtered.length} reviewed`
           : statusFilter === 'confirmed'

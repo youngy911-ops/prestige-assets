@@ -109,7 +109,7 @@ describe('InspectionNotesSection', () => {
     )
     expect(screen.getByText('Other notes')).toBeTruthy()
     const textarea = screen.getByRole('textbox')
-    expect((textarea as HTMLTextAreaElement).placeholder).toContain('Condition, damage')
+    expect((textarea as HTMLTextAreaElement).placeholder).toContain('Bull bar')
   })
 
   it('shows "Inspection Notes" section heading', async () => {

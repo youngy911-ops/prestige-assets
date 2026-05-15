@@ -26,7 +26,10 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
   const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
-  const href = status === 'draft'
+  const isExtracting = extraction_result === null && status === 'draft'
+  const href = isExtracting
+    ? `/assets/${id}/extract`
+    : status === 'draft'
     ? `/assets/${id}/review`
     : `/assets/${id}/output`
 
@@ -34,7 +37,8 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
   const make = fields?.make ?? ''
   const model = fields?.model ?? ''
   const year = fields?.year ?? ''
-  const subtitle = [year, make, model].filter(Boolean).join(' ') || null
+  const variant = fields?.variant ?? ''
+  const subtitle = [year, make, model, variant].filter(Boolean).join(' ') || null
 
   async function handleDelete(e: React.MouseEvent) {
     e.preventDefault()  // Prevent Link navigation
@@ -88,7 +92,7 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
           <div className="flex-1 min-w-0 px-4 py-3 flex flex-col justify-center relative">
             <div className="flex items-center justify-between mb-1">
               <span className="text-xs font-semibold text-white/40 uppercase tracking-widest truncate mr-2">{displayName}</span>
-              {extraction_result === null && status === 'draft' ? (
+              {isExtracting ? (
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-0.5 rounded-full tracking-wide bg-amber-500/10 text-amber-400/70 border border-amber-500/15">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400/60 animate-pulse flex-shrink-0" />
                   Extracting…
