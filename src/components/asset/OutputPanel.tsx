@@ -1,6 +1,6 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Camera, Copy, Check, AlertTriangle } from 'lucide-react'
+import { Camera, Copy, Check, AlertTriangle, Sparkles } from 'lucide-react'
 import { FieldsBlock } from '@/components/asset/FieldsBlock'
 import { DescriptionBlock } from '@/components/asset/DescriptionBlock'
 import { markAssetConfirmed } from '@/lib/actions/asset.actions'
@@ -36,11 +36,42 @@ interface OutputPanelProps {
   fieldsText: string           // Pre-computed by server page — always available immediately
   initialDescription: string | null  // null = generate; non-null = cached from DB
   photoUrls: string[]
+  extractionResult?: Record<string, { value: string | null; confidence: 'high' | 'medium' | 'low' | null }> | null
 }
 
 type DescriptionState = 'loading' | 'ready' | 'error'
 
-export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDescription, photoUrls }: OutputPanelProps) {
+/** Derive stats from extraction_result and fields for the stats strip */
+function deriveStats(
+  fields: Record<string, string>,
+  extractionResult: Record<string, { value: string | null; confidence: 'high' | 'medium' | 'low' | null }> | null | undefined
+): { fieldCount: number; confidenceLabel: string; confidenceColor: string } {
+  const fieldCount = Object.keys(fields).filter(k => fields[k]).length
+
+  if (!extractionResult) {
+    return { fieldCount, confidenceLabel: 'Ready to paste', confidenceColor: 'text-emerald-400' }
+  }
+
+  const entries = Object.values(extractionResult).filter(v => v?.value != null)
+  const highCount = entries.filter(v => v.confidence === 'high').length
+  const mediumCount = entries.filter(v => v.confidence === 'medium').length
+  const total = entries.length
+
+  if (total === 0) {
+    return { fieldCount, confidenceLabel: 'Ready to paste', confidenceColor: 'text-emerald-400' }
+  }
+
+  const highRatio = highCount / total
+  if (highRatio >= 0.7) {
+    return { fieldCount, confidenceLabel: 'High confidence', confidenceColor: 'text-emerald-400' }
+  } else if ((highCount + mediumCount) / total >= 0.5) {
+    return { fieldCount, confidenceLabel: 'Medium confidence', confidenceColor: 'text-amber-400' }
+  } else {
+    return { fieldCount, confidenceLabel: 'Low confidence', confidenceColor: 'text-red-400' }
+  }
+}
+
+export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDescription, photoUrls, extractionResult }: OutputPanelProps) {
   const [heroIndex, setHeroIndex] = useState(0)
   const [descState, setDescState] = useState<DescriptionState>(
     initialDescription ? 'ready' : 'loading'
@@ -154,6 +185,8 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
     setDescKey(k => k + 1)
     await generateDescription(false, newTone)
   }
+
+  const stats = deriveStats(fields, extractionResult)
 
   return (
     <div className="flex flex-col gap-6">
@@ -334,39 +367,17 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
         </>
       )}
 
-      {/* Condition ratings — vehicles only, shown when any condition field is set */}
+      {/* Condition Report — vehicles only, merges condition ratings + damage into one card */}
       {assetType === 'vehicle' && (() => {
         const conditionFields = [
-          { label: 'Body Condition',   value: fields.body_condition },
-          { label: 'Paint Condition',  value: fields.paint_condition },
-          { label: 'Tyre Condition',   value: fields.tyre_condition },
-          { label: 'Rust Condition',   value: fields.rust_condition },
-          { label: 'Seat Condition',   value: fields.seat_condition },
-          { label: 'Carpet Condition', value: fields.carpet_condition },
+          { label: 'Body',    value: fields.body_condition },
+          { label: 'Paint',   value: fields.paint_condition },
+          { label: 'Tyres',   value: fields.tyre_condition },
+          { label: 'Rust',    value: fields.rust_condition },
+          { label: 'Seats',   value: fields.seat_condition },
+          { label: 'Carpet',  value: fields.carpet_condition },
         ].filter(f => f.value)
-        if (conditionFields.length === 0) return null
 
-        return (
-          <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
-              <span className="text-sm font-semibold text-white">Condition</span>
-            </div>
-            <div className="divide-y divide-white/[0.06]">
-              {conditionFields.map(({ label, value }) => (
-                <div key={label} className="flex items-center justify-between px-4 py-2.5">
-                  <span className="text-sm text-white/60">{label}</span>
-                  <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${conditionBadgeClass(value)}`}>
-                    {value}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )
-      })()}
-
-      {/* Damage — always shown for vehicles */}
-      {assetType === 'vehicle' && (() => {
         const damageNotes = fields.damage_notes ?? ''
         const noteLines = damageNotes.split('\n').filter((l: string) => l.trim())
         // Prefer the explicit one-line summary; if absent but panel notes exist, derive a summary
@@ -376,38 +387,81 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
             ? `Damage noted to ${noteLines.length} panel${noteLines.length > 1 ? 's' : ''} — see breakdown below`
             : null
         const hasDamage = noteLines.length > 0 || !!fields.damage
+
+        if (conditionFields.length === 0 && !hasDamage) return null
+
         return (
           <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
-              <AlertTriangle className={`w-4 h-4 ${hasDamage ? 'text-amber-400' : 'text-white/40'}`} />
-              <span className="text-sm font-semibold text-white">Damage</span>
-              {hasDamage && (
-                <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/25">
-                  Recorded
+            {/* Section header */}
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06] bg-white/[0.02]">
+              <AlertTriangle className={`w-4 h-4 ${hasDamage ? 'text-amber-400' : 'text-emerald-400'}`} />
+              <span className="text-sm font-semibold text-white">Condition Report</span>
+              {hasDamage ? (
+                <span className="ml-auto text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                  Damage Recorded
                 </span>
-              )}
+              ) : conditionFields.length > 0 ? (
+                <span className="ml-auto text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                  No Damage
+                </span>
+              ) : null}
             </div>
-            <div className="px-4 py-3 flex flex-col gap-3">
-              {damageSummary ? (
-                <p className="text-sm font-medium text-white">{damageSummary}</p>
-              ) : (
-                <p className="text-sm text-white/40 italic">No damage recorded</p>
-              )}
-              {noteLines.length > 0 && (
-                <div className="rounded-lg border border-amber-500/15 bg-amber-500/[0.04] divide-y divide-white/[0.06]">
-                  {noteLines.map((line: string, i: number) => {
-                    const { panel, desc } = parseDamageLine(line)
-                    return (
-                      <div key={i} className="flex items-start gap-3 px-3 py-2">
-                        <span className="flex-shrink-0 text-xs font-semibold px-2 py-0.5 rounded bg-white/[0.07] text-white/80 whitespace-nowrap">
-                          {panel}
-                        </span>
-                        {desc && <span className="text-xs text-white/60 pt-0.5">{desc}</span>}
-                      </div>
-                    )
-                  })}
+
+            <div className="flex flex-col divide-y divide-white/[0.06]">
+              {/* Condition ratings — 2-column grid for compact display */}
+              {conditionFields.length > 0 && (
+                <div className="px-4 py-3 grid grid-cols-2 gap-x-4 gap-y-2.5">
+                  {conditionFields.map(({ label, value }) => (
+                    <div key={label} className="flex items-center justify-between gap-2 min-w-0">
+                      <span className="text-xs font-medium text-white/50 shrink-0">{label}</span>
+                      <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full whitespace-nowrap ${conditionBadgeClass(value)}`}>
+                        {value}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               )}
+
+              {/* Damage summary + panel breakdown */}
+              <div className="px-4 py-3 flex flex-col gap-3">
+                {damageSummary ? (
+                  /* Prominent amber box for damage summary */
+                  <div className="rounded-lg border border-amber-500/40 bg-amber-500/[0.08] px-3 py-2.5 flex items-start gap-2.5">
+                    <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                    <p className="text-sm font-medium text-amber-100 leading-snug">{damageSummary}</p>
+                  </div>
+                ) : (
+                  /* Green "no damage" badge */
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      No visible damage
+                    </span>
+                  </div>
+                )}
+
+                {/* Panel-by-panel breakdown */}
+                {noteLines.length > 0 && (
+                  <div className="rounded-lg border border-amber-500/20 bg-amber-500/[0.04] overflow-hidden">
+                    {noteLines.map((line: string, i: number) => {
+                      const { panel, desc } = parseDamageLine(line)
+                      return (
+                        <div key={i} className={`flex items-baseline gap-2 px-3 py-2.5 ${i > 0 ? 'border-t border-white/[0.05]' : ''}`}>
+                          <span className="text-xs font-semibold text-white/90 whitespace-nowrap shrink-0">{panel}</span>
+                          {desc && (
+                            <>
+                              <span className="text-white/25 text-xs shrink-0">—</span>
+                              <span className="text-xs text-white/55">{desc}</span>
+                            </>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )
