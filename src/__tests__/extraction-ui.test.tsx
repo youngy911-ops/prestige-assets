@@ -88,8 +88,8 @@ describe('InspectionNotesSection', () => {
     expect(screen.getByText('Service History')).toBeTruthy()
     // 5 structured inputs
     const inputs = screen.getAllByRole('textbox')
-    // 5 structured inputs + 1 textarea = 6 total
-    expect(inputs.length).toBe(6)
+    // 5 structured inputs + 1 textarea + 1 AI input = 7 total
+    expect(inputs.length).toBe(7)
   })
 
   it('renders only freeform textarea for general_goods (0 structured fields)', async () => {
@@ -97,9 +97,9 @@ describe('InspectionNotesSection', () => {
     render(
       <InspectionNotesSection assetId="asset-2" assetType="general_goods" initialNotes={null} />
     )
-    // Only 1 input — the freeform textarea
+    // Only 2 inputs — the freeform textarea + 1 AI input
     const inputs = screen.getAllByRole('textbox')
-    expect(inputs.length).toBe(1)
+    expect(inputs.length).toBe(2)
   })
 
   it('shows "Other notes" label and correct placeholder on freeform textarea', async () => {
@@ -108,7 +108,7 @@ describe('InspectionNotesSection', () => {
       <InspectionNotesSection assetId="asset-3" assetType="general_goods" initialNotes={null} />
     )
     expect(screen.getByText('Other notes')).toBeTruthy()
-    const textarea = screen.getByRole('textbox')
+    const textarea = screen.getByPlaceholderText(/Bull bar/i)
     expect((textarea as HTMLTextAreaElement).placeholder).toContain('Bull bar')
   })
 
