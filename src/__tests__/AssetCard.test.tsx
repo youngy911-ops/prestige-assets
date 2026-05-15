@@ -38,14 +38,14 @@ describe('AssetCard', () => {
     expect(link.getAttribute('href')).toBe('/assets/asset-123/output')
   })
 
-  it('shows make model year when fields has data', () => {
+  it('shows year make model when fields has data', () => {
     render(
       <AssetCard
         {...baseProps}
         fields={{ make: 'Caterpillar', model: '320', year: '2020' }}
       />
     )
-    expect(screen.getByText('Caterpillar 320 2020')).toBeInTheDocument()
+    expect(screen.getByText('2020 Caterpillar 320')).toBeInTheDocument()
   })
 
   it("shows asset type name when fields is empty", () => {
