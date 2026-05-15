@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import sharp from 'sharp'
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
@@ -19,13 +20,26 @@ export async function POST(req: NextRequest) {
     .eq('asset_id', assetId)
   if ((count ?? 0) >= 80) return Response.json({ error: 'Photo limit reached (80 max)' }, { status: 400 })
 
-  const ext = file.name.split('.').pop()?.replace(/[^a-zA-Z0-9]/g, '') ?? 'jpg'
-  const storagePath = `${user.id}/${assetId}/${Date.now()}-${sortOrder}.${ext}`
+  // Physically rotate pixels to match EXIF orientation and strip the tag.
+  // iPhone photos arrive with orientation metadata but pixels stored sideways —
+  // autoOrient() bakes the rotation so GPT-4o always sees the image right-way up.
+  const rawBuffer = Buffer.from(await file.arrayBuffer())
+  let uploadBuffer: Buffer
+  let uploadContentType: string
+  try {
+    uploadBuffer = await sharp(rawBuffer).autoOrient().jpeg({ quality: 92 }).toBuffer()
+    uploadContentType = 'image/jpeg'
+  } catch {
+    // If sharp fails (e.g. unsupported format) fall back to the original bytes
+    uploadBuffer = rawBuffer
+    uploadContentType = file.type
+  }
 
-  const arrayBuffer = await file.arrayBuffer()
+  const storagePath = `${user.id}/${assetId}/${Date.now()}-${sortOrder}.jpg`
+
   const { error: uploadError } = await supabase.storage
     .from('photos')
-    .upload(storagePath, arrayBuffer, { contentType: file.type, upsert: false })
+    .upload(storagePath, uploadBuffer, { contentType: uploadContentType, upsert: false })
 
   if (uploadError) return Response.json({ error: uploadError.message }, { status: 500 })
 
