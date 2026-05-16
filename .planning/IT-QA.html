@@ -157,8 +157,8 @@ h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
 
   <div class="qa-item">
     <div class="qa-q">"What's the uptime / SLA?"</div>
-    <div class="qa-a">We rely on Vercel (99.99% uptime SLA) for the app and Supabase (99.9%) for the database. Both are enterprise-grade platforms used by thousands of companies. There's no custom infrastructure to manage — if Vercel or Supabase has an outage, their support handles it.
-    <div class="simple">Simple version: "Hosted on reliable cloud platforms with good uptime — same infrastructure many large companies use."</div></div>
+    <div class="qa-a">The app is hosted on a dedicated server with PM2 for process management and Nginx as the reverse proxy, with SSL via Let's Encrypt. The database runs on Supabase (99.9% uptime SLA), hosted in Sydney. The server restarts the app automatically on reboot or crash.
+    <div class="simple">Simple version: "Runs on our own server, restarts itself automatically if anything goes wrong."</div></div>
   </div>
 
   <div class="qa-item">
