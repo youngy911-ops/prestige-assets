@@ -4,7 +4,7 @@ module.exports = {
       name: "prestige-assets",
       script: "node_modules/.bin/next",
       args: "start",
-      cwd: "/var/www/prestige-assets",
+      cwd: "/root/prestige-assets",
       instances: 1,
       autorestart: true,
       watch: false,
