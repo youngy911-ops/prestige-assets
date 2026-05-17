@@ -51,7 +51,7 @@ export const PhotoThumbnail = forwardRef<HTMLDivElement, PhotoThumbnailProps>(
         {qualityWarnings && qualityWarnings.length > 0 && (
           <div
             title={qualityWarnings.join(', ')}
-            className="absolute bottom-1 right-1 flex items-center gap-0.5 rounded bg-amber-500/90 px-1 py-0.5 pointer-events-none"
+            className="absolute bottom-1 right-1 flex items-center gap-0.5 rounded-lg bg-amber-500/80 backdrop-blur-sm shadow-sm px-1 py-0.5 pointer-events-none"
             aria-label={`Photo quality warning: ${qualityWarnings.join(', ')}`}
           >
             <TriangleAlert className="w-3 h-3 text-white" />

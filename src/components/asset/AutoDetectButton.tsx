@@ -120,7 +120,7 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
         type="button"
         onClick={() => inputRef.current?.click()}
         disabled={busy}
-        className="w-full flex items-center justify-center gap-2 rounded-xl border border-emerald-500/25 bg-emerald-500/8 hover:bg-emerald-500/12 text-emerald-300 hover:text-emerald-200 text-sm py-3.5 font-medium transition-all disabled:opacity-50"
+        className="w-full flex items-center justify-center gap-2 rounded-xl border border-emerald-500/35 bg-emerald-500/10 shadow-[0_0_0_1px_rgba(52,211,153,0.1)] hover:bg-emerald-500/15 hover:border-emerald-500/50 hover:shadow-[0_0_0_1px_rgba(52,211,153,0.2)] text-emerald-200 text-[15px] py-4 font-semibold transition-all disabled:opacity-50"
       >
         {busy ? (
           <>
@@ -138,7 +138,7 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
           </>
         ) : (
           <>
-            <Images className="w-4 h-4" />
+            <Images className="w-5 h-5" />
             Upload photos to detect type
           </>
         )}

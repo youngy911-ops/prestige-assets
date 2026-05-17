@@ -217,17 +217,19 @@ export function PhotoUploadZone({
           disabled={isUploading || atCap}
         />
 
-        <Camera className="w-12 h-12 text-white/40" />
+        <div className="w-20 h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-2">
+          <Camera className="w-10 h-10 text-emerald-400/70" />
+        </div>
         <div className="text-center">
-          <p className="text-[28px] font-semibold text-white leading-tight">No photos yet</p>
-          <p className="text-sm text-white/65 mt-1">
+          <p className="text-2xl font-bold tracking-tight text-white leading-tight">No photos yet</p>
+          <p className="text-sm text-white/50 mt-1">
             Add photos from your camera roll or file system.
           </p>
         </div>
         <Button
           onClick={handleAddPhotosClick}
           disabled={isUploading || atCap}
-          className="w-full max-w-xs bg-emerald-600 hover:bg-emerald-600/90 text-white h-11 disabled:opacity-40"
+          className="w-full max-w-xs bg-emerald-600 hover:bg-emerald-500 shadow-[0_0_0_1px_rgba(52,211,153,0.2),0_4px_16px_rgba(52,211,153,0.1)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.4),0_8px_24px_rgba(52,211,153,0.2)] transition-all h-12 rounded-2xl font-semibold disabled:opacity-40"
         >
           <Camera className="w-4 h-4 mr-2" />
           Add Photos
@@ -254,8 +256,8 @@ export function PhotoUploadZone({
       {/* Header row */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-white">Photos</h2>
-          <p className="text-sm text-white/65">
+          <h2 className="text-xl font-bold tracking-tight text-white">Photos</h2>
+          <p className="text-sm text-white/50">
             {uploadProgress
               ? `Uploading ${uploadProgress.done}/${uploadProgress.total}…`
               : heroPickResult === 'updated'
@@ -273,7 +275,7 @@ export function PhotoUploadZone({
               onClick={handlePickHero}
               disabled={isPickingHero}
               title="Auto-pick best cover photo"
-              className="flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 transition-colors disabled:opacity-40"
+              className="flex items-center gap-1.5 text-xs text-white/55 hover:text-emerald-300 transition-colors bg-white/[0.04] hover:bg-emerald-500/10 border border-white/[0.08] hover:border-emerald-500/30 px-2.5 py-1.5 rounded-lg disabled:opacity-40"
             >
               <Sparkles className={`w-3.5 h-3.5 ${isPickingHero ? 'animate-pulse' : ''}`} />
               {isPickingHero ? 'Picking…' : 'Best Cover'}

@@ -54,7 +54,7 @@ export function BottomNav() {
             newActive ? 'text-white' : 'text-white/40 hover:text-white/70'
           )}
         >
-          <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center transition-colors', newActive ? 'bg-emerald-500' : 'bg-white/10')}>
+          <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center transition-colors', newActive ? 'bg-emerald-500 shadow-[0_0_12px_rgba(52,211,153,0.4)]' : 'bg-white/10')}>
             <Plus className="w-5 h-5 text-white" />
           </div>
           <span className={cn('text-xs font-medium', newActive ? 'text-white' : 'text-white/40')}>New</span>

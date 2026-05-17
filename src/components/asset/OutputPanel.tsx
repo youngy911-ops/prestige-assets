@@ -250,14 +250,14 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
       )}
 
       {/* Stats strip — key extraction numbers at a glance */}
-      <div className="flex items-center justify-between rounded-xl border border-white/[0.07] bg-white/[0.03] px-4 py-3">
+      <div className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5">
         <div className="flex items-center gap-1.5">
           <Sparkles className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
-          <span className="text-sm font-semibold text-white tabular-nums">{stats.fieldCount}</span>
-          <span className="text-xs text-white/40">fields extracted</span>
+          <span className="text-base font-bold text-white tabular-nums">{stats.fieldCount}</span>
+          <span className="text-xs text-white/35 font-medium">fields extracted</span>
         </div>
         <div className="w-px h-4 bg-white/[0.08]" />
-        <span className={`text-xs font-medium ${stats.confidenceColor}`}>{stats.confidenceLabel}</span>
+        <span className={`text-sm font-semibold ${stats.confidenceColor}`}>{stats.confidenceLabel}</span>
       </div>
 
       {/* Copy All — one-click copy of fields + description for Salesforce */}
@@ -282,16 +282,16 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
       {/* Tone selector */}
       <div className="flex items-center gap-2">
         <span className="text-xs text-white/40 mr-1">Description style:</span>
-        <div className="flex rounded-lg border border-white/[0.10] bg-white/[0.03] p-0.5">
+        <div className="flex rounded-xl border border-white/[0.10] bg-white/[0.04] p-1">
           {(['standard', 'quick'] as Tone[]).map(t => (
             <button
               key={t}
               type="button"
               onClick={() => handleToneChange(t)}
               disabled={isRegenerating || descState === 'loading'}
-              className={`px-3 py-1 rounded-md text-xs font-medium transition-all capitalize disabled:opacity-40 ${
+              className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all capitalize disabled:opacity-40 ${
                 tone === t
-                  ? 'bg-emerald-600 text-white'
+                  ? 'bg-emerald-600 text-white shadow-[0_1px_4px_rgba(0,0,0,0.3)]'
                   : 'text-white/50 hover:text-white/80'
               }`}
             >

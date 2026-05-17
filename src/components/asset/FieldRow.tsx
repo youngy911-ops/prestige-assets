@@ -17,9 +17,9 @@ interface FieldRowProps {
 }
 
 const HIGHLIGHT_CLASSES: Partial<Record<ConfidenceLevel, string>> = {
-  medium: 'border-l-2 border-l-amber-400/40 pl-3',
-  low: 'border-l-2 border-l-red-500/40 pl-3',
-  not_found: 'border-l-2 border-l-red-500/40 pl-3',
+  medium: 'border-l-2 border-l-amber-400/50 pl-3.5 bg-gradient-to-r from-amber-500/[0.03] to-transparent',
+  low: 'border-l-2 border-l-red-400/45 pl-3.5 bg-gradient-to-r from-red-500/[0.03] to-transparent',
+  not_found: 'border-l-2 border-l-red-400/45 pl-3.5 bg-gradient-to-r from-red-500/[0.03] to-transparent',
 }
 
 const INPUT_BASE = 'h-9 text-sm bg-white/5 border-white/15 text-white placeholder:text-white/30 focus:ring-emerald-500/50'

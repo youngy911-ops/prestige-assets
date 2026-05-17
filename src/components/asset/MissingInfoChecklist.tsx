@@ -12,12 +12,12 @@ export function MissingInfoChecklist({ checklist, onUpdate }: MissingInfoCheckli
   if (checklist.length === 0) return null
 
   return (
-    <Card className="bg-[var(--card)] border-white/10">
+    <Card className="bg-white/[0.02] border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
       <CardHeader className="pb-2">
-        <CardTitle className="text-base font-semibold text-white">Fields Still Needed</CardTitle>
+        <CardTitle className="text-[15px] font-bold tracking-tight text-white">Fields Still Needed</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col">
-        <p className="text-sm text-white/65 mb-4">
+        <p className="text-sm text-white/50 mb-4">
           Fill in above, or mark N/A to proceed.
         </p>
         <div className="flex flex-col divide-y divide-white/10">

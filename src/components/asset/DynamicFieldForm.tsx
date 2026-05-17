@@ -93,8 +93,9 @@ export function DynamicFieldForm({
           if (section && section !== lastSection) {
             lastSection = section
             sectionHeader = (
-              <div key={`section-${section}`} className="text-xs text-white/40 uppercase tracking-widest font-semibold pt-6 pb-2">
-                {section}
+              <div key={`section-${section}`} className="flex items-center gap-3 pt-6 pb-2">
+                <span className="text-xs text-white/40 uppercase tracking-widest font-semibold">{section}</span>
+                <div className="flex-1 h-px bg-white/[0.06]" />
               </div>
             )
           }

@@ -16,17 +16,17 @@ export function FieldsBlock({ fieldsText }: FieldsBlockProps) {
   }
 
   return (
-    <div className={`rounded-xl border overflow-hidden transition-all duration-300 ${
+    <div className={`rounded-2xl border overflow-hidden transition-all duration-300 ${
       copied
         ? 'border-emerald-500/50 bg-emerald-950/30 shadow-[0_0_0_1px_rgba(16,185,129,0.15)]'
         : 'border-white/[0.08] bg-white/[0.04]'
     }`}>
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
         <div className="flex items-center gap-2.5">
-          <ClipboardList className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+          <ClipboardList className="h-4 w-4 text-emerald-400 opacity-90 flex-shrink-0" />
           <div>
             <span className="text-sm font-semibold text-white">Salesforce Fields</span>
-            <span className="ml-2 text-[11px] font-medium text-emerald-400/70 uppercase tracking-wide">ready to paste</span>
+            <span className="ml-2 text-[11px] font-medium text-emerald-300/60 uppercase tracking-wide">ready to paste</span>
           </div>
         </div>
         <button
@@ -34,7 +34,7 @@ export function FieldsBlock({ fieldsText }: FieldsBlockProps) {
           onClick={handleCopy}
           className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all duration-200 font-medium ${
             copied
-              ? 'bg-emerald-500 text-white scale-95'
+              ? 'bg-emerald-500 text-white scale-[0.97] shadow-[0_0_12px_rgba(52,211,153,0.4)]'
               : 'bg-emerald-600 hover:bg-emerald-500 text-white'
           }`}
         >
@@ -42,7 +42,7 @@ export function FieldsBlock({ fieldsText }: FieldsBlockProps) {
           {copied ? 'Copied!' : 'Copy'}
         </button>
       </div>
-      <div className="text-sm whitespace-pre-wrap font-sans leading-relaxed px-4 py-3 text-white/80">{fieldsText}</div>
+      <div className="text-[13px] whitespace-pre-wrap font-sans leading-[1.9] px-4 py-3 text-white/80">{fieldsText}</div>
     </div>
   )
 }

@@ -71,8 +71,8 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-xl font-semibold text-white">Photos</h1>
-          <p className="text-sm text-white/65">
+          <h1 className="text-2xl font-bold tracking-tight text-white">Photos</h1>
+          <p className="text-sm font-medium text-emerald-400/80">
             {getAssetDisplayTitle(asset.asset_type, asset.asset_subtype)}
           </p>
         </div>

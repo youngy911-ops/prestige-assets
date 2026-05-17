@@ -114,15 +114,15 @@ export default function NewAssetPage() {
           <button
             type="button"
             onClick={handleBack}
-            className="text-white/65 hover:text-white transition-colors p-2 -ml-2"
+            className="text-white/65 hover:text-white transition-colors p-2 -ml-2 hover:bg-white/[0.06] rounded-xl"
             aria-label="Back"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
         )}
         <div>
-          <h1 className="text-xl font-semibold text-white">{heading}</h1>
-          <p className="text-white/65 text-sm mt-0.5">{subheading}</p>
+          <h1 className="text-2xl font-bold tracking-tight text-white">{heading}</h1>
+          <p className="text-white/55 text-sm mt-0.5">{subheading}</p>
         </div>
       </div>
 

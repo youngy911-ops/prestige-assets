@@ -52,7 +52,7 @@ describe('FieldRow confidence highlighting', () => {
       <FieldRowWrapper field={textField} confidence="low" />
     )
     const row = container.firstChild as HTMLElement
-    expect(row.className).toMatch(/border-l-red-500/)
+    expect(row.className).toMatch(/border-l-red-400/)
   })
 
   it('applies red border for not_found confidence', () => {
@@ -60,7 +60,7 @@ describe('FieldRow confidence highlighting', () => {
       <FieldRowWrapper field={textField} confidence="not_found" />
     )
     const row = container.firstChild as HTMLElement
-    expect(row.className).toMatch(/border-l-red-500/)
+    expect(row.className).toMatch(/border-l-red-400/)
   })
 })
 

@@ -68,14 +68,14 @@ export function ExtractionResultPanel({
 
       {/* Found fields */}
       {foundFields.length > 0 && (
-        <div className="flex flex-col divide-y divide-white/10 rounded-xl border border-white/[0.08] bg-white/[0.03] mb-4 overflow-hidden">
+        <div className="flex flex-col divide-y divide-white/10 rounded-2xl border border-white/[0.08] bg-white/[0.03] mb-4 overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.15)]">
           {foundFields.map(field => {
             const extracted = extractionResult[field.key]!
             const confidence: 'high' | 'medium' | 'low' | 'not_found' = extracted.confidence ?? 'not_found'
             return (
-              <div key={field.key} className="flex items-center justify-between px-4 py-3 gap-2">
+              <div key={field.key} className="flex items-center justify-between px-4 py-3.5 gap-2">
                 <span className="text-sm text-white/65 flex-1 min-w-0 truncate">{field.label}</span>
-                <span className="text-sm font-semibold text-white flex-shrink-0 mx-2 max-w-[140px] truncate text-right">
+                <span className="text-[14px] font-bold text-white flex-shrink-0 mx-2 max-w-[180px] truncate text-right">
                   {extracted.value}
                 </span>
                 <ConfidenceBadge level={confidence} />
@@ -98,7 +98,7 @@ export function ExtractionResultPanel({
             {notFoundFields.length} field{notFoundFields.length !== 1 ? 's' : ''} not found
           </button>
           {showNotFound && (
-            <div className="flex flex-col divide-y divide-white/[0.06] rounded-xl border border-white/[0.06] bg-white/[0.02] mt-2 overflow-hidden">
+            <div className="flex flex-col divide-y divide-white/[0.06] rounded-2xl border border-white/[0.06] bg-white/[0.02] mt-2 overflow-hidden">
               {notFoundFields.map(field => (
                 <div key={field.key} className="flex items-center justify-between px-4 py-2.5 gap-2">
                   <span className="text-sm text-white/35 flex-1 min-w-0 truncate">{field.label}</span>
@@ -115,7 +115,7 @@ export function ExtractionResultPanel({
         <button
           type="button"
           onClick={() => router.push(`/assets/${assetId}/review`)}
-          className="flex items-center justify-center w-full h-11 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-colors gap-1"
+          className="flex items-center justify-center w-full h-12 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[15px] transition-colors gap-1"
         >
           Proceed to Review
           <ChevronRight className="w-4 h-4" aria-hidden="true" />
@@ -123,7 +123,7 @@ export function ExtractionResultPanel({
         <button
           type="button"
           onClick={onRerun}
-          className="w-full text-sm text-white/65 hover:text-white text-center mt-2 py-1"
+          className="w-full text-sm text-white/50 hover:text-white/80 text-center mt-2 py-1.5 border border-white/[0.08] hover:border-white/[0.15] rounded-xl transition-all"
         >
           Re-run Extraction
         </button>

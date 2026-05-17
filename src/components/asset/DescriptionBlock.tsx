@@ -51,9 +51,9 @@ export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isReg
   }
 
   return (
-    <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
-        <span className="text-sm font-semibold text-white">Auction Description</span>
+    <div className="rounded-2xl border border-white/[0.10] bg-white/[0.03] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.08]">
+        <span className="text-sm font-bold text-white tracking-tight">Auction Description</span>
         <div className="flex items-center gap-2">
           {savedIndicator && (
             <span className="text-xs text-white/35 animate-in fade-in duration-200">Saved</span>
@@ -62,7 +62,7 @@ export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isReg
             type="button"
             onClick={handleRegenerate}
             disabled={isRegenerating}
-            className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white/80 transition-colors disabled:opacity-40 px-2 py-1"
+            className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white/80 border border-transparent hover:border-white/[0.10] hover:bg-white/[0.04] rounded-lg px-2.5 py-1.5 transition-all disabled:opacity-40"
           >
             {isRegenerating
               ? <Loader2 className="h-3 w-3 animate-spin" />
@@ -73,7 +73,7 @@ export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isReg
             type="button"
             onClick={handleCopy}
             disabled={isRegenerating}
-            className="inline-flex items-center gap-1.5 text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40 font-medium"
+            className="inline-flex items-center gap-1.5 text-xs bg-emerald-600/80 hover:bg-emerald-500 border border-emerald-500/30 hover:border-emerald-400/50 text-white px-3 py-1.5 rounded-lg transition-all font-semibold disabled:opacity-40"
           >
             {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
             {copied ? 'Copied!' : 'Copy'}
@@ -85,7 +85,7 @@ export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isReg
         onChange={handleChange}
         readOnly={isRegenerating}
         placeholder="Description will appear here once generated."
-        className="min-h-48 text-sm leading-loose font-sans resize-y border-0 rounded-none bg-transparent focus-visible:ring-0 px-4 py-3 text-white/90 placeholder:text-white/30"
+        className="min-h-52 text-[14px] leading-[1.8] font-sans resize-y border-0 rounded-none bg-transparent focus-visible:ring-0 px-4 py-4 text-white/90 placeholder:text-white/30"
         rows={10}
       />
     </div>
