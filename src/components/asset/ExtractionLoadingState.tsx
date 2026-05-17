@@ -89,16 +89,19 @@ export function ExtractionLoadingState({ assetType, onNavigateToAssets, onNaviga
   const startRef = useRef(Date.now())
 
   // Cycle status messages with fade
+  const stepIndexRef = useRef(0)
   useEffect(() => {
     const interval = setInterval(() => {
+      if (stepIndexRef.current >= STEPS.length - 1) return  // stay on last step
       setVisible(false)
       setTimeout(() => {
-        setStepIndex(i => (i + 1) % STEPS.length)
+        stepIndexRef.current += 1
+        setStepIndex(stepIndexRef.current)
         setVisible(true)
       }, FADE_DURATION)
     }, STEP_INTERVAL)
     return () => clearInterval(interval)
-  }, [])
+  }, [STEPS.length])
 
   // Elapsed time counter
   useEffect(() => {
