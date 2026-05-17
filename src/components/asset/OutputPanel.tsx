@@ -220,13 +220,13 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
 
           {/* Thumbnail strip */}
           {photoUrls.length > 1 && (
-            <div className="flex items-center gap-2 px-1">
+            <div className="flex items-center gap-2 px-1 overflow-x-auto pb-1 scrollbar-none">
               {photoUrls.slice(0, 5).map((url, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => setHeroIndex(i)}
-                  className={`relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 transition-all ${
+                  className={`relative w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 transition-all ${
                     i === heroIndex
                       ? 'ring-2 ring-emerald-500 ring-offset-1 ring-offset-background'
                       : 'opacity-60 hover:opacity-100'

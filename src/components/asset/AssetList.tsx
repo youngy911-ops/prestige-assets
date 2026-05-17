@@ -235,7 +235,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
 
       {/* Detect note */}
       {detectNote && (
-        <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm">
+        <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm font-medium">
           <Sparkles className="w-4 h-4 flex-shrink-0" />
           {detectNote}
         </div>
@@ -288,7 +288,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
         return parts.length > 0 ? (
           <div className="flex flex-wrap gap-1.5 mb-3">
             {parts.map((part, i) => (
-              <span key={i} className="text-xs text-white/40 bg-white/[0.04] border border-white/[0.06] rounded-full px-2.5 py-0.5">
+              <span key={i} className="text-xs text-white/45 bg-white/[0.04] border border-white/[0.08] rounded-full px-3 py-1 font-medium">
                 {part}
               </span>
             ))}
@@ -302,7 +302,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
           <button
             type="button"
             onClick={() => setChangingBranch(true)}
-            className="inline-flex items-center gap-1 text-sm text-white/65 hover:text-white transition-colors border border-white/[0.12] rounded-lg px-3 py-1.5"
+            className="inline-flex items-center gap-1 text-sm text-white/60 hover:text-white transition-colors border border-white/[0.14] rounded-xl px-3 py-1.5 bg-white/[0.03] hover:bg-white/[0.06]"
           >
             {branchLabel}
             <ChevronDown className="w-3.5 h-3.5" />
@@ -310,7 +310,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
           <button
             type="button"
             onClick={() => setSortNewest(v => !v)}
-            className="inline-flex items-center gap-1 text-sm text-white/50 hover:text-white/70 transition-colors border border-white/[0.12] rounded-lg px-2.5 py-1.5 min-h-[36px]"
+            className="inline-flex items-center gap-1 text-sm text-white/50 hover:text-white/70 transition-colors border border-white/[0.14] rounded-xl px-2.5 py-1.5 min-h-[36px]"
             title={sortNewest ? 'Sorted newest first' : 'Sorted oldest first'}
           >
             {sortNewest ? <ArrowDown className="w-3.5 h-3.5" /> : <ArrowUp className="w-3.5 h-3.5" />}

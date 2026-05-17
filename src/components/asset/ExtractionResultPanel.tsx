@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChevronRight, ChevronDown } from 'lucide-react'
+import { ChevronRight, ChevronDown, CheckCircle2 } from 'lucide-react'
 import { ConfidenceBadge } from '@/components/asset/ConfidenceBadge'
 import { getFieldsSortedBySfOrder } from '@/lib/schema-registry'
 import type { AssetType } from '@/lib/schema-registry/types'
@@ -34,6 +34,13 @@ export function ExtractionResultPanel({
 
   return (
     <div className="flex flex-col">
+      {/* Success indicator */}
+      <div className="flex items-center gap-2 mb-3">
+        <div className="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center flex-shrink-0">
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+        </div>
+        <span className="text-sm font-semibold text-emerald-300">Extraction complete</span>
+      </div>
       {/* Summary pill */}
       <div className="flex items-center gap-2 mb-4">
         <span className="text-sm text-white/50 font-medium">
@@ -76,7 +83,7 @@ export function ExtractionResultPanel({
             const confidence: 'high' | 'medium' | 'low' | 'not_found' = extracted.confidence ?? 'not_found'
             return (
               <div key={field.key} className="flex items-center justify-between px-4 py-3.5 gap-2">
-                <span className="text-sm text-white/65 flex-1 min-w-0 truncate">{field.label}</span>
+                <span className="text-sm text-white/60 flex-1 min-w-0 truncate font-medium">{field.label}</span>
                 <span className="text-[14px] font-bold text-white flex-shrink-0 mx-2 max-w-[180px] truncate text-right">
                   {extracted.value}
                 </span>

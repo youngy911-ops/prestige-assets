@@ -66,7 +66,7 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
   return (
     <Link
       href={href}
-      className="block group animate-in fade-in slide-in-from-bottom-2 duration-200 fill-mode-both rounded-2xl"
+      className="block group animate-in fade-in slide-in-from-bottom-1 duration-200 fill-mode-both rounded-2xl"
       style={animationDelay ? { animationDelay } : undefined}
     >
       <div className="bg-[var(--card)] rounded-2xl border border-white/[0.11] transition-all duration-200 group-hover:border-emerald-500/30 group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.4),0_0_0_1px_rgba(52,211,153,0.1)] active:scale-[0.98] flex flex-col overflow-hidden relative">
@@ -79,7 +79,7 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
         }`} />
         <div className="flex items-stretch pl-1">
           {/* Thumbnail */}
-          <div className="w-24 flex-shrink-0 self-stretch relative overflow-hidden bg-white/[0.06]">
+          <div className="w-[88px] flex-shrink-0 self-stretch relative overflow-hidden bg-white/[0.06]">
             {thumb_url ? (
               <>
                 <img
@@ -96,10 +96,15 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
                     </svg>
                   </div>
                 )}
+                {status === 'confirmed' && (
+                  <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                )}
               </>
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
-                <Camera className="w-6 h-6 text-white/15" />
+                <div className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center">
+                  <Camera className="w-5 h-5 text-white/20" />
+                </div>
               </div>
             )}
           </div>

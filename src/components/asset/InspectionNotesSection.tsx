@@ -123,9 +123,9 @@ export function InspectionNotesSection({
   }, [aiInput, aiSending, assetId, assetType])
 
   return (
-    <Card className="bg-[var(--card)] border-white/10">
+    <Card className="bg-white/[0.02] border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
       <CardHeader className="pb-2">
-        <CardTitle className="text-sm font-semibold text-white">Inspection Notes</CardTitle>
+        <CardTitle className="text-sm font-bold text-white">Inspection Notes</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
         {priorityFields.map((field) => (

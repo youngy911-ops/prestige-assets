@@ -285,7 +285,7 @@ export function PhotoUploadZone({
             onClick={handleAddPhotosClick}
             disabled={isUploading || atCap}
             size="sm"
-            className="bg-emerald-600 hover:bg-emerald-600/90 text-white h-9 disabled:opacity-40"
+            className="bg-emerald-500 hover:bg-emerald-400 text-white h-9 rounded-xl font-semibold shadow-[0_0_0_1px_rgba(52,211,153,0.2),0_4px_12px_rgba(52,211,153,0.1)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.4),0_6px_16px_rgba(52,211,153,0.2)] transition-all disabled:opacity-40"
           >
             <Camera className="w-4 h-4 mr-1.5" />
             {isUploading ? `${uploadProgress?.done ?? 0}/${uploadProgress?.total ?? '…'}` : 'Add Photos'}

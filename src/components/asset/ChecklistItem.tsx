@@ -47,7 +47,7 @@ export function ChecklistItem({ entry, onUpdate }: ChecklistItemProps) {
     <div className="flex flex-col gap-2 py-3">
       <div className="flex items-center gap-2">
         {isBlocking ? (
-          <Badge className="bg-red-900/40 text-red-300 border-red-700/40 text-xs">Required</Badge>
+          <Badge className="bg-red-500/15 text-red-300 border border-red-500/30 text-xs font-semibold">Required</Badge>
         ) : (
           <span className="text-xs text-white/50">Optional</span>
         )}
