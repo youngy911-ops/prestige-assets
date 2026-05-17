@@ -49,10 +49,7 @@ export async function POST(req: NextRequest) {
     const result = await generateObject({
     model: openai('gpt-4o'),
     schema: ClassifySchema,
-    messages: [
-      {
-        role: 'system',
-        content: `You are an expert heavy equipment and vehicle classifier for an Australian auction house.
+    system: `You are an expert heavy equipment and vehicle classifier for an Australian auction house.
 You will be shown one or more photos of the same asset — use ALL photos together to make the most accurate classification.
 
 Classify the asset into one of these types and subtypes:
@@ -108,7 +105,7 @@ Confidence guide:
 - "high": asset type and subtype clearly identifiable from photos
 - "medium": asset type clear but subtype uncertain, OR one good photo but partially obscured
 - "low": poor quality, heavily cropped, or ambiguous — but still return your best guess`,
-      },
+    messages: [
       {
         role: 'user',
         content: imageUrls.map(url => ({ type: 'image' as const, image: url })),
