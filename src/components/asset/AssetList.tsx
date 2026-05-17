@@ -144,7 +144,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <h1 className="text-xl font-semibold text-white">Assets</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-white">Assets</h1>
           {todayCount !== null && todayCount > 0 && (
             <div className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -172,7 +172,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             onClick={() => setShowBookInMenu(v => !v)}
             onMouseEnter={() => { router.prefetch('/assets/new'); router.prefetch('/assets/quick') }}
             disabled={uploadingFiles}
-            className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-3 py-2 rounded-xl transition-colors disabled:opacity-60"
+            className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-bold px-4 py-2 rounded-xl shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_2px_8px_rgba(52,211,153,0.15)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_4px_16px_rgba(52,211,153,0.25)] transition-all disabled:opacity-60"
           >
             {uploadingFiles ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
             {uploadingFiles ? 'Uploading…' : 'Book In'}
@@ -244,7 +244,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             placeholder="Search assets…"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-white/[0.10] bg-white/[0.03] text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-emerald-500/40 focus:ring-1 focus:ring-emerald-500/20 transition-all duration-200"
+            className="w-full pl-9 pr-9 py-2.5 rounded-2xl border border-white/[0.12] bg-white/[0.03] text-sm text-white placeholder:text-white/30 focus:outline-none focus:bg-white/[0.05] focus:border-emerald-500/40 focus:ring-1 focus:ring-emerald-500/20 transition-all duration-200"
           />
           {search && (
             <button
@@ -346,10 +346,10 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
               key={s}
               type="button"
               onClick={() => setStatusFilter(s)}
-              className={`text-xs font-medium rounded-full px-3 min-h-[36px] transition-colors ${
+              className={`text-xs font-medium rounded-full px-3 min-h-[36px] transition-all duration-150 ${
                 statusFilter === s
-                  ? s === 'extracting' ? 'bg-amber-500/80 text-white' : 'bg-emerald-600 text-white'
-                  : 'bg-white/[0.05] text-white/50 hover:text-white/70'
+                  ? s === 'extracting' ? 'bg-amber-500/80 text-white shadow-[0_0_12px_rgba(245,158,11,0.3)]' : 'bg-emerald-500 text-white shadow-[0_0_12px_rgba(52,211,153,0.3)]'
+                  : 'bg-white/[0.04] text-white/45 border border-white/[0.08] hover:bg-white/[0.07] hover:text-white/65'
               }`}
             >
               {s === 'all' ? 'All' : s === 'draft' ? 'Draft' : s === 'extracting' ? 'Extracting' : s === 'reviewed' ? 'Reviewed' : 'Confirmed'}

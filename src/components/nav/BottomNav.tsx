@@ -57,6 +57,7 @@ export function BottomNav() {
           <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center transition-colors', newActive ? 'bg-emerald-500' : 'bg-white/10')}>
             <Plus className="w-5 h-5 text-white" />
           </div>
+          <span className={cn('text-xs font-medium', newActive ? 'text-white' : 'text-white/40')}>New</span>
         </Link>
         <Link
           href="/assets/quick"

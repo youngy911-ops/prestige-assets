@@ -266,7 +266,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
           onClick={handleCopyAll}
           className={`w-full h-12 rounded-xl text-white font-semibold text-sm flex items-center justify-center gap-2.5 transition-all duration-200 ${
             allCopied
-              ? 'bg-emerald-500 scale-[0.98] shadow-[0_0_20px_rgba(16,185,129,0.35)]'
+              ? 'bg-emerald-500 scale-[0.98] shadow-[0_0_20px_rgba(16,185,129,0.35)] ring-2 ring-emerald-400/30 ring-offset-1 ring-offset-background'
               : 'bg-emerald-600 hover:bg-emerald-500 hover:shadow-[0_0_16px_rgba(16,185,129,0.2)]'
           }`}
         >

@@ -119,10 +119,17 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
       >
         {busy ? (
           <>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            {status === 'detecting'
-              ? `Detecting from ${photoCount} photo${photoCount !== 1 ? 's' : ''}…`
-              : 'Compressing…'}
+            {status === 'detecting' ? (
+              <>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+                {`Detecting from ${photoCount} photo${photoCount !== 1 ? 's' : ''}…`}
+              </>
+            ) : (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                {'Compressing…'}
+              </>
+            )}
           </>
         ) : (
           <>

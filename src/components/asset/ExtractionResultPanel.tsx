@@ -46,6 +46,21 @@ export function ExtractionResultPanel({
         )}
       </div>
 
+      {/* Confidence bar */}
+      {foundFields.length > 0 && (() => {
+        const high = foundFields.filter(f => extractionResult[f.key]?.confidence === 'high').length
+        const medium = foundFields.filter(f => extractionResult[f.key]?.confidence === 'medium').length
+        const low = foundFields.filter(f => extractionResult[f.key]?.confidence === 'low').length
+        const total = foundFields.length
+        return (
+          <div className="flex items-center gap-1 mb-4 h-1.5 rounded-full overflow-hidden">
+            {high > 0 && <div className="h-full bg-green-400 rounded-full" style={{ width: `${(high/total)*100}%` }} />}
+            {medium > 0 && <div className="h-full bg-amber-400 rounded-full" style={{ width: `${(medium/total)*100}%` }} />}
+            {low > 0 && <div className="h-full bg-red-400 rounded-full" style={{ width: `${(low/total)*100}%` }} />}
+          </div>
+        )
+      })()}
+
       {/* Found fields */}
       {foundFields.length > 0 && (
         <div className="flex flex-col divide-y divide-white/10 rounded-xl border border-white/[0.08] bg-white/[0.03] mb-4 overflow-hidden">

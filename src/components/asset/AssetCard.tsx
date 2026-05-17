@@ -74,13 +74,22 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
           {/* Thumbnail */}
           <div className="w-20 flex-shrink-0 self-stretch relative overflow-hidden bg-white/[0.03]">
             {thumb_url ? (
-              <img
-                src={thumb_url}
-                alt=""
-                role="presentation"
-                className="absolute inset-0 w-full h-full object-cover animate-in fade-in duration-300"
-                loading="lazy"
-              />
+              <>
+                <img
+                  src={thumb_url}
+                  alt=""
+                  role="presentation"
+                  className="absolute inset-0 w-full h-full object-cover animate-in fade-in duration-300"
+                  loading="lazy"
+                />
+                {status === 'confirmed' && thumb_url && (
+                  <div className="absolute bottom-1 left-1 w-4 h-4 rounded-full bg-emerald-500/90 flex items-center justify-center">
+                    <svg className="w-2.5 h-2.5 text-white" viewBox="0 0 10 10" fill="none">
+                      <path d="M2 5l2.5 2.5L8 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                )}
+              </>
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
                 <Camera className="w-6 h-6 text-white/15" />

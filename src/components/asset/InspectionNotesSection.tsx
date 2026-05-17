@@ -182,22 +182,26 @@ export function InspectionNotesSection({
         </div>
 
         {/* Ask AI input */}
+        <p className="text-xs text-white/30 flex items-center gap-1.5">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400/60" />
+          Tell the AI anything about this asset
+        </p>
         <div className="flex gap-2 pt-1">
           <input
             type="text"
             value={aiInput}
             onChange={(e) => setAiInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAiSubmit() } }}
-            placeholder="Tell the AI about this asset…"
+            placeholder="Describe this asset in plain English…"
             className="flex-1 h-8 rounded-md border border-white/10 bg-white/5 px-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-emerald-500/40"
           />
           <button
             type="button"
             onClick={handleAiSubmit}
             disabled={aiSending || !aiInput.trim()}
-            className="h-8 px-3 rounded-md text-xs text-white/60 hover:text-white border border-white/10 bg-white/5 hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="h-8 px-3 rounded-md text-xs font-medium text-white/70 hover:text-white border border-white/10 bg-emerald-600/20 hover:bg-emerald-600/40 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center gap-1"
           >
-            {aiSending ? '…' : '→'}
+            {aiSending ? '…' : <><span className="text-emerald-400">AI</span><span className="text-white/50">→</span></>}
           </button>
         </div>
       </CardContent>

@@ -26,7 +26,7 @@ export function StepIndicator({ current }: StepIndicatorProps) {
             <div className="flex flex-col items-center gap-1">
               <div className={cn(
                 'w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-semibold transition-all',
-                isDone  && 'bg-emerald-500 text-white',
+                isDone  && 'bg-emerald-500 text-white ring-2 ring-emerald-500/20 ring-offset-1 ring-offset-background',
                 isActive && 'bg-emerald-500/20 border border-emerald-500/60 text-emerald-400',
                 !isDone && !isActive && 'bg-white/[0.06] text-white/30'
               )}>
