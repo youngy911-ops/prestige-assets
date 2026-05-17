@@ -1,12 +1,12 @@
 import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-
-export const maxDuration = 60
 import { generateText, Output } from 'ai'
 import { openai } from '@ai-sdk/openai'
 import { buildExtractionSchema, buildSystemPrompt, buildUserPrompt } from '@/lib/ai/extraction-schema'
 import type { AssetType } from '@/lib/schema-registry/types'
 import { parseStructuredFields } from '@/lib/utils/parseStructuredFields'
+
+export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient()
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
 
   const userPrompt = buildUserPrompt(asset.inspection_notes, structuredFields)
 
-  // 7. Call GPT-4o via Vercel AI SDK — use generateText + Output.object() (not deprecated generateObject)
+  // 7. Call GPT-4o — generateText + Output.object for structured output with vision
   let output: Record<string, unknown> | undefined
   try {
     const result = await generateText({
