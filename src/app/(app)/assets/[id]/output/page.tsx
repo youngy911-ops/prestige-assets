@@ -97,6 +97,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
       {/* QR Code + actions */}
       <div className="mt-8 flex flex-col gap-3">
         <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`https://api.qrserver.com/v1/create-qr-code/?size=80x80&bgcolor=1a2e1a&color=ffffff&data=${encodeURIComponent(`https://${BRAND.domain}/assets/${assetId}/output`)}`}
             alt="QR code for this asset"
