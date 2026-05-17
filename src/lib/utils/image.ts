@@ -5,7 +5,7 @@
  * Processes a File before upload:
  * 1. Reads EXIF orientation with exifr.rotation()
  * 2. If rotation needed, redraws onto canvas to bake pixels correctly (strips EXIF)
- * 3. Compresses to max 1400px longest side at 0.82 quality (JPEG output)
+ * 3. Compresses to max 1200px longest side at 0.75 quality, 500KB cap (JPEG output)
  *
  * Falls back gracefully at every step — if EXIF read or canvas rotation fails,
  * skips that step and proceeds with compression only. Never throws.
