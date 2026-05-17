@@ -54,7 +54,7 @@ export function ReportClient({ assetId, title, fieldsText, description, photoUrl
         <div className="mb-6 pb-4 border-b border-white/10 print:border-gray-300">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs text-white/40 print:text-gray-500 uppercase tracking-widest font-semibold mb-1">{BRAND.reportHeader}</p>
+              <p className="text-xs text-white/35 print:text-gray-400 uppercase tracking-[0.15em] font-bold mb-1">{BRAND.reportHeader}</p>
               <h1 className="text-2xl font-bold text-white print:text-black">{title}</h1>
               {fieldsText && (() => {
                 const keyLines = fieldsText.split('\n')

@@ -153,8 +153,8 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
           )}
           {todayCount !== null && todayCount > 0 && (
             <div className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span className="text-xs font-medium text-emerald-400">{todayCount} today</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs font-medium text-emerald-400">{todayCount} booked today</span>
             </div>
           )}
         </div>

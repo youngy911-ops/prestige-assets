@@ -130,12 +130,12 @@ export function ExtractionLoadingState({ assetType, onNavigateToAssets, onNaviga
         {/* Spinning ring — primary */}
         <div
           className="absolute inset-0 rounded-full border-2 border-transparent border-t-emerald-400 border-r-emerald-400/40"
-          style={{ animation: 'spin 1.2s linear infinite' }}
+          style={{ animation: 'spin 1.0s linear infinite' }}
         />
         {/* Counter-spinning inner ring */}
         <div
           className="absolute inset-[6px] rounded-full border border-transparent border-b-emerald-300/50"
-          style={{ animation: 'spin 1.8s linear infinite reverse' }}
+          style={{ animation: 'spin 1.6s linear infinite reverse' }}
         />
         {/* Centre dot */}
         <div className="absolute inset-[10px] rounded-full bg-emerald-500/10 flex items-center justify-center">

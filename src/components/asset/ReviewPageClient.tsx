@@ -328,7 +328,7 @@ export function ReviewPageClient({
       />
 
       {/* Sticky CTA — fixed bar so it's always visible regardless of scroll position */}
-      <div className="fixed bottom-0 left-0 right-0 z-20 bg-black/60 backdrop-blur-xl border-t border-white/[0.08]"
+      <div className="fixed bottom-0 left-0 right-0 z-20 bg-black/60 backdrop-blur-xl border-t border-white/[0.12]"
         style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 8px)' }}>
         <div className="max-w-2xl mx-auto px-4 pt-3 pb-2 flex flex-col gap-2">
           {checklist.length > 0 && (() => {

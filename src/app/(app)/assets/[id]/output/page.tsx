@@ -72,7 +72,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
       <div className="mb-4">
         <Link
           href={`/assets/${assetId}/review`}
-          className="inline-flex items-center gap-1 text-sm text-white/65 hover:text-white mb-4"
+          className="inline-flex items-center gap-1 text-sm text-white/50 hover:text-white/80 mb-4"
         >
           <ChevronLeft className="h-4 w-4" />
           Review
