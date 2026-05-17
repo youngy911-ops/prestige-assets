@@ -5,16 +5,27 @@ import type { FieldDefinition, AssetType } from '@/lib/schema-registry/types'
 import type { ExtractionResult } from '@/lib/ai/extraction-schema'
 import type { ConfidenceLevel } from '@/components/asset/ConfidenceBadge'
 
-const VEHICLE_SECTIONS: { maxOrder: number; label: string }[] = [
-  { maxOrder: 9, label: 'Asset Information' },
-  { maxOrder: 19, label: 'Vehicle Specifications' },
-  { maxOrder: 27, label: 'Technical & Identification' },
-  { maxOrder: 30, label: 'Operational & Logistics' },
-  { maxOrder: 39, label: 'Damage & Condition' },
-]
+const SECTION_MAP: Partial<Record<string, { maxOrder: number; label: string }[]>> = {
+  vehicle: [
+    { maxOrder: 9,  label: 'Asset Information' },
+    { maxOrder: 19, label: 'Vehicle Specifications' },
+    { maxOrder: 27, label: 'Technical & Identification' },
+    { maxOrder: 30, label: 'Operational & Logistics' },
+    { maxOrder: 39, label: 'Damage & Condition' },
+  ],
+  truck: [
+    { maxOrder: 5,  label: 'Identification' },
+    { maxOrder: 14, label: 'Engine & Drivetrain' },
+    { maxOrder: 21, label: 'Registration & Body' },
+    { maxOrder: 28, label: 'Technical Specs' },
+    { maxOrder: 99, label: 'Weights & Extras' },
+  ],
+}
 
-function getVehicleSection(sfOrder: number): string | undefined {
-  for (const s of VEHICLE_SECTIONS) {
+function getSection(assetType: string, sfOrder: number): string | undefined {
+  const sections = SECTION_MAP[assetType]
+  if (!sections) return undefined
+  for (const s of sections) {
     if (sfOrder <= s.maxOrder) return s.label
   }
   return undefined
@@ -46,15 +57,15 @@ export function DynamicFieldForm({
   errors = {},
   assetType,
 }: DynamicFieldFormProps) {
-  const showSections = assetType === 'vehicle'
+  const showSections = assetType === 'vehicle' || assetType === 'truck'
   let lastSection: string | undefined
 
   return (
     <div className="flex flex-col divide-y divide-white/10">
       {fields.map(field => {
         let sectionHeader: React.ReactNode = null
-        if (showSections) {
-          const section = getVehicleSection(field.sfOrder)
+        if (showSections && assetType) {
+          const section = getSection(assetType, field.sfOrder)
           if (section && section !== lastSection) {
             lastSection = section
             sectionHeader = (
