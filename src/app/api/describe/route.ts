@@ -2019,19 +2019,34 @@ function toTitleCase(text: string): string {
     .join('\n')
 }
 
+function stripMarkdownArtifacts(text: string): string {
+  let cleaned = text.trim()
+  // Strip leading code fence (```plaintext, ```text, ``` etc.)
+  cleaned = cleaned.replace(/^```[a-zA-Z]*\r?\n/, '')
+  // Strip trailing code fence
+  cleaned = cleaned.replace(/\r?\n```$/, '')
+  // Strip leading *** or --- line (GPT-4o format markers like "***plaintext")
+  cleaned = cleaned.replace(/^\*{3,}[a-zA-Z]*\r?\n/, '')
+  cleaned = cleaned.replace(/^-{3,}\r?\n/, '')
+  // Strip leading "plaintext" if it appears alone on first line
+  cleaned = cleaned.replace(/^plaintext\r?\n/i, '')
+  return cleaned.trim()
+}
+
 function normalizeFooter(text: string, assetType: string, assetSubtype?: string | null): string {
   const isUntested = assetType === 'general_goods' || assetSubtype === 'attachments'
   const footer = isUntested
     ? 'Sold As Is, Untested.'
     : 'Sold As Is, Untested & Unregistered.'
+  // Strip ALL "sold as is" variants from the body — GPT-4o sometimes emits it mid-description
+  // and again at the end; we always add exactly one standardised footer
   const lines = text.trimEnd().split('\n')
-  const lastMeaningfulIdx = lines.findLastIndex((l: string) => l.trim().length > 0)
-  const trimmed = lines.slice(0, lastMeaningfulIdx + 1)
-  const last = trimmed[trimmed.length - 1]?.trim() ?? ''
-  if (last.toLowerCase().startsWith('sold as is')) {
-    trimmed.pop()
+  const bodyLines = lines.filter(l => !l.trim().toLowerCase().startsWith('sold as is'))
+  // Remove trailing blank lines from body
+  while (bodyLines.length > 0 && bodyLines[bodyLines.length - 1].trim() === '') {
+    bodyLines.pop()
   }
-  return [...trimmed, '', footer].join('\n')
+  return [...bodyLines, '', footer].join('\n')
 }
 
 function buildDescriptionUserPrompt(asset: {
@@ -2166,7 +2181,10 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'Description generation failed' }, { status: 502 })
   }
 
-  // 7. Guard against refusals/non-descriptions appearing as descriptions
+  // 7a. Strip markdown artifacts GPT-4o sometimes prepends (```plaintext, ***, etc.)
+  text = stripMarkdownArtifacts(text)
+
+  // 7b. Guard against refusals/non-descriptions appearing as descriptions
   const lower = text.toLowerCase()
   const isRefusal = lower.startsWith("i'm sorry") || lower.startsWith("i'm unable") || lower.startsWith("i cannot") || lower.startsWith("i can't") || lower.startsWith("i don't") || lower.startsWith("i am unable") || lower.startsWith("i am sorry")
   if (isRefusal) {
