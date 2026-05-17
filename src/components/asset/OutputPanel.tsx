@@ -253,8 +253,6 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
         </div>
         <div className="w-px h-4 bg-white/[0.08]" />
         <span className={`text-xs font-medium ${stats.confidenceColor}`}>{stats.confidenceLabel}</span>
-        <div className="w-px h-4 bg-white/[0.08]" />
-        <span className="text-xs font-medium text-emerald-400">Ready to paste</span>
       </div>
 
       {/* Copy All — one-click copy of fields + description for Salesforce */}

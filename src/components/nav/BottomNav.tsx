@@ -1,6 +1,7 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useState } from 'react'
 import { List, Plus, Zap, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { createClient } from '@/lib/supabase/client'
@@ -8,6 +9,7 @@ import { createClient } from '@/lib/supabase/client'
 export function BottomNav() {
   const pathname = usePathname()
   const router = useRouter()
+  const [confirmingLogout, setConfirmingLogout] = useState(false)
 
   // Hide nav on the report page — it has its own toolbar and print layout
   if (pathname.endsWith('/report')) return null
@@ -17,6 +19,11 @@ export function BottomNav() {
   const quickActive = pathname.startsWith('/assets/quick')
 
   async function handleLogout() {
+    if (!confirmingLogout) {
+      setConfirmingLogout(true)
+      setTimeout(() => setConfirmingLogout(false), 3000)
+      return
+    }
     const supabase = createClient()
     await supabase.auth.signOut()
     router.push('/login')
@@ -65,10 +72,13 @@ export function BottomNav() {
         <button
           type="button"
           onClick={handleLogout}
-          className="flex flex-col items-center gap-1 min-h-[44px] justify-center px-4 text-white/40 hover:text-white/70 transition-colors"
+          className={cn(
+            'flex flex-col items-center gap-1 min-h-[44px] justify-center px-4 transition-colors',
+            confirmingLogout ? 'text-red-400' : 'text-white/40 hover:text-white/70'
+          )}
         >
           <LogOut className="w-5 h-5" />
-          <span className="text-xs font-medium">Logout</span>
+          <span className="text-xs font-medium">{confirmingLogout ? 'Confirm?' : 'Logout'}</span>
         </button>
       </div>
     </nav>
