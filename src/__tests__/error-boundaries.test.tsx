@@ -28,9 +28,9 @@ describe('Error boundary content', () => {
     expect(content).toContain('Something went wrong')
   })
 
-  it('app error boundary links to /assets and /login', () => {
+  it('app error boundary links to / and /login', () => {
     const content = fs.readFileSync(appErrorPath, 'utf-8')
-    expect(content).toContain('href="/assets"')
+    expect(content).toContain('href="/"')
     expect(content).toContain('href="/login"')
   })
 
