@@ -121,10 +121,10 @@ describe('POST /api/describe', () => {
     expect(mockGenerateText).toHaveBeenCalledTimes(1)
     const callArgs = mockGenerateText.mock.calls[0][0]
     // System message is the DESCRIPTION_SYSTEM_PROMPT
-    expect(callArgs.messages[0].role).toBe('system')
-    expect(callArgs.messages[0].content).toContain('UNIVERSAL RULES')
+    expect(callArgs.system).toBeDefined()
+    expect(callArgs.system).toContain('UNIVERSAL RULES')
     // User message contains at least one image entry
-    const userContent = callArgs.messages[1].content
+    const userContent = callArgs.messages[0].content
     const imageEntries = userContent.filter((c: { type: string }) => c.type === 'image')
     expect(imageEntries.length).toBeGreaterThan(0)
   })
@@ -259,7 +259,7 @@ describe('POST /api/describe', () => {
     await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
 
     const callArgs = mockGenerateText.mock.calls[0][0]
-    expect(callArgs.messages[0].content).toContain('Values and measurements from inspection notes must appear verbatim')
+    expect(callArgs.system).toContain('Values and measurements from inspection notes must appear verbatim')
   })
 
   it('buildDescriptionUserPrompt splits into verbatim and freeform blocks', async () => {
@@ -302,7 +302,7 @@ describe('POST /api/describe', () => {
     await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
 
     const callArgs = mockGenerateText.mock.calls[0][0]
-    const userContent = callArgs.messages[1].content
+    const userContent = callArgs.messages[0].content
     const textEntry = userContent.find((c: { type: string }) => c.type === 'text')
     const promptText: string = textEntry.text
 
@@ -361,7 +361,7 @@ describe('POST /api/describe', () => {
     await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
 
     const callArgs = mockGenerateText.mock.calls[0][0]
-    const userContent = callArgs.messages[1].content
+    const userContent = callArgs.messages[0].content
     const textEntry = userContent.find((c: { type: string }) => c.type === 'text')
     const promptText: string = textEntry.text
 
@@ -411,7 +411,7 @@ describe('POST /api/describe', () => {
     await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
 
     const callArgs = mockGenerateText.mock.calls[0][0]
-    const userContent = callArgs.messages[1].content
+    const userContent = callArgs.messages[0].content
     const textEntry = userContent.find((c: { type: string }) => c.type === 'text')
     const promptText: string = textEntry.text
 
@@ -466,7 +466,7 @@ describe('POST /api/describe', () => {
     await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
 
     const callArgs = mockGenerateText.mock.calls[0][0]
-    const userContent = callArgs.messages[1].content
+    const userContent = callArgs.messages[0].content
     const textEntry = userContent.find((c: { type: string }) => c.type === 'text')
     const promptText: string = textEntry.text
 
@@ -524,7 +524,7 @@ describe('DESCRIPTION_SYSTEM_PROMPT — marine templates', () => {
     }) as Parameters<typeof POST>[0])
 
     const callArgs = mockGenerateText.mock.calls[0][0]
-    const systemContent: string = callArgs.messages[0].content
+    const systemContent: string = callArgs.system
     expect(systemContent).toContain('MARINE')
     expect(systemContent).toContain('LOA: XXft (Xm) | Beam: XXft (Xm) | Draft: XXft (Xm)')
     expect(systemContent).toContain('Hull material')
@@ -574,7 +574,7 @@ describe('DESCRIPTION_SYSTEM_PROMPT — marine templates', () => {
     }) as Parameters<typeof POST>[0])
 
     const callArgs = mockGenerateText.mock.calls[0][0]
-    const systemContent: string = callArgs.messages[0].content
+    const systemContent: string = callArgs.system
     expect(systemContent).toContain('PERSONAL WATERCRAFT')
     // PERSONAL WATERCRAFT section must be distinct — must appear AFTER the MARINE section
     const marineIdx = systemContent.indexOf('MARINE')
@@ -689,7 +689,7 @@ describe('DESCRIPTION_SYSTEM_PROMPT — truck and earthmoving templates (Phase 1
       return { update: () => ({ eq: () => ({ eq: () => Promise.resolve({ error: null }) }) }) }
     })
     await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
-    return mockGenerateText.mock.calls[0][0].messages[0].content as string
+    return mockGenerateText.mock.calls[0][0].system as string
   }
 
   // Truck templates
@@ -786,7 +786,7 @@ describe('DESCRIPTION_SYSTEM_PROMPT — TBC rule removed', () => {
       return { update: () => ({ eq: () => ({ eq: () => Promise.resolve({ error: null }) }) }) }
     })
     await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
-    const systemContent: string = mockGenerateText.mock.calls[0][0].messages[0].content
+    const systemContent: string = mockGenerateText.mock.calls[0][0].system
     // Must not contain the old TBC instruction
     expect(systemContent).not.toContain('replace it with TBC')
     expect(systemContent).not.toMatch(/\bTBC\b/)
@@ -813,7 +813,7 @@ async function getSystemContentP17(assetType: string, assetSubtype: string): Pro
     return { update: () => ({ eq: () => ({ eq: () => Promise.resolve({ error: null }) }) }) }
   })
   await POST(makeRequest({ assetId: 'asset-1' }) as Parameters<typeof POST>[0])
-  return mockGenerateText.mock.calls[0][0].messages[0].content as string
+  return mockGenerateText.mock.calls[0][0].system as string
 }
 
 // DESCR-01: Missing truck subtypes
