@@ -69,10 +69,10 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
       className="block group animate-in fade-in slide-in-from-bottom-2 duration-200 fill-mode-both rounded-2xl"
       style={animationDelay ? { animationDelay } : undefined}
     >
-      <div className="bg-white/[0.03] rounded-2xl border border-white/[0.07] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all duration-200 group-hover:bg-white/[0.06] group-hover:border-white/[0.13] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_20px_rgba(0,0,0,0.25)] active:scale-[0.98] flex flex-col overflow-hidden">
+      <div className="bg-[var(--card)] rounded-2xl border border-white/[0.11] transition-all duration-200 group-hover:border-white/[0.20] group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.4)] active:scale-[0.98] flex flex-col overflow-hidden">
         <div className="flex items-stretch">
           {/* Thumbnail */}
-          <div className="w-20 flex-shrink-0 self-stretch relative overflow-hidden bg-white/[0.03]">
+          <div className="w-24 flex-shrink-0 self-stretch relative overflow-hidden bg-white/[0.04]">
             {thumb_url ? (
               <>
                 <img
