@@ -16,7 +16,7 @@ export function ExtractionFailureState({ assetId, onRetry }: ExtractionFailureSt
         <button
           type="button"
           onClick={onRetry}
-          className="flex items-center justify-center w-full h-11 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-colors"
+          className="flex items-center justify-center w-full h-12 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-[15px] transition-all shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_4px_16px_rgba(52,211,153,0.15)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_8px_24px_rgba(52,211,153,0.25)]"
         >
           Try Again
         </button>

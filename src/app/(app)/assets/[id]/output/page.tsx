@@ -125,13 +125,13 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
         />
         <Link
           href="/"
-          className="flex items-center justify-center w-full rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white h-11 px-4 text-sm font-semibold transition-colors"
+          className="flex items-center justify-center w-full rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-white h-12 px-4 text-[15px] font-bold transition-all shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_4px_16px_rgba(52,211,153,0.15)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_8px_24px_rgba(52,211,153,0.25)]"
         >
           Back to Assets
         </Link>
         <Link
           href="/assets/new"
-          className="flex items-center justify-center w-full rounded-xl border border-white/15 hover:border-white/30 text-white/70 hover:text-white h-11 px-4 text-sm font-medium transition-colors"
+          className="flex items-center justify-center w-full rounded-2xl border border-white/[0.15] hover:border-white/[0.28] text-white/65 hover:text-white h-12 px-4 text-sm font-semibold transition-all hover:bg-white/[0.04]"
         >
           Book In New Asset
         </Link>
