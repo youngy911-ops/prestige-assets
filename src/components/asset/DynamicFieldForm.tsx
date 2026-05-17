@@ -27,6 +27,12 @@ const SECTION_MAP: Partial<Record<string, { maxOrder: number; label: string }[]>
     { maxOrder: 28, label: 'Configuration' },
     { maxOrder: 99, label: 'Weights & Specs' },
   ],
+  forklift: [
+    { maxOrder: 5,  label: 'Identification & Powertrain' },
+    { maxOrder: 12, label: 'Capacity & Details' },
+    { maxOrder: 19, label: 'Specifications' },
+    { maxOrder: 99, label: 'Mast & Type' },
+  ],
 }
 
 function getSection(assetType: string, sfOrder: number): string | undefined {
@@ -64,7 +70,7 @@ export function DynamicFieldForm({
   errors = {},
   assetType,
 }: DynamicFieldFormProps) {
-  const showSections = assetType === 'vehicle' || assetType === 'truck' || assetType === 'earthmoving'
+  const showSections = assetType != null && assetType in SECTION_MAP
   let lastSection: string | undefined
 
   return (
