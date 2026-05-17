@@ -402,8 +402,8 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
           <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5">
             <Package className="w-8 h-8 text-emerald-400" />
           </div>
-          <h2 className="text-white text-lg font-semibold">Ready to book in</h2>
-          <p className="text-white/50 text-sm mt-2 max-w-[280px]">Snap photos, details extracted automatically, paste to Salesforce.</p>
+          <h2 className="text-white text-xl font-bold tracking-tight">Ready to book in</h2>
+          <p className="text-white/50 text-sm mt-2 max-w-[280px]">Upload photos → AI extracts all details → paste to Salesforce. 60 seconds per asset.</p>
           <div className="flex items-center gap-3 mt-6">
             <Link
               href="/assets/new"
