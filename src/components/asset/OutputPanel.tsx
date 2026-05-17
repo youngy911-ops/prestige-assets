@@ -306,11 +306,17 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
 
       {/* Description block — loading/ready/error states */}
       {descState === 'loading' && (
-        <div className="flex flex-col items-center gap-3 py-8">
-          <div className="relative w-8 h-8">
-            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-emerald-400 animate-spin" />
+        <div className="flex flex-col items-center gap-4 py-10">
+          <div className="relative w-12 h-12">
+            <div className="absolute -inset-1 rounded-full bg-emerald-500/10 animate-pulse" />
+            <div className="absolute inset-0 rounded-full border-2 border-emerald-500/20" />
+            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-emerald-400 border-r-emerald-400/40 animate-spin" style={{ animationDuration: '1.2s' }} />
+            <div className="absolute inset-[6px] rounded-full border border-transparent border-b-emerald-300/40 animate-spin" style={{ animationDuration: '1.8s', animationDirection: 'reverse' }} />
           </div>
-          <p className="text-sm text-white/50">Writing description…</p>
+          <div className="text-center">
+            <p className="text-sm font-medium text-white/70">Writing auction description…</p>
+            <p className="text-xs text-white/35 mt-1">Usually 15–20 seconds</p>
+          </div>
           {slowWarning && (
             <p className="text-sm text-amber-400/80">Taking longer than expected…</p>
           )}
