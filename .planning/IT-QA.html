@@ -157,8 +157,8 @@ h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
 
   <div class="qa-item">
     <div class="qa-q">"What's the uptime / SLA?"</div>
-    <div class="qa-a">The app is hosted on a dedicated server with PM2 for process management and Nginx as the reverse proxy, with SSL via Let's Encrypt. The database runs on Supabase (99.9% uptime SLA), hosted in Sydney. The server restarts the app automatically on reboot or crash.
-    <div class="simple">Simple version: "Runs on our own server, restarts itself automatically if anything goes wrong."</div></div>
+    <div class="qa-a">The app is hosted on a dedicated DigitalOcean server with PM2 for process management and Nginx as the reverse proxy. SSL is handled by Cloudflare — all traffic is HTTPS, certificates are managed automatically with no manual renewal. The database runs on Supabase (99.9% uptime SLA), hosted in Sydney. The server restarts the app automatically on reboot or crash.
+    <div class="simple">Simple version: "Runs on our own server, restarts itself automatically if anything goes wrong. SSL is handled automatically by Cloudflare."</div></div>
   </div>
 
   <div class="qa-item">
@@ -225,6 +225,29 @@ h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
   <div class="qa-item">
     <div class="qa-q">Technical question you don't know</div>
     <div class="qa-a">"Good question — let me get back to you on that in writing. Can I send you the details after the meeting?"</div>
+  </div>
+</div>
+
+<!-- ADDITIONAL QUESTIONS -->
+<div class="section">
+  <div class="section-header auth" style="background:#2a1a4a;">AI &amp; Technical</div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What AI model does it use?"</div>
+    <div class="qa-a">GPT-4o from OpenAI — their current best model for vision and text. If Slattery has a preference for a different provider (Azure OpenAI, Google, Anthropic), it's a straightforward swap — the app is built to be provider-agnostic. The core workflow doesn't change regardless of which AI is underneath.
+    <div class="simple">Simple version: "The latest OpenAI model. We can swap to a different provider if needed — the app is set up for that."</div></div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What's the URL and who can access it?"</div>
+    <div class="qa-a">The app is live at <strong>assetbookintool.com</strong>. Access is login-gated — you need a username and password to do anything. There's no public-facing data, no unauthenticated routes. User accounts are created manually by me, so only approved staff can log in.
+    <div class="simple">Simple version: "Invite-only login. I control who gets access."</div></div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Can we use our own domain?"</div>
+    <div class="qa-a">Yes. It's a simple DNS change — point slattery.com.au/bookin or any subdomain to the server, and it works. We can also move the whole app behind the Slattery domain if IT prefers. No code changes required.
+    <div class="simple">Simple version: "Yes, a 5-minute DNS change."</div></div>
   </div>
 </div>
 
