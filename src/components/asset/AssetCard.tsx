@@ -104,7 +104,7 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
             <p className={`text-[16px] font-semibold leading-snug truncate ${subtitle ? 'text-white' : 'text-white/25 font-normal'}`}>
               {subtitle ?? displayName}
             </p>
-            <p className="text-xs text-white/35 mt-1">{relativeTime(updated_at)}</p>
+            <p className="text-xs text-white/35 mt-1" suppressHydrationWarning>{relativeTime(updated_at)}</p>
             <button
               type="button"
               onClick={handleDelete}
