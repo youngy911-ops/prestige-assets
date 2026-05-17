@@ -124,13 +124,13 @@ describe('InspectionNotesSection', () => {
 // ─── ExtractionTriggerState ─────────────────────────────────────────────────
 
 describe('ExtractionTriggerState', () => {
-  it('renders "Extract Details" button and "Skip to Manual Entry" link when hasPhotos=true', async () => {
+  it('renders "Extract Details from Photos" button and "Skip to Manual Entry" link when hasPhotos=true', async () => {
     const { ExtractionTriggerState } = await import('@/components/asset/ExtractionTriggerState')
     const onTrigger = vi.fn()
     render(
       <ExtractionTriggerState assetId="asset-1" hasPhotos={true} onTrigger={onTrigger} />
     )
-    expect(screen.getByText('Extract Details')).toBeTruthy()
+    expect(screen.getByText('Extract Details from Photos')).toBeTruthy()
     expect(screen.getByText('Skip to Manual Entry')).toBeTruthy()
   })
 

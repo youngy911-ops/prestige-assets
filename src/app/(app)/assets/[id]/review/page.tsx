@@ -74,7 +74,7 @@ export default async function ReviewPage({ params }: ReviewPageProps) {
           </p>
         </div>
       </div>
-      {asset.status === 'draft' && <StepIndicator current="review" />}
+      <StepIndicator current="review" />
 
       <ReviewPageClient
         assetId={assetId}

@@ -56,6 +56,16 @@ export function ReportClient({ assetId, title, fieldsText, description, photoUrl
             <div>
               <p className="text-xs text-white/40 print:text-gray-500 uppercase tracking-widest font-semibold mb-1">{BRAND.reportHeader}</p>
               <h1 className="text-2xl font-bold text-white print:text-black">{title}</h1>
+              {fieldsText && (() => {
+                const keyLines = fieldsText.split('\n')
+                  .filter(l => l.includes(': ') && !l.endsWith(': '))
+                  .slice(0, 3)
+                return keyLines.length > 0 ? (
+                  <p className="text-sm text-white/60 print:text-gray-600 mt-1">
+                    {keyLines.map(l => l.split(': ').slice(1).join(': ')).filter(Boolean).join(' · ')}
+                  </p>
+                ) : null
+              })()}
             </div>
             <img
               src={`https://api.qrserver.com/v1/create-qr-code/?size=64x64&bgcolor=ffffff&color=000000&data=${encodeURIComponent(`https://${BRAND.domain}/assets/${assetId}/output`)}`}
@@ -67,16 +77,27 @@ export function ReportClient({ assetId, title, fieldsText, description, photoUrl
           </div>
         </div>
 
-        {/* Photos */}
+        {/* Hero photo */}
         {photoUrls.length > 0 && (
+          <div className="mb-5">
+            <img
+              src={photoUrls[0]}
+              alt="Cover photo"
+              className="w-full rounded-xl object-cover max-h-72 print:rounded print:max-h-64"
+            />
+          </div>
+        )}
+
+        {/* Remaining photos grid */}
+        {photoUrls.length > 1 && (
           <div className="mb-6">
             <h2 className="text-xs font-semibold text-white/40 print:text-gray-500 uppercase tracking-widest mb-3">Photos</h2>
             <div className="grid grid-cols-3 gap-2 print:grid-cols-4">
-              {photoUrls.map((url, i) => (
+              {photoUrls.slice(1).map((url, i) => (
                 <img
-                  key={i}
+                  key={i + 1}
                   src={url}
-                  alt={`Photo ${i + 1}`}
+                  alt={`Photo ${i + 2}`}
                   loading="lazy"
                   className="w-full aspect-square object-cover rounded-lg print:rounded"
                 />
@@ -119,6 +140,10 @@ export function ReportClient({ assetId, title, fieldsText, description, photoUrl
         @media print {
           body { background: white !important; color: black !important; }
           .print\\:hidden { display: none !important; }
+          @page { margin: 15mm; }
+          img { break-inside: avoid; }
+          pre { break-inside: avoid; }
+          h2 { break-after: avoid; }
         }
       `}</style>
     </>

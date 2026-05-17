@@ -163,7 +163,7 @@ describe('ExtractionPageClient', () => {
         hasPhotos={true}
       />
     )
-    expect(screen.getByText('Extract Details')).toBeTruthy()
+    expect(screen.getByText('Extract Details from Photos')).toBeTruthy()
   })
 
   it('shows ExtractionResultPanel when initialExtractionResult is provided', async () => {

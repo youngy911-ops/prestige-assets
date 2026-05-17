@@ -280,7 +280,13 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             return `${count} ${count !== 1 ? plural : singular}`
           })
         return parts.length > 0 ? (
-          <p className="text-xs text-white/30 mb-3">{parts.join(' \u00b7 ')}</p>
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {parts.map((part, i) => (
+              <span key={i} className="text-xs text-white/40 bg-white/[0.04] border border-white/[0.06] rounded-full px-2.5 py-0.5">
+                {part}
+              </span>
+            ))}
+          </div>
         ) : null
       })()}
 

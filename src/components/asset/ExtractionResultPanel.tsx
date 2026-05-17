@@ -53,10 +53,15 @@ export function ExtractionResultPanel({
         const low = foundFields.filter(f => extractionResult[f.key]?.confidence === 'low').length
         const total = foundFields.length
         return (
-          <div className="flex items-center gap-1 mb-4 h-1.5 rounded-full overflow-hidden">
-            {high > 0 && <div className="h-full bg-green-400 rounded-full" style={{ width: `${(high/total)*100}%` }} />}
-            {medium > 0 && <div className="h-full bg-amber-400 rounded-full" style={{ width: `${(medium/total)*100}%` }} />}
-            {low > 0 && <div className="h-full bg-red-400 rounded-full" style={{ width: `${(low/total)*100}%` }} />}
+          <div className="flex items-center gap-1.5 mb-4">
+            <div className="flex-1 flex h-1.5 rounded-full overflow-hidden gap-px bg-white/[0.05]">
+              {high > 0 && <div className="h-full bg-emerald-400 rounded-full" style={{ width: `${(high/total)*100}%` }} />}
+              {medium > 0 && <div className="h-full bg-amber-400 rounded-full" style={{ width: `${(medium/total)*100}%` }} />}
+              {low > 0 && <div className="h-full bg-red-400/70 rounded-full" style={{ width: `${(low/total)*100}%` }} />}
+            </div>
+            <span className="text-xs text-white/35 flex-shrink-0 tabular-nums">
+              {high} from photo · {medium} estimated
+            </span>
           </div>
         )
       })()}

@@ -198,7 +198,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
       {photoUrls.length > 0 && (
         <div className="flex flex-col gap-3">
           {/* Hero photo */}
-          <div className="relative rounded-xl overflow-hidden border border-white/[0.08]">
+          <div className="relative rounded-2xl overflow-hidden border border-white/[0.08]">
             <div className="aspect-[4/3]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -207,10 +207,11 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
+              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent pointer-events-none rounded-b-2xl" />
             </div>
             {/* Photo count badge */}
             {photoUrls.length > 1 && (
-              <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full">
+              <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full">
                 <Camera className="h-3 w-3" />
                 {heroIndex + 1} of {photoUrls.length}
               </div>
@@ -264,10 +265,10 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
         <button
           type="button"
           onClick={handleCopyAll}
-          className={`w-full h-12 rounded-xl text-white font-semibold text-sm flex items-center justify-center gap-2.5 transition-all duration-200 ${
+          className={`w-full h-14 rounded-2xl text-white text-[15px] font-bold flex items-center justify-center gap-2.5 transition-all duration-200 ${
             allCopied
-              ? 'bg-emerald-500 scale-[0.98] shadow-[0_0_20px_rgba(16,185,129,0.35)] ring-2 ring-emerald-400/30 ring-offset-1 ring-offset-background'
-              : 'bg-emerald-600 hover:bg-emerald-500 hover:shadow-[0_0_16px_rgba(16,185,129,0.2)]'
+              ? 'bg-emerald-400 scale-[0.99] shadow-[0_0_0_1px_rgba(52,211,153,0.6),0_0_32px_rgba(52,211,153,0.4)]'
+              : 'bg-emerald-500 hover:bg-emerald-400 shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_4px_24px_rgba(52,211,153,0.2)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_8px_32px_rgba(52,211,153,0.3)]'
           }`}
         >
           {allCopied ? <Check className="h-5 w-5" /> : <Copy className="h-4 w-4" />}

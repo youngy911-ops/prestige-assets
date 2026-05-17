@@ -10,6 +10,7 @@ import { DeleteAssetButton } from '@/components/asset/DeleteAssetButton'
 import { SalesforcePushButton } from '@/components/asset/SalesforcePushButton'
 import { getAssetDisplayTitle } from '@/lib/schema-registry'
 import type { AssetType } from '@/lib/schema-registry/types'
+import { ShareLinkButton } from '@/components/asset/ShareLinkButton'
 
 export default async function OutputPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: assetId } = await params
@@ -81,7 +82,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
           {getAssetDisplayTitle(asset.asset_type, asset.asset_subtype)}
         </p>
       </div>
-      {asset.status === 'draft' && <StepIndicator current="output" />}
+      <StepIndicator current="output" />
 
       {/* Output blocks */}
       <OutputPanel
@@ -114,6 +115,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
             >
               View condition report →
             </Link>
+            <ShareLinkButton url={`https://${BRAND.domain}/assets/${assetId}/output`} />
           </div>
         </div>
         <SalesforcePushButton

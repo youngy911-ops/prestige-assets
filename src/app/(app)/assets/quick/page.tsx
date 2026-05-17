@@ -248,7 +248,7 @@ export default function QuickBookPage() {
           >
             <Images className="w-4 h-4 text-emerald-400 flex-shrink-0" />
             <span className="text-sm font-medium">Upload from files</span>
-            <span className="text-xs text-white/35 ml-1">— plate, hours, body = 1 record</span>
+            <span className="text-xs text-white/35 ml-1">— multiple photos, one record</span>
           </button>
 
           {error && <p className="text-xs text-red-400 text-center mt-1">{error}</p>}

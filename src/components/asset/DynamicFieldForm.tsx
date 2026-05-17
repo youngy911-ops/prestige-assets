@@ -33,6 +33,17 @@ const SECTION_MAP: Partial<Record<string, { maxOrder: number; label: string }[]>
     { maxOrder: 19, label: 'Specifications' },
     { maxOrder: 99, label: 'Mast & Type' },
   ],
+  caravan: [
+    { maxOrder: 9,  label: 'Identification' },
+    { maxOrder: 19, label: 'Dimensions & Specs' },
+    { maxOrder: 99, label: 'Facilities & Extras' },
+  ],
+  marine: [
+    { maxOrder: 7,  label: 'Identification' },
+    { maxOrder: 14, label: 'Engine & Performance' },
+    { maxOrder: 20, label: 'Hull & Dimensions' },
+    { maxOrder: 99, label: 'Equipment & Extras' },
+  ],
 }
 
 function getSection(assetType: string, sfOrder: number): string | undefined {

@@ -266,6 +266,27 @@ export function ReviewPageClient({
       <div className="fixed bottom-0 left-0 right-0 z-20 bg-black/60 backdrop-blur-xl border-t border-white/[0.08]"
         style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 8px)' }}>
         <div className="max-w-2xl mx-auto px-4 pt-3 pb-2 flex flex-col gap-2">
+          {checklist.length > 0 && (() => {
+            const done = checklist.filter(e => e.status !== 'flagged').length
+            const total = checklist.length
+            if (done >= total) return (
+              <div className="flex items-center gap-1.5 mb-1">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="text-xs text-emerald-400">All fields complete</span>
+              </div>
+            )
+            return (
+              <div className="flex items-center gap-2 mb-1">
+                <div className="flex-1 h-1 rounded-full bg-white/10 overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-emerald-500/60 transition-all duration-500"
+                    style={{ width: `${(done / total) * 100}%` }}
+                  />
+                </div>
+                <span className="text-xs text-white/40 tabular-nums flex-shrink-0">{done}/{total}</span>
+              </div>
+            )
+          })()}
           {saveError && (
             <p role="alert" className="text-sm text-red-400 text-center">{saveError}</p>
           )}

@@ -107,7 +107,7 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
       )}
 
       {/* Photo guide for vehicles with fewer than 6 photos */}
-      {asset.asset_type === 'vehicle' && photosWithUrls.length < 6 && (
+      {asset.asset_type === 'vehicle' && photosWithUrls.length < 10 && (
         <VehiclePhotoGuide />
       )}
 

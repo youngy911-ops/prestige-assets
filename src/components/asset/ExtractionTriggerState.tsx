@@ -29,7 +29,7 @@ export function ExtractionTriggerState({ assetId, hasPhotos, onTrigger }: Extrac
         onClick={onTrigger}
         className="flex items-center justify-center w-full h-11 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition-colors"
       >
-        Extract Details
+        Extract Details from Photos
       </button>
       <a
         href={`/assets/${assetId}/review`}
