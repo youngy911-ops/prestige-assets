@@ -44,6 +44,7 @@ export function PhotoUploadZone({
   const [uploadProgress, setUploadProgress] = useState<{ done: number; total: number } | null>(null)
   const [isPickingHero, setIsPickingHero] = useState(false)
   const [heroPickResult, setHeroPickResult] = useState<'updated' | 'already-best' | null>(null)
+  const [isDragOver, setIsDragOver] = useState(false)
   const [qualityWarnings, setQualityWarnings] = useState<Map<string, string[]>>(new Map())
   const fileInputRef = useRef<HTMLInputElement>(null)
   const supabase = createClient()
@@ -201,10 +202,37 @@ export function PhotoUploadZone({
     setTimeout(() => setHeroPickResult(null), 3000)
   }
 
+  function handleDragOver(e: React.DragEvent) {
+    e.preventDefault()
+    if (!isUploading && !atCap) setIsDragOver(true)
+  }
+  function handleDragLeave(e: React.DragEvent) {
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) setIsDragOver(false)
+  }
+  function handleDrop(e: React.DragEvent) {
+    e.preventDefault()
+    setIsDragOver(false)
+    if (isUploading || atCap) return
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'))
+    if (files.length > 0) {
+      const fakeEvent = { target: { files: files as unknown as FileList, value: '' }, currentTarget: { files: files as unknown as FileList } } as unknown as React.ChangeEvent<HTMLInputElement>
+      handleFilesSelected(fakeEvent)
+    }
+  }
+
   // Empty state
   if (photos.length === 0 && uploadingIds.size === 0) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 py-12 px-4">
+      <div
+        className={`flex flex-col items-center justify-center gap-4 py-16 px-4 rounded-2xl border-2 border-dashed transition-all duration-200 ${
+          isDragOver
+            ? 'border-emerald-400/60 bg-emerald-500/10 scale-[1.01]'
+            : 'border-white/[0.10] bg-white/[0.02] hover:border-emerald-500/30 hover:bg-emerald-500/5'
+        }`}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
         {/* Hidden file input */}
         <input
           ref={fileInputRef}
@@ -217,22 +245,24 @@ export function PhotoUploadZone({
           disabled={isUploading || atCap}
         />
 
-        <div className="w-20 h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-2">
-          <Camera className="w-10 h-10 text-emerald-400/70" />
+        <div className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-2 transition-all duration-200 ${isDragOver ? 'bg-emerald-500/20 border-emerald-500/40' : 'bg-emerald-500/10 border-emerald-500/20'} border`}>
+          <Camera className={`w-10 h-10 transition-colors ${isDragOver ? 'text-emerald-300' : 'text-emerald-400/70'}`} />
         </div>
         <div className="text-center">
-          <p className="text-2xl font-bold tracking-tight text-white leading-tight">No photos yet</p>
+          <p className="text-2xl font-bold tracking-tight text-white leading-tight">
+            {isDragOver ? 'Drop to upload' : 'No photos yet'}
+          </p>
           <p className="text-sm text-white/50 mt-1">
-            Add photos from your camera roll or file system.
+            {isDragOver ? 'Release to add photos' : 'Drag photos here, or click to select files'}
           </p>
         </div>
         <Button
           onClick={handleAddPhotosClick}
           disabled={isUploading || atCap}
-          className="w-full max-w-xs bg-emerald-600 hover:bg-emerald-500 shadow-[0_0_0_1px_rgba(52,211,153,0.2),0_4px_16px_rgba(52,211,153,0.1)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.4),0_8px_24px_rgba(52,211,153,0.2)] transition-all h-12 rounded-2xl font-semibold disabled:opacity-40"
+          className="w-full max-w-xs bg-emerald-500 hover:bg-emerald-400 shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_4px_16px_rgba(52,211,153,0.15)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_8px_24px_rgba(52,211,153,0.25)] transition-all h-12 rounded-2xl font-bold disabled:opacity-40 text-[15px]"
         >
           <Camera className="w-4 h-4 mr-2" />
-          Add Photos
+          Select Photos
         </Button>
 
         {/* Upload errors */}
@@ -252,7 +282,12 @@ export function PhotoUploadZone({
 
   // Photos present state
   return (
-    <div className="space-y-4">
+    <div
+      className="space-y-4"
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
       {/* Header row */}
       <div className="flex items-center justify-between">
         <div>
