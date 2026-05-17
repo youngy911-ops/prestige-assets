@@ -1,10 +1,11 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
+import { Sparkles } from 'lucide-react'
 import { DynamicFieldForm } from '@/components/asset/DynamicFieldForm'
 import { MissingInfoChecklist } from '@/components/asset/MissingInfoChecklist'
 import { InspectionNotesSection } from '@/components/asset/InspectionNotesSection'
@@ -58,6 +59,38 @@ export function ReviewPageClient({
     resolver: zodResolver(schema) as any,
     defaultValues: buildDefaultValues(fields, initialExtractionResult, savedFields, assetType),
   })
+
+  // AI field input state
+  const [aiInput, setAiInput] = useState('')
+  const [aiSending, setAiSending] = useState(false)
+  const [aiResult, setAiResult] = useState<{ count: number; error?: boolean } | null>(null)
+  const aiInputRef = useRef<HTMLInputElement>(null)
+
+  async function handleAiFields() {
+    const msg = aiInput.trim()
+    if (!msg || aiSending) return
+    setAiSending(true)
+    setAiResult(null)
+    try {
+      const res = await fetch('/api/ai-fields', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ assetId, message: msg, assetType }),
+      })
+      if (!res.ok) throw new Error('Failed')
+      const data = await res.json()
+      const updates: { key: string; value: string }[] = data.fields ?? []
+      updates.forEach(({ key, value }) => setValue(key as keyof ReviewFormValues, value, { shouldDirty: true }))
+      setAiInput('')
+      setAiResult({ count: updates.length })
+      setTimeout(() => setAiResult(null), 3000)
+    } catch {
+      setAiResult({ count: 0, error: true })
+      setTimeout(() => setAiResult(null), 3000)
+    } finally {
+      setAiSending(false)
+    }
+  }
 
   // Only watch fields the checklist cares about — avoids re-rendering on every keystroke
   const checklistFieldKeys = fields
@@ -242,6 +275,38 @@ export function ReviewPageClient({
           </div>
         </div>
       )}
+
+      {/* AI field fill — type anything in plain English to fill fields instantly */}
+      <div className="mb-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-3">
+        <p className="text-xs text-white/40 flex items-center gap-1.5 mb-2">
+          <Sparkles className="w-3 h-3 text-emerald-400/70 flex-shrink-0" />
+          Tell the AI — it fills the fields below automatically
+        </p>
+        <div className="flex gap-2">
+          <input
+            ref={aiInputRef}
+            type="text"
+            value={aiInput}
+            onChange={e => setAiInput(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleAiFields() } }}
+            placeholder="e.g. no keys, purple, 80000km, runs well"
+            className="flex-1 h-9 rounded-xl border border-white/[0.12] bg-white/[0.05] px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-emerald-500/40 focus:border-emerald-500/40 transition-all"
+          />
+          <button
+            type="button"
+            onClick={handleAiFields}
+            disabled={aiSending || !aiInput.trim()}
+            className="h-9 px-4 rounded-xl text-xs font-semibold text-emerald-200 bg-emerald-600/70 hover:bg-emerald-500/80 border border-emerald-500/40 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex-shrink-0"
+          >
+            {aiSending ? '…' : 'Fill Fields'}
+          </button>
+        </div>
+        {aiResult && (
+          <p className={`text-xs mt-1.5 ${aiResult.error ? 'text-red-400' : aiResult.count === 0 ? 'text-white/40' : 'text-emerald-400'}`}>
+            {aiResult.error ? 'Could not parse — try rephrasing' : aiResult.count === 0 ? 'Nothing matched — check the phrasing' : `✓ Updated ${aiResult.count} field${aiResult.count !== 1 ? 's' : ''}`}
+          </p>
+        )}
+      </div>
 
       {/* Field form — shown first so inputs are immediately visible */}
       <DynamicFieldForm
