@@ -240,16 +240,22 @@ export default function QuickBookPage() {
           </button>
 
           {/* Upload from files */}
-          <button
-            type="button"
-            onClick={() => filesRef.current?.click()}
-            disabled={status === 'uploading' || status === 'creating'}
-            className="w-full flex items-center justify-center gap-2.5 rounded-xl border border-white/[0.10] bg-white/[0.03] hover:bg-white/[0.06] text-white/70 hover:text-white py-3.5 transition-all disabled:opacity-50"
+          <div
+            onDragOver={e => { e.preventDefault() }}
+            onDrop={e => { e.preventDefault(); const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')); if (files.length) bookInFiles(files) }}
+            className="w-full"
           >
-            <Images className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-            <span className="text-sm font-medium">Upload from files</span>
-            <span className="text-xs text-white/35 ml-1">— multiple photos, one record</span>
-          </button>
+            <button
+              type="button"
+              onClick={() => filesRef.current?.click()}
+              disabled={status === 'uploading' || status === 'creating'}
+              className="w-full flex items-center justify-center gap-2.5 rounded-xl border border-white/[0.10] bg-white/[0.03] hover:bg-white/[0.06] text-white/70 hover:text-white py-3.5 transition-all disabled:opacity-50"
+            >
+              <Images className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+              <span className="text-sm font-medium">Upload from files</span>
+              <span className="text-xs text-white/35 ml-1">— multiple photos, one record</span>
+            </button>
+          </div>
 
           {error && <p className="text-xs text-red-400 text-center mt-1">{error}</p>}
 

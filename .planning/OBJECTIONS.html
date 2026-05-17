@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Common Objections — Wednesday Demo</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f6f7f9; color: #1a1a1a; padding: 32px 0 80px; }
+.page { max-width: 700px; margin: 0 auto; padding: 0 24px; }
+h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: #888; margin-bottom: 32px; }
+.obj { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+.obj-q { background: #0f1c3f; color: #fff; padding: 13px 20px; font-size: 14px; font-weight: 700; }
+.obj-body { padding: 14px 20px; }
+.response { font-size: 14px; line-height: 1.6; color: #2a2a2a; margin-bottom: 8px; }
+.say { background: #f0f7ff; border-left: 3px solid #2a6ef5; padding: 10px 14px; font-size: 14px; color: #1a3a6b; font-style: italic; border-radius: 0 4px 4px 0; margin-top: 8px; }
+.warning { background: #fffbea; border-left: 3px solid #f5a623; padding: 8px 14px; font-size: 13px; color: #7a5a00; border-radius: 0 4px 4px 0; margin-top: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+<h1>Common Objections</h1>
+<p class="subtitle">What they'll say. What to say back. Read once. Know cold.</p>
+
+<div class="obj">
+  <div class="obj-q">1. "This is interesting but now's not the right time — we have other priorities."</div>
+  <div class="obj-body">
+    <p class="response">Classic deflection. They're not saying no to the idea, they're buying time. The key: this is already in production and saving time right now. You're not asking them to kick off a project — you're asking for one 30-minute IT task in a sandbox environment. There's no project timeline, no budget approval, no team resourcing required.</p>
+    <div class="say">"Totally understand — I'm not asking for a project. The tool is live and I'm already using it. The only thing left to unlock the direct Salesforce connection is a 30-minute sandbox task from IT. There's no risk and no deadline pressure. Happy to wait until there's a quiet window."</div>
+    <div class="warning">Don't argue about priorities. Agree and shrink the ask. A 30-minute IT task is not a priority conflict.</div>
+  </div>
+</div>
+
+<div class="obj">
+  <div class="obj-q">2. "What if the AI gets it wrong?"</div>
+  <div class="obj-body">
+    <p class="response">This is the most common AI objection and the easiest to handle — because the system was designed with it in mind. There is a mandatory human review step before anything touches Salesforce. The AI produces a draft. A person reads it, edits it, and confirms it. Nothing auto-publishes.</p>
+    <div class="say">"Nothing goes anywhere without a person reading it first. The AI fills in a draft — you see every field, you edit anything that's wrong, then you hit push. It's a first pass, not a final decision. The liability stays exactly where it is today."</div>
+    <div class="warning">If they push further, offer to show them the review screen live. The confirmation step is visible and obvious — seeing it kills the objection.</div>
+  </div>
+</div>
+
+<div class="obj">
+  <div class="obj-q">3. "What if it doesn't work for all our asset types?"</div>
+  <div class="obj-body">
+    <p class="response">Nine asset categories are already covered: passenger vehicles, commercial vehicles, motorcycles, watercraft, trailers, forklifts, earthmoving equipment, agriculture, and general goods. That's the core of what moves through any Australian asset business. If they name something specific, you almost certainly have it. Show the type picker — it lands the point better than listing categories.</p>
+    <div class="say">"We cover nine categories right now — let me show you the picker. What's the asset type you're most worried about?"</div>
+    <div class="warning">If they name something genuinely not covered (e.g. aircraft, specialised plant), be honest: "That's not in the current build, but we can add it. The field schema for a new type takes a day." Don't oversell — it'll bite you later.</div>
+  </div>
+</div>
+
+<div class="obj">
+  <div class="obj-q">4. "We'd need to go through the formal vendor onboarding process."</div>
+  <div class="obj-body">
+    <p class="response">Vendor onboarding applies to external software products being purchased from third-party companies. This is an internal tool built by an employee. The Salesforce integration is connecting a tool you built in-house to their existing Salesforce instance — no different from connecting an internal spreadsheet automation or a custom script. There's no contract, no external vendor, no procurement.</p>
+    <div class="say">"Vendor onboarding is for external software we're buying. This is an internal tool I built — it's ours. The Salesforce connection is just connecting our own tool to our own system. The External Client App setup is internal IT configuration, same category as setting up an integration for any internal tool."</div>
+    <div class="warning">If they insist on a process, ask who owns the Salesforce Connected App setup and offer to write the brief yourself. Reduce friction on their side.</div>
+  </div>
+</div>
+
+<div class="obj">
+  <div class="obj-q">5. "IT won't have time to do this for months."</div>
+  <div class="obj-body">
+    <p class="response">The pilot runs entirely in the Salesforce sandbox — not production. The only IT task is creating an External Client App, which takes approximately 30 minutes and involves zero risk to any live system. Everything else — the app, the AI, the review screen, the push logic — is already built and running. You're not asking IT to build anything.</p>
+    <div class="say">"The pilot runs in sandbox, so there's no production risk at all. The only IT task is creating an External Client App — it's a standard Salesforce configuration step that takes about 30 minutes. I've written up exactly what they need to do. If there's any window between now and end of month, that's all it takes."</div>
+    <div class="warning">Have the IT-TERMS.html doc ready to show. If IT is genuinely the blocker, offer to be in the room when they do it so you can answer questions in real time.</div>
+  </div>
+</div>
+
+<div class="obj">
+  <div class="obj-q">6. "We're worried about data security."</div>
+  <div class="obj-body">
+    <p class="response">Four facts to land in order: (1) Photos and extracted data are stored in Australia — Sydney region Supabase. (2) Data is never used to train AI models — it's passed for inference only and not retained by OpenAI. (3) The infrastructure is SOC 2 certified. (4) No data writes to Salesforce until a staff member explicitly confirms it — there's no automated push.</p>
+    <div class="say">"Photos stay in Australia — we're on Sydney Supabase. The AI call goes to OpenAI for inference only, not training — same as using ChatGPT for a work task. SOC 2 certified. And nothing goes near Salesforce until a person reviews and confirms it. The data handling is actually more auditable than the current manual process."</div>
+    <div class="warning">Don't get into a technical debate. If they have a security team requirement, offer a written data flow diagram. That's a 20-minute job and it usually ends the conversation.</div>
+  </div>
+</div>
+
+<div class="obj">
+  <div class="obj-q">7. "Can we just use the copy-paste version for now and not bother with the API?"</div>
+  <div class="obj-body">
+    <p class="response">Completely fine — and that's already the current state. The copy-paste output is live and working. The only ask today is sandbox access so you can build the direct push — which eliminates the copy-paste step entirely. They're not being asked to stop using copy-paste; they're being asked for the thing that makes copy-paste unnecessary.</p>
+    <div class="say">"Totally — copy-paste is working right now and that's what we're using. The sandbox access just lets me build the final step that removes copy-paste completely. You get the same outcome, just without the manual step. It's a one-time setup."</div>
+    <div class="warning">Don't frame this as "either/or." Frame it as "you're already getting the value — this just removes friction."</div>
+  </div>
+</div>
+
+<div class="obj">
+  <div class="obj-q">8. "What does this cost if we scale it up?"</div>
+  <div class="obj-body">
+    <p class="response">The cost is linear and predictable — no seat licences, no platform fees, no surprises. Infrastructure cost scales directly with volume. At realistic auction-house volumes, the ROI is 20:1 or better. The cost model is the same whether you're doing 10 assets or 500 a week.</p>
+    <div class="say">"It's linear — 100 assets a week runs about $900 a year in infrastructure. 200 assets a week is roughly $1,800 a year. There's no platform fee, no per-seat licence. At 100 assets a week, if this saves 15 minutes per asset, that's 25 hours saved a week — worth far more than $900 a year."</div>
+    <div class="warning">If they ask about support cost or your time: "I maintain it as part of my role. It's not a separate resource ask." Don't create a new cost centre in their head.</div>
+  </div>
+</div>
+
+<div class="obj">
+  <div class="obj-q">9. "Who owns this if you leave?"</div>
+  <div class="obj-body">
+    <p class="response">This is a fair and legitimate question — don't be defensive. The code is on GitHub and is readable, standard TypeScript/Next.js. The pilot includes documentation. Any competent developer can maintain it. If the business wanted to hand it to an agency or hire a junior dev, the codebase is clean enough to support that.</p>
+    <div class="say">"Fair question. The code is on GitHub, it's standard TypeScript, and the pilot includes documentation. Any developer can pick it up — there's nothing proprietary or bespoke that creates a dependency on me. If anything, having it in-house gives you more control than a vendor SaaS product where you'd have zero access to the code."</div>
+    <div class="warning">Don't say "I won't leave" — that's not credible and not the point. Focus on the handover being clean and low-risk.</div>
+  </div>
+</div>
+
+<div class="obj">
+  <div class="obj-q">10. "Let's wait until after the audit / busy period / end of financial year."</div>
+  <div class="obj-body">
+    <p class="response">There will always be an audit, a busy period, or an end of quarter. The ask is genuinely minimal — sandbox, 30 minutes from IT — and has zero audit exposure because nothing touches production. Agree with the concern, then shrink the ask to a specific window question.</p>
+    <div class="say">"Makes sense — I'm not asking for anything that touches production or creates audit risk. The pilot is entirely in sandbox. What's the earliest quiet window after the current push? Even a 30-minute IT slot in the next three weeks works."</div>
+    <div class="warning">Pin them to a specific date or window. "Let's revisit later" is a soft no. "What's the earliest window?" forces a concrete answer. If they genuinely can't give one, ask who else can authorise the sandbox request while they're in the busy period.</div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

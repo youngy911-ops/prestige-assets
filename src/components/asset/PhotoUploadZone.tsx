@@ -280,11 +280,16 @@ export function PhotoUploadZone({
   // Photos present state
   return (
     <div
-      className="space-y-4"
+      className="space-y-4 relative"
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
+      {isDragOver && (
+        <div className="absolute inset-0 rounded-2xl border-2 border-dashed border-emerald-400/60 bg-emerald-500/10 z-10 flex items-center justify-center pointer-events-none">
+          <p className="text-emerald-300 font-bold text-lg">Drop to add photos</p>
+        </div>
+      )}
       {/* Header row */}
       <div className="flex items-center justify-between">
         <div>

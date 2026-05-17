@@ -101,6 +101,22 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
   }
 
   const busy = status === 'processing' || status === 'detecting'
+  const [isDragOver, setIsDragOver] = useState(false)
+
+  function handleDragOver(e: React.DragEvent) {
+    e.preventDefault()
+    if (!busy) setIsDragOver(true)
+  }
+  function handleDragLeave(e: React.DragEvent) {
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) setIsDragOver(false)
+  }
+  async function handleDrop(e: React.DragEvent) {
+    e.preventDefault()
+    setIsDragOver(false)
+    if (busy) return
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')).slice(0, 4)
+    if (files.length > 0) await handleFiles(files)
+  }
 
   return (
     <>
@@ -120,7 +136,10 @@ export function AutoDetectButton({ onDetected }: AutoDetectButtonProps) {
         type="button"
         onClick={() => inputRef.current?.click()}
         disabled={busy}
-        className="w-full flex items-center justify-center gap-2 rounded-xl border border-emerald-500/35 bg-emerald-500/10 shadow-[0_0_0_1px_rgba(52,211,153,0.1)] hover:bg-emerald-500/15 hover:border-emerald-500/50 hover:shadow-[0_0_0_1px_rgba(52,211,153,0.2)] text-emerald-200 text-[15px] py-4 font-semibold transition-all disabled:opacity-50"
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        className={`w-full flex items-center justify-center gap-2 rounded-xl border border-emerald-500/35 bg-emerald-500/10 shadow-[0_0_0_1px_rgba(52,211,153,0.1)] hover:bg-emerald-500/15 hover:border-emerald-500/50 hover:shadow-[0_0_0_1px_rgba(52,211,153,0.2)] text-emerald-200 text-[15px] py-4 font-semibold transition-all disabled:opacity-50 ${isDragOver ? 'bg-emerald-500/15 border-emerald-500/50 shadow-[0_0_0_1px_rgba(52,211,153,0.3)]' : ''}`}
       >
         {busy ? (
           <>

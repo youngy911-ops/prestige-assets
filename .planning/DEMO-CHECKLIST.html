@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Demo Day Checklist — Wednesday May 20</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #fff; color: #1a1a1a; padding: 40px; max-width: 600px; }
+h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
+.date { font-size: 13px; color: #888; margin-bottom: 32px; }
+.section { margin-bottom: 28px; }
+.section h2 { font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #059669; margin-bottom: 12px; border-bottom: 2px solid #d1fae5; padding-bottom: 6px; }
+.item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
+.item:last-child { border-bottom: none; }
+.check { width: 20px; height: 20px; border: 2px solid #d1d5db; border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+.item-text { flex: 1; }
+.item-text strong { display: block; font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 2px; }
+.item-text span { font-size: 13px; color: #666; line-height: 1.4; }
+.critical { border-left: 3px solid #ef4444; padding-left: 12px; margin-left: -15px; }
+.login-box { margin-top: 32px; background: #f0fdf4; border: 2px solid #86efac; border-radius: 10px; padding: 20px 24px; }
+.login-box h3 { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #059669; margin-bottom: 12px; }
+.login-box p { font-size: 14px; color: #1a1a1a; margin-bottom: 6px; }
+.login-box code { background: #dcfce7; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 13px; font-weight: 700; }
+@media print {
+  body { padding: 24px; }
+  .login-box { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<h1>Demo Day Checklist</h1>
+<p class="date">Wednesday 20 May 2026 — Director + National Ops</p>
+
+<div class="section">
+  <h2>The Night Before (Tuesday)</h2>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Photos ready on laptop</strong>
+      <span>10–15 photos of a real asset — good quality, compliance plate visible. Do not rely on taking them live.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Login tested</strong>
+      <span>jackwyoung@yahoo.com / jack@test at assetbookintool.com — confirm you land on the dashboard.</span>
+    </div>
+  </div>
+
+  <div class="item critical">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Full end-to-end run — do it twice</strong>
+      <span>Book In → upload photos → extract → review → copy. Both runs must complete cleanly before you sleep.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Know the AI fill moment</strong>
+      <span>On the review page, type "no keys, purple, 80,000km" — confirm the fields fill automatically. This is the wow moment.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Read IT-TERMS.html once through</strong>
+      <span>Scan the glossary so no IT question catches you cold.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Slides open in browser</strong>
+      <span>PRESENTATION-SLIDES.html — open and advance through to the end once.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Script open in second tab</strong>
+      <span>PRESENTATION-SCRIPT.html — have it visible for reference during the demo.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>IT Q&amp;A open in third tab</strong>
+      <span>IT-QA.html — reference during the Q&amp;A portion.</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Morning of the Demo</h2>
+
+  <div class="item critical">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Device charged to 100%</strong>
+      <span>Bring your charger. Do not assume power points are accessible in the room.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Browser tabs pre-opened</strong>
+      <span>assetbookintool.com (logged in) + slides + script — all loaded and ready before you walk in.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Fallback asset confirmed</strong>
+      <span>Kenworth T409SAR at /assets/b4bb751f.../output — verify it has a full description and photos load.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Network tested</strong>
+      <span>Confirm you can reach assetbookintool.com on the venue's Wi-Fi or your mobile hotspot.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Photos in camera roll (if using phone)</strong>
+      <span>Photos already downloaded — do not plan to take them live unless the physical asset is present.</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>In the Room</h2>
+
+  <div class="item critical">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>App open on home page, Brisbane branch</strong>
+      <span>Should show "X today" counter. This is your opening visual.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Slides on a second screen or ready to share</strong>
+      <span>Know how you'll present — HDMI cable, AirPlay, or screen share. Test it before the room fills.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Not logged in as anyone else</strong>
+      <span>No other active sessions. Clear any guest or test accounts from the browser.</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>The Numbers (know cold)</h2>
+
+  <div class="item critical">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>41× return — the headline</strong>
+      <span>$900/year cost vs. $36,900+ in time savings. Say it plainly. Then let it land.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>$900/year all in</strong>
+      <span>Total annual cost. Rounded, memorable, unambiguous.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>2 min with API vs 12–15 min manual</strong>
+      <span>Per asset. This is what directors and ops can picture immediately.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>900 hours freed per year at 100 assets/week</strong>
+      <span>Scale story. Use when they ask "what if we roll this out nationally?"</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>The Ask</h2>
+
+  <div class="item critical">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>"Can IT get me sandbox access this week?"</strong>
+      <span>Say it. Then silence. Do not fill the gap. Wait for the answer.</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>If Things Go Wrong</h2>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Extraction is slow</strong>
+      <span>Hit retry, keep talking — describe what the AI is doing. Use the wait time.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Extraction fails</strong>
+      <span>Navigate directly to the confirmed Kenworth T409SAR — pre-filled, ready to show.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>Browser freezes</strong>
+      <span>Have the URL ready on your phone as a backup. Load it, continue from there.</span>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="check"></div>
+    <div class="item-text">
+      <strong>IT asks a question you don't know</strong>
+      <span>"Good question — let me get back to you in writing after the meeting." Then move on confidently.</span>
+    </div>
+  </div>
+</div>
+
+<div class="login-box">
+  <h3>URL &amp; Login — Keep This Handy</h3>
+  <p><strong>URL:</strong> <code>assetbookintool.com</code></p>
+  <p><strong>Email:</strong> <code>jackwyoung@yahoo.com</code></p>
+  <p><strong>Password:</strong> <code>jack@test</code></p>
+  <p style="margin-top: 10px;"><strong>Fallback asset:</strong> <code>/assets/b4bb751f.../output</code> — Kenworth T409SAR, full description ready</p>
+</div>
+
+</body>
+</html>

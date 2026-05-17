@@ -143,10 +143,10 @@ export default function NewAssetPage() {
                 }
               }}
             />
-            <div className="flex items-center gap-3">
-              <div className="flex-1 h-px bg-white/[0.07]" />
-              <span className="text-xs text-white/30">or select manually</span>
-              <div className="flex-1 h-px bg-white/[0.07]" />
+            <div className="flex items-center gap-3 my-2">
+              <div className="flex-1 h-px bg-white/[0.08]" />
+              <span className="text-xs text-white/30 font-medium">or select manually</span>
+              <div className="flex-1 h-px bg-white/[0.08]" />
             </div>
             <AssetTypeSelector selected={assetType} onSelect={handleTypeSelect} />
           </div>
