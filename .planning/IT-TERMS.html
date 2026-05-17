@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Terms — Plain English Reference</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: #f6f7f9;
+  color: #1a1a1a;
+  padding: 32px 0 80px;
+}
+.page { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: #888; margin-bottom: 32px; }
+
+.term {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.term-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 20px 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.term-name { font-size: 16px; font-weight: 800; color: #0f1c3f; }
+.term-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+.tag-auth { background: #e8f0fe; color: #1a56db; }
+.tag-data { background: #e8f5e9; color: #1a6b2a; }
+.tag-infra { background: #fff8e1; color: #7a5700; }
+.tag-process { background: #fce4ec; color: #9a1a2a; }
+
+.term-body { padding: 12px 20px 14px; }
+.plain { font-size: 15px; line-height: 1.6; color: #2a2a2a; margin-bottom: 8px; }
+.analogy {
+  background: #fffbea;
+  border-left: 3px solid #f5a623;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #7a5a00;
+  border-radius: 0 4px 4px 0;
+  margin-top: 8px;
+}
+.use-case {
+  background: #f0f7ff;
+  border-left: 3px solid #2a6ef5;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #1a3a6b;
+  border-radius: 0 4px 4px 0;
+  margin-top: 6px;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>IT Terms — Plain English</h1>
+<p class="subtitle">Every technical term you'll hear at the Wednesday meeting. Read before. Know cold.</p>
+
+<!-- OAUTH -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">OAuth 2.0</span>
+    <span class="term-tag tag-auth">Auth</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">The industry-standard way to let a third-party app access another service on your behalf — without giving it your password. You click "Connect to Salesforce", Salesforce shows you a login page, you log in, Salesforce hands the app a token (a temporary key). The app never sees your password.</p>
+    <div class="analogy">📎 Analogy: When you click "Sign in with Google" on any website — that's OAuth. Same thing here.</div>
+    <div class="use-case">💼 In your demo: "Each user connects their own Salesforce account. We use OAuth — the industry standard. It's the same method as signing in with Google."</div>
+  </div>
+</div>
+
+<!-- ACCESS TOKEN -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">Access Token / Refresh Token</span>
+    <span class="term-tag tag-auth">Auth</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">After OAuth login, Salesforce gives the app two things: an <strong>access token</strong> (a short-lived key, expires in ~1 hour) and a <strong>refresh token</strong> (a long-lived key used to get a new access token automatically). This means users only need to log in to Salesforce once — the app renews its own access silently.</p>
+    <div class="analogy">📎 Analogy: Access token = a day pass. Refresh token = a yearly membership that issues new day passes automatically.</div>
+  </div>
+</div>
+
+<!-- EXTERNAL CLIENT APP -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">External Client App (Salesforce)</span>
+    <span class="term-tag tag-process">Process</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">Salesforce's name for a registered third-party connection. IT creates it in Salesforce Setup in about 10 clicks. It generates two codes — a <strong>Consumer Key</strong> (public ID for the app) and a <strong>Consumer Secret</strong> (private password the app uses). Send me those two codes and the connection works.</p>
+    <div class="use-case">💼 In your demo: "IT creates it in Salesforce Setup — standard process, takes about 30 minutes. They give me two codes. Done."</div>
+  </div>
+</div>
+
+<!-- OAUTH SCOPES -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">OAuth Scopes</span>
+    <span class="term-tag tag-auth">Auth</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">Specific permissions the app requests. We need three: <strong>api</strong> (lets the app call Salesforce's API), <strong>refresh_token</strong> (lets it stay logged in), and <strong>openid</strong> (identifies which user is logged in). These are the minimum needed — no admin access, no org-wide permissions.</p>
+    <div class="analogy">📎 Analogy: Like ticking boxes on a permissions screen. We only tick the ones we need.</div>
+  </div>
+</div>
+
+<!-- SANDBOX -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">Salesforce Sandbox</span>
+    <span class="term-tag tag-process">Process</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">A complete copy of the production Salesforce org used for testing. Changes in a sandbox never affect real data. Every Salesforce customer has access to at least one. The pilot runs entirely in sandbox — production is never touched until there's explicit sign-off.</p>
+    <div class="use-case">💼 In your demo: "The whole pilot is in sandbox. Zero risk to production. IT can turn it off with one click."</div>
+  </div>
+</div>
+
+<!-- API -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">API (Application Programming Interface)</span>
+    <span class="term-tag tag-infra">Infra</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">A standardised way for two software systems to talk to each other. When the app "pushes to Salesforce", it's sending a message through Salesforce's API: "Create this asset record with these field values." Salesforce processes it and sends back confirmation. No human is involved.</p>
+    <div class="analogy">📎 Analogy: A waiter taking your order to the kitchen. You don't need to go to the kitchen yourself — the waiter (API) carries the message both ways.</div>
+  </div>
+</div>
+
+<!-- REST API -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">REST API</span>
+    <span class="term-tag tag-infra">Infra</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">The most common type of API. Uses standard web requests (the same technology as loading a webpage). Salesforce's main API is REST-based. It's well-documented, widely used, and stable — not experimental technology.</p>
+  </div>
+</div>
+
+<!-- ROW LEVEL SECURITY -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">Row Level Security (RLS)</span>
+    <span class="term-tag tag-data">Data</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">A database feature that enforces access control at the record level. In this app, RLS means User A can only see their own assets and photos — they physically cannot read User B's data, even if they tried. It's enforced by the database (Supabase), not just the app code.</p>
+    <div class="use-case">💼 In your demo: "Each user can only see their own data. It's enforced at the database level, not just the app — it's not bypassable."</div>
+  </div>
+</div>
+
+<!-- HTTPS / TLS -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">HTTPS / TLS</span>
+    <span class="term-tag tag-infra">Infra</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">Encryption for data in transit. Every request between the user's browser and the server is encrypted. The padlock in the browser address bar. TLS 1.2+ is the current standard — no older, weaker versions are allowed. Handled automatically by Cloudflare for this app.</p>
+  </div>
+</div>
+
+<!-- ENVIRONMENT VARIABLES -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">Environment Variables</span>
+    <span class="term-tag tag-infra">Infra</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">Secret configuration values (like API keys and passwords) stored on the server separately from the code. The app reads them at runtime but they're never embedded in the source code or visible in the browser. The Salesforce Consumer Secret, OpenAI API key, and database URL are all stored this way.</p>
+    <div class="analogy">📎 Analogy: The safe behind the painting — the code knows to look there, but it's not written on the wall.</div>
+  </div>
+</div>
+
+<!-- SOC 2 -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">SOC 2 Type II</span>
+    <span class="term-tag tag-data">Data</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">A security certification that verifies a service provider has controls in place for security, availability, and data confidentiality — and that those controls actually work over time (Type II = audited for 6+ months, not just a point-in-time check). OpenAI holds this. Supabase holds this. It's the standard IT asks for when approving third-party cloud services.</p>
+    <div class="use-case">💼 If IT asks "Is OpenAI certified?": "Yes — SOC 2 Type II. Same certification we'd require from any other cloud provider."</div>
+  </div>
+</div>
+
+<!-- DPA -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">DPA (Data Processing Agreement)</span>
+    <span class="term-tag tag-data">Data</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">A formal contract between a business and a data processor defining how personal/confidential data is handled — who's responsible for what, how breaches are reported, data retention limits. OpenAI offers one. Supabase offers one. If IT requires formal data agreements before approving a cloud vendor, we can sign them.</p>
+  </div>
+</div>
+
+<!-- CALLBACK URL -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">Callback URL (Redirect URI)</span>
+    <span class="term-tag tag-auth">Auth</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">The page Salesforce redirects the user back to after they log in. When IT creates the External Client App, they need to add this URL to the allowed list. Our callback URL is: <strong>https://assetbookintool.com/api/auth/salesforce/callback</strong></p>
+    <div class="use-case">💼 Have this exact URL ready to give IT in writing after the meeting.</div>
+  </div>
+</div>
+
+<!-- CLOUDFLARE -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">Cloudflare (CDN / Proxy)</span>
+    <span class="term-tag tag-infra">Infra</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">A global network that sits in front of the server and handles SSL certificates, DDoS protection, and content delivery. All traffic to assetbookintool.com goes through Cloudflare before reaching the server. SSL certificates renew automatically — no manual maintenance.</p>
+  </div>
+</div>
+
+<!-- PM2 -->
+<div class="term">
+  <div class="term-header">
+    <span class="term-name">PM2 (Process Manager)</span>
+    <span class="term-tag tag-infra">Infra</span>
+  </div>
+  <div class="term-body">
+    <p class="plain">Software that keeps the app running. If the app crashes or the server restarts, PM2 automatically restarts it. It's the equivalent of "start on boot" for a web app. IT doesn't need to manage it.</p>
+    <div class="use-case">💼 If IT asks about uptime: "The server restarts the app automatically if anything goes wrong. IT has nothing to maintain."</div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
