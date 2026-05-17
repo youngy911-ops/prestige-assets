@@ -53,10 +53,10 @@
   --background: oklch(0.16 0.04 148);
   /* Text primary: #FFFFFF */
   --foreground: oklch(1 0 0);
-  /* Card: slightly elevated */
-  --card: oklch(0.20 0.05 148);
+  /* Card: clearly elevated above background for visible depth */
+  --card: oklch(0.22 0.055 148);
   --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.20 0.05 148);
+  --popover: oklch(0.22 0.055 148);
   --popover-foreground: oklch(1 0 0);
   /* Primary CTA: bright green */
   --primary: oklch(0.52 0.17 148);
