@@ -199,7 +199,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
         <div className="flex flex-col gap-3">
           {/* Hero photo */}
           <div className="relative rounded-2xl overflow-hidden border border-white/[0.08]">
-            <div className="aspect-[4/3]">
+            <div className="aspect-[16/9]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={photoUrls[heroIndex]}
@@ -253,7 +253,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
       <div className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5">
         <div className="flex items-center gap-1.5">
           <Sparkles className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
-          <span className="text-base font-bold text-white tabular-nums">{stats.fieldCount}</span>
+          <span className="text-xl font-black text-emerald-300 tabular-nums">{stats.fieldCount}</span>
           <span className="text-xs text-white/35 font-medium">fields extracted</span>
         </div>
         <div className="w-px h-4 bg-white/[0.08]" />

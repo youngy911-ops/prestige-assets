@@ -27,7 +27,7 @@ export function StepIndicator({ current }: StepIndicatorProps) {
               <div className={cn(
                 'w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-semibold transition-all',
                 isDone  && 'bg-emerald-500 text-white shadow-[0_0_0_2px_rgba(52,211,153,0.2)]',
-                isActive && 'bg-emerald-500/25 border-2 border-emerald-400/80 text-emerald-300 shadow-[0_0_8px_rgba(52,211,153,0.3)]',
+                isActive && 'bg-emerald-500/20 border-2 border-emerald-400/70 text-emerald-300 shadow-[0_0_10px_rgba(52,211,153,0.3)]',
                 !isDone && !isActive && 'bg-white/[0.06] text-white/30'
               )}>
                 {isDone ? <Check className="w-3 h-3" /> : <span>{i + 1}</span>}

@@ -7,7 +7,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
   return (
-    <div className="min-h-screen bg-background" style={{ background: 'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(16,185,129,0.07) 0%, transparent 70%), var(--background)' }}>
+    <div className="min-h-screen bg-background" style={{ background: 'radial-gradient(ellipse 100% 60% at 50% 0%, rgba(16,185,129,0.10) 0%, rgba(16,185,129,0.03) 40%, transparent 70%), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(16,185,129,0.04) 0%, transparent 60%), var(--background)' }}>
       <main className="pb-[calc(env(safe-area-inset-bottom)+56px)]">
         {children}
       </main>

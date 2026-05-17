@@ -31,39 +31,39 @@ vi.mock('@/lib/schema-registry', () => ({
 // ─── ConfidenceBadge ────────────────────────────────────────────────────────
 
 describe('ConfidenceBadge', () => {
-  it('renders CheckCircle2 icon with text-green-400 for level="high"', async () => {
+  it('renders CheckCircle2 icon with text-emerald-300 font-semibold for level="high"', async () => {
     const { ConfidenceBadge } = await import('@/components/asset/ConfidenceBadge')
     const { container } = render(<ConfidenceBadge level="high" />)
     // Icon rendered with aria-hidden
     const icon = container.querySelector('[aria-hidden="true"]')
     expect(icon).toBeTruthy()
-    // Wrapper span has text-green-400
+    // Wrapper span has text-emerald-300
     const wrapper = container.querySelector('span')
-    expect(wrapper?.className).toContain('text-green-400')
+    expect(wrapper?.className).toContain('text-emerald-300')
     // Screen-reader label
     expect(screen.getByText('Read from photo')).toBeTruthy()
   })
 
-  it('renders AlertCircle icon with text-amber-400 for level="medium"', async () => {
+  it('renders AlertCircle icon with text-amber-300 font-medium for level="medium"', async () => {
     const { ConfidenceBadge } = await import('@/components/asset/ConfidenceBadge')
     const { container } = render(<ConfidenceBadge level="medium" />)
     const wrapper = container.querySelector('span')
-    expect(wrapper?.className).toContain('text-amber-400')
+    expect(wrapper?.className).toContain('text-amber-300 font-medium')
     expect(screen.getByText('AI estimate — check if critical')).toBeTruthy()
   })
 
-  it('renders AlertCircle icon with text-red-400 for level="low"', async () => {
+  it('renders AlertCircle icon with text-red-300 font-medium for level="low"', async () => {
     const { ConfidenceBadge } = await import('@/components/asset/ConfidenceBadge')
     const { container } = render(<ConfidenceBadge level="low" />)
     const wrapper = container.querySelector('span')
-    expect(wrapper?.className).toContain('text-red-400')
+    expect(wrapper?.className).toContain('text-red-300 font-medium')
   })
 
-  it('renders MinusCircle icon with text-white/25 for level="not_found"', async () => {
+  it('renders MinusCircle icon with text-white/30 for level="not_found"', async () => {
     const { ConfidenceBadge } = await import('@/components/asset/ConfidenceBadge')
     const { container } = render(<ConfidenceBadge level="not_found" />)
     const wrapper = container.querySelector('span')
-    expect(wrapper?.className).toContain('text-white/25')
+    expect(wrapper?.className).toContain('text-white/30')
     expect(screen.getAllByText('Not found').length).toBeGreaterThan(0)
   })
 })

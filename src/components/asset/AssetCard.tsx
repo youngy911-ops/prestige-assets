@@ -69,10 +69,17 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
       className="block group animate-in fade-in slide-in-from-bottom-2 duration-200 fill-mode-both rounded-2xl"
       style={animationDelay ? { animationDelay } : undefined}
     >
-      <div className="bg-[var(--card)] rounded-2xl border border-white/[0.11] transition-all duration-200 group-hover:border-emerald-500/30 group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.4),0_0_0_1px_rgba(52,211,153,0.1)] active:scale-[0.98] flex flex-col overflow-hidden">
-        <div className="flex items-stretch">
+      <div className="bg-[var(--card)] rounded-2xl border border-white/[0.11] transition-all duration-200 group-hover:border-emerald-500/30 group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.4),0_0_0_1px_rgba(52,211,153,0.1)] active:scale-[0.98] flex flex-col overflow-hidden relative">
+        {/* Status accent stripe */}
+        <div className={`h-full w-1 flex-shrink-0 absolute left-0 top-0 bottom-0 rounded-l-2xl ${
+          status === 'confirmed' ? 'bg-emerald-500/70' :
+          status === 'reviewed' ? 'bg-blue-400/60' :
+          isExtracting ? 'bg-amber-400/60' :
+          'bg-white/[0.08]'
+        }`} />
+        <div className="flex items-stretch pl-1">
           {/* Thumbnail */}
-          <div className="w-24 flex-shrink-0 self-stretch relative overflow-hidden bg-white/[0.04]">
+          <div className="w-24 flex-shrink-0 self-stretch relative overflow-hidden bg-white/[0.06]">
             {thumb_url ? (
               <>
                 <img

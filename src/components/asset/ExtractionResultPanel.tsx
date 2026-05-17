@@ -36,11 +36,11 @@ export function ExtractionResultPanel({
     <div className="flex flex-col">
       {/* Summary pill */}
       <div className="flex items-center gap-2 mb-4">
-        <span className="text-sm text-white/65">
-          <span className="font-semibold text-white">{foundFields.length}</span> of {fields.length} fields extracted
+        <span className="text-sm text-white/50 font-medium">
+          <span className="font-black text-2xl text-white">{foundFields.length}</span> of {fields.length} fields extracted
         </span>
         {foundFields.length > 0 && (
-          <span className="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5">
+          <span className="text-sm font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 rounded-full px-3 py-1">
             {Math.round((foundFields.length / fields.length) * 100)}%
           </span>
         )}
@@ -53,13 +53,15 @@ export function ExtractionResultPanel({
         const low = foundFields.filter(f => extractionResult[f.key]?.confidence === 'low').length
         const total = foundFields.length
         return (
-          <div className="flex items-center gap-1.5 mb-4">
-            <div className="flex-1 flex h-1.5 rounded-full overflow-hidden gap-px bg-white/[0.05]">
-              {high > 0 && <div className="h-full bg-emerald-400 rounded-full" style={{ width: `${(high/total)*100}%` }} />}
-              {medium > 0 && <div className="h-full bg-amber-400 rounded-full" style={{ width: `${(medium/total)*100}%` }} />}
-              {low > 0 && <div className="h-full bg-red-400/70 rounded-full" style={{ width: `${(low/total)*100}%` }} />}
+          <div className="flex items-center gap-2 mb-5">
+            <div className="flex-1 rounded-full overflow-hidden bg-white/[0.06]">
+              <div className="flex h-2 gap-px">
+                {high > 0 && <div className="h-full bg-emerald-400 rounded-full" style={{ width: `${(high/total)*100}%` }} />}
+                {medium > 0 && <div className="h-full bg-amber-400 rounded-full" style={{ width: `${(medium/total)*100}%` }} />}
+                {low > 0 && <div className="h-full bg-red-400/70 rounded-full" style={{ width: `${(low/total)*100}%` }} />}
+              </div>
             </div>
-            <span className="text-xs text-white/35 flex-shrink-0 tabular-nums">
+            <span className="text-xs text-white/40 font-medium flex-shrink-0 tabular-nums">
               {high} from photo · {medium} estimated
             </span>
           </div>

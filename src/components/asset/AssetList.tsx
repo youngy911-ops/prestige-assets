@@ -141,10 +141,16 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
 
   return (
     <div className="max-w-[640px] mx-auto px-4 pt-8">
+      <div className="h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent mb-6 -mx-4" />
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <h1 className="text-3xl font-black tracking-tight text-white">Assets</h1>
+          {assets && assets.length > 0 && (
+            <p className="text-xs text-white/30 font-medium">
+              {BRANCHES.find(b => b.key === branch)?.label}
+            </p>
+          )}
           {todayCount !== null && todayCount > 0 && (
             <div className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -172,7 +178,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             onClick={() => setShowBookInMenu(v => !v)}
             onMouseEnter={() => { router.prefetch('/assets/new'); router.prefetch('/assets/quick') }}
             disabled={uploadingFiles}
-            className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-bold px-4 py-2 rounded-xl shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_2px_8px_rgba(52,211,153,0.15)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_4px_16px_rgba(52,211,153,0.25)] transition-all disabled:opacity-60"
+            className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-white text-[15px] font-bold px-4 py-2.5 rounded-xl shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_2px_8px_rgba(52,211,153,0.15)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_4px_16px_rgba(52,211,153,0.25)] transition-all disabled:opacity-60"
           >
             {uploadingFiles ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
             {uploadingFiles ? 'Uploading…' : 'Book In'}
@@ -238,13 +244,13 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       {/* Search — always visible */}
       {!changingBranch && (
         <div className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/35 pointer-events-none" />
           <input
             type="search"
             placeholder="Search assets…"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-9 pr-9 py-2.5 rounded-2xl border border-white/[0.12] bg-white/[0.03] text-sm text-white placeholder:text-white/30 focus:outline-none focus:bg-white/[0.05] focus:border-emerald-500/40 focus:ring-1 focus:ring-emerald-500/20 transition-all duration-200"
+            className="w-full pl-9 pr-9 py-2.5 rounded-2xl border border-white/[0.12] bg-white/[0.03] text-sm text-white placeholder:text-white/30 focus:outline-none focus:bg-white/[0.05] focus:border-emerald-500/40 focus:ring-2 focus:ring-emerald-500/30 transition-all duration-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
           />
           {search && (
             <button

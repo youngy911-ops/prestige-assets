@@ -277,8 +277,8 @@ export function ReviewPageClient({
       )}
 
       {/* AI field fill — type anything in plain English to fill fields instantly */}
-      <div className="mb-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-3">
-        <p className="text-xs text-white/40 flex items-center gap-1.5 mb-2">
+      <div className="mb-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/8 shadow-[0_0_0_1px_rgba(52,211,153,0.05),0_4px_16px_rgba(0,0,0,0.2)] p-3">
+        <p className="text-xs text-emerald-400/60 flex items-center gap-1.5 mb-2">
           <Sparkles className="w-3 h-3 text-emerald-400/70 flex-shrink-0" />
           Tell the AI — it fills the fields below automatically
         </p>
@@ -289,7 +289,7 @@ export function ReviewPageClient({
             value={aiInput}
             onChange={e => setAiInput(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleAiFields() } }}
-            placeholder="e.g. no keys, purple, 80000km, runs well"
+            placeholder="e.g. no keys, purple, 80,000km, bull bar"
             className="flex-1 h-9 rounded-xl border border-white/[0.12] bg-white/[0.05] px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-emerald-500/40 focus:border-emerald-500/40 transition-all"
           />
           <button
