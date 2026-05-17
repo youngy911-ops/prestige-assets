@@ -88,6 +88,9 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
   const [showRetryButton, setShowRetryButton] = useState(false)
   const slowTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const isMountedRef = useRef(true)
+
+  useEffect(() => { return () => { isMountedRef.current = false } }, [])
 
   const handleDescTextChange = useCallback((text: string) => {
     currentDescRef.current = text
@@ -137,12 +140,13 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
       })
       if (!res.ok) throw new Error('API error')
       const data = await res.json()
+      if (!isMountedRef.current) return
       setDescText(data.description)
       currentDescRef.current = data.description
       setDescState('ready')
     } catch {
+      if (!isMountedRef.current) return
       if (!isRetry) {
-        // Auto-retry once
         await generateDescription(true, currentTone)
       } else {
         setDescState('error')

@@ -1,5 +1,5 @@
 'use client'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { InspectionNotesSection } from '@/components/asset/InspectionNotesSection'
 import { ExtractionTriggerState } from '@/components/asset/ExtractionTriggerState'
@@ -29,12 +29,17 @@ export function ExtractionPageClient({
   autoStart = false,
 }: ExtractionPageClientProps) {
   const router = useRouter()
+  const isMountedRef = useRef(true)
   const [status, setStatus] = useState<ExtractionStatus>(
     initialExtractionResult ? 'success' : 'idle'
   )
   const [extractionResult, setExtractionResult] = useState<ExtractionResult | null>(
     initialExtractionResult
   )
+
+  useEffect(() => {
+    return () => { isMountedRef.current = false }
+  }, [])
 
   const triggerExtraction = useCallback(async () => {
     setStatus('loading')
@@ -51,8 +56,9 @@ export function ExtractionPageClient({
       setExtractionResult(data.extraction_result)
       setStatus('success')
 
-      // Auto-navigate to review when extraction was auto-started (from photos page CTA)
-      if (autoStart) {
+      // Only auto-navigate if still on this page — user may have navigated away
+      // via "continue in background" links while extraction was running
+      if (autoStart && isMountedRef.current) {
         router.push(`/assets/${assetId}/review`)
       }
     } catch {
