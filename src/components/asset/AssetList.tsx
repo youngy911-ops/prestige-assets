@@ -264,11 +264,20 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
         for (const a of assets) {
           counts[a.asset_type] = (counts[a.asset_type] ?? 0) + 1
         }
+        const PLURAL_LABELS: Partial<Record<AssetType, string>> = {
+          general_goods: 'general goods',
+          earthmoving: 'earthmoving',
+          agriculture: 'agriculture',
+          marine: 'marine',
+          caravan: 'caravans / motor homes',
+        }
         const parts = Object.entries(counts)
           .sort((a, b) => b[1] - a[1])
           .map(([type, count]) => {
-            const label = SCHEMA_REGISTRY[type as AssetType]?.displayName ?? type
-            return `${count} ${label.toLowerCase()}${count !== 1 ? 's' : ''}`
+            const assetType = type as AssetType
+            const singular = SCHEMA_REGISTRY[assetType]?.displayName?.toLowerCase() ?? type
+            const plural = PLURAL_LABELS[assetType] ?? `${singular}s`
+            return `${count} ${count !== 1 ? plural : singular}`
           })
         return parts.length > 0 ? (
           <p className="text-xs text-white/30 mb-3">{parts.join(' \u00b7 ')}</p>
