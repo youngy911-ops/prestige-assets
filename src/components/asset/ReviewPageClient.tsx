@@ -365,7 +365,7 @@ export function ReviewPageClient({
             type="button"
             onClick={handleProceed}
             disabled={isSaving}
-            className="w-full h-12 text-base font-semibold bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40"
+            className="w-full h-12 text-base font-bold bg-emerald-500 hover:bg-emerald-400 disabled:opacity-40 rounded-2xl shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_4px_16px_rgba(52,211,153,0.15)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_8px_24px_rgba(52,211,153,0.25)] transition-all"
           >
             {isSaving ? 'Saving…' : 'Save & Continue →'}
           </Button>
