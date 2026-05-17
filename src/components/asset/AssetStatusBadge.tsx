@@ -14,7 +14,7 @@ const BADGE_CONFIG: Record<AssetStatus, { label: string; className: string; dot?
   },
   confirmed: {
     label: 'Confirmed',
-    className: 'bg-emerald-500/25 text-emerald-300 border border-emerald-400/50 font-bold',
+    className: 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 font-bold shadow-[0_0_8px_rgba(52,211,153,0.2)]',
     dot: true,
     title: 'Copied to clipboard',
   },

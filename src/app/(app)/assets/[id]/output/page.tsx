@@ -97,7 +97,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
 
       {/* QR Code + actions */}
       <div className="mt-8 flex flex-col gap-3">
-        <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-4">
+        <div className="rounded-2xl border border-white/[0.10] bg-white/[0.03] p-4 flex items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`https://api.qrserver.com/v1/create-qr-code/?size=80x80&bgcolor=1a2e1a&color=ffffff&data=${encodeURIComponent(`https://${BRAND.domain}/assets/${assetId}/output`)}`}
@@ -107,7 +107,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
             className="rounded-lg flex-shrink-0"
           />
           <div>
-            <p className="text-sm font-medium text-white">Asset QR Code</p>
+            <p className="text-sm font-bold text-white">Asset QR Code</p>
             <p className="text-xs text-white/45 mt-0.5">Scan to reopen this record on any device</p>
             <Link
               href={`/assets/${assetId}/report`}

@@ -76,11 +76,14 @@ export function SalesforcePushButton({ assetId, isConnected, returnTo }: Salesfo
         <button
           type="button"
           onClick={handleConnect}
-          className="flex items-center justify-center gap-2 w-full rounded-xl border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] text-white h-11 px-4 text-sm font-semibold transition-colors"
+          className="flex items-center justify-center gap-2.5 w-full rounded-2xl border border-white/[0.14] hover:border-emerald-500/30 bg-white/[0.03] hover:bg-emerald-500/5 text-white/65 hover:text-white h-12 px-4 text-sm font-semibold transition-all"
         >
-          <Cloud className="w-4 h-4 text-white/50" />
-          Connect Salesforce to Push
+          <Cloud className="w-4 h-4 text-white/40" />
+          Push to Salesforce
         </button>
+        <p className="text-xs text-white/30 text-center">
+          Connect your Salesforce account to push directly — no copy-paste needed
+        </p>
         {authError && (
           <p className="text-xs text-red-400 text-center">
             {authError === 'not_configured'

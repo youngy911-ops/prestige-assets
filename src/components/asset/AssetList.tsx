@@ -405,7 +405,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
 
       {!error && assets !== null && assets.length === 0 && (
         <div className="text-center py-16 flex flex-col items-center">
-          <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5">
+          <div className="w-18 h-18 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 shadow-[0_0_24px_rgba(52,211,153,0.12)] flex items-center justify-center mb-5">
             <Package className="w-8 h-8 text-emerald-400" />
           </div>
           <h2 className="text-white text-xl font-bold tracking-tight">Ready to book in</h2>

@@ -9,7 +9,12 @@ interface BranchPickerScreenProps {
 export function BranchPickerScreen({ onSelect }: BranchPickerScreenProps) {
   return (
     <div className="max-w-[480px] mx-auto px-4 pt-8 pb-[calc(env(safe-area-inset-bottom)+80px)]">
-      <h1 className="text-xl font-semibold text-white mb-2">Select your branch</h1>
+      <div className="mb-6 text-center">
+        <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center mx-auto mb-4">
+          <span className="text-2xl">📍</span>
+        </div>
+      </div>
+      <h1 className="text-2xl font-bold tracking-tight text-white mb-2">Select your branch</h1>
       <p className="text-sm text-white/65 mb-6">Your branch is saved — you can change it any time.</p>
       <BranchSelector selected={null} onSelect={onSelect} />
     </div>

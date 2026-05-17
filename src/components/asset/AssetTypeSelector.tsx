@@ -74,7 +74,7 @@ export function AssetTypeSelector({ selected, onSelect }: AssetTypeSelectorProps
               'flex flex-col items-center justify-center gap-3 rounded-xl p-4 min-h-[100px]',
               'border transition-all',
               isSelected
-                ? 'border-emerald-500/60 bg-emerald-500/10 shadow-[0_0_20px_rgba(34,197,94,0.1)]'
+                ? 'border-emerald-400/70 bg-emerald-500/10 shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_0_20px_rgba(52,211,153,0.15)]'
                 : 'border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12]'
             )}
           >

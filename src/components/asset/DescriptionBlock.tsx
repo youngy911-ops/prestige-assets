@@ -53,7 +53,10 @@ export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isReg
   return (
     <div className="rounded-2xl border border-white/[0.10] bg-white/[0.03] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.08]">
-        <span className="text-sm font-bold text-white tracking-tight">Auction Description</span>
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 flex-shrink-0" />
+          <span className="text-sm font-bold text-white tracking-tight">Auction Description</span>
+        </div>
         <div className="flex items-center gap-2">
           {savedIndicator && (
             <span className="text-xs text-white/35 animate-in fade-in duration-200">Saved</span>
