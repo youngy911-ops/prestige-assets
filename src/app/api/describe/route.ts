@@ -2139,12 +2139,12 @@ export async function POST(req: NextRequest) {
     signedUrls = (signedUrlData ?? [])
       .map(r => r.signedUrl)
       .filter((url): url is string => !!url)
-      .slice(0, 20) // Cap at 12 images — beyond this, additional images add latency without improving quality
+      .slice(0, 20) // Cap at 20 images — beyond this, additional photos add latency without improving quality
   }
 
   // 6. Call GPT-4o — plain text output (NOT Output.object — that is for structured extraction only)
   const systemPrompt = tone === 'quick' ? QUICK_DESCRIPTION_PROMPT : DESCRIPTION_SYSTEM_PROMPT
-  const abort = AbortSignal.timeout(40_000) // 40s hard cap — surfaces an error before Vercel 60s limit kills it
+  const abort = AbortSignal.timeout(40_000) // 40s hard cap — nginx proxy_read_timeout is 120s
   let text: string
   try {
     const result = await generateText({

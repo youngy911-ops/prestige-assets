@@ -123,14 +123,19 @@ export async function getTodayBookingCount(): Promise<number> {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return 0
 
-  const todayStart = new Date()
-  todayStart.setHours(0, 0, 0, 0)
+  // Compute midnight AEST (UTC+10) — server runs UTC so a naive setHours(0,0,0,0)
+  // would use midnight UTC which is 10 AM AEST, giving wrong counts all morning.
+  const nowUTC = Date.now()
+  const AEST_OFFSET_MS = 10 * 60 * 60 * 1000
+  const nowAEST = new Date(nowUTC + AEST_OFFSET_MS)
+  nowAEST.setUTCHours(0, 0, 0, 0)
+  const todayStartUTC = new Date(nowAEST.getTime() - AEST_OFFSET_MS)
 
   const { count } = await supabase
     .from('assets')
     .select('id', { count: 'exact', head: true })
     .eq('user_id', user.id)
-    .gte('created_at', todayStart.toISOString())
+    .gte('created_at', todayStartUTC.toISOString())
 
   return count ?? 0
 }
