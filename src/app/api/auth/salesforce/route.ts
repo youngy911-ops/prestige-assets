@@ -9,12 +9,11 @@ export async function GET(req: NextRequest) {
 
   const clientId = process.env.SALESFORCE_CLIENT_ID
   const redirectUri = process.env.SALESFORCE_REDIRECT_URI
-  if (!clientId || !redirectUri) {
-    return new Response('Salesforce integration not configured', { status: 503 })
-  }
-
-  // Pass the return URL via state so the callback can redirect back to the asset
   const returnTo = req.nextUrl.searchParams.get('returnTo') ?? '/'
+
+  if (!clientId || !redirectUri) {
+    return Response.redirect(new URL(`${returnTo}?sf_error=not_configured`, req.url))
+  }
 
   const params = new URLSearchParams({
     response_type: 'code',

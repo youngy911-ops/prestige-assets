@@ -82,7 +82,11 @@ export function SalesforcePushButton({ assetId, isConnected, returnTo }: Salesfo
           Connect Salesforce to Push
         </button>
         {authError && (
-          <p className="text-xs text-red-400 text-center">Salesforce login failed — try again</p>
+          <p className="text-xs text-red-400 text-center">
+            {authError === 'not_configured'
+              ? 'Salesforce integration not set up on this server'
+              : 'Salesforce login failed — try again'}
+          </p>
         )}
       </div>
     )
