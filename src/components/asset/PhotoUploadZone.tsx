@@ -62,17 +62,7 @@ export function PhotoUploadZone({
     fileInputRef.current?.click()
   }
 
-  async function handleFilesSelected(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = e.target.files
-    if (!files || files.length === 0) return
-
-    // Snapshot files into array BEFORE resetting input (resetting clears the FileList reference)
-    const remaining = 80 - photos.length
-    const fileArray = Array.from(files).slice(0, remaining)
-
-    // Reset input so same file can be re-selected
-    e.target.value = ''
-
+  async function processFiles(fileArray: File[]) {
     if (fileArray.length === 0) return
 
     setIsUploading(true)
@@ -214,10 +204,17 @@ export function PhotoUploadZone({
     setIsDragOver(false)
     if (isUploading || atCap) return
     const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'))
-    if (files.length > 0) {
-      const fakeEvent = { target: { files: files as unknown as FileList, value: '' }, currentTarget: { files: files as unknown as FileList } } as unknown as React.ChangeEvent<HTMLInputElement>
-      handleFilesSelected(fakeEvent)
-    }
+    const remaining = 80 - photos.length
+    if (files.length > 0) processFiles(files.slice(0, remaining))
+  }
+
+  async function handleFilesSelected(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+    const remaining = 80 - photos.length
+    const fileArray = Array.from(files).slice(0, remaining)
+    e.target.value = ''
+    await processFiles(fileArray)
   }
 
   // Empty state
