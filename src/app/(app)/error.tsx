@@ -48,7 +48,7 @@ export default function Error({
     </Link>
   ) : type === 'asset' ? (
     <>
-      <Link href="/assets" className={cn(buttonVariants({ variant: 'default', size: 'lg' }))}>
+      <Link href="/" className={cn(buttonVariants({ variant: 'default', size: 'lg' }))}>
         Go to Assets
       </Link>
       <Button variant="outline" size="lg" onClick={reset}>Try Again</Button>
@@ -56,7 +56,7 @@ export default function Error({
   ) : (
     <>
       <Button variant="outline" size="lg" onClick={reset}>Try Again</Button>
-      <Link href="/assets" className={cn(buttonVariants({ variant: 'default', size: 'lg' }))}>
+      <Link href="/" className={cn(buttonVariants({ variant: 'default', size: 'lg' }))}>
         Go to Assets
       </Link>
     </>
