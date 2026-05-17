@@ -45,6 +45,12 @@ const ASSET_TYPE_ICONS: Record<AssetType, IconEntry> = {
   vehicle:       { kind: 'lucide',  icon: Car },
 }
 
+// Short labels for the grid — avoids line-wrapping on mobile
+const SHORT_LABELS: Partial<Record<AssetType, string>> = {
+  caravan: 'Caravan',
+  general_goods: 'General Goods',
+}
+
 interface AssetTypeSelectorProps {
   selected: AssetType | null
   onSelect: (type: AssetType) => void
@@ -82,7 +88,7 @@ export function AssetTypeSelector({ selected, onSelect }: AssetTypeSelectorProps
               }
             </div>
             <span className={cn('text-[13px] font-medium text-center leading-tight', isSelected ? 'text-white' : 'text-white/70')}>
-              {schema.displayName}
+              {SHORT_LABELS[type] ?? schema.displayName}
             </span>
           </button>
         )
