@@ -327,7 +327,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
                 setDescState('loading')
                 generateDescription(false, tone)
               }}
-              className="mt-1 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition-colors"
+              className="mt-1 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-bold transition-all shadow-[0_0_0_1px_rgba(52,211,153,0.3)]"
             >
               Try Again
             </button>
@@ -346,7 +346,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
               setDescState('loading')
               generateDescription(false, tone)
             }}
-            className="self-start px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition-colors"
+            className="self-start px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-sm font-bold transition-all shadow-[0_0_0_1px_rgba(52,211,153,0.3)]"
           >
             Try Again
           </button>

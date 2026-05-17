@@ -249,6 +249,12 @@ h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
     <div class="qa-a">Yes. It's a simple DNS change — point slattery.com.au/bookin or any subdomain to the server, and it works. We can also move the whole app behind the Slattery domain if IT prefers. No code changes required.
     <div class="simple">Simple version: "Yes, a 5-minute DNS change."</div></div>
   </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What if OpenAI goes down or changes their pricing?"</div>
+    <div class="qa-a">The app is built provider-agnostic — the AI layer can be swapped in an afternoon. Azure OpenAI (Microsoft), Google Gemini, and Anthropic Claude are all direct drop-in replacements. If OpenAI pricing becomes an issue, we move providers and staff notice nothing. The $900/year estimate uses current OpenAI pricing but there's margin in it.
+    <div class="simple">Simple version: "We can switch AI providers any time. Not locked in."</div></div>
+  </div>
 </div>
 
 <div class="tip">💬 IT's job is to assess risk. Most of their questions are really "who's accountable if this breaks?" The answer is always: "The pilot is sandboxed, nothing touches production, and we review before any rollout. There's no risk to IT during the pilot."</div>

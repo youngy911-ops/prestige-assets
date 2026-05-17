@@ -122,7 +122,7 @@ export default function NewAssetPage() {
         )}
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-white">{heading}</h1>
-          <p className="text-white/55 text-sm mt-0.5">{subheading}</p>
+          <p className="text-white/50 text-sm mt-0.5">{subheading}</p>
         </div>
       </div>
 

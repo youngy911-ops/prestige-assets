@@ -158,7 +158,7 @@ export default function QuickBookPage() {
         <div>
           <div className="flex items-center gap-2">
             <Zap className="w-4 h-4 text-emerald-400" />
-            <h1 className="text-xl font-semibold text-white">Quick Book</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-white">Quick Book</h1>
           </div>
           <p className="text-sm text-white/50">Snap a photo, AI books it in</p>
         </div>

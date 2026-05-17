@@ -77,8 +77,8 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
           <ChevronLeft className="h-4 w-4" />
           Review
         </Link>
-        <h1 className="text-xl font-semibold text-white">Output</h1>
-        <p className="text-sm text-white/65 mt-0.5">
+        <h1 className="text-2xl font-bold tracking-tight text-white">Output</h1>
+        <p className="text-sm font-medium text-emerald-400/75 mt-0.5">
           {getAssetDisplayTitle(asset.asset_type, asset.asset_subtype)}
         </p>
       </div>
