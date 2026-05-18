@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works — Infrastructure & Technical Reference</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: #f6f7f9;
+  color: #1a1a1a;
+  padding: 32px 0 80px;
+}
+.page { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: #888; margin-bottom: 32px; }
+
+.section {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.07);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.section-header {
+  padding: 13px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #2a2a2a;
+}
+
+/* Stack table */
+table { width: 100%; border-collapse: collapse; }
+th { background: #f8f9fa; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #888; padding: 10px 20px; text-align: left; border-bottom: 1px solid #e8e8e8; }
+td { padding: 11px 20px; font-size: 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+td:first-child { font-weight: 700; color: #0f1c3f; white-space: nowrap; width: 160px; }
+td:nth-child(2) { color: #444; }
+td:nth-child(3) { color: #888; font-size: 13px; }
+
+/* Steps */
+.step { display: flex; gap: 16px; padding: 14px 20px; border-bottom: 1px solid #f0f0f0; }
+.step:last-child { border-bottom: none; }
+.step-num {
+  width: 28px; height: 28px;
+  background: #0f1c3f;
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-body {}
+.step-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+.step-detail { font-size: 13px; color: #555; line-height: 1.5; }
+.step-tech { font-size: 12px; color: #059669; font-weight: 600; margin-top: 4px; }
+
+/* Q&A items */
+.qa-item { padding: 14px 20px; border-bottom: 1px solid #f0f0f0; }
+.qa-item:last-child { border-bottom: none; }
+.qa-q { font-size: 14px; font-weight: 700; color: #0f1c3f; margin-bottom: 6px; }
+.qa-a { font-size: 14px; color: #333; line-height: 1.6; }
+.say {
+  background: #f0f7ff;
+  border-left: 3px solid #2a6ef5;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #1a3a6b;
+  font-style: italic;
+  margin-top: 8px;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Limitations */
+.limit { padding: 12px 20px; border-bottom: 1px solid #f0f0f0; display: flex; gap: 12px; }
+.limit:last-child { border-bottom: none; }
+.limit-dot { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; flex-shrink: 0; margin-top: 6px; }
+.limit-text { font-size: 14px; color: #333; line-height: 1.5; }
+.limit-text strong { color: #1a1a1a; }
+
+.tip {
+  background: #fffbea;
+  border-left: 3px solid #f5a623;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #7a5a00;
+  margin: 12px 20px;
+  border-radius: 0 4px 4px 0;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>How It Works</h1>
+<p class="subtitle">Infrastructure, tech stack, and what to say when someone asks.</p>
+
+<!-- THE STACK -->
+<div class="section">
+  <div class="section-header">The Stack — What It's Built On</div>
+  <table>
+    <tr><th>Layer</th><th>What</th><th>Notes</th></tr>
+    <tr>
+      <td>Frontend</td>
+      <td>Next.js (React)</td>
+      <td>Standard web framework. Runs in any browser, no install required.</td>
+    </tr>
+    <tr>
+      <td>Database</td>
+      <td>Supabase (PostgreSQL)</td>
+      <td>Hosted in Sydney. Stores all asset records, extracted fields, user accounts.</td>
+    </tr>
+    <tr>
+      <td>File storage</td>
+      <td>Supabase Storage</td>
+      <td>Where photos actually live. Also Sydney. Row Level Security — users only see their own photos.</td>
+    </tr>
+    <tr>
+      <td>AI — extraction</td>
+      <td>OpenAI GPT-4o</td>
+      <td>Reads compliance plate photos, extracts every field as structured data. 15–20 seconds.</td>
+    </tr>
+    <tr>
+      <td>AI — description</td>
+      <td>OpenAI GPT-4o</td>
+      <td>Writes the auction description from confirmed fields + photos. 15–20 seconds.</td>
+    </tr>
+    <tr>
+      <td>Server</td>
+      <td>DigitalOcean VPS</td>
+      <td>Dedicated server. ~$12/month. PM2 keeps the app running, restarts automatically on crash.</td>
+    </tr>
+    <tr>
+      <td>Domain + SSL</td>
+      <td>Cloudflare</td>
+      <td>assetbookintool.com. HTTPS handled automatically. Certificate expires June 2026, auto-renews.</td>
+    </tr>
+    <tr>
+      <td>Process manager</td>
+      <td>PM2</td>
+      <td>Restarts the app on crash or server reboot. No manual intervention needed.</td>
+    </tr>
+  </table>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <div class="section-header">How It Actually Works — Step by Step</div>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <div class="step-title">Inspector takes photos on site</div>
+      <div class="step-detail">Compliance plate, build plate, odometer, exterior walkaround, interior, any damage. More photos = better results. On laptop: drag photos straight from Finder onto the upload zone.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <div class="step-title">Photos upload and compress</div>
+      <div class="step-detail">iPhone 15 photos are ~6MB each. The app compresses them to ~400KB before uploading — preserves quality, massively reduces storage and upload time. Photos stored in Supabase Storage in Sydney.</div>
+      <div class="step-tech">80-photo limit per asset. Free tier has 800MB headroom remaining.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <div class="step-title">AI reads the plates and extracts every field</div>
+      <div class="step-detail">Server sends photos to GPT-4o with a detailed prompt specific to that asset type (truck, excavator, forklift etc.). GPT-4o reads the compliance plate, identifies make/model/year/VIN/GVM and 20+ other fields. Returns structured data. Each field gets a confidence score — "from photo" (read directly) or "AI estimate" (inferred from model knowledge).</div>
+      <div class="step-tech">15–20 seconds. Asset-type-specific prompts: trucks, earthmoving, forklifts, trailers, marine, agriculture, caravans, vehicles, general goods.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <div class="step-title">Inspector reviews every extracted field</div>
+      <div class="step-detail">Nothing saves until a person confirms it. Inspector sees all extracted fields with confidence badges, can edit any of them. New: type plain English into the AI fill box ("no keys, purple, 80,000km") and matching fields fill automatically. Mandatory review step — the AI is a drafter, not a decision-maker.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <div class="step-title">Auction description generates</div>
+      <div class="step-detail">GPT-4o writes a professional auction description using the confirmed fields and photos. Asset-type-specific templates: prime movers, tippers, excavators, forklifts, caravans, marine etc. — each formatted to Slattery's style. Inspector can edit before saving.</div>
+      <div class="step-tech">Standard tone: full multi-line spec description. Quick tone: 2–4 sentence summary.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <div class="step-title">Output: copy, download, or push</div>
+      <div class="step-detail">
+        <strong>Copy All to Clipboard</strong> — one button copies all Salesforce fields + description, ready to paste.<br>
+        <strong>Download Excel</strong> — generates a .xlsx file with all fields as column headers, values in row 2. For valuers who track in spreadsheets.<br>
+        <strong>Push to Salesforce</strong> — with IT's sandbox setup, one button creates the Asset record directly. No clipboard step.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- WHAT TO SAY -->
+<div class="section">
+  <div class="section-header">What to Say When Asked</div>
+  <div class="tip">💬 You don't need to know every technical detail. "Good question — let me follow up on that in writing" is always fine for deep IT questions.</div>
+
+  <div class="qa-item">
+    <div class="qa-q">"How accurate is it?"</div>
+    <div class="qa-a">It reads the actual plate, so VIN, GVM, compliance date are reading the exact number printed on the metal. For engine and transmission it infers from make/model/year knowledge — same thing a book-in person would do by looking it up. The review step exists so nothing incorrect gets through.</div>
+    <div class="say">"For plate data it's reading exact numbers. For specs it makes an educated guess that the inspector confirms. Nothing saves until a person reviews it."</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What happens to the photos?"</div>
+    <div class="qa-a">Stored in Supabase in Sydney, tied to the user's account. Only that user can access them — database-level access control, not just app logic. Not public. The only external system that sees them is OpenAI for the extraction call.</div>
+    <div class="say">"Photos stay in Australia. Only the person who uploaded them can access them. OpenAI sees them briefly for extraction, then that's it."</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What if the AI gets something wrong?"</div>
+    <div class="qa-a">The inspector fixes it before it saves. The review step isn't optional — you can't skip it. In practice, the AI is wrong less often than manual data entry, and when it is wrong it's obvious (misread digit, wrong engine series). The inspector catches it.</div>
+    <div class="say">"There's a mandatory review step. You can't skip it. If the AI gets something wrong, the inspector fixes it before anything saves to Salesforce."</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Can it handle all our asset types?"</div>
+    <div class="qa-a">Nine categories: trucks (prime mover, tipper, tray, pantech, all subtypes), trailers, earthmoving (excavator, dozer, loader, grader, forklift), agriculture, marine, caravans, vehicles (ute, sedan, SUV), general goods. Each has a specific extraction template and description format.</div>
+    <div class="say">"Trucks, trailers, earthmoving, ag, forklifts, marine, caravans, utes — all the categories Slattery books daily."</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"Who pays for the AI?"</div>
+    <div class="qa-a">Currently paid personally via an OpenAI account — part of the roughly $900/year running cost. If Slattery wants to take it over formally, they'd set up their own API key. The cost per asset is tiny — roughly 5–10 cents per book-in for the AI calls.</div>
+    <div class="say">"I'm covering the AI costs as part of the overall running cost. About 5–10 cents per asset. Happy to work out the billing structure if we formalise it."</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">"What if OpenAI goes down?"</div>
+    <div class="qa-a">The app still works — you can still browse assets, review and edit fields manually, and copy the output. Only extraction and description generation pause until OpenAI comes back. In practice this is very rare and usually resolves in minutes.</div>
+    <div class="say">"If OpenAI has an outage, extraction and description generation pause. Everything else works. Fallback is the same manual process as today — no data is lost."</div>
+  </div>
+
+</div>
+
+<!-- KNOWN LIMITATIONS -->
+<div class="section">
+  <div class="section-header">Known Limitations — Be Honest If Asked</div>
+
+  <div class="limit">
+    <div class="limit-dot"></div>
+    <div class="limit-text"><strong>Free Supabase tier:</strong> 1GB storage limit. Currently using roughly 200MB with 486 photos. Fine for a pilot. National rollout would need a paid plan (~$25/month).</div>
+  </div>
+
+  <div class="limit">
+    <div class="limit-dot"></div>
+    <div class="limit-text"><strong>Single server:</strong> If the DigitalOcean server has an issue, the app goes down. PM2 handles crashes automatically but a hardware failure would need manual intervention. For a pilot this is acceptable. For national rollout, would want more robust hosting.</div>
+  </div>
+
+  <div class="limit">
+    <div class="limit-dot"></div>
+    <div class="limit-text"><strong>AI isn't perfect:</strong> Occasionally misreads a digit on a plate or misses a field. The review step catches these. It's faster to fix one wrong field than to type all 34 from scratch — that's the value even when it's not perfect.</div>
+  </div>
+
+  <div class="limit">
+    <div class="limit-dot"></div>
+    <div class="limit-text"><strong>Salesforce integration not live yet:</strong> This is exactly what Wednesday's ask is about. Currently copy-paste. The IT sandbox setup is the missing piece.</div>
+  </div>
+
+  <div class="limit">
+    <div class="limit-dot"></div>
+    <div class="limit-text"><strong>No offline mode:</strong> Needs internet to upload photos, run extraction, and generate descriptions. Works on venue Wi-Fi or mobile hotspot.</div>
+  </div>
+
+</div>
+
+</div>
+</body>
+</html>
