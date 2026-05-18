@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { generateText } from 'ai'
 import { openai } from '@ai-sdk/openai'
-import { parseStructuredFields } from '@/lib/utils/parseStructuredFields'
+import { parseStructuredFields, extractFreeformNotes } from '@/lib/utils/parseStructuredFields'
 
 export const maxDuration = 60 // Allow up to 60s for GPT-4o description generation
 
@@ -2092,9 +2092,7 @@ function buildDescriptionUserPrompt(asset: {
     .map(([k, v]) => `${k}: ${v}`)
     .join('\n')
 
-  const freeformNotes = asset.inspection_notes
-    ? (asset.inspection_notes.split('\n').find(l => l.startsWith('Notes: '))?.slice('Notes: '.length) ?? '')
-    : ''
+  const freeformNotes = extractFreeformNotes(asset.inspection_notes)
 
   const parts: string[] = [
     `Asset type: ${asset.asset_type}`,
