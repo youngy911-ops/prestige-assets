@@ -116,6 +116,7 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
       <PhotoUploadZone
         assetId={assetId}
         userId={user.id}
+        assetType={asset.asset_type}
         initialPhotos={photosWithUrls}
         showCTA
       />

@@ -19,6 +19,7 @@ export interface PhotoItem {
 interface PhotoUploadZoneProps {
   assetId: string
   userId: string
+  assetType?: string
   initialPhotos?: PhotoItem[]
   onPhotosChange?: (photos: PhotoItem[]) => void
   showCTA?: boolean
@@ -32,6 +33,7 @@ interface UploadError {
 export function PhotoUploadZone({
   assetId,
   userId,
+  assetType,
   initialPhotos = [],
   onPhotosChange,
   showCTA = false,
@@ -80,7 +82,7 @@ export function PhotoUploadZone({
     const COMPRESS_BATCH = 3
     const processed: File[] = []
     for (let i = 0; i < fileArray.length; i += COMPRESS_BATCH) {
-      const batch = await Promise.all(fileArray.slice(i, i + COMPRESS_BATCH).map(f => processImageForUpload(f)))
+      const batch = await Promise.all(fileArray.slice(i, i + COMPRESS_BATCH).map(f => processImageForUpload(f, assetType)))
       processed.push(...batch)
     }
 

@@ -5,12 +5,13 @@
  * Processes a File before upload:
  * 1. Reads EXIF orientation with exifr.rotation()
  * 2. If rotation needed, redraws onto canvas to bake pixels correctly (strips EXIF)
- * 3. Compresses to max 1600px longest side at 0.82 quality, 1.2MB cap (JPEG output)
+ * 3. Compresses to max 1200px longest side at 0.75 quality, 500KB cap (JPEG output)
+ *    Exception: vehicle assets use 1600px / 0.82 / 1.2MB for better damage detail
  *
  * Falls back gracefully at every step — if EXIF read or canvas rotation fails,
  * skips that step and proceeds with compression only. Never throws.
  */
-export async function processImageForUpload(file: File): Promise<File> {
+export async function processImageForUpload(file: File, assetType?: string): Promise<File> {
   let sourceFile: File = file
 
   // Step 1 & 2: EXIF rotation — wrapped in try/catch; failure is non-fatal
@@ -52,11 +53,11 @@ export async function processImageForUpload(file: File): Promise<File> {
   try {
     const imageCompression = (await import('browser-image-compression')).default
     return await imageCompression(sourceFile, {
-      maxWidthOrHeight: 1600,
+      maxWidthOrHeight: assetType === 'vehicle' ? 1600 : 1200,
       useWebWorker: true,
       fileType: 'image/jpeg',
-      initialQuality: 0.82,
-      maxSizeMB: 1.2,
+      initialQuality: assetType === 'vehicle' ? 0.82 : 0.75,
+      maxSizeMB: assetType === 'vehicle' ? 1.2 : 0.5,
     })
   } catch {
     // Compression failed — return uncompressed (better to upload large than not upload)
