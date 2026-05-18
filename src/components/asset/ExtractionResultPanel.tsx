@@ -124,7 +124,7 @@ export function ExtractionResultPanel({
         <button
           type="button"
           onClick={() => router.push(`/assets/${assetId}/review`)}
-          className="flex items-center justify-center w-full h-12 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[15px] transition-colors gap-1"
+          className="flex items-center justify-center w-full h-12 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-[15px] shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_4px_16px_rgba(52,211,153,0.15)] transition-colors gap-1"
         >
           Proceed to Review
           <ChevronRight className="w-4 h-4" aria-hidden="true" />

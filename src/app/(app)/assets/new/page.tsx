@@ -123,6 +123,9 @@ export default function NewAssetPage() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-white">{heading}</h1>
           <p className="text-white/50 text-sm mt-0.5">{subheading}</p>
+          {step === 2 && (
+            <p className="text-sm text-white/40 mt-1">Drag your photos in to auto-detect the type</p>
+          )}
         </div>
       </div>
 

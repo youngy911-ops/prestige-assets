@@ -179,7 +179,7 @@ export function ExtractionLoadingState({ assetType, onNavigateToAssets, onNaviga
           </p>
         </div>
         <p className="text-sm text-white/40">
-          Usually 15–20 seconds
+          Usually under 20 seconds
         </p>
       </div>
 

@@ -145,7 +145,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <h1 className="text-3xl font-black tracking-tight text-white">Assets</h1>
+          <h1 className="text-4xl font-black tracking-tight text-white leading-none">Assets</h1>
           {assets && assets.length > 0 && (
             <p className="text-xs text-white/30 font-medium flex items-center gap-1">
               <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" aria-hidden="true">

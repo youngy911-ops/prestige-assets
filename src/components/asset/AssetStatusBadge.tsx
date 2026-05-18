@@ -34,7 +34,7 @@ export function AssetStatusBadge({ status }: AssetStatusBadgeProps) {
         config.className
       )}
     >
-      {config.dot && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />}
+      {config.dot && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0 animate-pulse" />}
       {config.label}
     </span>
   )

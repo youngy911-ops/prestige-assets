@@ -172,25 +172,25 @@ describe('ExtractionLoadingState', () => {
   it('renders the timing sub-message', async () => {
     const { ExtractionLoadingState } = await import('@/components/asset/ExtractionLoadingState')
     render(<ExtractionLoadingState />)
-    expect(screen.getByText(/Usually 15–20 seconds/)).toBeTruthy()
+    expect(screen.getByText(/Usually under 20 seconds/)).toBeTruthy()
   })
 })
 
 // ─── ExtractionFailureState ─────────────────────────────────────────────────
 
 describe('ExtractionFailureState', () => {
-  it('renders "Extraction failed" heading', async () => {
+  it('renders "Extraction didn\'t complete" heading', async () => {
     const { ExtractionFailureState } = await import('@/components/asset/ExtractionFailureState')
     const onRetry = vi.fn()
     render(<ExtractionFailureState assetId="asset-1" onRetry={onRetry} />)
-    expect(screen.getByText('Extraction failed')).toBeTruthy()
+    expect(screen.getByText("Extraction didn't complete")).toBeTruthy()
   })
 
-  it('renders "Try Again" button and "Skip to Manual Entry" link', async () => {
+  it('renders "Try Again →" button and "Skip to Manual Entry" link', async () => {
     const { ExtractionFailureState } = await import('@/components/asset/ExtractionFailureState')
     const onRetry = vi.fn()
     render(<ExtractionFailureState assetId="asset-1" onRetry={onRetry} />)
-    expect(screen.getByText('Try Again')).toBeTruthy()
+    expect(screen.getByText('Try Again →')).toBeTruthy()
     expect(screen.getByText('Skip to Manual Entry')).toBeTruthy()
   })
 })
