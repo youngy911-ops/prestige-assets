@@ -140,8 +140,11 @@ describe('ExtractionTriggerState', () => {
     render(
       <ExtractionTriggerState assetId="asset-1" hasPhotos={false} onTrigger={onTrigger} />
     )
-    expect(screen.getByText('No photos uploaded')).toBeTruthy()
+    expect(screen.getByText('No photos uploaded yet')).toBeTruthy()
     expect(screen.getByText('Skip to Manual Entry')).toBeTruthy()
+    // Back link should go to the photos page, not a generic fallback
+    const backLink = screen.getByText('← Upload Photos').closest('a')
+    expect(backLink?.getAttribute('href')).toBe('/assets/asset-1/photos')
   })
 })
 

@@ -221,7 +221,7 @@ export function ReviewPageClient({
     <form onSubmit={(e) => { e.preventDefault(); handleProceed() }} className="flex flex-col gap-0">
       {/* Duplicate detection banner */}
       {duplicateWarning && (
-        <div className="mb-4 rounded-xl border border-red-500/40 bg-red-900/20 px-4 py-3 flex items-start gap-3">
+        <div className="mb-4 rounded-2xl border border-red-500/40 bg-red-900/20 px-4 py-3 flex items-start gap-3">
           <span className="text-red-400 text-lg leading-none mt-0.5">⚠</span>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-red-300">Possible duplicate detected</p>

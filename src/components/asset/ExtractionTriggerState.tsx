@@ -7,14 +7,20 @@ interface ExtractionTriggerStateProps {
 export function ExtractionTriggerState({ assetId, hasPhotos, onTrigger }: ExtractionTriggerStateProps) {
   if (!hasPhotos) {
     return (
-      <div className="text-center py-8 flex flex-col items-center gap-3">
-        <p className="text-white font-semibold">No photos uploaded</p>
-        <p className="text-sm text-white/65">
-          Upload photos first to auto-extract details. Or skip to manual entry.
+      <div className="text-center py-8 flex flex-col items-center gap-4">
+        <p className="text-white font-semibold">No photos uploaded yet</p>
+        <p className="text-sm text-white/65 max-w-[280px]">
+          Go back and upload photos — AI will extract all the details automatically.
         </p>
         <a
+          href={`/assets/${assetId}/photos`}
+          className="flex items-center justify-center w-full h-12 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-[15px] transition-all shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_4px_16px_rgba(52,211,153,0.15)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_8px_24px_rgba(52,211,153,0.25)]"
+        >
+          ← Upload Photos
+        </a>
+        <a
           href={`/assets/${assetId}/review`}
-          className="text-sm text-white/65 hover:text-white underline"
+          className="text-sm text-white/50 hover:text-white/80 transition-colors"
         >
           Skip to Manual Entry
         </a>
