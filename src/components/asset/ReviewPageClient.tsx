@@ -277,8 +277,8 @@ export function ReviewPageClient({
       )}
 
       {/* AI field fill — type anything in plain English to fill fields instantly */}
-      <div className="mb-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/8 shadow-[0_0_0_1px_rgba(52,211,153,0.05),0_4px_16px_rgba(0,0,0,0.2)] p-3">
-        <p className="text-xs text-emerald-400/60 flex items-center gap-1.5 mb-2">
+      <div className="mb-4 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 shadow-[inset_0_0_0_1px_rgba(52,211,153,0.1),0_4px_16px_rgba(0,0,0,0.2)] p-3">
+        <p className="text-xs text-emerald-400/80 flex items-center gap-1.5 mb-2">
           <Sparkles className="w-3 h-3 text-emerald-400/70 flex-shrink-0" />
           Tell the AI — it fills the fields below automatically
         </p>

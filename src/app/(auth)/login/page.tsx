@@ -3,7 +3,10 @@ import { BRAND } from '@/lib/constants/brand'
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-emerald-500/8 blur-[120px]" />
+      </div>
       <div className="w-full max-w-[380px] flex flex-col gap-6">
         <div className="text-center mb-2">
           <div className="relative inline-flex items-center justify-center">
@@ -18,7 +21,7 @@ export default function LoginPage() {
           <p className="text-sm font-medium text-emerald-400/70 mt-1">Asset Book-In</p>
           <p className="text-xs text-white/30 mt-2">Log in to start booking in assets</p>
         </div>
-        <div className="bg-white/[0.03] rounded-3xl border border-white/[0.10] shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_32px_64px_rgba(0,0,0,0.4)] p-6">
+        <div className="bg-white/[0.03] rounded-3xl border border-white/[0.14] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_40px_80px_rgba(0,0,0,0.5),0_0_0_1px_rgba(0,0,0,0.3)] p-7">
           <LoginForm />
         </div>
       </div>

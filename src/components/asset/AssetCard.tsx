@@ -69,9 +69,16 @@ export function AssetCard({ id, asset_type, asset_subtype, fields, status, updat
       className="block group animate-in fade-in slide-in-from-bottom-1 duration-200 fill-mode-both rounded-2xl"
       style={animationDelay ? { animationDelay } : undefined}
     >
-      <div className="bg-[var(--card)] rounded-2xl border border-white/[0.11] transition-all duration-200 group-hover:border-emerald-500/30 group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.4),0_0_0_1px_rgba(52,211,153,0.1)] active:scale-[0.98] flex flex-col overflow-hidden relative">
+      <div
+        className="rounded-2xl border border-white/[0.11] transition-all duration-200 group-hover:border-emerald-500/30 group-hover:shadow-[0_4px_24px_rgba(0,0,0,0.4),0_0_0_1px_rgba(52,211,153,0.1)] active:scale-[0.98] flex flex-col overflow-hidden relative"
+        style={{
+          background: status === 'confirmed'
+            ? 'linear-gradient(135deg, oklch(0.24 0.07 148) 0%, oklch(0.22 0.06 148) 100%)'
+            : 'linear-gradient(135deg, oklch(0.24 0.06 148) 0%, oklch(0.21 0.05 148) 100%)'
+        }}
+      >
         {/* Status accent stripe */}
-        <div className={`h-full w-1 flex-shrink-0 absolute left-0 top-0 bottom-0 rounded-l-2xl ${
+        <div className={`h-full w-1.5 flex-shrink-0 absolute left-0 top-0 bottom-0 rounded-l-2xl ${
           status === 'confirmed' ? 'bg-emerald-500/70' :
           status === 'reviewed' ? 'bg-blue-400/60' :
           isExtracting ? 'bg-amber-400/60' :

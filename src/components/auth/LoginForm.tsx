@@ -61,7 +61,7 @@ export function LoginForm() {
       <Button
         type="submit"
         disabled={loading}
-        className="bg-emerald-600 hover:bg-emerald-500 text-white h-11 w-full font-semibold"
+        className="bg-emerald-600 hover:bg-emerald-500 text-white h-12 w-full font-semibold rounded-2xl shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_4px_20px_rgba(52,211,153,0.2)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_8px_28px_rgba(52,211,153,0.3)] transition-all"
       >
         {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Sign In'}
       </Button>

@@ -72,9 +72,9 @@ export default async function PhotosPage({ params }: PhotosPageProps) {
         </Link>
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-white">Photos</h1>
-          <p className="text-sm font-medium text-emerald-400/80">
+          <span className="inline-flex items-center mt-1 text-xs font-bold text-emerald-300/80 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1 uppercase tracking-widest">
             {getAssetDisplayTitle(asset.asset_type, asset.asset_subtype)}
-          </p>
+          </span>
         </div>
       </div>
       <StepIndicator current="photos" />

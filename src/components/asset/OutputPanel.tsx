@@ -199,7 +199,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
         <div className="flex flex-col gap-3">
           {/* Hero photo */}
           <div className="relative rounded-2xl overflow-hidden border border-white/[0.08]">
-            <div className="aspect-[16/9]">
+            <div className="aspect-[4/3]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={photoUrls[heroIndex]}
@@ -207,11 +207,11 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/40 to-transparent pointer-events-none rounded-b-2xl" />
+              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent pointer-events-none rounded-b-2xl" />
             </div>
             {/* Photo count badge */}
             {photoUrls.length > 1 && (
-              <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full">
+              <div className="absolute bottom-4 right-4 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm text-white text-sm font-bold px-3 py-1.5 rounded-full">
                 <Camera className="h-3 w-3" />
                 {heroIndex + 1} of {photoUrls.length}
               </div>
@@ -253,7 +253,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
       <div className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-4">
         <div className="flex items-center gap-1.5">
           <Sparkles className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
-          <span className="text-xl font-black text-emerald-300 tabular-nums">{stats.fieldCount}</span>
+          <span className="text-3xl font-black text-emerald-300 tabular-nums leading-none">{stats.fieldCount}</span>
           <span className="text-xs text-white/35 font-medium">fields extracted</span>
         </div>
         <div className="w-px h-4 bg-white/[0.08]" />
@@ -265,10 +265,10 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
         <button
           type="button"
           onClick={handleCopyAll}
-          className={`w-full h-14 rounded-2xl text-white text-[15px] font-bold flex items-center justify-center gap-2.5 transition-all duration-200 ${
+          className={`w-full h-16 rounded-2xl text-white text-lg font-black tracking-tight flex items-center justify-center gap-2.5 transition-all duration-200 ${
             allCopied
-              ? 'bg-emerald-400 scale-[0.99] shadow-[0_0_0_1px_rgba(52,211,153,0.6),0_0_32px_rgba(52,211,153,0.4)]'
-              : 'bg-emerald-500 hover:bg-emerald-400 shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_4px_24px_rgba(52,211,153,0.2)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_8px_32px_rgba(52,211,153,0.3)]'
+              ? 'bg-emerald-400 scale-[0.98] shadow-[0_0_0_2px_rgba(52,211,153,0.8),0_0_40px_rgba(52,211,153,0.5)]'
+              : 'bg-emerald-500 hover:bg-emerald-400 shadow-[0_0_0_2px_rgba(52,211,153,0.4),0_8px_32px_rgba(52,211,153,0.25)] hover:shadow-[0_0_0_2px_rgba(52,211,153,0.5),0_8px_32px_rgba(52,211,153,0.3)]'
           }`}
         >
           {allCopied ? <Check className="h-5 w-5" /> : <Copy className="h-4 w-4" />}

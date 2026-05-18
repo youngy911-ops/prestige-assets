@@ -187,7 +187,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             onClick={() => setShowBookInMenu(v => !v)}
             onMouseEnter={() => { router.prefetch('/assets/new'); router.prefetch('/assets/quick') }}
             disabled={uploadingFiles}
-            className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-white text-[15px] font-bold px-4 py-2.5 rounded-xl shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_2px_8px_rgba(52,211,153,0.15)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_4px_16px_rgba(52,211,153,0.25)] transition-all disabled:opacity-60"
+            className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-white text-base font-bold px-5 py-3 rounded-xl shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_2px_8px_rgba(52,211,153,0.15)] hover:shadow-[0_0_0_1px_rgba(52,211,153,0.5),0_4px_16px_rgba(52,211,153,0.25)] transition-all disabled:opacity-60"
           >
             {uploadingFiles ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
             {uploadingFiles ? 'Uploading…' : 'Book In'}

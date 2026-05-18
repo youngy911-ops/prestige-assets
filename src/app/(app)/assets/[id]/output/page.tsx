@@ -78,9 +78,9 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
           Review
         </Link>
         <h1 className="text-2xl font-bold tracking-tight text-white">Output</h1>
-        <p className="text-sm font-medium text-emerald-400/75 mt-0.5">
+        <span className="inline-flex items-center mt-1 text-xs font-bold text-emerald-300/80 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1 uppercase tracking-widest">
           {getAssetDisplayTitle(asset.asset_type, asset.asset_subtype)}
-        </p>
+        </span>
       </div>
       <StepIndicator current="output" />
 

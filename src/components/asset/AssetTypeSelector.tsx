@@ -71,11 +71,11 @@ export function AssetTypeSelector({ selected, onSelect }: AssetTypeSelectorProps
             type="button"
             onClick={() => onSelect(type)}
             className={cn(
-              'flex flex-col items-center justify-center gap-3 rounded-xl p-4 min-h-[100px]',
+              'flex flex-col items-center justify-center gap-3 rounded-2xl p-4 min-h-[110px]',
               'border transition-all',
               isSelected
-                ? 'border-emerald-400/70 bg-emerald-500/10 shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_0_20px_rgba(52,211,153,0.15)]'
-                : 'border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12]'
+                ? 'shadow-[0_0_0_2px_rgba(52,211,153,0.5),0_0_30px_rgba(52,211,153,0.2)] border-emerald-400/80 bg-emerald-500/15'
+                : 'border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12] hover:shadow-[0_4px_20px_rgba(0,0,0,0.3)]'
             )}
           >
             <div className={cn(

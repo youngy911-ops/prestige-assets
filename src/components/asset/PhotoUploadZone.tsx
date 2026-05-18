@@ -226,7 +226,7 @@ export function PhotoUploadZone({
         className={`flex flex-col items-center justify-center gap-4 py-16 px-4 rounded-2xl border-2 border-dashed transition-all duration-200 ${
           isDragOver
             ? 'border-emerald-400/60 bg-emerald-500/10 scale-[1.01]'
-            : 'border-white/[0.10] bg-white/[0.02] hover:border-emerald-500/30 hover:bg-emerald-500/5'
+            : 'border-white/[0.16] bg-white/[0.02] hover:border-emerald-500/30 hover:bg-emerald-500/5 shadow-[inset_0_0_40px_rgba(0,0,0,0.15)]'
         }`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
