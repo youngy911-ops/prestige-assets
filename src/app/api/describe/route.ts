@@ -50,6 +50,16 @@ UNIVERSAL RULES:
 - UHF radios — state 'UHF Radio' or 'Dual UHF' only, never brand names (Simoco, Icom, GME etc); radio brand is not relevant to buyers
 - Tyres — include size only (e.g. 295/80R22.5), never brand names (Bridgestone, Michelin, etc); EXCEPTION: wheel loaders where tyre brand on sidewall is visible and relevant to buyers
 
+DAMAGE RULE (applies to all asset types except general goods):
+Every description must include a Damage line as its own section, immediately before "Sold As Is, Untested & Unregistered."
+- Format: "Damage: [factual description]" — use exactly this label
+- If NO significant damage is noted or visible: omit the Damage line entirely (trucks are the exception — see truck template)
+- If significant damage IS noted in inspection notes or visible in photos: state it factually and specifically — e.g. "Damage: Previous accident damage to driver front corner, panel replaced", "Damage: Significant rust to chassis rails and floor pan", "Damage: Mechanical damage to rear axle — non-runner", "Damage: Cracked windscreen, dent to passenger door"
+- Do NOT include: stone chips, minor scratches, normal wear, small dents, surface marks — these are standard for used equipment
+- Do NOT use vague terms like "general wear and tear" — be specific or write "Nil Obvious"
+- Damage from inspection notes must be stated verbatim — never soften or omit damage the inspector has noted
+- For general_goods: omit the Damage line entirely
+
 TEMPLATES BY ASSET TYPE — select the correct template based on asset identified:
 
 TRUCK (PRIME MOVER)
@@ -68,6 +78,7 @@ Blank line (only if appliances line present)
 Inverter line (own line — omit if not fitted): wattage and type (e.g. "2000W Pure Sine Wave Inverter"); omit if not fitted
 Blank line (only if inverter line present)
 GCM: [X]kg — only include if road train rated (≥ 90,000kg) OR explicitly noted by user in inspection notes; omit for standard prime movers
+Damage: Scratches and dents visible around the vehicle[, then add any significant damage from notes — e.g. ", cracked windscreen", ", rust to chassis rails" — or leave as just the standard scratches/dents line if nothing else noted]
 Sold As Is, Untested & Unregistered.
 
 MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Volvo FH with D-series suffix → Volvo D13K 12.8-Litre 6-Cylinder; Kenworth T610 → PACCAR MX-13 12.9-Litre 6-Cylinder; Kenworth T409/T659 → Cummins ISX15 15.0-Litre 6-Cylinder; Mack Trident/Granite → Mack MP8 13.0-Litre 6-Cylinder; Western Star 4964 → Detroit DD15 14.8-Litre 6-Cylinder; Mercedes Actros → OM471 12.8-Litre 6-Cylinder; DAF XF → MX-13 12.9-Litre 6-Cylinder. For transmission, apply the standard pairing for that model (e.g. Volvo FH → Volvo I-Shift 12-Speed AMT; Kenworth T610 → PACCAR TX-12 12-Speed AMT; Kenworth T909/T659 → Eaton Fuller 18-Speed Manual or Eaton UltraShift Plus depending on era). For suspension, apply the standard fitment for that model (e.g. Volvo FH → Volvo ECAS Air Suspension; Kenworth T610/T909 → Hendrickson PRIMAAX Air Suspension; Western Star 4964 → Hendrickson RT Air Suspension; Mack Trident → Hendrickson PRIMAAX Air Suspension). For fifth wheel, apply the standard fitment for that model (e.g. most AU prime movers → Jost JSK 37 or SAF-Holland FW35). If the spec varies by order/option, omit it rather than guess — but the engine family, displacement, suspension brand, and fifth wheel brand are mandatory attempts for all prime movers. Use the ENGINE HP REFERENCE table above to fill the hp figure when not supplied.
@@ -1278,7 +1289,7 @@ Rules:
 - Engine code BEFORE displacement: "2GD-FTV 2.8-Litre" NOT "2.8-Litre 2GD-FTV"
 - Power always kW first then hp in brackets: "150kW (201hp)"
 - Only mention extras/mods if they are significant and add real value. Do NOT list standard features like A/C, power windows, central locking
-- Do NOT include damage unless major (heavy rust, accident damage, significant structural damage). Minor wear is captured in damage notes separately
+- Include a "Damage:" line before "Sold As Is" — state damage factually if significant, or "Damage: Nil Obvious" if none
 - Do NOT use dot points
 - "Sold As Is, Untested & Unregistered." MUST be on its own line with a blank line before it
 
@@ -1298,12 +1309,16 @@ LS3 6.2-Litre V8 Petrol, 317kW (425hp), 6-Speed Manual Transmission
 
 Brembo Brakes, Sports Suspension, 19" Alloy Wheels, Leather Sports Seats, Sunroof, Apple CarPlay
 
+Damage: Significant accident damage to front end, bonnet and guards replaced, airbags deployed
+
 Sold As Is, Untested & Unregistered.
 
 Example (standard sedan/hatch, no extras):
 2019 Toyota Corolla Ascent Sport FWD Hatchback
 
 2ZR-FAE 2.0-Litre 4-Cylinder Petrol, 125kW (168hp), CVT Automatic Transmission
+
+Damage: Nil Obvious
 
 Sold As Is, Untested & Unregistered.
 
