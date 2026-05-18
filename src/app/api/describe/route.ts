@@ -53,7 +53,7 @@ UNIVERSAL RULES:
 DAMAGE RULE (applies to all asset types except general goods):
 Every description must include a Damage line as its own section, immediately before "Sold As Is, Untested & Unregistered."
 - Format: "Damage: [factual description]" — use exactly this label
-- If NO significant damage is noted or visible: omit the Damage line entirely (trucks are the exception — see truck template)
+- If NO significant damage is noted or visible: omit the Damage line entirely
 - If significant damage IS noted in inspection notes or visible in photos: state it factually and specifically — e.g. "Damage: Previous accident damage to driver front corner, panel replaced", "Damage: Significant rust to chassis rails and floor pan", "Damage: Mechanical damage to rear axle — non-runner", "Damage: Cracked windscreen, dent to passenger door"
 - Do NOT include: stone chips, minor scratches, normal wear, small dents, surface marks — these are standard for used equipment
 - Do NOT use vague terms like "general wear and tear" — be specific or write "Nil Obvious"
@@ -78,7 +78,7 @@ Blank line (only if appliances line present)
 Inverter line (own line — omit if not fitted): wattage and type (e.g. "2000W Pure Sine Wave Inverter"); omit if not fitted
 Blank line (only if inverter line present)
 GCM: [X]kg — only include if road train rated (≥ 90,000kg) OR explicitly noted by user in inspection notes; omit for standard prime movers
-Damage: Scratches and dents visible around the vehicle[, then add any significant damage from notes — e.g. ", cracked windscreen", ", rust to chassis rails" — or leave as just the standard scratches/dents line if nothing else noted]
+Damage: [include only if significant damage noted in inspection notes — e.g. "Previous accident damage to front cab", "Significant rust to chassis rails", "Non-runner — mechanical damage to rear axle". Omit this line entirely if no significant damage is noted. Routine scratches and dents are NOT significant — omit.]
 Sold As Is, Untested & Unregistered.
 
 MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Volvo FH with D-series suffix → Volvo D13K 12.8-Litre 6-Cylinder; Kenworth T610 → PACCAR MX-13 12.9-Litre 6-Cylinder; Kenworth T409/T659 → Cummins ISX15 15.0-Litre 6-Cylinder; Mack Trident/Granite → Mack MP8 13.0-Litre 6-Cylinder; Western Star 4964 → Detroit DD15 14.8-Litre 6-Cylinder; Mercedes Actros → OM471 12.8-Litre 6-Cylinder; DAF XF → MX-13 12.9-Litre 6-Cylinder. For transmission, apply the standard pairing for that model (e.g. Volvo FH → Volvo I-Shift 12-Speed AMT; Kenworth T610 → PACCAR TX-12 12-Speed AMT; Kenworth T909/T659 → Eaton Fuller 18-Speed Manual or Eaton UltraShift Plus depending on era). For suspension, apply the standard fitment for that model (e.g. Volvo FH → Volvo ECAS Air Suspension; Kenworth T610/T909 → Hendrickson PRIMAAX Air Suspension; Western Star 4964 → Hendrickson RT Air Suspension; Mack Trident → Hendrickson PRIMAAX Air Suspension). For fifth wheel, apply the standard fitment for that model (e.g. most AU prime movers → Jost JSK 37 or SAF-Holland FW35). If the spec varies by order/option, omit it rather than guess — but the engine family, displacement, suspension brand, and fifth wheel brand are mandatory attempts for all prime movers. Use the ENGINE HP REFERENCE table above to fill the hp figure when not supplied.
