@@ -1,0 +1,36 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - main [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]:
+          - heading "Select Branch" [level=1] [ref=e7]
+          - paragraph [ref=e8]: Which branch is booking this asset?
+        - generic [ref=e10]:
+          - button "Brisbane (QLD)" [ref=e11]
+          - button "Roma (QLD)" [ref=e12]
+          - button "Mackay (QLD)" [ref=e13]
+          - button "Newcastle (NSW)" [ref=e14]
+          - button "Sydney (NSW)" [ref=e15]
+          - button "Canberra (ACT)" [ref=e16]
+          - button "Melbourne (VIC)" [ref=e17]
+          - button "Perth (WA)" [ref=e18]
+          - button "Adelaide (SA)" [ref=e19]
+          - button "Karratha (WA)" [ref=e20]
+    - navigation:
+      - generic [ref=e21]:
+        - link "Assets" [ref=e22] [cursor=pointer]:
+          - /url: /
+          - img [ref=e23]
+          - generic [ref=e24]: Assets
+        - link "New" [ref=e25] [cursor=pointer]:
+          - /url: /assets/new
+          - img [ref=e27]
+          - generic [ref=e28]: New
+        - link "Quick" [ref=e29] [cursor=pointer]:
+          - /url: /assets/quick
+          - img [ref=e30]
+          - generic [ref=e32]: Quick
+        - button "Logout" [ref=e33]:
+          - img [ref=e34]
+          - generic [ref=e37]: Logout
+  - alert [ref=e38]

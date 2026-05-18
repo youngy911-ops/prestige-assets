@@ -35,11 +35,11 @@ export function ExtractionResultPanel({
   return (
     <div className="flex flex-col">
       {/* Success indicator */}
-      <div className="flex items-center gap-2 mb-3">
-        <div className="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center flex-shrink-0">
-          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+      <div className="flex items-center gap-2 mb-3 shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+        <div className="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center flex-shrink-0">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
         </div>
-        <span className="text-sm font-semibold text-emerald-300">Extraction complete</span>
+        <span className="text-base font-bold text-emerald-300">Extraction complete</span>
       </div>
       {/* Summary pill */}
       <div className="flex items-center gap-2 mb-4">

@@ -8,7 +8,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   if (!user) redirect('/login')
   return (
     <div className="min-h-screen bg-background" style={{ background: 'radial-gradient(ellipse 120% 80% at 50% -20%, rgba(16,185,129,0.18) 0%, rgba(16,185,129,0.06) 50%, transparent 75%), var(--background)' }}>
-      <main className="pb-[calc(env(safe-area-inset-bottom)+56px)] overscroll-none">
+      <main className="pb-[calc(env(safe-area-inset-bottom)+72px)] overscroll-none">
         {children}
       </main>
       <BottomNav />

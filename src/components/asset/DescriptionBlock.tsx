@@ -76,7 +76,7 @@ export function DescriptionBlock({ assetId, descriptionText, onRegenerate, isReg
             type="button"
             onClick={handleCopy}
             disabled={isRegenerating}
-            className="inline-flex items-center gap-1.5 text-xs bg-emerald-600/80 hover:bg-emerald-500 border border-emerald-500/30 hover:border-emerald-400/50 text-white px-3 py-1.5 rounded-lg transition-all font-semibold disabled:opacity-40"
+            className={`inline-flex items-center gap-1.5 text-xs bg-emerald-600/80 hover:bg-emerald-500 border border-emerald-500/30 hover:border-emerald-400/50 text-white px-3 py-1.5 rounded-lg transition-all font-semibold disabled:opacity-40 ${copied ? 'shadow-[0_0_12px_rgba(52,211,153,0.4)]' : ''}`}
           >
             {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
             {copied ? 'Copied!' : 'Copy'}

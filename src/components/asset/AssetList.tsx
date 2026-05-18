@@ -273,6 +273,11 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
         </div>
       )}
 
+      {/* Total asset count */}
+      {!changingBranch && assets && assets.length > 0 && (
+        <p className="text-white/20 text-xs mb-2">{assets.length} assets on this branch</p>
+      )}
+
       {/* Asset type breakdown */}
       {!changingBranch && assets && assets.length > 0 && (() => {
         const counts: Record<string, number> = {}

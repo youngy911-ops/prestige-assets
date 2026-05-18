@@ -223,7 +223,7 @@ export default function QuickBookPage() {
             type="button"
             onClick={() => cameraRef.current?.click()}
             disabled={status === 'uploading' || status === 'creating'}
-            className="w-full flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/10 hover:border-emerald-500/50 text-white min-h-[140px] transition-all disabled:opacity-50"
+            className="w-full flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-emerald-500/35 bg-emerald-500/[7%] hover:bg-emerald-500/10 hover:border-emerald-500/50 text-white min-h-[140px] transition-all disabled:opacity-50 shadow-[inset_0_0_30px_rgba(16,185,129,0.05)]"
           >
             {status === 'uploading' || status === 'creating' ? (
               <>

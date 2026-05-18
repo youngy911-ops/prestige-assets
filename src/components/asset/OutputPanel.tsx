@@ -265,7 +265,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
         <button
           type="button"
           onClick={handleCopyAll}
-          className={`w-full h-16 rounded-2xl text-white text-lg font-black tracking-tight flex items-center justify-center gap-2.5 transition-all duration-200 ${
+          className={`w-full h-16 rounded-2xl text-white text-lg font-black tracking-tight flex items-center justify-center gap-2.5 transition-all duration-300 ${
             allCopied
               ? 'bg-emerald-400 scale-[0.98] shadow-[0_0_0_2px_rgba(52,211,153,0.8),0_0_40px_rgba(52,211,153,0.5)]'
               : 'bg-emerald-500 hover:bg-emerald-400 shadow-[0_0_0_2px_rgba(52,211,153,0.4),0_8px_32px_rgba(52,211,153,0.25)] hover:shadow-[0_0_0_2px_rgba(52,211,153,0.5),0_8px_32px_rgba(52,211,153,0.3)]'
