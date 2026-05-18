@@ -147,12 +147,16 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
         <div className="flex items-center gap-3">
           <h1 className="text-3xl font-black tracking-tight text-white">Assets</h1>
           {assets && assets.length > 0 && (
-            <p className="text-xs text-white/30 font-medium">
+            <p className="text-xs text-white/30 font-medium flex items-center gap-1">
+              <svg className="w-3 h-3" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M6 1a3.5 3.5 0 013.5 3.5C9.5 7.5 6 11 6 11S2.5 7.5 2.5 4.5A3.5 3.5 0 016 1z" stroke="currentColor" strokeWidth="1.2"/>
+                <circle cx="6" cy="4.5" r="1" fill="currentColor"/>
+              </svg>
               {BRANCHES.find(b => b.key === branch)?.label}
             </p>
           )}
           {todayCount !== null && todayCount > 0 && (
-            <div className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1">
+            <div className={`flex items-center gap-1.5 bg-emerald-500/10 border ${todayCount >= 5 ? 'border-emerald-400/30' : 'border-emerald-500/20'} rounded-lg px-2.5 py-1`}>
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-xs font-medium text-emerald-400">{todayCount} booked today</span>
             </div>

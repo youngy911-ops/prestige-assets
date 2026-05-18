@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     assetId = body.assetId
-    message = body.message?.trim() ?? ''
+    message = body.message?.trim().slice(0, 500) ?? ''
     assetType = body.assetType ?? 'general_goods'
     if (!assetId || !message) return Response.json({ error: 'assetId and message required' }, { status: 400 })
   } catch {
@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
 
   // Get the field definitions for this asset type
   const fields = getFieldsSortedBySfOrder(assetType as AssetType)
+  if (fields.length === 0) return Response.json({ fields: [], confidence: 'low' })
   const fieldList = fields
     .map(f => `${f.key}: "${f.label}"${f.options ? ` (options: ${f.options.join(', ')})` : ''}`)
     .join('\n')

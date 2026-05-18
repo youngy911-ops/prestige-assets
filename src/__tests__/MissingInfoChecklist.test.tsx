@@ -38,7 +38,7 @@ describe('MissingInfoChecklist', () => {
     const { getByText } = render(
       <MissingInfoChecklist checklist={[blockingEntry]} onUpdate={vi.fn()} />
     )
-    expect(getByText(/Fill in above, or mark N\/A to proceed/)).toBeTruthy()
+    expect(getByText(/Fill these in above, or mark as N\/A to save and continue/)).toBeTruthy()
   })
 
   it('renders "Required" for blocking flagged item', () => {

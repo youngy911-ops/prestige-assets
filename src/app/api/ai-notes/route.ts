@@ -42,7 +42,8 @@ export async function POST(req: NextRequest) {
     model: openai('gpt-4o'),
     system: `You are an assistant that formats freeform asset inspection notes for ${assetType} assets into concise structured lines.
 Extract specific details from what the user says and format them clearly, one item per line.
-Use short, direct labels followed by the value (e.g. "Bull bar: yes", "Tow bar: yes", "Year: 2019", "GCM: 135,000 kg", "Damage: dent to driver front door approx 150mm").
+Use short, direct labels followed by the value (e.g. "Bull bar: yes", "Tow bar: yes", "Year: 2019", "GCM: 135,000 kg", "Damage: dent to driver front door approx 150mm", "Non-runner: mechanical damage to rear diff", "Previous accident: front end replaced", "Significant rust: chassis rails and floor").
+When the inspector describes collision or impact damage, format as "Previous accident: [description]" or "Damage: [description]". When the inspector describes a vehicle that will not start or run, format as "Non-runner: [cause if known]". When the inspector describes rust, format as "Significant rust: [location]".
 Omit any conversational filler. Only output the formatted note lines — no preamble, no explanation.`,
     prompt: `The user said: "${message}"`,
   })

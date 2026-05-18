@@ -250,7 +250,7 @@ export function OutputPanel({ assetId, assetType, fields, fieldsText, initialDes
       )}
 
       {/* Stats strip — key extraction numbers at a glance */}
-      <div className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5">
+      <div className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-4">
         <div className="flex items-center gap-1.5">
           <Sparkles className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
           <span className="text-xl font-black text-emerald-300 tabular-nums">{stats.fieldCount}</span>

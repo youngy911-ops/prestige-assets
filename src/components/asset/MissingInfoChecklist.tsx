@@ -18,7 +18,7 @@ export function MissingInfoChecklist({ checklist, onUpdate }: MissingInfoCheckli
       </CardHeader>
       <CardContent className="flex flex-col">
         <p className="text-sm text-white/50 mb-4">
-          Fill in above, or mark N/A to proceed.
+          Fill these in above, or mark as N/A to save and continue.
         </p>
         <div className="flex flex-col divide-y divide-white/10">
           {checklist.map(entry => (

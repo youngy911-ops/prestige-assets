@@ -93,6 +93,7 @@ Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW (
 Blank line
 Single body-detail line: body builder name MUST always be stated — common AU builders: Moore, Stoodley, Hamelex White, CJD, Auswide, Superior; always attempt to identify from photos (look for badge/plate on body); if not determinable write "Custom Tipper Body"; then dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox); Hardox lining MUST be called out explicitly if fitted ("Hardox Lined" or "Full Hardox Lining" — Hardox is a premium value signal); tarp brand AND type always named if tarp fitted — never write "tarp" alone (e.g. "Razor Delta II Electric Roll-Over Tarp", "Aerocover Auto-Retractable Tarp", "CoverMe Electric Tarp"); tailgate type, exhaust/engine brake brand, cruise control, load monitoring system, UHF, diff locks, Ringfeder hitch if confirmed; ALL extras in one comma-separated run on this single line — never use separate lines for individual accessories
 Payload: [X]kg — include only if notably high or stated by user in inspection notes.
+Damage: [include only if significant — accident damage, major rust, structural issues; omit line if none]
 Sold As Is, Untested & Unregistered.
 
 MINIMAL DATA RULE (tippers): Body builder name is a mandatory attempt — always check photos for a badge, plate, or embossed name on the tailgate or body sides before writing "Custom Tipper Body". Tarp brand is a mandatory attempt — Razor and Aerocover are the most common AU tipper tarp brands. Hardox lining must always be called out if steel body shows wear-plate construction visible in photos.
@@ -349,6 +350,7 @@ Toolboxes: state quantity, position (undermount / side-mounted), and dimension i
 Beacons, tie rails, tow hitch/airlines if fitted
 Crane: make, model, capacity if fitted
 Payload: [X]kg — include only if notably high or stated by user in inspection notes.
+Damage: [include only if significant — accident damage, major rust, structural issues; omit line if none]
 Sold As Is, Untested & Unregistered.
 
 Example:
@@ -631,6 +633,7 @@ X.Xm Max Dig Depth — on its own line; apply model knowledge if not confirmed (
 Attachments Included: list each item (make, model, coupling type where known)
 
 MINIMAL DATA RULE (excavators): If only make/model/year/hours are known, apply your training knowledge of that specific model to fill in operating weight, engine code + kW + hp + emissions tier, track width and type, and standard bucket size and capacity — e.g. Caterpillar 320 → 20t class, Cat C4.4 ACERT 4-Cylinder 97kW (130hp) Tier 4 Final, 600mm Steel Tracks, 0.9m³ GP Bucket; Caterpillar 330 → 30t class, Cat C7.1 6-Cylinder 170kW (228hp) Tier 4 Final; Komatsu PC200 → 20t class, SAA4D107E 4-Cylinder 110kW (148hp) Tier 4 Final, 600mm Steel Tracks, 0.8m³ bucket; Komatsu PC300 → 30t class, SAA6D114E 6-Cylinder 168kW (225hp) Tier 4 Final; Hitachi ZX200 → 20t class, Isuzu 4HK1 4-Cylinder 110kW (148hp) Tier 4 Final; Hitachi ZX350 → 35t class, Isuzu 6HK1 6-Cylinder 184kW (247hp) Tier 4 Final; Volvo EC220 → 22t class, Volvo D6E 6-Cylinder 122kW (163hp) Tier 4 Final; John Deere 210G → 21t class, John Deere PowerTech PSS 4-Cylinder 103kW (138hp) Tier 4 Final. Include all specs that are universally true for the identified model; omit specs that vary by configuration. Always include operating weight, engine code + kW + hp + emissions tier, and track width + type even when not in confirmed fields — these are the primary value indicators for earthmoving buyers. Always attempt to state undercarriage condition from photos. Always attempt to identify quick hitch brand from photos. Always attempt to identify auto-lube brand from photos or model-standard fitment.
+Damage: [include only if significant — structural damage, major hydraulic failure, fire damage; undercarriage wear goes in specs not here; omit if no significant damage]
 Sold As Is, Untested & Unregistered.
 
 BULLDOZER/CRAWLER TRACTOR
@@ -2035,12 +2038,16 @@ function toTitleCase(text: string): string {
 
 function stripMarkdownArtifacts(text: string): string {
   let cleaned = text.trim()
-  // Strip leading code fence (```plaintext, ```text, ``` etc.)
+  // Strip leading code fence (```json, ```plaintext, ```text, ``` etc.)
+  // Handles both with and without a trailing newline after the fence opener
   cleaned = cleaned.replace(/^```[a-zA-Z]*\r?\n/, '')
+  cleaned = cleaned.replace(/^```[a-zA-Z]*$/, '')
   // Strip trailing code fence
   cleaned = cleaned.replace(/\r?\n```$/, '')
-  // Strip leading *** or --- line (GPT-4o format markers like "***plaintext")
+  cleaned = cleaned.replace(/^```$/, '')
+  // Strip leading *** or --- line (GPT-4o format markers like "***plaintext" or bare "***")
   cleaned = cleaned.replace(/^\*{3,}[a-zA-Z]*\r?\n/, '')
+  cleaned = cleaned.replace(/^\*{3,}[a-zA-Z]*$/, '')
   cleaned = cleaned.replace(/^-{3,}\r?\n/, '')
   // Strip leading "plaintext" if it appears alone on first line
   cleaned = cleaned.replace(/^plaintext\r?\n/i, '')

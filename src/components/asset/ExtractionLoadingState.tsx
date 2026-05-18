@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
-import { ScanLine, Search, Car, ClipboardList, FileCheck, CheckCircle2, Gauge, BookOpen, Wrench, Anchor, Tractor } from 'lucide-react'
+import { ScanLine, Search, Car, ClipboardList, FileCheck, Gauge, BookOpen, Wrench, Anchor, Tractor, Truck, Package } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 // Delay before showing the "continue in background" options (ms)
@@ -51,6 +51,24 @@ const AGRICULTURE_STEPS: { text: string; Icon: LucideIcon }[] = [
   { text: 'Generating description…', Icon: FileCheck },
 ]
 
+const FORKLIFT_STEPS: { text: string; Icon: LucideIcon }[] = [
+  { text: 'Reading make and model plate…', Icon: ScanLine },
+  { text: 'Identifying forklift type…', Icon: Truck },
+  { text: 'Reading hourmeter…', Icon: Gauge },
+  { text: 'Checking mast and attachments…', Icon: Wrench },
+  { text: 'Looking up specifications…', Icon: BookOpen },
+  { text: 'Generating description…', Icon: FileCheck },
+]
+
+const TRAILER_STEPS: { text: string; Icon: LucideIcon }[] = [
+  { text: 'Reading compliance plate…', Icon: ScanLine },
+  { text: 'Identifying trailer type…', Icon: Package },
+  { text: 'Checking dimensions and payload…', Icon: Wrench },
+  { text: 'Scanning for damage…', Icon: Search },
+  { text: 'Looking up specifications…', Icon: BookOpen },
+  { text: 'Generating description…', Icon: FileCheck },
+]
+
 const GENERAL_STEPS: { text: string; Icon: LucideIcon }[] = [
   { text: 'Reading labels and markings…', Icon: ScanLine },
   { text: 'Identifying type and model…', Icon: Car },
@@ -76,6 +94,8 @@ function getStepsForAssetType(assetType: string | undefined) {
     case 'earthmoving': return EARTHMOVING_STEPS
     case 'marine': return MARINE_STEPS
     case 'agriculture': return AGRICULTURE_STEPS
+    case 'forklift': return FORKLIFT_STEPS
+    case 'trailer': return TRAILER_STEPS
     default: return GENERAL_STEPS
   }
 }
