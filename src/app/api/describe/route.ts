@@ -56,7 +56,7 @@ Every description must include a Damage line as its own section, immediately bef
 - If NO significant damage is noted or visible: omit the Damage line entirely
 - If significant damage IS noted in inspection notes or visible in photos: state it factually and specifically — e.g. "Damage: Previous accident damage to driver front corner, panel replaced", "Damage: Significant rust to chassis rails and floor pan", "Damage: Mechanical damage to rear axle — non-runner", "Damage: Cracked windscreen, dent to passenger door"
 - Do NOT include: stone chips, minor scratches, normal wear, small dents, surface marks — these are standard for used equipment
-- Do NOT use vague terms like "general wear and tear" — be specific or write "Nil Obvious"
+- Do NOT use vague terms like "general wear and tear" — be specific or omit the line entirely
 - Damage from inspection notes must be stated verbatim — never soften or omit damage the inspector has noted
 - For general_goods: omit the Damage line entirely
 
@@ -1041,7 +1041,7 @@ Tyre type: Solid / Pneumatic / Cushion — always state; never omit
 Cab type: ROPS Canopy / Enclosed Cab — always state
 Hours: include hours on their own line in the description (same as operating weight for earthmoving) — e.g. "14,826 Hours" as a separate bullet line
 Side Shift: always call out explicitly if fitted
-Damage: factual description or "Nil Obvious" if none visible
+Damage: factual description — omit this line entirely if no significant damage
 Sold As Is, Untested. (no "& Unregistered" for forklifts unless road-registered)
 
 Key rules:
@@ -1289,7 +1289,7 @@ Rules:
 - Engine code BEFORE displacement: "2GD-FTV 2.8-Litre" NOT "2.8-Litre 2GD-FTV"
 - Power always kW first then hp in brackets: "150kW (201hp)"
 - Only mention extras/mods if they are significant and add real value. Do NOT list standard features like A/C, power windows, central locking
-- Include a "Damage:" line before "Sold As Is" — state damage factually if significant, or "Damage: Nil Obvious" if none
+- Include a "Damage:" line before "Sold As Is" — state damage factually if significant — omit the line entirely if none
 - Do NOT use dot points
 - "Sold As Is, Untested & Unregistered." MUST be on its own line with a blank line before it
 
@@ -1318,7 +1318,6 @@ Example (standard sedan/hatch, no extras):
 
 2ZR-FAE 2.0-Litre 4-Cylinder Petrol, 125kW (168hp), CVT Automatic Transmission
 
-Damage: Nil Obvious
 
 Sold As Is, Untested & Unregistered.
 
