@@ -36,7 +36,7 @@ export function DeleteAssetButton({ assetId }: DeleteAssetButtonProps) {
         className="flex items-center justify-center gap-2 w-full rounded-xl border border-red-500/20 text-red-400 hover:bg-red-500/10 h-11 px-4 text-sm font-semibold transition-colors mt-2"
       >
         <Trash2 className="w-4 h-4" />
-        Delete Asset
+        Delete this asset
       </button>
     )
   }

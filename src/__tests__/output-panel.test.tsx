@@ -43,11 +43,11 @@ describe('FieldsBlock', () => {
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(SAMPLE_FIELDS)
   })
 
-  it('copy button label changes to "Copied!" immediately after click', async () => {
+  it('copy button label changes to "✓ Copied" immediately after click', async () => {
     render(<FieldsBlock fieldsText={SAMPLE_FIELDS} />)
     const copyBtn = screen.getByRole('button', { name: /^copy$/i })
     await act(async () => { fireEvent.click(copyBtn) })
-    expect(screen.getByRole('button', { name: /copied!/i })).toBeTruthy()
+    expect(screen.getByRole('button', { name: /✓ Copied/i })).toBeTruthy()
   })
 
   it('copy button label reverts to "Copy" after 2000ms', async () => {

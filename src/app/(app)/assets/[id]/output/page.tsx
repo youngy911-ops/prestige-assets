@@ -96,7 +96,7 @@ export default async function OutputPage({ params }: { params: Promise<{ id: str
       />
 
       {/* QR Code + actions */}
-      <div className="mt-8 flex flex-col gap-3">
+      <div className="mt-6 flex flex-col gap-2.5">
         <div className="rounded-2xl border border-white/[0.10] bg-white/[0.03] p-4 flex items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

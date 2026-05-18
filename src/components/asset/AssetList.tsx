@@ -157,6 +157,11 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
               <span className="text-xs font-medium text-emerald-400">{todayCount} booked today</span>
             </div>
           )}
+          {assets && assets.filter(a => a.status === 'confirmed').length > 0 && (
+            <div className="flex items-center gap-1.5 bg-white/[0.05] border border-white/[0.08] rounded-lg px-2.5 py-1">
+              <span className="text-xs font-medium text-white/50">{assets.filter(a => a.status === 'confirmed').length} confirmed</span>
+            </div>
+          )}
         </div>
 
         {/* Book In button + dropdown */}
@@ -472,7 +477,7 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
                 updated_at={asset.updated_at}
                 thumb_url={asset.thumb_url}
                 extraction_result={asset.extraction_result}
-                animationDelay={`${i * 50}ms`}
+                animationDelay={`${i * 40}ms`}
                 onDeleted={handleAssetDeleted}
               />
             ))}

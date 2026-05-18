@@ -39,7 +39,7 @@ export function FieldsBlock({ fieldsText }: FieldsBlockProps) {
           }`}
         >
           {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
-          {copied ? 'Copied!' : 'Copy'}
+          {copied ? '✓ Copied' : 'Copy'}
         </button>
       </div>
       <div className="text-[12.5px] whitespace-pre-wrap font-sans leading-[1.85] px-4 py-3 text-white/80">{fieldsText}</div>

@@ -35,7 +35,7 @@ h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
   <div class="obj-q">2. "What if the AI gets it wrong?"</div>
   <div class="obj-body">
     <p class="response">This is the most common AI objection and the easiest to handle — because the system was designed with it in mind. There is a mandatory human review step before anything touches Salesforce. The AI produces a draft. A person reads it, edits it, and confirms it. Nothing auto-publishes.</p>
-    <div class="say">"Nothing goes anywhere without a person reading it first. The AI fills in a draft — you see every field, you edit anything that's wrong, then you hit push. It's a first pass, not a final decision. The liability stays exactly where it is today."</div>
+    <div class="say">"Nothing goes anywhere without a person reading it first. The AI fills in a draft — you see every field, you edit anything that's wrong, then you hit push. It's a first pass, not a final decision. If something's wrong, you fix it before it saves."</div>
     <div class="warning">If they push further, offer to show them the review screen live. The confirmation step is visible and obvious — seeing it kills the objection.</div>
   </div>
 </div>
@@ -53,7 +53,7 @@ h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
   <div class="obj-q">4. "We'd need to go through the formal vendor onboarding process."</div>
   <div class="obj-body">
     <p class="response">Vendor onboarding applies to external software products being purchased from third-party companies. This is an internal tool built by an employee. The Salesforce integration is connecting a tool you built in-house to their existing Salesforce instance — no different from connecting an internal spreadsheet automation or a custom script. There's no contract, no external vendor, no procurement.</p>
-    <div class="say">"Vendor onboarding is for external software we're buying. This is an internal tool I built — it's ours. The Salesforce connection is just connecting our own tool to our own system. The External Client App setup is internal IT configuration, same category as setting up an integration for any internal tool."</div>
+    <div class="say">"Vendor onboarding is for external software we're buying. This is an internal tool I built — it's ours. The Salesforce connection is just hooking our own tool up to our own system. The External Client App setup is standard IT configuration, same as any other internal connection they'd set up."</div>
     <div class="warning">If they insist on a process, ask who owns the Salesforce Connected App setup and offer to write the brief yourself. Reduce friction on their side.</div>
   </div>
 </div>
@@ -71,7 +71,7 @@ h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
   <div class="obj-q">6. "We're worried about data security."</div>
   <div class="obj-body">
     <p class="response">Four facts to land in order: (1) Photos and extracted data are stored in Australia — Sydney region Supabase. (2) Data is never used to train AI models — it's passed for inference only and not retained by OpenAI. (3) The infrastructure is SOC 2 certified. (4) No data writes to Salesforce until a staff member explicitly confirms it — there's no automated push.</p>
-    <div class="say">"Photos stay in Australia — we're on Sydney Supabase. The AI call goes to OpenAI for inference only, not training — same as using ChatGPT for a work task. SOC 2 certified. And nothing goes near Salesforce until a person reviews and confirms it. The data handling is actually more auditable than the current manual process."</div>
+    <div class="say">"Photos stay in Australia — we're on Sydney Supabase. The AI call goes to OpenAI to read the data, not to train their model — same as using ChatGPT for a work task. SOC 2 certified. And nothing goes near Salesforce until a person reviews and confirms it. Honestly it's more traceable than someone typing it in manually."</div>
     <div class="warning">Don't get into a technical debate. If they have a security team requirement, offer a written data flow diagram. That's a 20-minute job and it usually ends the conversation.</div>
   </div>
 </div>
@@ -98,7 +98,7 @@ h1 { font-size: 22px; font-weight: 800; color: #0f1c3f; margin-bottom: 4px; }
   <div class="obj-q">9. "Who owns this if you leave?"</div>
   <div class="obj-body">
     <p class="response">This is a fair and legitimate question — don't be defensive. The code is on GitHub and is readable, standard TypeScript/Next.js. The pilot includes documentation. Any competent developer can maintain it. If the business wanted to hand it to an agency or hire a junior dev, the codebase is clean enough to support that.</p>
-    <div class="say">"Fair question. The code is on GitHub, it's standard TypeScript, and the pilot includes documentation. Any developer can pick it up — there's nothing proprietary or bespoke that creates a dependency on me. If anything, having it in-house gives you more control than a vendor SaaS product where you'd have zero access to the code."</div>
+    <div class="say">"Fair question. The code is on GitHub, it's standard TypeScript, and the pilot includes documentation. Any developer can pick it up — there's nothing unusual that ties it to me specifically. If anything, having it in-house gives you more control than buying a SaaS product where you'd have zero access to the code."</div>
     <div class="warning">Don't say "I won't leave" — that's not credible and not the point. Focus on the handover being clean and low-risk.</div>
   </div>
 </div>
