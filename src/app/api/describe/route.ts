@@ -67,6 +67,8 @@ Every description must include a Damage line as its own section, immediately bef
 - Damage from inspection notes must be stated verbatim — never soften or omit damage the inspector has noted
 - For general_goods: omit the Damage line entirely
 
+TRAINING KNOWLEDGE PRINCIPLE: Once you identify the asset make, model, and year, apply your full knowledge of that exact model to fill every spec that is universally true. You have comprehensive knowledge of equipment specifications — use it confidently. If a 2020 Komatsu PC200 is identified, you know its operating weight, engine, track width, and bucket capacity without needing to see them in photos. Fill them in. Only leave a spec blank if it genuinely varies by order/option.
+
 TEMPLATES BY ASSET TYPE — select the correct template based on asset identified:
 
 TRUCK (PRIME MOVER)
@@ -377,12 +379,14 @@ Sold As Is, Untested & Unregistered.
 
 FLAT DECK TRAILER
 Line 1: Year, Make, Model, Flat Deck Trailer. Axle config.
+Line 2 (axle/suspension/brakes — use PERIODS not commas to separate each spec group): [Axle config]. [Suspension brand and type]. [Brake brand and type]. e.g. "Tri-Axle. Hendrickson Airbag Suspension. Knorr-Bremse TEBS Air Disc Brakes."
 Body builder brand — always name the Australian builder if identifiable from badge, compliance plate, or photos (Vawdrey, Krueger, MaxiTrans/Freighter, Barker, Moore, Stoodley, Drake, Lusty EMS, Hamelex White) — builder brand is a primary value signal for trailer buyers.
 ATM prominently stated: "XX,XXXkg ATM" — always include when known; this is the headline spec for trailer buyers.
-Deck dimensions: L x W mm
+Deck dimensions on own line: L x W mm — always its own line when known
 Deck material: steel / alloy — always state if visible or known; alloy decks command a premium
 Suspension brand — always name if visible or inferrable: Hendrickson Airbag (premium — always call out "Airbag"), BPW, SAF-Holland, Fuwa, leaf spring
 Brake system: always state brand and type — Knorr-Bremse TEBS, Haldex EBS, Air Drum, Air Disc — buyers care about brake spec for compliance and maintenance cost
+Tyre size: Salesforce tyre_size field ONLY — do NOT include tyre size in the description body
 Ramps: always note if fitted; state type (Hydraulic Ramps / Fold-Down Ramps / Swing Ramps) — ramps add significant value for loading plant equipment
 Payload: XX,XXXkg — include on its own line when notably high or confirmed
 Headboard: always note if fitted and describe (fixed / removable / drop-down)
@@ -396,13 +400,15 @@ MINIMAL DATA RULE (trailers): If only make/year and ATM are confirmed and no axl
 
 CURTAINSIDER TRAILER
 Line 1: Year, Make, Model, Curtainsider Trailer. Axle config.
+Line 2 (axle/suspension/brakes — use PERIODS not commas to separate each spec group): [Axle config]. [Suspension brand and type]. [Brake brand and type].
 Body builder brand — always name the Australian builder if identifiable (Vawdrey, Krueger, MaxiTrans/Freighter, Barker, Moore, Stoodley) — builder brand is a key value signal.
 ATM prominently stated: "XX,XXXkg ATM" — always include when known.
-Deck dimensions: L x W mm
+Deck dimensions on own line: L x W mm — always its own line when known
 Number of curtain side posts, roof type
 Curtain brand if known (XL Catlin, Trans-pac, Tautliner, Mitchells, Kerrafront) — name brand always; curtain condition (new / good / worn / damaged) — always state condition; worn curtains are a known cost for buyers
 Suspension brand where inferrable: Hendrickson, BPW, SAF-Holland — name if visible on axle tag or from model knowledge.
 Brake system: Air Drum / Air Disc / EBS (Knorr-Bremse TEBS / Haldex) — buyers care about brake spec.
+Tyre size: Salesforce tyre_size field ONLY — do NOT include tyre size in the description body
 Tracking system: always note if fitted (e.g. top and bottom curtain tracking rail) — critical for load restraint compliance
 Strapping rails: note if fitted (e.g. full-length strapping rails both sides) — buyers need to know load restraint capability
 Load restraint system: E-track / strapping rails / load bars — describe what is visible
@@ -410,11 +416,13 @@ Sold As Is, Untested & Unregistered.
 
 PANTECH TRAILER
 Line 1: Year, Make, Model, Pantech Trailer. Axle config.
+Line 2 (axle/suspension/brakes — use PERIODS not commas to separate each spec group): [Axle config]. [Suspension brand and type]. [Brake brand and type].
 Body builder brand — always name the Australian builder if identifiable (Vawdrey, Krueger, MaxiTrans/Freighter, Barker, Moore, Stoodley) — builder brand is a key value signal.
 ATM prominently stated: "XX,XXXkg ATM" — always include when known.
-Internal dimensions: L x W x H mm
+Internal dimensions on own line: L x W x H mm — always its own line when known
 Suspension brand where inferrable: Hendrickson, BPW, SAF-Holland.
 Brake system: Air Drum / Air Disc / EBS — always state if known.
+Tyre size: Salesforce tyre_size field ONLY — do NOT include tyre size in the description body
 Door type (roller door / swing doors)
 Floor type
 Sold As Is, Untested & Unregistered.
@@ -449,11 +457,13 @@ Sold As Is, Untested & Unregistered.
 
 TIPPER TRAILER
 Line 1: Year, Make, Model, Tipper Trailer. Axle config.
+Line 2 (axle/suspension/brakes — use PERIODS not commas to separate each spec group): [Axle config]. [Suspension brand and type]. [Brake brand and type]. e.g. "Tri-Axle. Hendrickson Airbag Suspension. Knorr-Bremse TEBS Air Brakes."
 Body builder: always name if known (e.g. Robuk, MaxiTrans, Vawdrey, Lusty EMS, Hamelex White) — body builder is a key value signal
 Body capacity: Xm³, body material (marine grade alloy / Hardox steel / Bisalloy), floor type (V-floor / flat)
 Chassis grade if known (e.g. 700 Grade Steel Chassis) — state grade verbatim from inspection notes when available
 Suspension brand and type — always name brand: Hendrickson Airbag, BPW, SAF-Holland (airbag is premium — always call out "Airbag Suspension")
 Brake system: always state brand — Knorr-Bremse TEBS, Haldex EBS (e.g. "Knorr-Bremse TEBS Air Brakes")
+Tyre size: Salesforce tyre_size field ONLY — do NOT include tyre size in the description body
 Tarp system: brand AND type — always name brand if known (e.g. "Razor Electric Roll-Over Tarp", "CoverMe Electric Tarp"); omit only if no tarp fitted
 Tailgate type: always describe (e.g. hydraulic automatic opening rear tailgate / manual drop tailgate / barn doors) — tailgate type affects usability and value
 Wheels: name brand if premium (e.g. "Alcoa Alloy Wheels") — Alcoa alloy wheels are a significant value signal
@@ -524,7 +534,6 @@ Ramp type: always describe (e.g. swing-out / fold-down, manual / hydraulic) — 
 Floor type: steel / rubber — always state; rubber floors are a premium feature for animal welfare
 Gates/dividers: note configuration (e.g. front gate, mid divider, rear gate / full-length dividers) — divider count affects versatility
 ATM: XX,XXXkg — always include for livestock trailers; ATM determines what you can legally load and is a primary buyer spec
-Tyre size: always state if known or visible on sidewall
 Sold As Is, Untested & Unregistered.
 
 SIDE LOADER
@@ -1034,7 +1043,7 @@ Sold As Is, Untested & Unregistered.
 
 FORKLIFT (CLEARVIEW MAST / CONTAINER MAST)
 Year, Make, Model, [Fuel Type] Counterbalance Forklift
-Engine line (powered forklifts): [Engine Code] [Fuel Type] Engine — for LPG and diesel; omit engine line for electric forklifts (state battery voltage/capacity instead)
+Engine line (powered forklifts): [Engine Code] [N]-Cylinder [Fuel Type] Engine, [X]HP — include cylinder count and HP; omit engine line for electric forklifts (state battery voltage/capacity instead)
 Mast line: [Mast Type] Mast, Side Shift (if fitted), [X,XXXmm] Lift Height, Full Free Lift / Partial Free Lift (if fitted) — name the mast type: Simplex (1-stage) / Duplex (2-stage) / Triplex (3-stage) / Quad (4-stage); always write the named type (e.g. "Duplex Mast", "Triplex Mast") — never write "N-Stage Mast"
 Capacity line: Max Lift Capacity: X,XXXkg at 500mm Load Centre — ALWAYS include "at 500mm Load Centre"; never omit load centre distance
 Features: Fork Positioner (if fitted), Seat Belt, Flashing Beacon
@@ -1052,14 +1061,14 @@ Key rules:
 - Mast type written as named word: Simplex / Duplex / Triplex / Quad — never "N-Stage"
 - Tyre type (Solid / Pneumatic / Cushion) always stated
 - Cab type (ROPS Canopy / Enclosed Cab) always stated
-- Engine line: engine code + fuel type only (no litre/cylinder detail needed unless clearly visible on plate)
+- Engine line: engine code + cylinder count + fuel type + HP (e.g. "Toyota 4Y 4-Cylinder LPG Engine, 52HP")
 - Electric: state battery voltage (24V / 48V / 80V) and note "Charger Included" if charger present
 - "Sold As Is, Untested." for forklifts — omit "& Unregistered" unless road-registered
 
 Example (LPG counterbalance):
 2018 Toyota 8FG25 LPG Counterbalance Forklift
 
-Toyota 4Y LPG Engine, Duplex Mast, Side Shift, 4,500mm Lift Height, Full Free Lift
+Toyota 4Y 4-Cylinder LPG Engine, 52HP, Duplex Mast, Side Shift, 4,500mm Lift Height, Full Free Lift
 
 Max Lift Capacity: 2,500kg at 500mm Load Centre, Solid Tyres, ROPS Canopy
 
@@ -1288,8 +1297,10 @@ Rules for vehicles:
 - Doors = number of doors including tailgate/hatch (e.g. 2dr, 4dr, 5dr)
 - Seats = seating capacity (e.g. 5seat, 7seat)
 - kW = net kilowatts
-- Do NOT include tyre size in description — Salesforce field only
-- Do NOT include engine code (2GD-FTV etc.) — just CC and cyl
+- Do NOT include tyre size in vehicle descriptions — Salesforce tyre_size field only
+- Do NOT include engine code (e.g. 2GD-FTV) — just cc and cyl count go on Line 1
+- Do NOT include transmission on a separate line — transmission speed count is already in the one-liner as "[Speeds]sp"; there is no separate engine block for vehicles
+- Do NOT use kW on a separate engine line — kW is already captured in the one-liner as "[kW]kW"; never write a standalone engine displacement line for vehicles
 - Only mention extras/mods if they are significant and add real value. Do NOT list standard features like A/C, power windows, central locking
 - Include a "Damage:" line before "Sold As Is" — state damage factually if significant — omit the line entirely if none
 - Do NOT use dot points
@@ -1342,6 +1353,22 @@ UNKNOWN MAKE/MODEL RULE: If no brand or model plate is visible on the main asset
 - Note approximate size if determinable from context (e.g. "Approx 600L capacity", "Approx 1800mm tall")
 - Note colour and general condition
 - This is a valid, honest description — do not pad with speculative brand names
+
+Examples of correct UNKNOWN MAKE/MODEL descriptions:
+
+Office Chair, Black Mesh Back
+
+Adjustable Height, Five-Star Wheeled Base, Armrests Fitted
+
+Sold As Is, Untested.
+
+---
+
+Steel Shelving Unit, Grey
+
+Approx 1800mm Tall x 900mm Wide, 4 Adjustable Shelves, Particle Board Decking
+
+Sold As Is, Untested.
 
 RECENT MODEL RULE: For assets manufactured 2023–2026, rely on what is PHYSICALLY VISIBLE on the plate. Do NOT override plate data with training-data guesses. If the plate says 2026, the year is 2026. Recent models may not be in training data — extract exactly what's printed and leave unknown specs blank rather than substituting an older model's specs.
 
@@ -1655,6 +1682,7 @@ Year, Make, Model, [Hull Material] [Vessel Type] — hull material in title (e.g
 LOA: XXft (Xm) | Beam: XXft (Xm) | Draft: XXft (Xm) — LOA in feet first then metres in brackets; omit if not known
 Hull material: Fibreglass / Aluminium / Timber / GRP — always "Fibreglass" not "Fiberglass"
 Engine line: [Make] [HP] [Config] [Stroke] [Drive type] (e.g. "Mercury 200HP V6 Four-Stroke Outboard")
+Engine Hours: [X] — include engine hours in the description for all marine assets (EXCEPTION to the no-hours rule); format as "Engine Hours: [X]" on its own line after the engine line
 Key features: list in comma-separated prose — hull type, deadrise, arch/tower, canvas, lighting, swim platform, seating config, capacity
 Companion trailer (if supplied): own paragraph — "Supplied With [Year] [Make] [Axle Config] Boat Trailer: VIN [X], ATM [X]kg, Date of Manufacture [MM/YYYY]"
 Sold As Is, Untested & Unregistered.
@@ -1662,7 +1690,7 @@ Sold As Is, Untested & Unregistered.
 Key rules:
 - Hull material in title and features line (always "Fibreglass" not "Fiberglass")
 - Companion trailer gets its own paragraph — never buried in the features line
-- Engine hours NOT in description — goes in Salesforce fields only
+- Engine hours ARE included in description for marine — "Engine Hours: [X]" on its own line after the engine line (exception to the universal no-hours rule)
 - LOA: feet first then metres in brackets (e.g. "21ft (6.4m)")
 
 PRIVATE
@@ -1670,6 +1698,7 @@ Year, Make, Model, [Hull Material] [Vessel Type]
 LOA: XXft (Xm) | Beam: XXft (Xm) | Draft: XXft (Xm)
 Hull Material
 Engine/s: Make, cylinders, fuel type, HP (or Twin X HP Outboards)
+Engine Hours: [X] — always include if known; engine hours are in the description for all marine assets
 Key features
 Companion trailer (if supplied): own paragraph — "Supplied With [Year] [Make] [Axle Config] Boat Trailer: VIN [X], ATM [X]kg, Date of Manufacture [MM/YYYY]"
 Sold As Is, Untested & Unregistered.
@@ -1679,6 +1708,7 @@ Year, Make, Model, [Hull Material] [Vessel Type]
 LOA: XXft (Xm) | Beam: XXft (Xm) | Draft: XXft (Xm)
 Hull Material
 Engine/s: Make, cylinders, fuel type, HP (or Twin X HP Outboards)
+Engine Hours: [X] — always include if known; engine hours are in the description for all marine assets
 Key features
 Companion trailer (if supplied): own paragraph — "Supplied With [Year] [Make] [Axle Config] Boat Trailer: VIN [X], ATM [X]kg, Date of Manufacture [MM/YYYY]"
 Sold As Is, Untested & Unregistered.
@@ -2091,20 +2121,18 @@ Approx 40x Items Including Spanners, Sockets, Screwdrivers, Pliers and Wrenches 
 Sold As Is, Untested.
 
 UTE EXAMPLE:
-2019 Toyota HiLux SR5 4x4 Dual Cab Utility
+2019 Toyota HiLux SR5 Pickup 6sp 4WD Diesel Double Cab 2755cc 150kW 6sp 4cyl 4dr 5seat
 
-2GD-FTV 2.8-Litre 4-Cylinder Turbocharged Diesel, 150kW (201hp), 6-Speed Automatic Transmission
-
-Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, Reverse Camera, Apple CarPlay, Leather Seats, 18" Alloy Wheels, UHF Radio
+Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, UHF Radio
 
 Sold As Is, Untested & Unregistered.
 
 SEDAN (DAMAGE) EXAMPLE:
-2018 Holden Commodore VF SS-V 2WD Sedan
+2018 Holden Commodore VF SS-V Sedan 6sp 2WD Petrol Sedan 6162cc 317kW 6sp 8cyl 4dr 5seat
 
-LS3 6.2-Litre V8 Petrol, 317kW (425hp), 6-Speed Manual Transmission
+Brembo Brakes, Sports Suspension, 19" Alloy Wheels, Leather Sports Seats, Sunroof
 
-Brembo Brakes, Sports Suspension, 19" Alloy Wheels, Leather Sports Seats, Sunroof, Apple CarPlay
+Damage: Significant Accident Damage to Front End, Bonnet and Guards Replaced, Airbags Deployed
 
 Sold As Is, Untested & Unregistered.
 

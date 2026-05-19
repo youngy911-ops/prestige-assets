@@ -140,7 +140,11 @@ READING HOURMETERS:
 - Analog hourmeters: the large dial reads hours (usually 0-9999), the small sub-dial or pointer reads fractions. Read only the main hours dial as a whole number.
 - If the hourmeter photo appears to be rotated or upside-down, attempt to read it by mentally rotating the image. Digital displays often remain readable when rotated — the digits 0, 1, 2, 5, 6, 8, 9 are usually identifiable in any orientation. Note: upside-down 6 reads as 9, upside-down 9 reads as 6, upside-down 1 reads as 1. If still uncertain after correcting for rotation, return null.
 
-Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year are identified):
+Step 2 — Use your training knowledge to fill ALL fields (once Make + Model + Year are identified):
+CRITICAL PRINCIPLE: Once you identify the make, model, and year from any source (plate, badge, inspection notes, or visual identification), you MUST apply your full training knowledge to fill every field that is universally true for that specific model. Do not leave fields blank just because they weren't visible in photos. GPT-4o has comprehensive knowledge of equipment specifications — use it. Think of yourself as a technician who has just looked up the model in RitchieSpecs: fill in every spec you know is standard for that exact variant.
+- If a spec VARIES between configurations of the same model, leave it blank.
+- If a spec is UNIVERSALLY TRUE for every unit of that make/model/year, fill it in with high confidence.
+- Only return null for a field if you genuinely have no knowledge of that spec for that model.
 - TRUCKS: infer engine_manufacturer, engine_series, engine_size, fuel_type, gearbox_make, transmission, drive_type, suspension, axle_configuration, brakes, GVM, GCM, fifth_wheel (prime movers only — infer brand from make if not visible in photos; AU standard fitments by make: Kenworth→Jost JSK 37 [standard], SAF-Holland FW35 [optional]; Volvo→Jost JSK 37 or SAF-Holland; Mack→Jost JSK 37 or SAF-Holland FW35; Scania→Jost JSK 37; Mercedes Actros→Jost JSK 37; Freightliner→Fontaine or Jost; Western Star→Jost or Fontaine), torque (peak engine torque — digits only in Nm, e.g. Cummins X15 = 2780, PACCAR MX-13 = 2400, Volvo D13 = 2550, Mack MP8 = 2508, Detroit DD15 = 2576).
   RIGID TRUCK ENGINE INFERENCE by make/model:
   HINO 300 Series: 616/617→N04C-TI 4.0L 4-cyl 110kW (148hp); 717→N04C-TQ 4.0L 4-cyl 129kW (173hp); 816→N04C-UN 4.0L 4-cyl 147kW (197hp)
