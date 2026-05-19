@@ -1208,7 +1208,7 @@ QUALITY REFERENCE — real Slattery vehicle descriptions showing the correct one
 Example (dual cab ute):
 2019 Toyota HiLux SR5 Pickup 6sp 4WD Diesel Double Cab 2755cc 150kW 6sp 4cyl 4dr 5seat
 
-Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, UHF Radio
+Side Steps, Roof Rack, Tow Bar, UHF Antenna
 
 Sold As Is, Untested & Unregistered.
 
@@ -1264,7 +1264,7 @@ Extras line (own line, only if significant extras fitted): comma-separated acces
 Priority extras to mention if confirmed or visible (include every one that applies):
 - Tow bar — always mention if fitted (buyers universally ask; state Class/ball rating if visible)
 - Canopy / tray top — mention make and material if known (e.g. "Fibreglass Canopy", "Aeroklas Alloy Canopy", "Steel Canopy")
-- Bull bar / nudge bar — name brand if badged (ARB, TJM, Ridgeback, Ironman, Opposite Lock)
+- Bull bar / nudge bar — DO NOT include in description
 - Snorkel — mention if visible (signals off-road use and value to buyers)
 - Winch — mention if visible (state brand/capacity if badged)
 - Roof rack / roof basket — name brand if badged (Rhino Rack, Thule, ARB)
@@ -1285,7 +1285,7 @@ VEHICLE (PASSENGER / LIGHT COMMERCIAL)
 ALL specs go on Line 1 — ONE LINE only, no blank lines between spec sections.
 
 Line 1: [Year] [Make] [Model] [Trim/Variant] [Series] [Transmission] [Drive] [Fuel] [Body Type] [CC]cc [kW]kW [Speeds]sp [Cyl]cyl [Doors]dr [Seats]seat
-Extras line (own line, only if significant extras fitted): comma-separated significant extras only — bull bar, snorkel, tow bar, lift kit, canopy, drawbar, UHF. Omit standard features.
+Extras line (own line, only if significant extras fitted): comma-separated significant extras only — snorkel, tow bar, lift kit, canopy, drawbar, UHF Antenna. Omit bull bars. Omit standard features.
 Damage: [if significant only, else omit]
 Sold As Is, Untested & Unregistered.
 
@@ -1309,7 +1309,7 @@ Rules for vehicles:
 Example (dual cab ute with accessories — most common Slattery type):
 2019 Toyota HiLux SR5 Pickup 6sp 4WD Diesel Double Cab 2755cc 150kW 6sp 4cyl 4dr 5seat
 
-Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, UHF Radio
+Side Steps, Roof Rack, Tow Bar, UHF Antenna
 
 Sold As Is, Untested & Unregistered.
 
@@ -2123,7 +2123,7 @@ Sold As Is, Untested.
 UTE EXAMPLE:
 2019 Toyota HiLux SR5 Pickup 6sp 4WD Diesel Double Cab 2755cc 150kW 6sp 4cyl 4dr 5seat
 
-Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, UHF Radio
+Side Steps, Roof Rack, Tow Bar, UHF Antenna
 
 Sold As Is, Untested & Unregistered.
 
