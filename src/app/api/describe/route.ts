@@ -1366,6 +1366,7 @@ FORMAT RULES for all general goods and attachments:
 - Quantity lots: always estimate quantity as "Approx Xx Items" or "Approx Xx Pallets" — never leave quantity vague
 - Blank line between title, spec line, and footer
 - Always close with "Sold As Is, Untested." — NEVER "Sold As Is, Untested & Unregistered." for any general goods or attachment
+- ALWAYS DESCRIBE WHAT YOU CAN SEE: If no brand plate or sticker is visible, describe the item by what it physically is — type, material, colour, approximate size, visible condition. A factual description without a brand is more valuable than an invented one. Never hallucinate brand names.
 
 GENERATORS (subtype: plant_equipment or miscellaneous):
   Title: Make, Model, XkVA [Inverter / Diesel / Petrol] Generator
@@ -1523,6 +1524,107 @@ WASTE / RUBBISH COMPACTORS (not earthmoving — freestanding units):
   Commercial Waste Compactor
 
   Electric Motor Drive, Self-Contained Unit
+
+  Sold As Is, Untested.
+
+FURNITURE / OFFICE EQUIPMENT (subtype: office or miscellaneous):
+  For named brand items: Brand, Model, Item Type
+  For unbranded items: describe by type, material, colour, approximate size — e.g. "Office Chair, Black Mesh Back" or "Timber Boardroom Table, 2400mm x 1200mm"
+  Never guess a brand. If no brand visible, describe what you see.
+  Common items: office chairs (mesh/leather/fabric, adjustable height), desks, tables (dimensions if estimable), shelving (steel/timber, number of shelves, approximate height), filing cabinets, whiteboards
+
+  Example (no brand visible):
+  Office Chair, Black Mesh Back
+
+  Adjustable Height, Five-Star Wheeled Base, Armrests Fitted
+
+  Sold As Is, Untested.
+
+  Example (branded):
+  Herman Miller Aeron Office Chair
+
+  Size B, Black Fabric, Fully Adjustable Lumbar Support, PostureFit SL, Adjustable Arms
+
+  Sold As Is, Untested.
+
+WORKSHOP EQUIPMENT (subtype: tools_toolboxes or plant_equipment):
+  Title: Brand, Model, Item Type — or if no brand: describe by type and capacity
+  Items: welders (MIG/TIG/arc, amps), angle grinders (disc size), drill presses (capacity), lathes (swing and bed length), band saws, bench grinders, hydraulic presses (tonnage), sandblasters
+
+  Example (no brand):
+  Hydraulic Workshop Press, 20 Tonne
+
+  H-Frame, Floor-Standing, Manual Pump, 200mm Ram Stroke, Heavy-Duty Steel Frame
+
+  Sold As Is, Untested.
+
+CARAVANNING / CAMPING EQUIPMENT (subtype: miscellaneous):
+  Title: Brand, Model, Item Type
+  Items: portable generators, camping fridges, solar panels, dual battery systems, inverters
+
+  Example:
+  Dometic CFX3 55L Portable Compressor Fridge/Freezer
+
+  55L Capacity, 12V/24V/240V Operation, Temperature Range -22°C to +10°C, WiFi and Bluetooth Connectivity, Dual Zone Compatible, Foldable Handles
+
+  Sold As Is, Untested.
+
+PALLET RACKING / SHELVING SYSTEMS (subtype: office or miscellaneous):
+  Title: Brand (if visible), Pallet Racking or Shelving System
+  Spec: number of bays, beam levels, bay dimensions (width x depth x height), capacity per level if known, beam colour/type, uprights condition
+  If unbranded: "Heavy Duty Pallet Racking System" with dimensions
+
+  Example:
+  Dexion Pallet Racking System
+
+  Approx 10 Bays, 4 Beam Levels, Bay Dimensions Approx 2700mm Wide x 900mm Deep x 4000mm Tall, Orange Uprights, Galvanised Wire Mesh Decking, Bolts and Footplates Included
+
+  Sold As Is, Untested.
+
+EXERCISE / GYM EQUIPMENT (subtype: miscellaneous):
+  Title: Brand, Model, Item Type — or type and key spec if no brand
+  Items: treadmills (max speed/incline), bikes, rowing machines, weight benches, squat racks, dumbbells/barbells (weight), cable machines
+
+  Example (no brand):
+  Commercial Cable Machine, Dual Stack
+
+  Dual 100kg Weight Stacks, Multiple Attachment Points, Adjustable Pulley, Heavy-Duty Powder Coat Frame
+
+  Sold As Is, Untested.
+
+CLEANING EQUIPMENT (subtype: plant_equipment or miscellaneous):
+  Title: Brand, Model, Item Type — or type and key spec
+  Items: ride-on floor scrubbers, sweepers, pressure washers, vacuum systems, floor polishers
+
+  Example:
+  Nilfisk SC500 Ride-On Floor Scrubber
+
+  500mm Scrub Width, 48V Electric Drive, 100L Solution Tank, 100L Recovery Tank, Cylindrical Brush System
+
+  Sold As Is, Untested.
+
+MOTORS / ELECTRIC MOTORS (subtype: plant_equipment):
+  Title: Brand, Model, [kW/HP] Electric Motor
+  Spec: frame size, voltage/phase, RPM, IP rating, foot-mounted / flange-mounted
+  Key brands: WEG, Teco, ABB, Siemens, Leroy Somer, Nidec
+
+  Example:
+  WEG W22 7.5kW Electric Motor
+
+  7.5kW (10HP) Output, Frame 132S, 3-Phase 415V 50Hz, 1450 RPM, IE3 Premium Efficiency, IP55 Rated, Foot Mounted
+
+  Sold As Is, Untested.
+
+PUMPS / PUMP SETS (subtype: plant_equipment):
+  Title: Brand, Model, [type] Pump — e.g. "Grundfos CM5-4 Centrifugal Pump"
+  For pump sets (pump + engine/motor on frame): "[capacity] Pump Set with [Engine Brand] Engine"
+  Spec: flow rate (L/min or m³/hr), head (metres), outlet size (mm), drive type (electric/diesel/petrol)
+  Key pump brands: Grundfos, Davey, Onga, Lowara, Tsurumi, Gorman-Rupp, Mono, Flowserve
+
+  Example (pump set, component brand not the main asset):
+  Diesel Pump Set, 4-Inch Outlet
+
+  Approx 1500L/min Flow Rate, 4-Inch (100mm) Suction and Discharge, Diesel Engine Drive, Trailer Mounted
 
   Sold As Is, Untested.
 

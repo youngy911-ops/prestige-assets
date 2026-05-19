@@ -453,6 +453,7 @@ TYRE SIDEWALL READING — when tyre sidewalls are visible in exterior or wheel p
 - Read the tyre brand moulded on the sidewall (e.g. Bridgestone, Michelin, Continental, Goodyear, Yokohama, Toyo, Hankook)
 - This data is especially valuable for trucks and trailers where steer, drive, and trailer tyre specs differ — note position if distinguishable (steer vs drive vs trailer axle)
 - Add tyre size and brand to extras if not already captured in a dedicated tyre field
+- TYRE SIZE — DO NOT ESTIMATE OR INFER: Only return tyre_size if it is clearly readable on the sidewall in the photos. Do NOT estimate or guess tyre size from the make/model of the truck or trailer. If the sidewall is not legible or not photographed, return null for tyre_size — the user will fill this in manually. An estimated tyre size is worse than no tyre size.
 
 ENGINE BAY LABELS — when engine compartment photos are included, look for:
 - Engine model badge on the rocker cover or valve cover (e.g. "X15" or "ISX15" on Cummins, "MX-13" on PACCAR, "DD15" on Detroit, "D13" on Volvo) — use this to confirm or correct the engine series field
