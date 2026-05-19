@@ -28,52 +28,73 @@ export async function GET(req: NextRequest) {
   const savedFields = (asset.fields ?? {}) as Record<string, string>
   const title = getAssetDisplayTitle(assetType, asset.asset_subtype)
 
-  // Build rows: header row + value row
-  const headers = fields.map(f => f.label)
-  const values = fields.map(f => savedFields[f.key] ?? '')
+  const make = savedFields.make ?? ''
+  const model = savedFields.model ?? ''
+  const year = savedFields.year ?? ''
+  const nameParts = [year, make, model, savedFields.variant].filter(Boolean)
+  const assetName = nameParts.length > 0 ? nameParts.join(' ') : title
 
-  // Add description as a final column if it exists
-  const hasDesc = !!(asset.description as string | null)
-  if (hasDesc) {
-    headers.push('Auction Description')
-    values.push((asset.description as string).replace(/\n/g, ' | '))
+  // Two-column layout: Field Label | Value
+  // Row 1: Asset title as header
+  // Row 2: blank
+  // Row 3+: Field | Value pairs (only filled fields)
+  // Then blank row + description block
+
+  const rows: (string | number)[][] = []
+
+  // Title row
+  rows.push([assetName, ''])
+  rows.push(['', ''])
+  rows.push(['Field', 'Value'])
+
+  // Field rows — only include fields that have values
+  for (const f of fields) {
+    const val = savedFields[f.key] ?? ''
+    rows.push([f.label, val])
   }
 
-  const ws = XLSX.utils.aoa_to_sheet([headers, values])
+  // Description block
+  const desc = asset.description as string | null
+  if (desc) {
+    rows.push(['', ''])
+    rows.push(['Auction Description', ''])
+    rows.push([desc, ''])
+  }
 
-  // Style: bold header row, freeze top row, auto column widths
-  if (!ws['!cols']) ws['!cols'] = []
-  headers.forEach((h, i) => {
-    const colWidth = Math.max(h.length, (values[i] ?? '').length, 10)
-    ws['!cols']![i] = { wch: Math.min(colWidth + 2, 50) }
-  })
+  const ws = XLSX.utils.aoa_to_sheet(rows)
 
-  // Freeze top row
-  ws['!freeze'] = { xSplit: 0, ySplit: 1 }
+  // Column widths: label col 28 wide, value col 50 wide
+  ws['!cols'] = [{ wch: 28 }, { wch: 55 }]
 
-  // Bold the header cells
-  headers.forEach((_, i) => {
-    const cellAddr = XLSX.utils.encode_cell({ r: 0, c: i })
-    if (ws[cellAddr]) {
-      ws[cellAddr].s = {
-        font: { bold: true },
-        fill: { fgColor: { rgb: '0C1A0F' } },
-        border: { bottom: { style: 'thin', color: { rgb: '059669' } } },
+  // Style cells
+  // Row 0 (title): large bold
+  const titleCell = ws['A1']
+  if (titleCell) {
+    titleCell.s = { font: { bold: true, sz: 14, color: { rgb: '0C1A0F' } } }
+  }
+
+  // Row 2 (header row at index 2): bold with background
+  ;['A3', 'B3'].forEach(addr => {
+    const cell = ws[addr]
+    if (cell) {
+      cell.s = {
+        font: { bold: true, color: { rgb: 'FFFFFF' } },
+        fill: { patternType: 'solid', fgColor: { rgb: '059669' } },
       }
     }
   })
+
+  // Merge title across both columns (A1:B1)
+  ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 1 } }]
+
+  // Freeze the header row (row 3 = index 2)
+  ws['!freeze'] = { xSplit: 0, ySplit: 3 }
 
   const wb = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(wb, ws, 'Asset')
 
   const buf = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' })
 
-  // Filename: "Slattery - 2015 Kenworth T409SAR.xlsx"
-  const make = savedFields.make ?? ''
-  const model = savedFields.model ?? ''
-  const year = savedFields.year ?? ''
-  const nameParts = [year, make, model].filter(Boolean)
-  const assetName = nameParts.length > 0 ? nameParts.join(' ') : title
   const filename = `Slattery - ${assetName}.xlsx`.replace(/[/\\?%*:|"<>]/g, '-')
 
   return new Response(buf, {
