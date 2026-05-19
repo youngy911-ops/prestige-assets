@@ -630,12 +630,12 @@ Enclosed Cab or ROPS Canopy
 Quick hitch if fitted: "[Brand] [Model] [Type] Quick Hitch" (e.g. "Steelwrist X20 Tilt Rotator Quick Hitch", "Wedgelock OQ80 Quick Hitch") — always name brand; omit line if no quick hitch fitted
 Main bucket: XXXmm [Type] Bucket, X.Xm³ — always include BOTH width in mm AND capacity in m³ (e.g. "900mm GP Bucket, 0.9m³" or "1200mm Mud Bucket, 1.2m³")
 Thumb attachment if fitted: "Hydraulic Thumb" on its own line immediately after bucket — omit if not fitted
-Blade if fitted (on undercarriage): "Backfill Blade" or "Grader Blade" on its own line — omit if not fitted
+Blade if fitted (on undercarriage): "Dozer Blade: [X]ft" on its own line — always state blade width in feet per Slattery convention (e.g. "Dozer Blade: 8.0ft"); omit line entirely if no blade fitted. For basic backfill blades on compact machines where width is unknown, use "Backfill Blade" — omit if not fitted
 Auto-lube system if fitted: name brand where known (e.g. "Lincoln Auto-Lube System", "Beka-Max Auto-Lube System") — omit if not fitted
 Travel Speed: Xkm/h (X.Xmph) Forward, Xkm/h (X.Xmph) Reverse — always state in BOTH km/h AND mph (km/h × 0.621 = mph); apply model knowledge if not in confirmed fields (e.g. Cat 320 → 5.5km/h (3.4mph) Forward, 5.5km/h (3.4mph) Reverse)
 Boom and arm: "X.Xm Boom, X.Xm Arm" — on its own line; apply model knowledge if not confirmed
 X.Xm Max Reach — on its own line; apply model knowledge if not confirmed (e.g. Cat 320 → 9.5m Max Reach; Cat 330 → 10.8m Max Reach; Komatsu PC200 → 9.7m Max Reach; Hitachi ZX200 → 9.5m Max Reach)
-X.Xm Max Dig Depth — on its own line; apply model knowledge if not confirmed (e.g. Cat 320 → 6.5m Max Dig Depth; Cat 330 → 7.2m Max Dig Depth; Komatsu PC200 → 6.6m Max Dig Depth; Hitachi ZX200 → 6.5m Max Dig Depth)
+Max Digging Depth: X.Xm — on its own line using this label; apply model knowledge if not confirmed (e.g. Cat 320 → Max Digging Depth: 6.5m; Cat 330 → Max Digging Depth: 7.2m; Komatsu PC200 → Max Digging Depth: 6.6m; Hitachi ZX200 → Max Digging Depth: 6.5m)
 Attachments Included: list each item (make, model, coupling type where known)
 
 MINIMAL DATA RULE (excavators): If only make/model/year/hours are known, apply your training knowledge of that specific model to fill in operating weight, engine code + kW + hp + emissions tier, track width and type, and standard bucket size and capacity — e.g. Caterpillar 320 → 20t class, Cat C4.4 ACERT 4-Cylinder 97kW (130hp) Tier 4 Final, 600mm Steel Tracks, 0.9m³ GP Bucket; Caterpillar 330 → 30t class, Cat C7.1 6-Cylinder 170kW (228hp) Tier 4 Final; Komatsu PC200 → 20t class, SAA4D107E 4-Cylinder 110kW (148hp) Tier 4 Final, 600mm Steel Tracks, 0.8m³ bucket; Komatsu PC300 → 30t class, SAA6D114E 6-Cylinder 168kW (225hp) Tier 4 Final; Hitachi ZX200 → 20t class, Isuzu 4HK1 4-Cylinder 110kW (148hp) Tier 4 Final; Hitachi ZX350 → 35t class, Isuzu 6HK1 6-Cylinder 184kW (247hp) Tier 4 Final; Volvo EC220 → 22t class, Volvo D6E 6-Cylinder 122kW (163hp) Tier 4 Final; John Deere 210G → 21t class, John Deere PowerTech PSS 4-Cylinder 103kW (138hp) Tier 4 Final. Include all specs that are universally true for the identified model; omit specs that vary by configuration. Always include operating weight, engine code + kW + hp + emissions tier, and track width + type even when not in confirmed fields — these are the primary value indicators for earthmoving buyers. Always attempt to state undercarriage condition from photos. Always attempt to identify quick hitch brand from photos. Always attempt to identify auto-lube brand from photos or model-standard fitment.
@@ -1137,6 +1137,8 @@ Exterior: Side Awning — always note brand if readable (Dometic, Carefree, Fiam
 Solar: XXXw Solar Panel(s) — note wattage from panel label if visible. Omit if not confirmed.
 Power: battery system, 240v hookup if confirmed — omit if not confirmed.
 Water: Xlt fresh water tank if confirmed — omit if not confirmed.
+Suspension and Brakes: [Suspension type], [Brake type] — include if confirmed or inferrable from model knowledge (e.g. "Independent Coil Suspension, Electric Brakes")
+ATM: [X]kg — always include on its own line at the bottom when known (from compliance plate or Salesforce ATM field); note "(Upgraded)" if ATM has been upgraded beyond OEM spec
 Sold As Is, Untested & Unregistered.
 
 Key rules:
@@ -1146,6 +1148,7 @@ Key rules:
 - Appliance brands always named where visible or known (Dometic fridge, Dometic air con, Suburban HWS)
 - Solar wattage always stated if visible on panel label
 - Awning brand always stated if readable (Dometic, Carefree, Fiamma)
+- ATM always on its own line at the bottom when known — never embedded in a comma list
 
 Example:
 Coronel Caravans Lifestyle 638 On-Road Dual-Axle Caravan
@@ -1199,7 +1202,7 @@ Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) one-liner template below. ALL spe
 
 MINIMAL DATA RULE (cars/utes): A short accurate description is better than a padded one. When only limited information is confirmed, write a concise description using only what is known — do NOT fill lines with inferred or speculative specs just to appear thorough. Only apply training knowledge to fill a spec when it is universally true for that exact model/variant/year. If the spec varies by order or option, omit it entirely.
 
-When engine/transmission/drive data IS confirmed or universally inferrable for the exact variant, apply it — e.g. Toyota HiLux SR5 → 2755cc 150kW 6sp 4cyl 4dr 5seat; Ford Ranger Wildtrak → 1996cc 157kW 10sp 4cyl 4dr 5seat; Mitsubishi Triton GLS → 2442cc 133kW 6sp 4cyl 4dr 5seat; Toyota LandCruiser 200 Series → 4461cc 195kW 6sp 8cyl 5dr 5seat; Toyota Corolla Ascent Sport → 1987cc 125kW CVT 4cyl 5dr 5seat. Drive type (4WD/2WD/AWD) is standard knowledge for a variant and must always be included. Always include variant/trim level if inferrable (SR5, Wildtrak, GLS, SV6, Titanium, Raptor, GXL, VX, Kakadu etc.) — this is one of the highest-value details and directly affects hammer price.
+When engine/transmission/drive data IS confirmed or universally inferrable for the exact variant, apply it — e.g. Toyota HiLux SR5 → 2755cc 150kW 6sp 4cyl 4dr 5seat; Ford Ranger XLT/Wildtrak → 1996cc 157kW 10sp 4cyl 4dr 5seat; Mitsubishi Triton GLS → 2268cc 133kW 6sp 4cyl 4dr 5seat; Toyota LandCruiser 200 Series → 4461cc 195kW 6sp 8cyl 5dr 5seat; Toyota Corolla Ascent Sport → 1987cc 125kW CVT 4cyl 5dr 5seat. Drive type (4WD/2WD/AWD) is standard knowledge for a variant and must always be included. Always include variant/trim level if inferrable (SR5, Wildtrak, GLS, SV6, Titanium, Raptor, GXL, VX, Kakadu etc.) — this is one of the highest-value details and directly affects hammer price.
 
 QUALITY REFERENCE — real Slattery vehicle descriptions showing the correct one-liner format:
 
@@ -1212,6 +1215,21 @@ Sold As Is, Untested & Unregistered.
 
 Example (minimal — only key specs confirmed):
 2023 Ford Ranger PY Sport Pickup 10sp 4WD Diesel Double Cab 1996cc 157kW 10sp 4cyl 4dr 5seat
+
+Sold As Is, Untested & Unregistered.
+
+Example (common AU ute — Ford Ranger XLT):
+2020 Ford Ranger XLT Auto 4WD Diesel Double Cab 1996cc 157kW 10sp 4cyl 4dr 5seat
+
+Sold As Is, Untested & Unregistered.
+
+Example (common AU ute — Toyota HiLux SR5):
+2022 Toyota HiLux SR5 Auto 4WD Diesel Double Cab 2755cc 150kW 6sp 4cyl 4dr 5seat
+
+Sold As Is, Untested & Unregistered.
+
+Example (common AU ute — Mitsubishi Triton GLS):
+2021 Mitsubishi Triton GLS Auto 4WD Diesel Double Cab 2268cc 133kW 6sp 4cyl 4dr 5seat
 
 Sold As Is, Untested & Unregistered.
 
@@ -1899,7 +1917,7 @@ Lincoln Auto-Lube System
 5.2km/h (3.2mph) Forward, 6.1km/h (3.8mph) Reverse
 14.5m Boom, 2.8m Arm
 9.5m Max Reach
-6.5m Max Dig Depth
+Max Digging Depth: 6.5m
 
 Sold As Is, Untested & Unregistered.
 
