@@ -49,7 +49,7 @@ UNIVERSAL RULES:
 - Always closes with "Sold As Is, Untested & Unregistered." or "Sold As Is, Untested." for attachments and general goods
 - Values and measurements from inspection notes must appear verbatim in the description — do not paraphrase, convert units, or interpret. If notes say '48" sleeper cab', write '48" sleeper cab'
 - VIN, serial number, chassis number, and registration must only appear if directly visible in photos or inspection notes — never infer or estimate these identifiers
-- UHF radios — state 'UHF Antenna' or 'Dual UHF Antenna' — never just 'UHF', never brand names (Simoco, Icom, GME etc); radio brand is not relevant to buyers
+- UHF radios — state 'UHF' or 'Dual UHF' — never just 'UHF', never brand names (Simoco, Icom, GME etc); radio brand is not relevant to buyers
 - Tyres — include size only (e.g. 295/80R22.5), never brand names (Bridgestone, Michelin, etc); EXCEPTION: wheel loaders where tyre brand on sidewall is visible and relevant to buyers
 - TYRE SIZE IN DESCRIPTIONS: Only include tyre size in the description for WHEEL LOADERS and TELEHANDLERS. For all other asset types (trucks, trailers, vehicles etc.) — tyre size goes in the Salesforce tyre_size field ONLY, never in the description body.
 - NO SUSPENSION IN TRUCK DESCRIPTIONS: Suspension type and brand belong in the Salesforce suspension field only. Never mention suspension in the description text.
@@ -76,7 +76,16 @@ Line 1: [Year] [Make] [Model] [Drive Type] Prime Mover — e.g. "2019 Kenworth T
 Blank line
 Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Cummins 6-Cylinder Diesel, 550HP". DO NOT include: engine code (ISX, MX-13, DD15 etc.), displacement/litres (15.0-Litre etc.), "Turbocharged" or "Turbodiesel". JUST: Make N-Cylinder FuelType, XXXHP.
 Blank line
-Extras line: [Transmission Name], Diff Locks (if fitted), Exhaust Brake (if fitted), Cruise Control (if fitted), [UHF, GPS, cameras, other extras] — all comma-separated. DO NOT include suspension. DO NOT include brakes. DO NOT include cab type. DO NOT include fifth wheel. Fifth wheel goes in Salesforce field, not description.
+Transmission line: [Transmission Name] — e.g. "Eaton 18-Speed Manual" or "Volvo I-Shift 12-Speed AMT"
+Each notable extra on its OWN LINE — do NOT comma-separate extras with transmission. Each of the following gets its own line if fitted:
+  Diff Locks
+  Exhaust Brake
+  Cruise Control
+  UHF
+  GPS / Satellite Navigation
+  Reverse Camera
+  [Any other significant fitted extra]
+DO NOT include: suspension, brakes, cab type, fifth wheel — these go in Salesforce fields only.
 GCM: [X]kg B-Double Rated / Road Train Rated — only include if road train rated (≥ 90,000kg) OR explicitly stated
 Damage: [if significant damage only, else omit]
 Sold As Is, Untested & Unregistered.
@@ -102,7 +111,7 @@ Transmission line: [Transmission Name], [Key chassis extras] — comma-separated
 Blank line
 Body line: body builder name + tray dimensions Xmm (L) x Xmm (W) — own line
 Crane line (if fitted): [Crane Make] [Model] Knuckleboom Crane, [X]kg Capacity [— Not In Certification if applicable] — crane always on its own line; include make, model, capacity rating
-Accessories: ALL remaining fitted items in one comma-separated run on a single line — air hose reel, water hose reel, toolboxes with dimensions, compressor, inverter brand/wattage, solar, awnings, rack, reverse camera, in-cab crane controls, UHF Antenna, sat nav, cruise control, overhead lights, beacons
+Accessories: ALL remaining fitted items in one comma-separated run on a single line — air hose reel, water hose reel, toolboxes with dimensions, compressor, inverter brand/wattage, solar, awnings, rack, reverse camera, in-cab crane controls, UHF, sat nav, cruise control, overhead lights, beacons
 Tow Hitch and Airlines at Rear — include on its own line when fitted (standard service truck closing spec)
 Sold As Is, Untested & Unregistered.
 
@@ -231,7 +240,7 @@ Body line: body builder name + tray dimensions Xmm (L) x Xmm (W) — own line
 Crane line: [Crane Make] [Model] Knuckleboom Crane, [X]kg Capacity [— Not In Certification if applicable] — crane always on its own line; include make, model, capacity rating
   — boom type: Knuckle Boom / Straight Boom / Loader Crane (use whichever applies)
   — certification status (In Current Certification / Not In Current Certification / Certification Unknown): include if known
-Accessories: ALL remaining fitted items in one comma-separated run on a single line — hose reels, toolboxes with dimensions, compressor, inverter brand/wattage, reverse camera, in-cab crane controls, UHF Antenna, sat nav, cruise control, overhead lights, beacons
+Accessories: ALL remaining fitted items in one comma-separated run on a single line — hose reels, toolboxes with dimensions, compressor, inverter brand/wattage, reverse camera, in-cab crane controls, UHF, sat nav, cruise control, overhead lights, beacons
 Tow Hitch and Airlines at Rear — include on its own line when fitted
 Sold As Is, Untested & Unregistered.
 
@@ -1209,7 +1218,7 @@ QUALITY REFERENCE — real Slattery vehicle descriptions showing the correct one
 Example (dual cab ute):
 2019 Toyota HiLux SR5 Pickup 6sp 4WD Diesel Double Cab 2755cc 150kW 6sp 4cyl 4dr 5seat
 
-Side Steps, Roof Rack, Tow Bar, UHF Antenna
+Side Steps, Roof Rack, Tow Bar, UHF
 
 Sold As Is, Untested & Unregistered.
 
@@ -1301,7 +1310,7 @@ VEHICLE (PASSENGER / LIGHT COMMERCIAL)
 ALL specs go on Line 1 — ONE LINE only, no blank lines between spec sections.
 
 Line 1: [Year] [Make] [Model] [Trim/Variant] [Series] [Transmission] [Drive] [Fuel] [Body Type] [CC]cc [kW]kW [Speeds]sp [Cyl]cyl [Doors]dr [Seats]seat
-Extras line (own line, only if significant extras fitted): comma-separated significant extras only — snorkel, tow bar, lift kit, canopy, drawbar, UHF Antenna. Omit bull bars. Omit standard features.
+Extras line (own line, only if significant extras fitted): comma-separated significant extras only — snorkel, tow bar, lift kit, canopy, drawbar, UHF. Omit bull bars. Omit standard features.
 Damage: [if significant only, else omit]
 Sold As Is, Untested & Unregistered.
 
@@ -1325,7 +1334,7 @@ Rules for vehicles:
 Example (dual cab ute with accessories — most common Slattery type):
 2019 Toyota HiLux SR5 Pickup 6sp 4WD Diesel Double Cab 2755cc 150kW 6sp 4cyl 4dr 5seat
 
-Side Steps, Roof Rack, Tow Bar, UHF Antenna
+Side Steps, Roof Rack, Tow Bar, UHF
 
 Sold As Is, Untested & Unregistered.
 
@@ -1811,7 +1820,7 @@ PRIME MOVER EXAMPLE:
 
 Volvo 6-Cylinder Diesel, 500HP
 
-Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission, Volvo Engine Brake (VEB+), Mr Wong Hydraulics PTO, Adaptive Cruise Control, Lane Keeping Support, Dual UHF Antenna
+Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission, Volvo Engine Brake (VEB+), Mr Wong Hydraulics PTO, Adaptive Cruise Control, Lane Keeping Support, Dual UHF
 
 Ice Pack 24in Sleeper Cab
 
@@ -1824,7 +1833,7 @@ PRIME MOVER EXAMPLE 2 (road train rated — GCM included):
 
 Cummins 6-Cylinder Diesel, 565HP
 
-Eaton 18-Speed Manual, Diff Locks, Hydraulics, Alemlube Auto Greaser, RightWeigh Onboard Scales, Dual UHF Antenna
+Eaton 18-Speed Manual, Diff Locks, Hydraulics, Alemlube Auto Greaser, RightWeigh Onboard Scales, Dual UHF
 
 48" Single Bonneted Sleeper, Custom Air Sleeper A/C
 
@@ -1839,7 +1848,7 @@ PRIME MOVER EXAMPLE 3 (T409SAR — correct compact format):
 
 Cummins 6-Cylinder Diesel, 550HP
 
-Eaton 18-Speed Manual, Diff Locks, Exhaust Brake, UHF Antenna
+Eaton 18-Speed Manual, Diff Locks, Exhaust Brake, UHF
 
 Sold As Is, Untested & Unregistered.
 
@@ -1848,7 +1857,7 @@ TIPPER WITH COMPANION TRAILER EXAMPLE:
 
 Mack MP8 13.0-Litre 6-Cylinder Turbocharged Diesel, 373kW (500hp), 1860Nm Torque, Mack mDRIVE 12-Speed Automated Manual Transmission
 
-Tipper Body 4800mm (L) x 2500mm (W) x 900mm (D), Auto Retractable Tarp, PowerLeash Engine Brake, Cruise Control, Ecco Load Monitoring System, UHF Antenna, Diff Locks
+Tipper Body 4800mm (L) x 2500mm (W) x 900mm (D), Auto Retractable Tarp, PowerLeash Engine Brake, Cruise Control, Ecco Load Monitoring System, UHF, Diff Locks
 
 Tri-Axle Shepard Dog Trailer 2016: VIN 6V9T24STEGC075014, ATM 25,500kg, Tipper Body 5600mm (L) x 2500mm (W) x 900mm (D), Auto Retractable Tarp, Shepard Axles
 
@@ -1870,7 +1879,7 @@ SERVICE/CRANE TRUCK EXAMPLE:
 
 Tuff Tray Body 5600mm (L) x 2400mm (W)
 HMF 300 E4-4 Knuckleboom Crane, 3,200kg Capacity
-Air Hose Reel, Water Hose Reel, Dual Vertical Toolboxes (1500mm + 1700mm), Reverse Camera, Redarc 2000W Pure Sine Inverter, UHF Antenna, Sat Nav, Cruise Control, Overhead Lights, Beacons
+Air Hose Reel, Water Hose Reel, Dual Vertical Toolboxes (1500mm + 1700mm), Reverse Camera, Redarc 2000W Pure Sine Inverter, UHF, Sat Nav, Cruise Control, Overhead Lights, Beacons
 
 Tow Hitch and Airlines at Rear
 
@@ -1957,7 +1966,7 @@ BACKHOE LOADER EXAMPLE:
 
 JCB Dieselmax 4-Cylinder Turbocharged Diesel, 74.2kW (100hp), 3-Speed Hydrostatic Transmission
 
-2200mm 4-In-1 Front Loader Bucket, Norm Quick Hitch Rear, Max Dig Depth 5.97m, Loadmaster 100 In-Cab Load Monitoring, Bluetooth Radio, Air Conditioning, UHF Antenna, Extendable Dipper, Hydraulic Sideshift, Load Sensing Hydraulics
+2200mm 4-In-1 Front Loader Bucket, Norm Quick Hitch Rear, Max Dig Depth 5.97m, Loadmaster 100 In-Cab Load Monitoring, Bluetooth Radio, Air Conditioning, UHF, Extendable Dipper, Hydraulic Sideshift, Load Sensing Hydraulics
 
 Sold As Is, Untested & Unregistered.
 
@@ -2158,7 +2167,7 @@ Sold As Is, Untested.
 UTE EXAMPLE:
 2019 Toyota HiLux SR5 Pickup 6sp 4WD Diesel Double Cab 2755cc 150kW 6sp 4cyl 4dr 5seat
 
-Side Steps, Roof Rack, Tow Bar, UHF Antenna
+Side Steps, Roof Rack, Tow Bar, UHF
 
 Sold As Is, Untested & Unregistered.
 
