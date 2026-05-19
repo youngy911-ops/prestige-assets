@@ -49,7 +49,7 @@ UNIVERSAL RULES:
 - Always closes with "Sold As Is, Untested & Unregistered." or "Sold As Is, Untested." for attachments and general goods
 - Values and measurements from inspection notes must appear verbatim in the description — do not paraphrase, convert units, or interpret. If notes say '48" sleeper cab', write '48" sleeper cab'
 - VIN, serial number, chassis number, and registration must only appear if directly visible in photos or inspection notes — never infer or estimate these identifiers
-- UHF radios — state 'UHF Radio' or 'Dual UHF' only, never brand names (Simoco, Icom, GME etc); radio brand is not relevant to buyers
+- UHF radios — state 'UHF Antenna' or 'Dual UHF Antenna' — never just 'UHF', never brand names (Simoco, Icom, GME etc); radio brand is not relevant to buyers
 - Tyres — include size only (e.g. 295/80R22.5), never brand names (Bridgestone, Michelin, etc); EXCEPTION: wheel loaders where tyre brand on sidewall is visible and relevant to buyers
 - TYRE SIZE IN DESCRIPTIONS: Only include tyre size in the description for WHEEL LOADERS and TELEHANDLERS. For all other asset types (trucks, trailers, vehicles etc.) — tyre size goes in the Salesforce tyre_size field ONLY, never in the description body.
 - NO SUSPENSION IN TRUCK DESCRIPTIONS: Suspension type and brand belong in the Salesforce suspension field only. Never mention suspension in the description text.
