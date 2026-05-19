@@ -186,6 +186,34 @@ CRITICAL PRINCIPLE: Once you identify the make, model, and year from any source 
   - Exhaust brake: look for a dashboard switch or toggle labelled "ENGINE BRAKE", "JAKE BRAKE", "EXHAUST BRAKE", or "COMPRESSION BRAKE". If not visible in photos but make is Kenworth, Mack, Volvo, Scania, or Mercedes Actros, infer exhaust brake as standard fitment at medium confidence and note in extras (e.g. "Exhaust brake (standard on Kenworth prime movers)").
   - Retarder: scan the driveshaft tunnel or transmission/gearbox area for a bolt-on retarder unit — Telma retarders are circular electromagnetic disc units mounted on the driveshaft; Voith retarders are a larger rectangular hydraulic box unit bolted between the gearbox output and driveshaft. If a retarder unit is clearly visible, name the brand and note in extras (e.g. "Telma electromagnetic retarder fitted" or "Voith hydraulic retarder fitted").
   - Sleeper amenities: when sleeper compartment photos are available, actively scan for: fridge (stainless steel or plastic-door unit mounted in the sleeper wall or under the bunk — note brand if badge is readable: Waeco, Engel, Bushman, Evakool, Dometic); microwave (compact rectangular unit mounted on a shelf or above the bunk — note brand if visible); TV mount or screen (bracket fixed to sleeper wall or ceiling, or a flat screen visible); inverter unit (rectangular electrical box with AC outlet sockets mounted on the side wall or under the bunk — note brand if readable: Redarc, Projecta, Victron). List all confirmed sleeper amenities in extras.
+  TRUCK EXTRAS DETECTION — always scan ALL photos for these fitted items:
+
+  CAB EXTERIOR (check front, side, and rear cab photos):
+  - Bull bar: DO NOT include in description (user preference — skip)
+  - Sunvisor / wind deflector: note brand if badged (Herd, International, Western Star)
+  - Spotlights / driving lights: note if LED light bar fitted (brand if readable: Stedi, Narva, Hella)
+  - UHF antenna: chrome whip on cab roof, corner, or bull bar — note as 'UHF'
+  - Satellite dish: mounted on cab roof or rear — note as 'Satellite'
+  - Cab air conditioning unit (underdash or roof mount)
+
+  CHASSIS / UNDER-CABIN (check underside and side profiles):
+  - Diff locks: look for 'diff lock' switch in cab interior, or dashboard toggle — state 'Diff Locks'
+  - Exhaust brake / Jake brake: dashboard toggle labelled 'ENGINE BRAKE' or 'JAKE BRAKE' — state 'Exhaust Brake'
+  - Cruise control: stalk on steering column or dashboard toggle — state 'Cruise Control'
+  - PTO (power take-off): check chassis rail for PTO shaft stub or cab console for PTO switch
+  - Onboard air compressor: look for air lines at rear or below tray
+  - Fuel tank configuration: if dual fuel tanks visible, note 'Dual Fuel Tanks'
+  - Sleeper air conditioner: visible as box unit on front or side of sleeper box — state brand if readable (Webasto, Espar, Thermo King, Custom Air)
+
+  REAR / TRAY AREA:
+  - Tow hitch and airlines: always check rear — state 'Tow Hitch and Airlines at Rear' if fitted
+  - Toolboxes: note quantity and approx dimensions if visible (e.g. 'Underslung Toolboxes x2')
+  - Fuel heater: note as 'Fuel Heater' if visible in cab or chassis
+  - Load restraint points: E-track or chain rails on tray
+  - Headboard: note if fitted, with roof rack if present
+  - Side curtains: note brand if readable
+
+  For each extra detected: output it on its own line in the description. Each extra = own line.
 - TRAILERS: Follow this extraction sequence for every trailer:
   1. DRAWBAR/A-FRAME BUILD PLATE — highest priority. The compliance/build plate is riveted or bolted to the drawbar (A-frame) or front chassis cross-member. Look for it in close-up photos of the front of the trailer or kingpin area. Extract: Make, Model, VIN (17-char), Chassis Number, ATM (kg), Tare (kg), Year of Manufacture, Compliance Date. If partially obscured, extract whatever is legible — do not skip.
   2. MAKE FROM VISUAL CUES when plate is unreadable — scan side panels, curtains, rear bumper, and mud flaps for brand logos or decals. Key visual identifiers: Vawdrey — distinctive blue/grey oval logo on curtain or rear panel, "VAWDREY" text on headboard; Maxitrans/Freighter — "FREIGHTER" on rear panel or mud flap logo, red/white Maxitrans branding; Krueger — large "K" logo on side panel or rear, SA-made premium flat tops; Barker — "BARKER" text on headboard or chassis rail plate; Moore — "MOORE" badge on rear or headboard, heavy tipper specialist; Stoodley — "STOODLEY" on side or headboard, QLD side tipper; Drake — yellow Drake branding, heavy haulage; Byrne — "BYRNE" on stock crate body; Graham Lusty/Lusty EMS — polished alloy body with "LUSTY" decal; Hamelex White — "HXW" or "HAMELEX WHITE" on body. If you can read the brand from any photo, output it even if the build plate is not visible — confidence "medium".
@@ -232,6 +260,14 @@ CRITICAL PRINCIPLE: Once you identify the make, model, and year from any source 
   - Dozer blade type: for crawler dozers, identify the blade shape from the front exterior photo. Straight blade (S-blade) = flat rectangular plate, no curve, cuts and pushes material straight ahead. PAT blade (Power Angle and Tilt) = flat blade with hydraulic cylinders visible on each side allowing the blade to angle left/right and tilt — identifiable by the external angling cylinders. U-blade = wide curved blade with high side wings forming a U-shape, designed to carry large volumes of loose material — identifiable by the upswept side panels. Semi-U blade = narrower curved blade between S and U. Note blade type in extras.
   - Counterweight configuration: on excavators, scan the rear of the house (upperstructure) for the counterweight shape. Standard counterweight = rounded or flat block that does not extend significantly beyond the rear of the house. Extended/heavy counterweight = a larger block that protrudes well beyond the tail of the machine, often fitted to machines used for long-reach work or heavy lifting. Note in extras if an extended counterweight is visible (e.g. "Extended counterweight fitted").
   - Central lubrication system: look for a grease pump box or automatic lubrication unit mounted on the cab exterior, main frame, or engine bay bulkhead. Auto-lube systems have a cylindrical or rectangular grease reservoir with a pump unit and distribution lines running to pin joints. If visible, note brand if readable (Lincoln, Beka-Max, Graco, SKF) and note in extras (e.g. "Auto-lube system fitted — Lincoln brand").
+  EARTHMOVING EXTRAS DETECTION:
+  - Quick hitch: look for wedge-lock or hydraulic coupler between stick and bucket — note brand if readable (Miller, OilQuick, Steelwrist, Lehnhoff)
+  - Auto lube (auto greaser): small pump unit visible on boom or frame, usually Beka-Max, Lincoln, or Graco
+  - Air conditioning: note 'Air Conditioning' if enclosed cab
+  - GPS grade control: look for mast/antenna on blade/boom (Trimble, Topcon, Leica)
+  - Rear view camera: visible on cab rear or counterweight
+  - Work lights: LED light bar on cab or boom
+  - Hammer lines (auxiliary hydraulics): two hose fittings on stick end, look for quick-connects
 - FORKLIFTS: Use Make + Model + Year to infer the following fields when not directly readable from the data plate.
   DATA PLATE LOCATIONS BY BRAND — check these specific spots first before scanning the whole mast:
   - Toyota: data plate is on the LEFT-SIDE mast column at operator eye level (facing the operator). Contains model, serial number, year of manufacture, rated capacity at load centre, and unladen weight.

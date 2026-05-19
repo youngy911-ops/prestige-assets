@@ -74,7 +74,7 @@ TEMPLATES BY ASSET TYPE — select the correct template based on asset identifie
 TRUCK (PRIME MOVER)
 Line 1: [Year] [Make] [Model] [Drive Type] Prime Mover — e.g. "2019 Kenworth T909 6x4 Prime Mover"
 Blank line
-Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Cummins 6-Cylinder Diesel, 550HP". DO NOT include: engine code (ISX, MX-13, DD15 etc.), displacement/litres (15.0-Litre etc.), "Turbocharged" or "Turbodiesel". JUST: Make N-Cylinder FuelType, XXXHP.
+Engine line: [Engine Make] [X.X]-Litre [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + litres + cylinders + fuel + HP ONLY. e.g. "Cummins 15.0-Litre 6-Cylinder Diesel, 550HP". DO NOT include: engine code (ISX, MX-13, DD15 etc.), "Turbocharged" or "Turbodiesel". JUST: Make X.X-Litre N-Cylinder FuelType, XXXHP.
 Blank line
 Transmission line: [Transmission Name] — e.g. "Eaton 18-Speed Manual" or "Volvo I-Shift 12-Speed AMT"
 Each notable extra on its OWN LINE — do NOT comma-separate extras with transmission. Each of the following gets its own line if fitted:
@@ -82,19 +82,22 @@ Each notable extra on its OWN LINE — do NOT comma-separate extras with transmi
   Exhaust Brake
   Cruise Control
   UHF
-  GPS / Satellite Navigation
+  Satellite Navigation
   Reverse Camera
+  Fuel Heater
+  Dual Fuel Tanks
+  Tow Hitch and Airlines at Rear
   [Any other significant fitted extra]
 DO NOT include: suspension, brakes, cab type, fifth wheel — these go in Salesforce fields only.
 GCM: [X]kg B-Double Rated / Road Train Rated — only include if road train rated (≥ 90,000kg) OR explicitly stated
 Damage: [if significant damage only, else omit]
 Sold As Is, Untested & Unregistered.
 
-MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Kenworth T909/T659 → Cummins 6-Cylinder Diesel, 550HP; Kenworth T409SAR → Cummins 6-Cylinder Diesel, 550HP; Kenworth T610 → PACCAR 6-Cylinder Diesel, 510HP; Volvo FH → Volvo 6-Cylinder Diesel, 540HP; Western Star 4964 → Detroit 6-Cylinder Diesel, 505HP; Mack Trident/Granite → Mack 6-Cylinder Diesel, 505HP; Mercedes Actros → Mercedes 6-Cylinder Diesel, 530HP; DAF XF → DAF 6-Cylinder Diesel, 510HP. Use the ENGINE HP REFERENCE table above to fill the HP figure when not supplied. DO NOT include suspension, fifth wheel, or cab type in the description — these belong in Salesforce fields only.
+MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Kenworth T909/T659 → Cummins 15.0-Litre 6-Cylinder Diesel, 550HP; Kenworth T409SAR → Cummins 15.0-Litre 6-Cylinder Diesel, 550HP; Kenworth T610 → PACCAR 12.9-Litre 6-Cylinder Diesel, 510HP; Volvo FH → Volvo 12.8-Litre 6-Cylinder Diesel, 540HP; Western Star 4964 → Detroit 14.8-Litre 6-Cylinder Diesel, 505HP; Mack Trident/Granite → Mack 12.8-Litre 6-Cylinder Diesel, 505HP; Mercedes Actros → Mercedes 12.8-Litre 6-Cylinder Diesel, 530HP; DAF XF → DAF 12.9-Litre 6-Cylinder Diesel, 510HP. Use the ENGINE HP REFERENCE table above to fill the HP figure when not supplied. DO NOT include suspension, fifth wheel, or cab type in the description — these belong in Salesforce fields only.
 
 TIPPER
 Line 1: Year, Make, Model, Drive Type, Tipper
-Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Mack 6-Cylinder Diesel, 500HP". DO NOT include: engine code (ISX, MP8, 6M60 etc.), displacement/litres, "Turbocharged" or "Turbodiesel". JUST: Make N-Cylinder FuelType, XXXHP.
+Engine line: [Engine Make] [X.X]-Litre [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + litres + cylinders + fuel + HP ONLY. e.g. "Mack 12.8-Litre 6-Cylinder Diesel, 500HP". DO NOT include: engine code (ISX, MP8, 6M60 etc.), "Turbocharged" or "Turbodiesel". JUST: Make X.X-Litre N-Cylinder FuelType, XXXHP.
 Transmission line: [Transmission Name], Diff Locks (if fitted), Exhaust Brake (if fitted), [Key chassis extras] — all comma-separated on its own line, no blank line before it
 Blank line
 Single body-detail line: body builder name MUST always be stated — common AU builders: Moore, Stoodley, Hamelex White, CJD, Auswide, Superior; always attempt to identify from photos (look for badge/plate on body); if not determinable write "Custom Tipper Body"; then dimensions Xmm (L) x Xmm (W) x Xmm (H), material (steel / alloy / Hardox); Hardox lining MUST be called out explicitly if fitted ("Hardox Lined" or "Full Hardox Lining" — Hardox is a premium value signal); tarp brand AND type always named if tarp fitted — never write "tarp" alone (e.g. "Razor Delta II Electric Roll-Over Tarp", "Aerocover Auto-Retractable Tarp", "CoverMe Electric Tarp"); tailgate type, Ringfeder hitch if confirmed; Rock Lined if applicable; ALL extras in one comma-separated run on this single line — never use separate lines for individual accessories
@@ -106,7 +109,7 @@ MINIMAL DATA RULE (tippers): Body builder name is a mandatory attempt — always
 
 SERVICE TRUCK
 Line 1: Year, Make, Model, Drive Type, Service Truck or Tray/Crane Truck (use "Tray/Crane Truck" when a loader crane is fitted)
-Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Isuzu 6-Cylinder Diesel, 280HP". DO NOT include: engine code, displacement/litres, "Turbocharged". JUST: Make N-Cylinder FuelType, XXXHP.
+Engine line: [Engine Make] [X.X]-Litre [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + litres + cylinders + fuel + HP ONLY. e.g. "Isuzu 5.2-Litre 6-Cylinder Diesel, 280HP". DO NOT include: engine code, "Turbocharged". JUST: Make X.X-Litre N-Cylinder FuelType, XXXHP.
 Transmission line: [Transmission Name], [Key chassis extras] — comma-separated on its own line
 Blank line
 Body line: body builder name + tray dimensions Xmm (L) x Xmm (W) — own line
@@ -117,7 +120,7 @@ Sold As Is, Untested & Unregistered.
 
 RIGID TRUCK / PANTECH / CURTAINSIDER / TAUTLINER / VAN
 Line 1: Year, Make, Model, Drive Type, Body Type
-Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP, [Transmission Name]
+Engine line: [Engine Make] [X.X]-Litre [N]-Cylinder [Fuel], [X]HP, [Transmission Name]
 Body dimensions Xmm (L) x Xmm (W), door type always stated (Roller Door Rear / Swing Doors Rear / Side Door) if known — door type affects usability and is a key buyer detail
 Tail lift or refrigeration unit if fitted (state make and model)
 Extras if any
@@ -126,7 +129,7 @@ Sold As Is, Untested & Unregistered.
 Example (Pantech):
 2020 Hino 300 Series 617 4x2 Pantech
 
-Hino 4-Cylinder Diesel, 110HP, Automatic Transmission
+Hino 4.0-Litre 4-Cylinder Diesel, 110HP, Automatic Transmission
 
 Pantech Body 3700mm (L) x 2200mm (W), Roller Door Rear
 
@@ -349,7 +352,7 @@ Sold As Is, Untested & Unregistered.
 
 TRAY TRUCK
 Line 1: Year, Make, Model, Drive Type, Tray Truck
-Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Hino 4-Cylinder Diesel, 150HP". DO NOT include: engine code, displacement/litres, "Turbocharged". JUST: Make N-Cylinder FuelType, XXXHP.
+Engine line: [Engine Make] [X.X]-Litre [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + litres + cylinders + fuel + HP ONLY. e.g. "Hino 4.0-Litre 4-Cylinder Diesel, 150HP". DO NOT include: engine code, "Turbocharged". JUST: Make X.X-Litre N-Cylinder FuelType, XXXHP.
 Transmission line: [Transmission Name], [Key chassis extras] — comma-separated on its own line, no blank line before it
 Blank line
 Body line: [Body Builder] Tray Body, Xmm (L) x Xmm (W) — body builder name leads; write "Custom Tray Body" if builder not determinable; include tray material (steel / alloy) if visible; headboard type (fixed / with roof rack), rear tailboard if fitted; tail lift brand and SWL if fitted; toolboxes with quantity, position, and dimension if visible; beacons, tie rails, tow hitch/airlines if fitted — all on this one comma-separated line
@@ -361,7 +364,7 @@ Sold As Is, Untested & Unregistered.
 Example:
 2015 Hino 300 Series 616 4x2 Wide Cab Tray Truck
 
-Hino 4-Cylinder Diesel, 150HP
+Hino 4.0-Litre 4-Cylinder Diesel, 150HP
 Aisin 6-Speed Automatic Transmission
 
 Custom Tray Body, 4800mm (L) x 2300mm (W) Steel Tray, Tieman Swing-Under Tailgate Lift 600kg SWL, Headboard With Roof Rack, Rear Tailboard, 1x 650mm & 1x 1000mm Undermount Toolboxes, Beacons
@@ -381,6 +384,17 @@ Sold As Is, Untested & Unregistered.
 COUPE (TRUCK)
 This subtype is a Salesforce system artifact. Describe whatever asset is visible from the photos and inspection notes using the most relevant truck template structure. Do not force a specific field layout.
 Sold As Is, Untested & Unregistered.
+
+TRAILER EXTRAS — apply to ALL trailer types where relevant:
+Trailer extras to always check for:
+  Toolbox (headboard or chassis-mounted — note position)
+  Spare Tyre (always note if fitted and where mounted — e.g. "Spare Tyre, Headboard Mounted")
+  Tarp system — state brand AND type if visible (Razor, Aerocover, CoverMe — never just "tarp")
+  Ramps (folding or swing — note quantity)
+  Load restraint rail / E-track
+  Weighbridge / onboard scales
+  LED lights (upgraded)
+  Air lines at rear (B-double connections)
 
 FLAT DECK TRAILER
 Line 1: Year, Make, Model, Flat Deck Trailer. Axle config.
@@ -1062,6 +1076,15 @@ Side Shift: always call out explicitly if fitted
 Damage: factual description — omit this line entirely if no significant damage
 Sold As Is, Untested. (no "& Unregistered" for forklifts unless road-registered)
 
+Forklift extras to detect (each gets its own line if fitted):
+  Side Shift (most common — always call out explicitly)
+  Fork Positioner
+  Full Free Lift (premium feature — always call out)
+  Man Cage / Work Platform
+  Paper Roll Clamp / Bale Clamp / Rotator (name the type explicitly)
+  Cold Store Specification (enclosed cab, heated seat)
+  Battery Charger Included (electric forklifts)
+
 Key rules:
 - Capacity ALWAYS states "at 500mm Load Centre" — never just "X,XXXkg"
 - Hours ARE included in description on their own line — not Salesforce fields only
@@ -1310,7 +1333,18 @@ VEHICLE (PASSENGER / LIGHT COMMERCIAL)
 ALL specs go on Line 1 — ONE LINE only, no blank lines between spec sections.
 
 Line 1: [Year] [Make] [Model] [Trim/Variant] [Series] [Transmission] [Drive] [Fuel] [Body Type] [CC]cc [kW]kW [Speeds]sp [Cyl]cyl [Doors]dr [Seats]seat
-Extras line (own line, only if significant extras fitted): comma-separated significant extras only — snorkel, tow bar, lift kit, canopy, drawbar, UHF. Omit bull bars. Omit standard features.
+Extras line (own line, only if significant extras fitted): each extra gets its own line. Common ute/4WD extras worth noting:
+  Snorkel (brand if known: ARB, Safari, Ironman)
+  Tow Bar
+  Canopy (brand if known: Aeroklas, Truckman, MTM)
+  Lift Kit (brand if known: Old Man Emu, Dobinsons, Ironman)
+  Roof Rack (brand if known: Rhino Rack, Thule)
+  UHF
+  Winch (brand if known: Warn, ARB, Runva)
+  Drawbar
+  Side Steps / Running Boards
+  Cargo Barrier (for wagons/SUVs)
+Do NOT include: standard features (A/C, power windows, reversing camera standard on new utes), bull bars
 Damage: [if significant only, else omit]
 Sold As Is, Untested & Unregistered.
 
@@ -1818,7 +1852,7 @@ QUALITY REFERENCE EXAMPLES — match this level of detail, format, and Title Cas
 PRIME MOVER EXAMPLE:
 2019 Volvo FH 500 6x4 Prime Mover
 
-Volvo 6-Cylinder Diesel, 500HP
+Volvo 12.8-Litre 6-Cylinder Diesel, 500HP
 
 Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission, Volvo Engine Brake (VEB+), Mr Wong Hydraulics PTO, Adaptive Cruise Control, Lane Keeping Support, Dual UHF
 
@@ -1831,7 +1865,7 @@ Sold As Is, Untested & Unregistered.
 PRIME MOVER EXAMPLE 2 (road train rated — GCM included):
 2023 Kenworth C509 6x4 Prime Mover
 
-Cummins 6-Cylinder Diesel, 565HP
+Cummins 15.0-Litre 6-Cylinder Diesel, 565HP
 
 Eaton 18-Speed Manual, Diff Locks, Hydraulics, Alemlube Auto Greaser, RightWeigh Onboard Scales, Dual UHF
 
@@ -1846,7 +1880,7 @@ Sold As Is, Untested & Unregistered.
 PRIME MOVER EXAMPLE 3 (T409SAR — correct compact format):
 2015 Kenworth T409SAR 6x4 Prime Mover
 
-Cummins 6-Cylinder Diesel, 550HP
+Cummins 15.0-Litre 6-Cylinder Diesel, 550HP
 
 Eaton 18-Speed Manual, Diff Locks, Exhaust Brake, UHF
 
@@ -1903,7 +1937,7 @@ Sold As Is, Untested & Unregistered.
 TRAY TRUCK EXAMPLE:
 2015 Hino 300 Series 616 4x2 Wide Cab Tray Truck
 
-Hino 4-Cylinder Diesel, 150HP
+Hino 4.0-Litre 4-Cylinder Diesel, 150HP
 Aisin 6-Speed Automatic Transmission
 
 Custom Tray Body, 4800mm (L) x 2300mm (W) Steel Tray, Tieman Swing-Under Tailgate Lift 600kg SWL, Headboard With Roof Rack, Rear Tailboard, 1x 650mm & 1x 1000mm Undermount Toolboxes, Beacons
