@@ -1346,6 +1346,17 @@ ATTACHMENTS / GENERAL GOODS
 Year (if known), Make, Model
 Key specs by category — use the subtype to pick the right focus, then apply your training knowledge of that exact make/model.
 
+COMPONENT PLATE RULE — CRITICAL: When an assembled unit (water tank, pump set, spray unit, compactor) has a sub-component (pump, motor, compressor head, engine) with its own data plate, DO NOT use the component's plate as the make/model of the whole unit. Example: a 600L water tank with a Honda pump — the asset is "600L Water Tank with Honda WB30 Pump". The "Honda WB30" is the pump, not the main asset. If the main unit has no plate, the asset is described as what it IS (e.g. "Custom 600L Water Tank with Pump") — never as the brand of the pump alone.
+
+UNKNOWN MAKE/MODEL RULE: If no brand or model plate is visible on the main asset, do NOT guess or invent a make/model. Instead, describe WHAT YOU CAN SEE:
+- Describe the item type plainly (e.g. "Office Chair", "Steel Shelving Unit", "Custom Fabricated Water Tank")
+- Note visible material (steel / alloy / plastic / timber / rubber)
+- Note approximate size if determinable from context (e.g. "Approx 600L capacity", "Approx 1800mm tall")
+- Note colour and general condition
+- This is a valid, honest description — do not pad with speculative brand names
+
+RECENT MODEL RULE: For assets manufactured 2023–2026, rely on what is PHYSICALLY VISIBLE on the plate. Do NOT override plate data with training-data guesses. If the plate says 2026, the year is 2026. Recent models may not be in training data — extract exactly what's printed and leave unknown specs blank rather than substituting an older model's specs.
+
 MINIMAL DATA RULE (general goods/attachments): If only make/model are known and no photos provide additional detail, write a clean, factual description that: (1) states what the item is in plain terms, (2) applies your training knowledge of that exact make/model to include any universally-known specs (output, capacity, weight class, coupling type), and (3) closes with the correct footer. Do not pad with vague filler — a short accurate description is better than a long hollow one. Example: if only "Epiroc SB202 Hydraulic Breaker" is known, include the known weight class (~200kg), pin diameter, and housing type from your training knowledge.
 
 FORMAT RULES for all general goods and attachments:
@@ -1487,9 +1498,39 @@ EARTHMOVING ATTACHMENTS (subtype: plant_equipment):
 
   Sold As Is, Untested.
 
+WATER TANKS / PUMP SETS / SPRAY UNITS:
+  Title: Capacity + item type (e.g. "600L Poly Water Tank with Honda Pump", "1000L IBC Water Cage")
+  If a pump is fitted: name the pump brand/model separately after "with" — e.g. "with Honda WB30 Pump", "with Davey Pump"
+  If no pump brand is visible: "with Pump" (do not invent a brand)
+  If tank has no visible brand, title it by capacity and material (Poly / Steel / IBC / Stainless)
+  Spec line: capacity in litres, tank material, pump output if known, outlet size, fittings visible
+
+  Example (unknown tank brand, pump with plate):
+  Custom 600L Poly Water Tank with Honda WB30 Pump
+
+  600L Poly Tank, Pump Outlet 50mm, Rear Hitch Mounted Frame
+
+  Sold As Is, Untested.
+
+WASTE / RUBBISH COMPACTORS (not earthmoving — freestanding units):
+  Title: Make, Model, [type — Baler / Waste Compactor / Cardboard Baler] — or if no brand: "Commercial Waste Compactor"
+  Spec line: chamber dimensions if visible, power (kW/HP), cycle type, bale output if known
+  Key brands: Bramidan, Harris, Wastequip, Mil-tek, PTR Baler — name if readable from photos
+  If the plate shows a year, use that year EXACTLY — do not substitute based on appearance
+  If the year/make/model on the plate differs from what you expect from training data, ALWAYS trust the plate
+
+  Example (unknown brand):
+  Commercial Waste Compactor
+
+  Electric Motor Drive, Self-Contained Unit
+
+  Sold As Is, Untested.
+
 MISCELLANEOUS / OTHER:
   Describe what is visible from photos. State item type, brand, any readable specs (capacity, output, dimensions).
   For lots with multiple items: list each type with approximate quantity — always estimate "Approx Xx Items".
+  For items with NO visible branding or plate: describe by appearance — type, material, colour, approximate size, condition.
+  NEVER invent or guess a make/model when none is visible.
 
   Example (general goods with motor):
   Westmix C&G Electric Concrete Mixer

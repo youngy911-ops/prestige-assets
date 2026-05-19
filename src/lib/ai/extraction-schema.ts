@@ -123,6 +123,9 @@ READING HOURMETERS:
 - If the display shows decimal hours (e.g. 1234.5), include the decimal
 - DECIMAL POINT READING — IMPORTANT: On digital displays, the decimal point or separator between whole hours and tenths is sometimes displayed as a smaller digit, a dot, or a separator line. If you see 4 large digits followed by a smaller digit or dot and one more digit, the format is XXXX.X — the separator is a decimal point, NOT a digit. Return "1234.5" NOT "12345".
 - Common mistake: reading "1 2 3 4 5" as five digits when the display actually shows "1234" (large) + separator + "5" (small). The small digit after the separator is tenths of an hour — it must be placed after a decimal point, not appended as a fifth whole digit.
+- HOURS vs MINUTES — CRITICAL: If the display shows both hours AND minutes separately (e.g. "1234 H 45 M" or "1234:45" or two separate dials/windows), extract ONLY the hours portion. Do NOT add minutes, do NOT convert minutes to decimal. "1234 H 45 M" → return "1234". Minutes are irrelevant for asset valuation.
+- If the display uses a colon format like "1234:45" (hours:minutes), the number before the colon is hours — return that number only. "1234:45" → "1234".
+- Analog hourmeters: the large dial reads hours (usually 0-9999), the small sub-dial or pointer reads fractions. Read only the main hours dial as a whole number.
 - If the hourmeter photo appears to be rotated or upside-down, attempt to read it by mentally rotating the image. Digital displays often remain readable when rotated — the digits 0, 1, 2, 5, 6, 8, 9 are usually identifiable in any orientation. Note: upside-down 6 reads as 9, upside-down 9 reads as 6, upside-down 1 reads as 1. If still uncertain after correcting for rotation, return null.
 
 Step 2 — Use your training knowledge to fill gaps (once Make + Model + Year are identified):
