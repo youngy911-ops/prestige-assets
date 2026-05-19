@@ -50,7 +50,7 @@ Step 1 — Identify plates and read them in this priority order:
 - ENGINE BADGE or VALVE COVER: may show Engine Manufacturer and Engine Series/Model
 - WEIGHT RATING PLATE (cab card): GVM, GCM, axle load ratings
 - VIN PLATE (stamped on chassis rail): 17-character VIN number. TRUCK VIN LOCATIONS BY MAKE — scan ALL photos for these specific spots:
-  KENWORTH: VIN plate is inside the cab on the A-pillar (driver side door frame, look up near the top), OR stamped on the chassis rail just behind the cab on the driver side. Also on the compliance plate in the engine bay. The Kenworth VIN starts with "6F5" (Australian-assembled) or "1XK" (US-built).
+  KENWORTH: VIN plate is inside the cab near the steering column — look on the dash or column shroud itself, typically a metal plate or adhesive label visible from the driver seat. Also appears on the compliance plate in the engine bay firewall. The Kenworth VIN starts with "6F5" (Australian-assembled) or "1XK" (US-built). If an interior/dash photo is included, ALWAYS check near the steering column for the VIN plate — this is the primary location.
   VOLVO/SCANIA/MERCEDES: VIN plate on driver-side A-pillar or inside door frame
   ISUZU/HINO/FUSO: VIN on compliance plate in engine bay or driver door jamb
   ALL TRUCKS: also look on the engine bay firewall — the compliance plate riveted there often has the full 17-char VIN.
