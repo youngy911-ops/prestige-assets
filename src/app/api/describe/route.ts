@@ -85,14 +85,11 @@ MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known a
 
 TIPPER
 Line 1: Year, Make, Model, Drive Type, Tipper
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-  — engine code comes FIRST before displacement (e.g. "6M60-9AT1 7.5-Litre" not "7.5-Litre 6M60-9AT1")
-  — kW AND hp always both stated: "177kW (237hp)" — never kW only or hp only
-  — Nm Torque: include only when known for heavy/prime mover class tippers; omit for medium rigids if not in confirmed fields
-  — Transmission: "Automatic Transmission" is acceptable when brand/model unknown; full brand+model preferred when known
+Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Mack 6-Cylinder Diesel, 500HP". DO NOT include: engine code (ISX, MP8, 6M60 etc.), displacement/litres, "Turbocharged" or "Turbodiesel". JUST: Make N-Cylinder FuelType, XXXHP.
+Transmission line: [Transmission Name], Diff Locks (if fitted), Exhaust Brake (if fitted), [Key chassis extras] — all comma-separated on its own line, no blank line before it
 Blank line
-Single body-detail line: body builder name MUST always be stated — common AU builders: Moore, Stoodley, Hamelex White, CJD, Auswide, Superior; always attempt to identify from photos (look for badge/plate on body); if not determinable write "Custom Tipper Body"; then dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox); Hardox lining MUST be called out explicitly if fitted ("Hardox Lined" or "Full Hardox Lining" — Hardox is a premium value signal); tarp brand AND type always named if tarp fitted — never write "tarp" alone (e.g. "Razor Delta II Electric Roll-Over Tarp", "Aerocover Auto-Retractable Tarp", "CoverMe Electric Tarp"); tailgate type, exhaust/engine brake brand, cruise control, load monitoring system, UHF, diff locks, Ringfeder hitch if confirmed; ALL extras in one comma-separated run on this single line — never use separate lines for individual accessories
-Payload: [X]kg — include only if notably high or stated by user in inspection notes.
+Single body-detail line: body builder name MUST always be stated — common AU builders: Moore, Stoodley, Hamelex White, CJD, Auswide, Superior; always attempt to identify from photos (look for badge/plate on body); if not determinable write "Custom Tipper Body"; then dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox); Hardox lining MUST be called out explicitly if fitted ("Hardox Lined" or "Full Hardox Lining" — Hardox is a premium value signal); tarp brand AND type always named if tarp fitted — never write "tarp" alone (e.g. "Razor Delta II Electric Roll-Over Tarp", "Aerocover Auto-Retractable Tarp", "CoverMe Electric Tarp"); tailgate type, Ringfeder hitch if confirmed; Rock Lined if applicable; ALL extras in one comma-separated run on this single line — never use separate lines for individual accessories
+Payload: [X]kg — include ONLY if confirmed from inspection notes or compliance plate. Do not estimate or infer.
 Damage: [include only if significant — accident damage, major rust, structural issues; omit line if none]
 Sold As Is, Untested & Unregistered.
 
@@ -100,12 +97,11 @@ MINIMAL DATA RULE (tippers): Body builder name is a mandatory attempt — always
 
 SERVICE TRUCK
 Line 1: Year, Make, Model, Drive Type, Service Truck or Tray/Crane Truck (use "Tray/Crane Truck" when a loader crane is fitted)
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-  — engine code comes FIRST before displacement (e.g. "6M60-T2 7.5-Litre" not "7.5-Litre 6M60-T2")
-  — kW AND hp always both stated: "177kW (237hp)" — never kW only or hp only
-  — engine + transmission on ONE line, no separate lines
+Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Isuzu 6-Cylinder Diesel, 280HP". DO NOT include: engine code, displacement/litres, "Turbocharged". JUST: Make N-Cylinder FuelType, XXXHP.
+Transmission line: [Transmission Name], [Key chassis extras] — comma-separated on its own line
 Blank line
 Single body-detail line: body builder name + tray dimensions Xmm (L) x Xmm (W), crane make/model + year in brackets (e.g. "HMF 300 E4-4 Loader Crane (2021)") if fitted, then ALL fitted items in one comma-separated run — never separate lines for individual accessories (air hose reel, water hose reel, toolboxes with dimensions, compressor, inverter brand/wattage, solar, awnings, rack, reverse camera, tow hitch, rear airlines, in-cab crane controls, UHF, sat nav, cruise control, overhead lights, beacons)
+Tow Hitch and Airlines at Rear — include on its own line when fitted (standard service truck closing spec)
 Sold As Is, Untested & Unregistered.
 
 RIGID TRUCK / PANTECH / CURTAINSIDER / TAUTLINER / VAN
@@ -226,9 +222,8 @@ Sold As Is, Untested & Unregistered.
 
 CRANE TRUCK
 Line 1: Year, Make, Model, Drive Type, Tray/Crane Truck (always use "Tray/Crane Truck" as the body type)
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
-  — engine code comes FIRST before displacement (e.g. "6M60-T2 7.5-Litre")
-  — kW AND hp always both stated: "177kW (237hp)"
+Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. DO NOT include: engine code, displacement/litres, "Turbocharged". JUST: Make N-Cylinder FuelType, XXXHP.
+Transmission line: [Transmission Name], [Key chassis extras] — comma-separated on its own line
 Blank line
 Single body-detail line: body builder name + tray dimensions Xmm (L) x Xmm (W), crane brand/model + year in brackets (e.g. "HMF 300 E4-4 Loader Crane (2021)"), then ALL fitted items in one comma-separated run — NEVER split into separate body/crane/accessories lines
   — crane brand/model are the primary buyer specs — always state these immediately after body dimensions
@@ -671,10 +666,9 @@ Sold As Is, Untested & Unregistered.
 
 SKID STEER / COMPACT TRACK LOADER
 Line 1: Year Make Model Type (e.g. "2013 Bobcat T590 Compact Track Loader")
-Operating Weight: X,XXXkg Operating Weight
+Operating Weight and ROC on same line: X,XXXkg Operating Weight, Xkg Rated Operating Capacity — these two specs always share one line per Slattery format; e.g. "3,360kg Operating Weight, 1,530kg Rated Operating Capacity"
 Hours
 Engine line: [Engine Code] [N]-Cylinder Turbo Diesel, [X]HP — use HP (all caps); include engine code where known (e.g. "Kubota V2607-DI-TE3B 4-Cylinder Turbo Diesel, 61HP")
-Rated Operating Capacity: Xkg — always on its own line
 Cab/ROPS/Extras: comma-separated single line (e.g. "Enclosed Cab, ROPS/FOPS, Air Conditioning, Radio, Auxiliary Hydraulics")
 Track width and type (e.g. "320mm Rubber Tracks") or tyre size for wheeled skid steer
 Bucket: X,XXXmm [Type] Bucket (e.g. "1,800mm 4-In-1 Bucket")
@@ -703,8 +697,9 @@ Year, Make, Model, Telehandler
 Max Lift Capacity
 Max Lift Height
 Hours
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Engine line: [Engine Make] [N]-Cylinder Diesel, [X]HP — HP (all caps); engine make and cylinders only, no engine code prefix, no kW; e.g. "Deutz 4-Cylinder Diesel, 74HP"
 Enclosed Cab / ROPS
+Transmission: [Transmission type] — own line after cab; e.g. "Hydrostatic Transmission" or "Powershift Transmission"
 Tyre size
 Attachments Included
 Sold As Is, Untested & Unregistered.

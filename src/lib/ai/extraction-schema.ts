@@ -92,6 +92,9 @@ When reading stamped, embossed, or printed VINs/serials from photos, use these r
 - A valid VIN is exactly 17 characters — if you read more or fewer, recount carefully
 - Return null ONLY if the plate is completely unreadable (blurry, out of frame, or no VIN plate visible at all). If you can see the plate and read ANY characters, return what you have with "?" for illegible positions — never return null for a visible, photographed VIN plate just because some characters are uncertain.
 
+CHASSIS NUMBER vs VIN — THESE ARE DIFFERENT FIELDS:
+The Chassis Number (sometimes labelled "Chassis No" or "Frame No") is a shorter alphanumeric identifier stamped directly into the chassis rail — it may be 8–12 characters and is separate from the VIN. The VIN (Vehicle Identification Number) is always exactly 17 characters. If you see both on a plate or in photos, extract each to its correct field: the 17-character value goes into the vin field, the shorter stamped chassis number goes into the chassis_number field. Do not put the VIN into chassis_number or vice versa.
+
 EARTHMOVING PIN / SERIAL — SPECIAL RULES (overrides the 17-char VIN rule above):
 - Earthmoving PINs and serials are NOT always 17 characters — shorter formats are the norm for many makes
 - Common format: model prefix + sequential number (e.g. "PC200-8 #12345" on Komatsu, "ZX200-3 #001234" on Hitachi)
