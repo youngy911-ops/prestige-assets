@@ -53,8 +53,10 @@ Rules:
 - "no keys" or "no key" → master_key: "No", spare_key: "No"
 - "one key" or "has key" → master_key: "Yes", spare_key: "No"
 - "two keys" or "full set" → master_key: "Yes", spare_key: "Yes"
-- "runs" or "starts" or "drives" → driveable: "Yes"
-- "doesn't run" or "non-runner" or "no start" → driveable: "No"
+- "non runner" or "doesn't start" or "no start" → driveable: "No"
+- "runs" or "starts fine" or "drives" → driveable: "Yes"
+- "log books" or "service history" or "full logs" → service_history: "Full Service History — Log Books"
+- "no history" or "no log books" → service_history: "No Service History"
 - Colours, odometer readings, registration numbers, VINs etc. map directly
 - If the message is ambiguous or doesn't clearly map to any field, return an empty fields array
 - Never guess or hallucinate field values`,

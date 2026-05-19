@@ -100,7 +100,9 @@ Line 1: Year, Make, Model, Drive Type, Service Truck or Tray/Crane Truck (use "T
 Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Isuzu 6-Cylinder Diesel, 280HP". DO NOT include: engine code, displacement/litres, "Turbocharged". JUST: Make N-Cylinder FuelType, XXXHP.
 Transmission line: [Transmission Name], [Key chassis extras] — comma-separated on its own line
 Blank line
-Single body-detail line: body builder name + tray dimensions Xmm (L) x Xmm (W), crane make/model + year in brackets (e.g. "HMF 300 E4-4 Loader Crane (2021)") if fitted, then ALL fitted items in one comma-separated run — never separate lines for individual accessories (air hose reel, water hose reel, toolboxes with dimensions, compressor, inverter brand/wattage, solar, awnings, rack, reverse camera, tow hitch, rear airlines, in-cab crane controls, UHF, sat nav, cruise control, overhead lights, beacons)
+Body line: body builder name + tray dimensions Xmm (L) x Xmm (W) — own line
+Crane line (if fitted): [Crane Make] [Model] Knuckleboom Crane, [X]kg Capacity [— Not In Certification if applicable] — crane always on its own line; include make, model, capacity rating
+Accessories: ALL remaining fitted items in one comma-separated run on a single line — air hose reel, water hose reel, toolboxes with dimensions, compressor, inverter brand/wattage, solar, awnings, rack, reverse camera, in-cab crane controls, UHF Antenna, sat nav, cruise control, overhead lights, beacons
 Tow Hitch and Airlines at Rear — include on its own line when fitted (standard service truck closing spec)
 Sold As Is, Untested & Unregistered.
 
@@ -225,11 +227,12 @@ Line 1: Year, Make, Model, Drive Type, Tray/Crane Truck (always use "Tray/Crane 
 Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. DO NOT include: engine code, displacement/litres, "Turbocharged". JUST: Make N-Cylinder FuelType, XXXHP.
 Transmission line: [Transmission Name], [Key chassis extras] — comma-separated on its own line
 Blank line
-Single body-detail line: body builder name + tray dimensions Xmm (L) x Xmm (W), crane brand/model + year in brackets (e.g. "HMF 300 E4-4 Loader Crane (2021)"), then ALL fitted items in one comma-separated run — NEVER split into separate body/crane/accessories lines
-  — crane brand/model are the primary buyer specs — always state these immediately after body dimensions
+Body line: body builder name + tray dimensions Xmm (L) x Xmm (W) — own line
+Crane line: [Crane Make] [Model] Knuckleboom Crane, [X]kg Capacity [— Not In Certification if applicable] — crane always on its own line; include make, model, capacity rating
   — boom type: Knuckle Boom / Straight Boom / Loader Crane (use whichever applies)
   — certification status (In Current Certification / Not In Current Certification / Certification Unknown): include if known
-  — accessories in order: hose reels, toolboxes with dimensions, compressor, inverter brand/wattage, reverse camera, tow hitch, rear airlines, in-cab crane controls, UHF, sat nav, cruise control, overhead lights, beacons
+Accessories: ALL remaining fitted items in one comma-separated run on a single line — hose reels, toolboxes with dimensions, compressor, inverter brand/wattage, reverse camera, in-cab crane controls, UHF Antenna, sat nav, cruise control, overhead lights, beacons
+Tow Hitch and Airlines at Rear — include on its own line when fitted
 Sold As Is, Untested & Unregistered.
 
 FIRE TRUCK / PUMP TRUCK
@@ -1349,6 +1352,15 @@ UNKNOWN MAKE/MODEL RULE: If no brand or model plate is visible on the main asset
 - Note colour and general condition
 - This is a valid, honest description — do not pad with speculative brand names
 
+VISUAL PATTERNS FOR COMMON UNBRANDED ITEMS:
+- IBC (Intermediate Bulk Container): cubic frame approx 1200x1000x1165mm, poly tank inside, usually 1000L, cage around it with pallet base
+- Poly water tank: smooth rounded plastic, usually blue/green/black, capacity label visible
+- Generator: engine on frame with fuel tank, exhaust pipe, control panel with outlets
+- Hydraulic press: H-frame or C-frame steel, ram visible, usually floor-standing
+- Electric motor: cylindrical finned body, shaft protruding, mounting feet/flange
+- Pallet racking bay: vertical uprights with horizontal beams, steel frame
+- Waste compactor: hydraulic ram mechanism with collection chamber, control panel on side
+
 Examples of correct UNKNOWN MAKE/MODEL descriptions:
 
 Office Chair, Black Mesh Back
@@ -1779,32 +1791,37 @@ QUALITY REFERENCE EXAMPLES — match this level of detail, format, and Title Cas
 PRIME MOVER EXAMPLE:
 2019 Volvo FH 500 6x4 Prime Mover
 
-Volvo D13K 12.8-Litre 6-Cylinder Turbocharged Diesel, 375kW (500hp), 2800Nm Torque
+Volvo 6-Cylinder Diesel, 500HP
 
-Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission, Volvo Engine Brake (VEB+), Mr Wong Hydraulics PTO, Adaptive Cruise Control, Lane Keeping Support, Hendrickson ECAS Air Suspension, Jost JSK 37 Fifth Wheel
+Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission, Volvo Engine Brake (VEB+), Mr Wong Hydraulics PTO, Adaptive Cruise Control, Lane Keeping Support, Dual UHF Antenna
 
-Ice Pack 24in Sleeper Cab, 3,575hrs
+Ice Pack 24in Sleeper Cab
 
-Single Bunk, Slide-Out Fridge, Satellite Navigation, Dual UHF
+Single Bunk, Slide-Out Fridge, Satellite Navigation
 
 Sold As Is, Untested & Unregistered.
 
 PRIME MOVER EXAMPLE 2 (road train rated — GCM included):
 2023 Kenworth C509 6x4 Prime Mover
 
-Cummins X15 6-Cylinder Turbo Diesel
+Cummins 6-Cylinder Diesel, 565HP
 
-Eaton 18-Speed Manual, Diff Locks, Hydraulics, Alemlube Auto Greaser, RightWeigh Onboard Scales
+Eaton 18-Speed Manual, Diff Locks, Hydraulics, Alemlube Auto Greaser, RightWeigh Onboard Scales, Dual UHF Antenna
 
-48" Single Bonneted Sleeper, Custom Air Sleeper A/C (2,926hrs)
+48" Single Bonneted Sleeper, Custom Air Sleeper A/C
 
-Touchscreen Infotainment, Dual UHFs
-
-Dometic Slide-Out Fridge, Second Fridge, Microwave, TV, Electrical System
-
-2000W Pure Sine Wave Inverter
+Touchscreen Infotainment, Dometic Slide-Out Fridge, Second Fridge, Microwave, TV, Electrical System, 2000W Pure Sine Wave Inverter
 
 GCM: 135,000kg
+
+Sold As Is, Untested & Unregistered.
+
+PRIME MOVER EXAMPLE 3 (T409SAR — correct compact format):
+2015 Kenworth T409SAR 6x4 Prime Mover
+
+Cummins 6-Cylinder Diesel, 550HP
+
+Eaton 18-Speed Manual, Diff Locks, Exhaust Brake, UHF Antenna
 
 Sold As Is, Untested & Unregistered.
 
@@ -1813,7 +1830,7 @@ TIPPER WITH COMPANION TRAILER EXAMPLE:
 
 Mack MP8 13.0-Litre 6-Cylinder Turbocharged Diesel, 373kW (500hp), 1860Nm Torque, Mack mDRIVE 12-Speed Automated Manual Transmission
 
-Tipper Body 4800mm (L) x 2500mm (W) x 900mm (D), Auto Retractable Tarp, PowerLeash Engine Brake, Cruise Control, Ecco Load Monitoring System, UHF Radio, Diff Locks
+Tipper Body 4800mm (L) x 2500mm (W) x 900mm (D), Auto Retractable Tarp, PowerLeash Engine Brake, Cruise Control, Ecco Load Monitoring System, UHF Antenna, Diff Locks
 
 Tri-Axle Shepard Dog Trailer 2016: VIN 6V9T24STEGC075014, ATM 25,500kg, Tipper Body 5600mm (L) x 2500mm (W) x 900mm (D), Auto Retractable Tarp, Shepard Axles
 
@@ -1833,7 +1850,11 @@ SERVICE/CRANE TRUCK EXAMPLE:
 
 6M60-T2 7.5-Litre 6-Cylinder Turbocharged Diesel, 177kW (237hp), Automatic Transmission
 
-Tuff Tray Body 5600mm (L) x 2400mm (W), HMF 300 E4-4 Loader Crane (2021), Air Hose Reel, Water Hose Reel, Dual Vertical Toolboxes (1500mm + 1700mm), Reverse Camera, Tow Hitch, Rear Airlines, Redarc 2000W Pure Sine Inverter, UHF, Sat Nav, Cruise Control, Overhead Lights, Beacons
+Tuff Tray Body 5600mm (L) x 2400mm (W)
+HMF 300 E4-4 Knuckleboom Crane, 3,200kg Capacity
+Air Hose Reel, Water Hose Reel, Dual Vertical Toolboxes (1500mm + 1700mm), Reverse Camera, Redarc 2000W Pure Sine Inverter, UHF Antenna, Sat Nav, Cruise Control, Overhead Lights, Beacons
+
+Tow Hitch and Airlines at Rear
 
 Sold As Is, Untested & Unregistered.
 
@@ -1917,7 +1938,7 @@ BACKHOE LOADER EXAMPLE:
 
 JCB Dieselmax 4-Cylinder Turbocharged Diesel, 74.2kW (100hp), 3-Speed Hydrostatic Transmission
 
-2200mm 4-In-1 Front Loader Bucket, Norm Quick Hitch Rear, Max Dig Depth 5.97m, Loadmaster 100 In-Cab Load Monitoring, Bluetooth Radio, Air Conditioning, UHF Radio, Extendable Dipper, Hydraulic Sideshift, Load Sensing Hydraulics
+2200mm 4-In-1 Front Loader Bucket, Norm Quick Hitch Rear, Max Dig Depth 5.97m, Loadmaster 100 In-Cab Load Monitoring, Bluetooth Radio, Air Conditioning, UHF Antenna, Extendable Dipper, Hydraulic Sideshift, Load Sensing Hydraulics
 
 Sold As Is, Untested & Unregistered.
 
