@@ -46,6 +46,7 @@ Step 1 — Identify plates and read them in this priority order:
 - COMPLIANCE PLATE: contains Compliance Date (format MM/YYYY), Tare (kg), ADR compliance numbers
 - INSTRUMENT CLUSTER: contains Odometer (km) and Hourmeter (hours) — only extract if digits are clearly legible; do NOT guess
 - REGISTRATION PLATE: contains Registration Number — on vehicles, scan front and rear exterior photos for the physical rego plate; Australian plates are rectangular with alphanumeric characters, e.g. "ABC-123" (NSW), "123-ABC" (QLD), "ABC-12A" (VIC); read exactly as shown including any hyphens or spaces
+- ENGINE ID PLATE / STICK / LABEL: shows Engine Number (serial number). This is a separate plate or adhesive label on the engine block itself — NOT the build plate. For Cummins: metal dataplate on the driver-side block face, often near the injection pump. For Detroit/PACCAR: on the block side or front face. For Komatsu/Cat/Isuzu: near the injection pump or flywheel housing. For Toyota forklifts: on the valve cover or block side. ALWAYS inspect engine bay photos for this label — if an engine photo is included, look for the engine serial number. Extract it into the engine_number field.
 - ENGINE BADGE or VALVE COVER: may show Engine Manufacturer and Engine Series/Model
 - WEIGHT RATING PLATE (cab card): GVM, GCM, axle load ratings
 - VIN PLATE (stamped on chassis rail): 17-character VIN number
