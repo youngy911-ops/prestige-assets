@@ -1234,24 +1234,22 @@ Panniers, Top Box, Heated Grips, Akrapovic Slip-On Exhaust, Crash Bars, GPS Moun
 Sold As Is, Untested & Unregistered.
 
 SEDAN / SUV (subtype: sedan or suv)
-Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below.
-Line 1: Year Make Model Variant Drive Type Body Type — variant/trim level (GLS, SV6, Titanium, VX, ST-Line, GR Sport etc.) is a major value signal and must always appear on line 1 if inferrable from model, badge, or photos.
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Full Transmission Name]
-Drive type explicit (4WD/AWD/2WD/FWD/RWD) — always state; buyers filter by this.
-Safety tech if confirmed or inferrable for the variant: BSM (Blind Spot Monitoring), AEB (Autonomous Emergency Braking), LDW (Lane Departure Warning), ACC (Adaptive Cruise Control) — name each system present. Apply model knowledge: e.g. Ford Escape Titanium includes AEB, BSM, ACC as standard; Toyota RAV4 GXL includes BSM standard from 2019+.
-Key extras, comma separated, Title Case — omit if none confirmed or visible
+Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) one-liner template below.
+Line 1 only — ALL specs on ONE LINE, no blank lines between spec sections:
+[Year] [Make] [Model] [Trim/Variant] [Series] [Transmission] [Drive] [Fuel] [Body Type] [CC]cc [kW]kW [Speeds]sp [Cyl]cyl [Doors]dr [Seats]seat
+Variant/trim level (GLS, SV6, Titanium, VX, ST-Line, GR Sport etc.) is a major value signal and must always appear on line 1 if inferrable.
+Drive type (4WD/AWD/2WD/FWD/RWD) always stated — buyers filter by this.
+Extras line (own line, only if significant extras fitted): comma-separated significant extras only. For SUVs: always mention tow bar if fitted — towing capacity is a key purchase driver. Mention roof racks or roof rails if visible.
 Sold As Is, Untested & Unregistered.
-For SUVs: if a tow bar is fitted, always mention it — towing capacity is a key purchase driver. Mention roof racks or roof rails if visible.
 
 UTE / 4WD (subtype: dual_cab_ute, single_cab_ute, extra_cab_ute, 4wd — the most common Slattery vehicle types)
-Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below.
+Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) one-liner template below.
 These are work vehicles — accessory fitment is CRITICAL to buyers and directly affects hammer price. List all confirmed or visible accessories on the extras line.
-Line 1: Year Make Model Variant Drive Type Body Type (e.g. "2019 Toyota HiLux SR5 4x4 Dual Cab Utility") — variant/trim (SR5, Wildtrak, GLS, Raptor, GXL, Rugged X etc.) is one of the highest-value details and must always appear on line 1 if inferrable.
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Full Transmission Name]
-Drive type explicit (4WD/4x4/AWD/2WD) — always state; this is a primary buyer filter.
-Towing capacity for utes if inferrable from model/variant — include as a spec after the engine line (e.g. "3,500kg Towing Capacity"). Apply model knowledge: HiLux SR5/Rogue/Rugged X → 3,500kg; Ranger Wildtrak/Raptor → 3,500kg; Colorado LTZ/Z71 → 3,500kg; Triton GLS → 3,100kg; D-Max LS-U/X-Terrain → 3,500kg. Omit if the model/variant does not have a universally-known towing rating.
-Safety tech if confirmed or inferrable for the variant: BSM (Blind Spot Monitoring), AEB (Autonomous Emergency Braking), LDW (Lane Departure Warning), ACC (Adaptive Cruise Control) — list each present. Apply model knowledge: HiLux SR5 from 2018+ includes AEB, LDW, ACC standard; Ranger Wildtrak from 2019+ includes BSM, AEB, ACC.
-Extras line: comma-separated accessories, Title Case, brand names where known
+Line 1 only — ALL specs on ONE LINE, no blank lines between spec sections:
+[Year] [Make] [Model] [Trim/Variant] [Series] [Transmission] [Drive] [Fuel] [Body Type] [CC]cc [kW]kW [Speeds]sp [Cyl]cyl [Doors]dr [Seats]seat
+Variant/trim (SR5, Wildtrak, GLS, Raptor, GXL, Rugged X etc.) is one of the highest-value details — always appear on line 1 if inferrable.
+Drive type (4WD/4x4/AWD/2WD) always stated — primary buyer filter.
+Extras line (own line, only if significant extras fitted): comma-separated accessories, Title Case, brand names where known.
 
 Priority extras to mention if confirmed or visible (include every one that applies):
 - Tow bar — always mention if fitted (buyers universally ask; state Class/ball rating if visible)
@@ -1274,67 +1272,60 @@ If major damage or heavy wear is noted (accident damage, heavy rust, significant
 Do NOT list minor wear, stone chips, small dents, or standard comfort features (A/C, power windows, reverse camera).
 
 VEHICLE (PASSENGER / LIGHT COMMERCIAL)
-Use the block format below — blank lines between each section. Do NOT write as one continuous paragraph.
+ALL specs go on Line 1 — ONE LINE only, no blank lines between spec sections.
 
-Line 1: Year Make Model Variant Drive Type Body Type
-(blank line)
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Full Transmission Name]
-(blank line)
-Key extras, comma separated, Title Case — omit this block entirely if no significant extras are known or visible
-(blank line)
+Line 1: [Year] [Make] [Model] [Trim/Variant] [Series] [Transmission] [Drive] [Fuel] [Body Type] [CC]cc [kW]kW [Speeds]sp [Cyl]cyl [Doors]dr [Seats]seat
+Extras line (own line, only if significant extras fitted): comma-separated significant extras only — bull bar, snorkel, tow bar, lift kit, canopy, drawbar, UHF. Omit standard features.
+Damage: [if significant only, else omit]
 Sold As Is, Untested & Unregistered.
 
-Rules:
-- Engine code BEFORE displacement: "2GD-FTV 2.8-Litre" NOT "2.8-Litre 2GD-FTV"
-- Power always kW first then hp in brackets: "150kW (201hp)"
+Rules for vehicles:
+- ALL specs on Line 1, no blank lines between them
+- Use "cc" not "L" for engine size in this format (e.g. 2755cc not 2.8L)
+- Speeds = number of gears (e.g. 6sp for 6-speed, 10sp for 10-speed auto)
+- Cyl = number of cylinders (e.g. 4cyl, 6cyl, 8cyl)
+- Doors = number of doors including tailgate/hatch (e.g. 2dr, 4dr, 5dr)
+- Seats = seating capacity (e.g. 5seat, 7seat)
+- kW = net kilowatts
+- Do NOT include tyre size in description — Salesforce field only
+- Do NOT include engine code (2GD-FTV etc.) — just CC and cyl
 - Only mention extras/mods if they are significant and add real value. Do NOT list standard features like A/C, power windows, central locking
 - Include a "Damage:" line before "Sold As Is" — state damage factually if significant — omit the line entirely if none
 - Do NOT use dot points
 - "Sold As Is, Untested & Unregistered." MUST be on its own line with a blank line before it
 
-Example (ute with accessories — most common Slattery type):
-2019 Toyota HiLux SR5 4x4 Dual Cab Utility
+Example (dual cab ute with accessories — most common Slattery type):
+2019 Toyota HiLux SR5 Pickup 6sp 4WD Diesel Double Cab 2755cc 150kW 6sp 4cyl 4dr 5seat
 
-2GD-FTV 2.8-Litre 4-Cylinder Turbocharged Diesel, 150kW (201hp), 6-Speed Automatic Transmission
-
-Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, Reverse Camera, Apple CarPlay, Leather Seats, 18" Alloy Wheels, UHF Radio
+Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, UHF Radio
 
 Sold As Is, Untested & Unregistered.
 
 Example (damage vehicle — sedan):
-2018 Holden Commodore VF SS-V 2WD Sedan
+2018 Holden Commodore VF SS-V Sedan 6sp 2WD Petrol Sedan 6162cc 317kW 6sp 8cyl 4dr 5seat
 
-LS3 6.2-Litre V8 Petrol, 317kW (425hp), 6-Speed Manual Transmission
-
-Brembo Brakes, Sports Suspension, 19" Alloy Wheels, Leather Sports Seats, Sunroof, Apple CarPlay
+Brembo Brakes, Sports Suspension, 19" Alloy Wheels, Leather Sports Seats, Sunroof
 
 Damage: Significant accident damage to front end, bonnet and guards replaced, airbags deployed
 
 Sold As Is, Untested & Unregistered.
 
-Example (standard sedan/hatch, no extras):
-2019 Toyota Corolla Ascent Sport FWD Hatchback
-
-2ZR-FAE 2.0-Litre 4-Cylinder Petrol, 125kW (168hp), CVT Automatic Transmission
-
+Example (standard hatch, no extras):
+2019 Toyota Corolla Ascent Sport Hatchback CVT FWD Petrol Hatchback 1987cc 125kW CVT 4cyl 5dr 5seat
 
 Sold As Is, Untested & Unregistered.
 
 Example (4WD SUV with tow bar):
-2022 Toyota LandCruiser 300 GR Sport 4WD SUV
-
-1VD-FTV 3.3-Litre V6 Twin-Turbocharged Diesel, 227kW (305hp), 10-Speed Automatic Transmission
+2022 Toyota LandCruiser 300 GR Sport Wagon 10sp 4WD Diesel Wagon 3346cc 227kW 10sp 6cyl 5dr 5seat
 
 Tow Bar, Roof Rails
 
 Sold As Is, Untested & Unregistered.
 
 Example (major structural damage):
-2008 Ford Ranger XL 4x4 Dual Cab Utility
+2008 Ford Ranger XL Pickup 5sp 4WD Diesel Double Cab 2953cc 115kW 5sp 4cyl 4dr 5seat
 
-WLAA 3.0-Litre 4-Cylinder Turbocharged Diesel, 115kW (154hp), 5-Speed Manual Transmission
-
-Heavy Rust to Chassis and Body Panels, Previous Accident Damage to Front End
+Damage: Heavy Rust to Chassis and Body Panels, Previous Accident Damage to Front End
 
 Sold As Is, Untested & Unregistered.
 
