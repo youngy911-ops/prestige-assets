@@ -72,7 +72,7 @@ TEMPLATES BY ASSET TYPE — select the correct template based on asset identifie
 TRUCK (PRIME MOVER)
 Line 1: [Year] [Make] [Model] [Drive Type] Prime Mover — e.g. "2019 Kenworth T909 6x4 Prime Mover"
 Blank line
-Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — e.g. "Cummins 6-Cylinder Diesel, 550HP". Use HP not kW. If HP not confirmed from inspection notes, apply training knowledge from the ENGINE HP REFERENCE table above.
+Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Cummins 6-Cylinder Diesel, 550HP". DO NOT include: engine code (ISX, MX-13, DD15 etc.), displacement/litres (15.0-Litre etc.), "Turbocharged" or "Turbodiesel". JUST: Make N-Cylinder FuelType, XXXHP.
 Blank line
 Extras line: [Transmission Name], Diff Locks (if fitted), Exhaust Brake (if fitted), Cruise Control (if fitted), [UHF, GPS, cameras, other extras] — all comma-separated. DO NOT include suspension. DO NOT include brakes. DO NOT include cab type. DO NOT include fifth wheel. Fifth wheel goes in Salesforce field, not description.
 GCM: [X]kg B-Double Rated / Road Train Rated — only include if road train rated (≥ 90,000kg) OR explicitly stated
@@ -108,15 +108,16 @@ Sold As Is, Untested & Unregistered.
 
 RIGID TRUCK / PANTECH / CURTAINSIDER / TAUTLINER / VAN
 Line 1: Year, Make, Model, Drive Type, Body Type
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP, [Transmission Name]
 Body dimensions Xmm (L) x Xmm (W), door type always stated (Roller Door Rear / Swing Doors Rear / Side Door) if known — door type affects usability and is a key buyer detail
+Tail lift or refrigeration unit if fitted (state make and model)
 Extras if any
 Sold As Is, Untested & Unregistered.
 
 Example (Pantech):
 2020 Hino 300 Series 617 4x2 Pantech
 
-Hino N04C 4.0-Litre 4-Cylinder Turbocharged Diesel, 110kW (147hp), Automatic Transmission
+Hino 4-Cylinder Diesel, 110HP, Automatic Transmission
 
 Pantech Body 3700mm (L) x 2200mm (W), Roller Door Rear
 
@@ -1062,7 +1063,7 @@ Toyota 4Y LPG Engine, Duplex Mast, Side Shift, 4,500mm Lift Height, Full Free Li
 
 Max Lift Capacity: 2,500kg at 500mm Load Centre, Solid Tyres, ROPS Canopy
 
-Sold As Is, Untested & Unregistered.
+Sold As Is, Untested.
 
 Example (Electric counterbalance):
 2020 Linde E25 Electric Counterbalance Forklift
@@ -1071,7 +1072,7 @@ Triplex Mast, Side Shift, 5,500mm Lift Height, Full Free Lift
 
 Max Lift Capacity: 2,500kg at 500mm Load Centre, 80V Battery, Charger Included, Solid Tyres, Enclosed Cab
 
-Sold As Is, Untested & Unregistered.
+Sold As Is, Untested.
 
 WALKIE STACKER
 Year, Make, Model, Walkie Stacker
@@ -1987,14 +1988,13 @@ Kawasaki FR651V 656cc V-Twin Petrol, 16.0kW (21.5hp), Hydro-Gear ZT-2800 Hydrost
 Sold As Is, Untested & Unregistered.
 
 FORKLIFT EXAMPLE:
-2004 Toyota 42-7FG25 Forklift
+2019 Toyota 8FG25 LPG Counterbalance Forklift
 
-2,500kg Lift Capacity
-4,300mm Max Lift Height
-14,826 Hours
-LPG
-3-Stage Mast
-Sideshift
+Max Lift Capacity: 2,500kg at 500mm Load Centre
+Max Lift Height: 4,500mm
+Triplex Mast, Side Shift, Full Free Lift
+Toyota 4Y 4-Cylinder LPG Engine, 52HP
+4,200 Hours
 
 Sold As Is, Untested.
 
