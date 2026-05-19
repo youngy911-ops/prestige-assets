@@ -62,9 +62,15 @@ READING BUILD PLATES / COMPLIANCE PLATES:
   (1) MATCH THE BADGE: The correct machine plate's make must match the brand badge/logo visible on the machine exterior in wide shots. If the machine has a Volvo logo on the cab but one plate says "Volvo" and another says "ESCO" or "OES" — the Volvo plate is the machine plate, the ESCO/OES plate is the bucket/attachment plate.
   (2) LOCATION TELLS YOU: Machine/chassis plate = bolted to the cab door jamb, frame rail, engine bay, or main structural frame. Attachment plate = bolted to the bucket back, blade, hammer body, fork carriage, or removable component.
   (3) CONTENT TELLS YOU: Machine plate contains: Make, Model, PIN/Serial, Operating Weight, Year of Manufacture. Attachment plate contains: capacity (m³), bucket width (mm), pin diameter (mm), teeth count, cutting edge dimensions, bucket weight — NOT operating weight of a whole machine.
-  (4) WHEEL LOADER SPECIFIC: A wheel loader bucket plate will show bucket capacity (e.g. "3.1m³") and pin centre dimensions. The MACHINE plate is always on the cab/frame. If you photograph both the machine plate AND the bucket plate, use the machine plate for all main fields (make, model, year, serial/PIN, operating weight). Use the bucket plate data ONLY for the capacity field and describe it in the attachments field as the bucket size.
-  (5) EARTHMOVING GENERAL: Buckets, blades, rippers, quick hitches, hammers ALL have their own plates. NONE of these plate details should overwrite the machine's make/model/serial/year. Attachment plate data → extras or attachments field only.
-  (6) WHEN IN DOUBT: If you cannot determine which plate is the machine's, use the wide exterior shots — what badge does the machine have on its body? That's the make. Look for that make's plate format.
+  (4) APPLIES TO ALL ASSET TYPES — specific examples:
+     EARTHMOVING: Bucket plate shows capacity (m³) and pin dims — use machine plate for make/model/serial/year. Bucket data → capacity field and attachments only.
+     TRUCKS: Engine nameplate (Cummins, Detroit, Volvo) is a component plate — truck make comes from the cab badge or chassis plate. Body builder plate (Moore, Stoodley) is a component plate — goes in extras, not as the truck make.
+     TRAILERS: Axle manufacturer plate (BPW, SAF-Holland, Hendrickson) is a component plate — trailer make comes from the drawbar/chassis plate (Vawdrey, Barker, Krueger), never the axle plate.
+     WATER TANKS / PUMP SETS: Pump plate (Honda, Davey, Grundfos) is a component — main asset is the tank. Pump brand → extras as "with Honda WB30 Pump", never as main make/model.
+     FORKLIFTS: Engine plate is a component — forklift make comes from mast/overhead guard plate.
+     VEHICLES: Engine plate never equals vehicle make. Vehicle make comes from VIN plate or exterior badge.
+     GENERAL GOODS: Any sub-component plate (motor, pump, engine) is a component — describe the whole unit, note sub-component brand in extras.
+  (5) UNIVERSAL RULE: Main asset plate = physically attached to the primary structural frame/chassis/cab/hull. Component plates = attached to removable or secondary parts. When in doubt, use wide exterior shots — what badge is on the body? That is the make.
 
 VIN / SERIAL NUMBER READING — CHARACTER DISAMBIGUATION:
 VINs use only these characters: 0-9 and A-Z excluding I, O, Q (these three letters never appear in a valid VIN).

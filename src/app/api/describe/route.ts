@@ -51,6 +51,11 @@ UNIVERSAL RULES:
 - VIN, serial number, chassis number, and registration must only appear if directly visible in photos or inspection notes — never infer or estimate these identifiers
 - UHF radios — state 'UHF Radio' or 'Dual UHF' only, never brand names (Simoco, Icom, GME etc); radio brand is not relevant to buyers
 - Tyres — include size only (e.g. 295/80R22.5), never brand names (Bridgestone, Michelin, etc); EXCEPTION: wheel loaders where tyre brand on sidewall is visible and relevant to buyers
+- TYRE SIZE IN DESCRIPTIONS: Only include tyre size in the description for WHEEL LOADERS and TELEHANDLERS. For all other asset types (trucks, trailers, vehicles etc.) — tyre size goes in the Salesforce tyre_size field ONLY, never in the description body.
+- NO SUSPENSION IN TRUCK DESCRIPTIONS: Suspension type and brand belong in the Salesforce suspension field only. Never mention suspension in the description text.
+- NO BRAKES IN TRUCK DESCRIPTIONS: Brake type belongs in the Salesforce brakes field only.
+- NO CAB TYPE IN TRUCK DESCRIPTIONS: Cab type (Day Cab, Sleeper, Crew Cab) belongs in the Salesforce cab_type field only.
+- HP NOT kW FOR TRUCKS: Use HP (horsepower) in truck and earthmoving descriptions. kW is for vehicles.
 
 DAMAGE RULE (applies to all asset types except general goods):
 Every description must include a Damage line as its own section, immediately before "Sold As Is, Untested & Unregistered."
@@ -65,25 +70,16 @@ Every description must include a Damage line as its own section, immediately bef
 TEMPLATES BY ASSET TYPE — select the correct template based on asset identified:
 
 TRUCK (PRIME MOVER)
-Line 1: Year, Make, Model, Drive Type, "Prime Mover"
+Line 1: [Year] [Make] [Model] [Drive Type] Prime Mover — e.g. "2019 Kenworth T909 6x4 Prime Mover"
 Blank line
-Engine line (own line): [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel] — include kW ([X]hp), [X]Nm Torque only when known; omit power/torque figures if not confirmed (e.g. "Cummins X15 6-Cylinder Turbo Diesel" is valid when kW not supplied); do NOT put transmission on this line
+Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — e.g. "Cummins 6-Cylinder Diesel, 550HP". Use HP not kW. If HP not confirmed from inspection notes, apply training knowledge from the ENGINE HP REFERENCE table above.
 Blank line
-Transmission + key chassis extras line (own line): Transmission name first (full brand and name — e.g. "Eaton 18-Speed Manual", "Volvo I-Shift AT2612F 12-Speed Automated Manual Transmission"), then diff locks MUST be stated (diff lock is a critical value factor for buyers), then PTO/hydraulics, auto greaser, onboard scales, exhaust brake, cruise control — all comma-separated; suspension brand MUST always be named on this line — never write "airbag suspension" without the brand (e.g. Hendrickson PRIMAAX, Kenworth AirGlide 200, Volvo ECAS, Freightliner AirLiner, Mercedes-Benz AIRMATIC); apply training knowledge if not visible; fifth wheel brand/model MUST always be named on this line — never write "fifth wheel" without the brand (e.g. Jost JSK 37, SAF-Holland FW35, Fontaine No-Slack 2); apply training knowledge if not specified in fields
-Blank line
-Sleeper line (own line — omit entirely for day cabs): size in inches first, then brand A/C with hours in brackets (e.g. '48" Single Bonneted Sleeper, Custom Air Sleeper A/C (2,926hrs)' or '24in Sleeper Cab, [Brand] A/C ([X]hrs)'); omit this line entirely if day cab
-Blank line (only if sleeper line present)
-Electronics/cab comfort line (own line — omit if none): touchscreen infotainment, UHF radios, satellite navigation, cameras, adaptive cruise, lane keeping — comma-separated; omit if none fitted
-Blank line (only if electronics line present)
-Appliances line (own line — omit if none): fridge brand + type (e.g. "Dometic Slide-Out Fridge"), second fridge, microwave, TV, electrical system — comma-separated; omit if no appliances
-Blank line (only if appliances line present)
-Inverter line (own line — omit if not fitted): wattage and type (e.g. "2000W Pure Sine Wave Inverter"); omit if not fitted
-Blank line (only if inverter line present)
-GCM: [X]kg — only include if road train rated (≥ 90,000kg) OR explicitly noted by user in inspection notes; omit for standard prime movers
-Damage: [include only if significant damage noted in inspection notes — e.g. "Previous accident damage to front cab", "Significant rust to chassis rails", "Non-runner — mechanical damage to rear axle". Omit this line entirely if no significant damage is noted. Routine scratches and dents are NOT significant — omit.]
+Extras line: [Transmission Name], Diff Locks (if fitted), Exhaust Brake (if fitted), Cruise Control (if fitted), [UHF, GPS, cameras, other extras] — all comma-separated. DO NOT include suspension. DO NOT include brakes. DO NOT include cab type. DO NOT include fifth wheel. Fifth wheel goes in Salesforce field, not description.
+GCM: [X]kg B-Double Rated / Road Train Rated — only include if road train rated (≥ 90,000kg) OR explicitly stated
+Damage: [if significant damage only, else omit]
 Sold As Is, Untested & Unregistered.
 
-MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Volvo FH with D-series suffix → Volvo D13K 12.8-Litre 6-Cylinder; Kenworth T610 → PACCAR MX-13 12.9-Litre 6-Cylinder; Kenworth T409/T659 → Cummins ISX15 15.0-Litre 6-Cylinder; Mack Trident/Granite → Mack MP8 13.0-Litre 6-Cylinder; Western Star 4964 → Detroit DD15 14.8-Litre 6-Cylinder; Mercedes Actros → OM471 12.8-Litre 6-Cylinder; DAF XF → MX-13 12.9-Litre 6-Cylinder. For transmission, apply the standard pairing for that model (e.g. Volvo FH → Volvo I-Shift 12-Speed AMT; Kenworth T610 → PACCAR TX-12 12-Speed AMT; Kenworth T909/T659 → Eaton Fuller 18-Speed Manual or Eaton UltraShift Plus depending on era). For suspension, apply the standard fitment for that model (e.g. Volvo FH → Volvo ECAS Air Suspension; Kenworth T610/T909 → Hendrickson PRIMAAX Air Suspension; Western Star 4964 → Hendrickson RT Air Suspension; Mack Trident → Hendrickson PRIMAAX Air Suspension). For fifth wheel, apply the standard fitment for that model (e.g. most AU prime movers → Jost JSK 37 or SAF-Holland FW35). If the spec varies by order/option, omit it rather than guess — but the engine family, displacement, suspension brand, and fifth wheel brand are mandatory attempts for all prime movers. Use the ENGINE HP REFERENCE table above to fill the hp figure when not supplied.
+MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Kenworth T909/T659 → Cummins 6-Cylinder Diesel, 550HP; Kenworth T610 → PACCAR 6-Cylinder Diesel, 510HP; Volvo FH → Volvo 6-Cylinder Diesel, 540HP; Western Star 4964 → Detroit 6-Cylinder Diesel, 505HP; Mack Trident/Granite → Mack 6-Cylinder Diesel, 505HP; Mercedes Actros → Mercedes 6-Cylinder Diesel, 530HP; DAF XF → DAF 6-Cylinder Diesel, 510HP. Use the ENGINE HP REFERENCE table above to fill the HP figure when not supplied. DO NOT include suspension, fifth wheel, or cab type in the description — these belong in Salesforce fields only.
 
 TIPPER
 Line 1: Year, Make, Model, Drive Type, Tipper
@@ -1191,29 +1187,27 @@ This subtype is a Salesforce system artifact. Describe whatever asset is visible
 Sold As Is, Untested & Unregistered.
 
 MOTOR VEHICLE (CAR)
-Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) block template below. Do NOT write as a single run-on sentence — use the block format with blank lines between sections.
+Use the VEHICLE (PASSENGER / LIGHT COMMERCIAL) one-liner template below. ALL specs go on Line 1 — no blank lines between spec groups.
 
 MINIMAL DATA RULE (cars/utes): A short accurate description is better than a padded one. When only limited information is confirmed, write a concise description using only what is known — do NOT fill lines with inferred or speculative specs just to appear thorough. Only apply training knowledge to fill a spec when it is universally true for that exact model/variant/year. If the spec varies by order or option, omit it entirely.
 
-When engine/transmission/drive data IS confirmed or universally inferrable for the exact variant, apply it — e.g. Toyota HiLux SR5 2GD-FTV 2.8-Litre 4-Cylinder Turbo Diesel, 6-Speed Automatic; Ford Ranger Wildtrak 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Mitsubishi Triton GLS 4N15 2.4-Litre 4-Cylinder Turbo Diesel, 6-Speed Automatic; Toyota LandCruiser 200 Series 1VD-FTV 4.5-Litre V8 Twin-Turbo Diesel, 6-Speed Automatic; Ford Everest Titanium 2.0L 4-Cylinder Bi-Turbo Diesel, 10-Speed Automatic; Toyota Corolla Ascent Sport 2ZR-FAE 2.0-Litre 4-Cylinder Petrol, CVT Automatic. Drive type (4WD/2WD/AWD) is standard knowledge for a variant and must always be included. Engine code before displacement: "2GD-FTV 2.8-Litre" NOT "2.8-Litre 2GD-FTV". Power in kW first, then hp in brackets: "150kW (201hp)". Always include variant/trim level on line 1 if inferrable from model or photos (SR5, Wildtrak, GLS, SV6, Titanium, Raptor, GXL, VX, Kakadu etc.) — this is one of the highest-value details for vehicle buyers and directly affects hammer price.
+When engine/transmission/drive data IS confirmed or universally inferrable for the exact variant, apply it — e.g. Toyota HiLux SR5 → 2755cc 150kW 6sp 4cyl 4dr 5seat; Ford Ranger Wildtrak → 1996cc 157kW 10sp 4cyl 4dr 5seat; Mitsubishi Triton GLS → 2442cc 133kW 6sp 4cyl 4dr 5seat; Toyota LandCruiser 200 Series → 4461cc 195kW 6sp 8cyl 5dr 5seat; Toyota Corolla Ascent Sport → 1987cc 125kW CVT 4cyl 5dr 5seat. Drive type (4WD/2WD/AWD) is standard knowledge for a variant and must always be included. Always include variant/trim level if inferrable (SR5, Wildtrak, GLS, SV6, Titanium, Raptor, GXL, VX, Kakadu etc.) — this is one of the highest-value details and directly affects hammer price.
 
-QUALITY REFERENCE — real Slattery vehicle descriptions showing the correct minimal format:
+QUALITY REFERENCE — real Slattery vehicle descriptions showing the correct one-liner format:
 
-Minimal (only year/make/model/body/drive/key specs confirmed, engine code not available):
-2017 Toyota LandCruiser 200 GX Wagon
+Example (dual cab ute):
+2019 Toyota HiLux SR5 Pickup 6sp 4WD Diesel Double Cab 2755cc 150kW 6sp 4cyl 4dr 5seat
 
-4WD, V8 Twin-Turbo Diesel, 5-Seater, Snorkel
-
-Sold As Is, Untested & Unregistered.
-
-Medium (year/make/model/series/body plus engine/gearbox confirmed):
-2023 Ford Ranger PY Sport 4WD Dual Cab Ute
-
-Auto Diesel 2.0L 10sp 4dr 5seat
+Ironman 4x4 Bull Bar, Side Steps, Roof Rack, Tow Bar, UHF Radio
 
 Sold As Is, Untested & Unregistered.
 
-These are the quality bar. Match the brevity and accuracy — do NOT pad with inferred specs when they are not confirmed.
+Example (minimal — only key specs confirmed):
+2023 Ford Ranger PY Sport Pickup 10sp 4WD Diesel Double Cab 1996cc 157kW 10sp 4cyl 4dr 5seat
+
+Sold As Is, Untested & Unregistered.
+
+These are the quality bar. ALL specs go on Line 1 — no blank lines between spec sections.
 
 MOTORCYCLE (subtype: motorcycle)
 Line 1: Year Make Model Variant (e.g. "2021 Kawasaki Versys 650 ABS")
