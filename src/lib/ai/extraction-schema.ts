@@ -88,8 +88,9 @@ When reading stamped, embossed, or printed VINs/serials from photos, use these r
 - "6" vs "G": 6 has a closed bottom loop, G has an open right side
 - "2" vs "Z": 2 has a curved bottom, Z has a flat bottom diagonal
 - If a character is genuinely illegible, substitute "?" for that character — do NOT guess
+- READ AGGRESSIVELY: If a photo of the VIN plate is clear and you can see the plate, you MUST extract the VIN. Do not give up because of one uncertain character — use "?" for that position and return the rest. A VIN like "6F5???XXXPA??????" is far more useful than null.
 - A valid VIN is exactly 17 characters — if you read more or fewer, recount carefully
-- Return null if fewer than 10 characters are legible — a partial VIN does more harm than good
+- Return null ONLY if the plate is completely unreadable (blurry, out of frame, or no VIN plate visible at all). If you can see the plate and read ANY characters, return what you have with "?" for illegible positions — never return null for a visible, photographed VIN plate just because some characters are uncertain.
 
 EARTHMOVING PIN / SERIAL — SPECIAL RULES (overrides the 17-char VIN rule above):
 - Earthmoving PINs and serials are NOT always 17 characters — shorter formats are the norm for many makes
