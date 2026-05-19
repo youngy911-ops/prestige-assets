@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChevronRight, ChevronDown, CheckCircle2 } from 'lucide-react'
+import { ChevronDown, CheckCircle2 } from 'lucide-react'
 import { ConfidenceBadge } from '@/components/asset/ConfidenceBadge'
 import { getFieldsSortedBySfOrder } from '@/lib/schema-registry'
 import type { AssetType } from '@/lib/schema-registry/types'
@@ -126,8 +126,7 @@ export function ExtractionResultPanel({
           onClick={() => router.push(`/assets/${assetId}/review`)}
           className="flex items-center justify-center w-full h-12 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-[15px] shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_4px_16px_rgba(52,211,153,0.15)] transition-colors gap-1"
         >
-          Proceed to Review
-          <ChevronRight className="w-4 h-4" aria-hidden="true" />
+          Proceed to Review →
         </button>
         <button
           type="button"

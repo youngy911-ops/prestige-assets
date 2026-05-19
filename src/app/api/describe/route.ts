@@ -81,14 +81,14 @@ GCM: [X]kg B-Double Rated / Road Train Rated — only include if road train rate
 Damage: [if significant damage only, else omit]
 Sold As Is, Untested & Unregistered.
 
-MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Kenworth T909/T659 → Cummins 6-Cylinder Diesel, 550HP; Kenworth T610 → PACCAR 6-Cylinder Diesel, 510HP; Volvo FH → Volvo 6-Cylinder Diesel, 540HP; Western Star 4964 → Detroit 6-Cylinder Diesel, 505HP; Mack Trident/Granite → Mack 6-Cylinder Diesel, 505HP; Mercedes Actros → Mercedes 6-Cylinder Diesel, 530HP; DAF XF → DAF 6-Cylinder Diesel, 510HP. Use the ENGINE HP REFERENCE table above to fill the HP figure when not supplied. DO NOT include suspension, fifth wheel, or cab type in the description — these belong in Salesforce fields only.
+MINIMAL DATA RULE (prime movers): If only make/model/year/drive type are known and no engine or transmission data is in the confirmed fields, apply your training knowledge of that specific model to fill the engine line — e.g. Kenworth T909/T659 → Cummins 6-Cylinder Diesel, 550HP; Kenworth T409SAR → Cummins 6-Cylinder Diesel, 550HP; Kenworth T610 → PACCAR 6-Cylinder Diesel, 510HP; Volvo FH → Volvo 6-Cylinder Diesel, 540HP; Western Star 4964 → Detroit 6-Cylinder Diesel, 505HP; Mack Trident/Granite → Mack 6-Cylinder Diesel, 505HP; Mercedes Actros → Mercedes 6-Cylinder Diesel, 530HP; DAF XF → DAF 6-Cylinder Diesel, 510HP. Use the ENGINE HP REFERENCE table above to fill the HP figure when not supplied. DO NOT include suspension, fifth wheel, or cab type in the description — these belong in Salesforce fields only.
 
 TIPPER
 Line 1: Year, Make, Model, Drive Type, Tipper
 Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Mack 6-Cylinder Diesel, 500HP". DO NOT include: engine code (ISX, MP8, 6M60 etc.), displacement/litres, "Turbocharged" or "Turbodiesel". JUST: Make N-Cylinder FuelType, XXXHP.
 Transmission line: [Transmission Name], Diff Locks (if fitted), Exhaust Brake (if fitted), [Key chassis extras] — all comma-separated on its own line, no blank line before it
 Blank line
-Single body-detail line: body builder name MUST always be stated — common AU builders: Moore, Stoodley, Hamelex White, CJD, Auswide, Superior; always attempt to identify from photos (look for badge/plate on body); if not determinable write "Custom Tipper Body"; then dimensions Xmm (L) x Xmm (W) x Xmm (D), material (steel / alloy / Hardox); Hardox lining MUST be called out explicitly if fitted ("Hardox Lined" or "Full Hardox Lining" — Hardox is a premium value signal); tarp brand AND type always named if tarp fitted — never write "tarp" alone (e.g. "Razor Delta II Electric Roll-Over Tarp", "Aerocover Auto-Retractable Tarp", "CoverMe Electric Tarp"); tailgate type, Ringfeder hitch if confirmed; Rock Lined if applicable; ALL extras in one comma-separated run on this single line — never use separate lines for individual accessories
+Single body-detail line: body builder name MUST always be stated — common AU builders: Moore, Stoodley, Hamelex White, CJD, Auswide, Superior; always attempt to identify from photos (look for badge/plate on body); if not determinable write "Custom Tipper Body"; then dimensions Xmm (L) x Xmm (W) x Xmm (H), material (steel / alloy / Hardox); Hardox lining MUST be called out explicitly if fitted ("Hardox Lined" or "Full Hardox Lining" — Hardox is a premium value signal); tarp brand AND type always named if tarp fitted — never write "tarp" alone (e.g. "Razor Delta II Electric Roll-Over Tarp", "Aerocover Auto-Retractable Tarp", "CoverMe Electric Tarp"); tailgate type, Ringfeder hitch if confirmed; Rock Lined if applicable; ALL extras in one comma-separated run on this single line — never use separate lines for individual accessories
 Payload: [X]kg — include ONLY if confirmed from inspection notes or compliance plate. Do not estimate or infer.
 Damage: [include only if significant — accident damage, major rust, structural issues; omit line if none]
 Sold As Is, Untested & Unregistered.
@@ -340,14 +340,11 @@ Sold As Is, Untested & Unregistered.
 
 TRAY TRUCK
 Line 1: Year, Make, Model, Drive Type, Tray Truck
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [X]Nm Torque (if known), [Full Transmission Brand and Name]
-
-Body builder if known, tray dimensions Xmm (L) x Xmm (W) — metric only, no imperial; tray material (steel / alloy) if visible
-Headboard (fixed / with roof rack), rear tailboard if fitted
-Tail lift: brand and SWL always stated if fitted (e.g. "Tieman Swing-Under Tailgate Lift 600kg SWL", "Maxon TE-20 Tuckaway Tailgate Lift 750kg SWL")
-Toolboxes: state quantity, position (undermount / side-mounted), and dimension if visible (e.g. "1x 650mm & 1x 1000mm Undermount Toolboxes")
-Beacons, tie rails, tow hitch/airlines if fitted
-Crane: make, model, capacity if fitted
+Engine line: [Engine Make] [N]-Cylinder [Fuel], [X]HP — STRICT FORMAT: Make + cylinders + fuel + HP ONLY. e.g. "Hino 4-Cylinder Diesel, 150HP". DO NOT include: engine code, displacement/litres, "Turbocharged". JUST: Make N-Cylinder FuelType, XXXHP.
+Transmission line: [Transmission Name], [Key chassis extras] — comma-separated on its own line, no blank line before it
+Blank line
+Body line: [Body Builder] Tray Body, Xmm (L) x Xmm (W) — body builder name leads; write "Custom Tray Body" if builder not determinable; include tray material (steel / alloy) if visible; headboard type (fixed / with roof rack), rear tailboard if fitted; tail lift brand and SWL if fitted; toolboxes with quantity, position, and dimension if visible; beacons, tie rails, tow hitch/airlines if fitted — all on this one comma-separated line
+Crane line (if fitted): [Crane Make] [Model] Crane, [X]kg Capacity — own line
 Payload: [X]kg — include only if notably high or stated by user in inspection notes.
 Damage: [include only if significant — accident damage, major rust, structural issues; omit line if none]
 Sold As Is, Untested & Unregistered.
@@ -355,9 +352,10 @@ Sold As Is, Untested & Unregistered.
 Example:
 2015 Hino 300 Series 616 4x2 Wide Cab Tray Truck
 
-Hino N04C-US 4.0-Litre 4-Cylinder Turbocharged Diesel, 110kW (150hp), 420Nm Torque, Aisin A860E 6-Speed Automatic Transmission
+Hino 4-Cylinder Diesel, 150HP
+Aisin 6-Speed Automatic Transmission
 
-4800mm (L) x 2300mm (W) Steel Tray, Tieman Swing-Under Tailgate Lift 600kg SWL, Headboard With Roof Rack, Rear Tailboard, 1x 650mm & 1x 1000mm Undermount Toolboxes, Beacons
+Custom Tray Body, 4800mm (L) x 2300mm (W) Steel Tray, Tieman Swing-Under Tailgate Lift 600kg SWL, Headboard With Roof Rack, Rear Tailboard, 1x 650mm & 1x 1000mm Undermount Toolboxes, Beacons
 
 Sold As Is, Untested & Unregistered.
 
@@ -644,27 +642,29 @@ Sold As Is, Untested & Unregistered.
 
 BULLDOZER/CRAWLER TRACTOR
 Year, Make, Model, Type (Bulldozer or Crawler Tractor)
-Operating Weight
-Hours
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name]
+[X]kg Operating Weight
+[X] Hours
+Engine line: [Engine Make] [N]-Cylinder Diesel, [X]HP — HP (all caps); engine make and cylinders only, no engine code prefix, no kW; e.g. "Caterpillar 6-Cylinder Diesel, 354HP" or "Komatsu 6-Cylinder Diesel, 228HP"
 Enclosed Cab / ROPS Canopy
-Track width
+[Transmission type — own line]
+[X]mm [Track type] — track width in mm followed by track type (e.g. "560mm Steel Tracks" or "600mm Rubber Tracks"); always state both width AND type
 Travel Speed: Xkm/h (X.Xmph) Forward, Xkm/h (X.Xmph) Reverse — always state in BOTH km/h AND mph (km/h × 0.621 = mph); apply model knowledge if not confirmed
 
-For Bulldozer: blade width in feet and type (e.g. "11.9ft PAT Blade", "14.0ft Semi-U Blade") — blade width ALWAYS in feet, never mm; ripper type on its own line if fitted ("Single Shank Ripper" or "Multi Shank Ripper" — never just "Ripper"); GPS Grade Control on its own line if fitted or confirmed from photos
+For Bulldozer: [X]ft [Blade type] — blade width ALWAYS in feet, never mm (e.g. "11.9ft PAT Blade", "14.0ft Semi-U Blade") — own line; ripper type on its own line if fitted ("Single Shank Ripper" or "Multi Shank Ripper" — never just "Ripper"); GPS Grade Control on its own line if fitted or confirmed from photos
 For Crawler Tractor: PTO if fitted, drawbar capacity, implements included if any
 Sold As Is, Untested & Unregistered.
 
 MOTOR GRADER
 Year, Make, Model, Motor Grader
-Operating Weight
-Hours
-Engine line: [Engine Code] [X.X]-Litre [N]-Cylinder Turbocharged [Fuel], [X]kW ([X]hp), [Transmission Name, speeds]
-Enclosed Cab / ROPS, FOPS, AC
-Moldboard width in ft
-Scarifier / Ripper if fitted
-GPS Grade Control if fitted
-Extras
+[X]kg Operating Weight
+[X] Hours
+Engine line: [Engine Make] [N]-Cylinder Diesel, [X]HP — HP (all caps); engine make and cylinders only, no engine code prefix, no kW; e.g. "Caterpillar 6-Cylinder Diesel, 215HP"
+Transmission line: [Transmission type], [X]-Speed Forward/Reverse — transmission type and speed count on one line (e.g. "Direct Drive Transmission, 8-Speed Forward/Reverse")
+Enclosed Cab, ROPS, FOPS, Air Conditioned
+[X]ft Moldboard
+[Scarifier / Ripper if fitted — own line]
+[GPS Grade Control if fitted — own line]
+[Extras: Auto Articulation, Auto Gain etc. — own line]
 Sold As Is, Untested & Unregistered.
 
 SKID STEER / COMPACT TRACK LOADER
@@ -1894,9 +1894,10 @@ Sold As Is, Untested & Unregistered.
 TRAY TRUCK EXAMPLE:
 2015 Hino 300 Series 616 4x2 Wide Cab Tray Truck
 
-Hino N04C-US 4.0-Litre 4-Cylinder Turbocharged Diesel, 110kW (150hp), 420Nm Torque, Aisin A860E 6-Speed Automatic Transmission
+Hino 4-Cylinder Diesel, 150HP
+Aisin 6-Speed Automatic Transmission
 
-4800mm (L) x 2300mm (W) Steel Tray, Tieman Swing-Under Tailgate Lift 600kg SWL, Headboard With Roof Rack, Rear Tailboard, 1x 650mm & 1x 1000mm Undermount Toolboxes, Beacons
+Custom Tray Body, 4800mm (L) x 2300mm (W) Steel Tray, Tieman Swing-Under Tailgate Lift 600kg SWL, Headboard With Roof Rack, Rear Tailboard, 1x 650mm & 1x 1000mm Undermount Toolboxes, Beacons
 
 Sold As Is, Untested & Unregistered.
 

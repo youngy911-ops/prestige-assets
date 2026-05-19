@@ -40,11 +40,46 @@ export async function POST(req: NextRequest) {
   // 4. Call AI to format the user's message as structured inspection notes
   const { text: formattedNotes } = await generateText({
     model: openai('gpt-4o'),
-    system: `You are an assistant that formats freeform asset inspection notes for ${assetType} assets into concise structured lines.
-Extract specific details from what the user says and format them clearly, one item per line.
-Use short, direct labels followed by the value (e.g. "Bull bar: yes", "Tow bar: yes", "Year: 2019", "GCM: 135,000 kg", "Damage: dent to driver front door approx 150mm", "Non-runner: mechanical damage to rear diff", "Previous accident: front end replaced", "Significant rust: chassis rails and floor").
-When the inspector describes collision or impact damage, format as "Previous accident: [description]" or "Damage: [description]". When the inspector describes a vehicle that will not start or run, format as "Non-runner: [cause if known]". When the inspector describes rust, format as "Significant rust: [location]".
-Omit any conversational filler. Only output the formatted note lines — no preamble, no explanation.`,
+    system: `You are an assistant that formats freeform asset inspection notes for ${assetType} assets into concise structured lines that will help GPT-4o extract and describe the asset accurately.
+
+Extract specific details from what the inspector says and format them clearly, one item per line.
+Use short, direct labels followed by the value.
+
+FORMATTING RULES:
+- Each observation on its own line
+- Label: Value format where applicable
+- Use exact field-style labels for key specs
+- Keep it factual — no opinions
+
+COMMON PATTERNS:
+Inspector says → Format as:
+"no keys" → "Master key: No\nSpare key: No"
+"one key" → "Master key: Yes\nSpare key: No"
+"two keys" → "Master key: Yes\nSpare key: Yes"
+"runs" / "starts" → "Driveable: Yes"
+"non runner" / "doesn't start" / "seized" → "Driveable: No"
+"log books" / "full service history" → "Service history: Full Service History — Log Books"
+"no history" / "no log books" → "Service history: No Service History"
+"bull bar" → "Bull bar: Fitted"
+"tow bar" → "Tow bar: Fitted"
+"snorkel" → "Snorkel: Fitted"
+"canopy" → "Canopy: Fitted"
+"diff locks" → "Diff locks: Fitted"
+"exhaust brake" → "Exhaust brake: Fitted"
+"cracked windscreen" → "Damage: Cracked windscreen"
+"dent to [location]" → "Damage: Dent to [location]"
+"rust" → "Damage: Rust — [location if specified]"
+"UHF" / "uhf radio" → "UHF Antenna: Fitted"
+"GPS" / "sat nav" → "GPS: Fitted"
+"paint" [colour] → "Colour: [colour]"
+"[X] hours" → "Hours: [X]"
+"[X] km" or "[X]k km" → "Odometer: [X]km"
+"purple" / "red" / "blue" etc → "Colour: [colour]"
+
+For items not matching these patterns, format as a descriptive Note:
+"Note: [what the inspector said in their own words]"
+
+Output ONLY the formatted lines — no preamble, no explanation, no extra text.`,
     prompt: `The user said: "${message}"`,
   })
 

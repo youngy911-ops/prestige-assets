@@ -162,8 +162,8 @@ export function AssetList({ branch, onBranchChange, initialAssets }: AssetListPr
             </div>
           )}
           {assets && assets.filter(a => a.status === 'confirmed').length > 0 && (
-            <div className="flex items-center gap-1.5 bg-white/[0.05] border border-white/[0.08] rounded-lg px-2.5 py-1">
-              <span className="text-xs font-medium text-white/50">{assets.filter(a => a.status === 'confirmed').length} confirmed</span>
+            <div className="flex items-center gap-1.5 bg-white/[0.05] border border-white/[0.10] rounded-lg px-2.5 py-1">
+              <span className="text-xs font-medium text-white/55">{assets.filter(a => a.status === 'confirmed').length} confirmed</span>
             </div>
           )}
         </div>

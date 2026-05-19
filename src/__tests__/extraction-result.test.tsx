@@ -113,7 +113,7 @@ describe('ExtractionResultPanel', () => {
         onRerun={vi.fn()}
       />
     )
-    expect(screen.getByText('Proceed to Review')).toBeTruthy()
+    expect(screen.getByText('Proceed to Review →')).toBeTruthy()
   })
 
   it('renders "Re-run Extraction" secondary button', async () => {
@@ -139,7 +139,7 @@ describe('ExtractionResultPanel', () => {
         onRerun={vi.fn()}
       />
     )
-    fireEvent.click(screen.getByText('Proceed to Review'))
+    fireEvent.click(screen.getByText('Proceed to Review →'))
     expect(mockRouterPush).toHaveBeenCalledWith('/assets/asset-1/review')
   })
 })
@@ -177,7 +177,7 @@ describe('ExtractionPageClient', () => {
         hasPhotos={true}
       />
     )
-    expect(screen.getByText('Proceed to Review')).toBeTruthy()
+    expect(screen.getByText('Proceed to Review →')).toBeTruthy()
   })
 })
 

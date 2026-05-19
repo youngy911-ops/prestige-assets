@@ -184,7 +184,7 @@ export function InspectionNotesSection({
         {/* Ask AI input */}
         <p className="text-xs text-white/35 flex items-center gap-1.5 pt-1">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400/70 flex-shrink-0" />
-          Tell the AI anything about this asset
+          Tell the AI what you noticed:
         </p>
         <div className="flex gap-2 pt-1">
           <input
@@ -192,7 +192,7 @@ export function InspectionNotesSection({
             value={aiInput}
             onChange={(e) => setAiInput(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAiSubmit() } }}
-            placeholder="Describe this asset in plain English…"
+            placeholder="e.g. no keys, runs, purple, 80,000km, tow bar, full log books"
             className="flex-1 h-8 rounded-md border border-white/10 bg-white/5 px-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-emerald-500/40"
           />
           <button
