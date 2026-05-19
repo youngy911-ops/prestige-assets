@@ -38,6 +38,8 @@ PACCAR MX-13: 380–510hp | CAT C15: 435–580hp
 
 UNIVERSAL RULES:
 - No dot points
+- SPECS ONLY — NO PROSE: Every line must be a factual spec, not a description of what something does. WRONG: "Featuring a powerful Cummins ISX engine". RIGHT: "Cummins ISX 15.0-Litre 6-Cylinder Turbodiesel". Never write what something does — write what it IS.
+- NO FILLER WORDS: Never use "featuring", "equipped with", "boasting", "comes with", "offers", "provides", "including". Start each spec line directly with the spec value.
 - Use METRIC throughout — EXCEPT these Australian industry conventions where feet/inches are standard: moldboard width (graders), combine header width, grain auger length/diameter, boat LOA (feet first then metres in brackets e.g. "22ft (6.7m)")
 - No serial numbers in description
 - No hours or odometer in vehicle (car/ute/sedan/SUV) descriptions. For EQUIPMENT and MACHINERY — hours are included in the description ONLY when clearly confirmed from photos or inspection notes. Never estimate or infer hours. If confirmed hours are available, include them on their own line (e.g. '3,603 Hours').
