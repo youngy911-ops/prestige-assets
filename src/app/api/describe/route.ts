@@ -1629,6 +1629,20 @@ MISCELLANEOUS / OTHER:
 
   Sold As Is, Untested.
 
+  Example (unbranded office furniture):
+  Office Chair, Black Mesh Back
+
+  Adjustable Height, Five-Star Wheeled Base, Armrests Fitted
+
+  Sold As Is, Untested.
+
+  Example (unbranded shelving):
+  Steel Shelving Unit, Grey
+
+  Approx 1800mm Tall x 900mm Wide, 4 Adjustable Shelves, Particle Board Decking
+
+  Sold As Is, Untested.
+
 UNIVERSAL RULES for all general goods:
 - Only include specs you can confirm from fields, notes, photos, or universal model knowledge for that exact make/model
 - For items with no identifiable make/model, describe what is visible in the photos
