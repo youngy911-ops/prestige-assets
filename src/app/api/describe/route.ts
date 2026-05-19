@@ -1716,6 +1716,10 @@ MISCELLANEOUS / OTHER:
   For lots with multiple items: list each type with approximate quantity — always estimate "Approx Xx Items".
   For items with NO visible branding or plate: describe by appearance — type, material, colour, approximate size, condition.
   NEVER invent or guess a make/model when none is visible.
+NEVER assume functional features you cannot see. Examples:
+- Bar stool/office chair with solid fixed legs → do NOT say "adjustable height" unless you can see a gas lift cylinder, adjustment lever, or height-adjustment mechanism in the photo
+- Fixed-leg chair/stool = state "Fixed Height" or omit height entirely
+- Only describe what is PHYSICALLY VISIBLE in the photos — not what that product type typically has
 
   Example (general goods with motor):
   Westmix C&G Electric Concrete Mixer
